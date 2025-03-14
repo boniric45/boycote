@@ -1,14 +1,15 @@
 
-<!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<h1>Bienvenue chez Boy-Coté</h1>
+<div class="container">
+<h1>Bienvenue sur Boy Coté</h1>
 
 <div class="logoContainer">
+
+
     <ul>
         <li>
             <img class="logoContainer" src="/pictures/logo.png">
-            <a class="titleLogo" (click)="myDialog.show()">Boy Coté</a>
+            <a class="titleLogo" (click)="myDialog.show()" (click)="compHeader()">Boy Coté</a>
         </li>
     </ul>
 </div>
@@ -17,11 +18,11 @@
     <dialog #myDialog>
         <div class="popupTitle">Boy Coté Museum</div>
         <div class="btnNav">
-            <button mat-button class="btnModalEnter" (click)="myDialog.close()" (click)="listClick()" routerLink="/header/home">Enter</button>
+            <a mat-button class="btnModalEnter" (click)="myDialog.close()" (click)="listClick()">Enter</a>
             <button mat-button class="btnModalClose" (click)="myDialog.close()">Close</button>
         </div>
     </dialog>
 </div>
 
+</div>
 
-</html>

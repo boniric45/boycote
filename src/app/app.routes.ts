@@ -1,14 +1,15 @@
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { HomeComponent } from './public/home/home.component';
 import { ListOfCollectionsComponent } from './public/list-of-collections/list-of-collections.component';
 import { CollectionComponent } from './public/collection/collection.component';
+import { HeaderComponent } from './public/header/header.component';
 
 
 
 export const routes: Routes = [
 
-    {path:'',redirectTo:'home',pathMatch:'full'},
-    {path:'**',component:HomeComponent},
+    {path:'',redirectTo:'header',pathMatch:'full'},
+    {path:'header',component:HeaderComponent},
     {path:'home',
         title:'Boy-Coté.fr',
         component: HomeComponent,
