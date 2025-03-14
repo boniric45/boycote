@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<h1>Bienvenue chez Boy-Coté</h1>
+
+<div class="logoContainer">
+    <ul>
+        <li>
+            <img class="logoContainer" src="/pictures/logo.png">
+            <a class="titleLogo" (click)="myDialog.show()">Boy Coté</a>
+        </li>
+    </ul>
+</div>
+
+<div class="popup">
+    <dialog #myDialog>
+        <div class="popupTitle">Boy Coté Museum</div>
+        <div class="btnNav">
+            <button mat-button class="btnModalEnter" (click)="myDialog.close()" (click)="listClick()" routerLink="/header/home">Enter</button>
+            <button mat-button class="btnModalClose" (click)="myDialog.close()">Close</button>
+        </div>
+    </dialog>
+</div>
+
+
+</html>
