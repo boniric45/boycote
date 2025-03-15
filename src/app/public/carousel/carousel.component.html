@@ -1,0 +1,27 @@
+
+
+<div class="scene">
+    <div class="carousel2" style="position:relative">
+        @for(item of [0,1,2,3,4,5,6,7,8];track $index){
+          <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(item)">{{item}}</div>
+        }
+    </div>
+
+    <div class="btn">
+      <button class="prev" mat-flat-button (click)="prev()">prev</button>
+      <button class="next" mat-flat-button (click)="next()">next</button>
+    </div>
+
+
+</div>
+
+
+
+<!--
+Translate to Angular from <a href="https://3dtransforms.desandro.com/carousel">https://3dtransforms.desandro.com/carousel</a>
+<input type="checkbox" id="horizontal"  [ngModel]="isHorizontal" (ngModelChange)="isHorizontal=$event; orientationChange()"/><label for="horizontal">Horizontal</label>
+  <div *ngFor="let i of [0,1,2,3,4,5,6,7,8]" class="carousel__cell" [ngStyle]="getStyle(i)">{{i}}</div>
+-->
+
+
+

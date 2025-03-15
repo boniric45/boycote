@@ -20,8 +20,9 @@ export class HeaderComponent {
   }
 
   listClick() {
-    this.route.navigateByUrl('home');    
+    this.route.navigateByUrl('carousel');    
   }
 
 
+  
 }
