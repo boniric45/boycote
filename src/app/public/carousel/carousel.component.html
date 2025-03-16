@@ -1,27 +1,41 @@
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="scene">
-    <div class="carousel2" style="position:relative">
-        @for(item of [0,1,2,3,4,5,6,7,8];track $index){
-          <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(item)">{{item}}</div>
+
+  <button class="prev" mat-fab extended (click)="prev()"><i class="fa fa-arrow-circle-left"></i></button>
+      
+     <div class="container_carousel" >
+
+      @for(collection of mapCollection.keys();track $index){
+
+          <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(collection)" >
+            <div >
+               {{collection}}  
+            </div>
+          </div>
         }
-    </div>
-
-    <div class="btn">
-      <button class="prev" mat-flat-button (click)="prev()">prev</button>
-      <button class="next" mat-flat-button (click)="next()">next</button>
-    </div>
-
-
+      </div>
+      <button class="next" mat-fab extended (click)="next()"><i class="fa fa-arrow-circle-right"></i></button>     
 </div>
 
 
+<div class="nameCollections">
+  {{txtCollection}} 
+</div>
 
-<!--
-Translate to Angular from <a href="https://3dtransforms.desandro.com/carousel">https://3dtransforms.desandro.com/carousel</a>
-<input type="checkbox" id="horizontal"  [ngModel]="isHorizontal" (ngModelChange)="isHorizontal=$event; orientationChange()"/><label for="horizontal">Horizontal</label>
-  <div *ngFor="let i of [0,1,2,3,4,5,6,7,8]" class="carousel__cell" [ngStyle]="getStyle(i)">{{i}}</div>
--->
+<div class="btnView">
+
+  <button class="view" mat-fab extended><span class="material-icons">visibility</span>View</button>
+
+</div>
+
+  <!--
+
+  <mat-form-field><mat-label>{{txtCollection}}</mat-label><input matInput></mat-form-field>
+  -->
+
 
 
 
