@@ -12,6 +12,7 @@
   scale: 1.8; // agrandi le carousel
   }
 
+
   .carousel__cell {
     position: relative;
     width: 280px;
@@ -53,20 +54,10 @@
     background: hsla(320, 100%, 50%);
   }
 
-  /*
-  .carousel__cell:nth-child(1) { transform: rotateY(  0deg); }
-  .carousel__cell:nth-child(2) { transform: rotateY( 40deg); }
-  .carousel__cell:nth-child(3) { transform: rotateY( 80deg); }
-  .carousel__cell:nth-child(4) { transform: rotateY(120deg); }
-  .carousel__cell:nth-child(5) { transform: rotateY(160deg); }
-  .carousel__cell:nth-child(6) { transform: rotateY(200deg); }
-  .carousel__cell:nth-child(7) { transform: rotateY(240deg); }
-  .carousel__cell:nth-child(8) { transform: rotateY(280deg); }
-  .carousel__cell:nth-child(9) { transform: rotateY(320deg); }
-*/
   .carousel {
     transform: translateZ(-288px) rotateY(-160deg);
   }
+
 
 .prev{
     margin-right: 255px;

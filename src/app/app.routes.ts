@@ -4,6 +4,7 @@ import { ListOfCollectionsComponent } from './public/list-of-collections/list-of
 import { CollectionComponent } from './public/collection/collection.component';
 import { HeaderComponent } from './public/header/header.component';
 import { CarouselComponent } from './public/carousel/carousel.component';
+import { ProductComponent } from './public/product/product.component';
 
 
 
@@ -26,6 +27,10 @@ export const routes: Routes = [
     {path:'carousel',
         title:'Carousel',
         component: CarouselComponent
+    },
+    {path:'product',
+        title:'Produit',
+        component: ProductComponent
     }
 
 

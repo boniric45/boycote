@@ -1,41 +1,32 @@
-
+<HTMl lang="en">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="scene">
 
-  <button class="prev" mat-fab extended (click)="prev()"><i class="fa fa-arrow-circle-left"></i></button>
+  <button class="prev" mat-fab extended (click)="prev()" [disabled]="disabled"><i class="fa fa-arrow-circle-left"></i></button>
       
      <div class="container_carousel" >
-
       @for(collection of mapCollection.keys();track $index){
-
-          <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(collection)" >
-            <div >
-               {{collection}}  
-            </div>
+          <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(collection)"
+          (click)="getIdCollection(collection)"
+          (click)="btnView()" 
+          >
+          {{collection}}
           </div>
         }
       </div>
-      <button class="next" mat-fab extended (click)="next()"><i class="fa fa-arrow-circle-right"></i></button>     
+
+    <button class="next" mat-fab extended (click)="next()" [disabled]="disabled" disabled="false"><i class="fa fa-arrow-circle-right"></i></button>     
 </div>
 
 
-<div class="nameCollections">
-  {{txtCollection}} 
-</div>
+<div class="nameCollections">{{txtCollection}}</div>
 
 <div class="btnView">
-
-  <button class="view" mat-fab extended><span class="material-icons">visibility</span>View</button>
-
+  <button  class="view" mat-fab extended (click)="btnView()" ><span class="material-icons notranslate" >visibility</span>View</button>
 </div>
 
-  <!--
-
-  <mat-form-field><mat-label>{{txtCollection}}</mat-label><input matInput></mat-form-field>
-  -->
-
-
+</HTMl>
 
 
