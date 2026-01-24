@@ -1,26 +1,86 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+</head>
+<body>
 
 <div class="container">
-<h1>Bienvenue sur Boy Coté</h1>
-
-<div class="logoContainer">
-    <ul>
-        <li>
-            <img class="logoContainer" src="/pictures/logo.png">
-            <a class="titleLogo" (click)="myDialog.show()" (click)="compHeader()">Boy Coté</a>
-        </li>
-    </ul>
+    <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+    <div class="btn-panier">
+      <img src="/pictures/shopping.png" alt="panier" class="img-panier">
+    </div>
 </div>
 
-<div class="popup">
-    <dialog #myDialog>
-        <div class="popupTitle">Boy Coté Museum</div>
-        <div class="btnNav">
-            <a mat-flat-button class="btnModalEnter" (click)="myDialog.close()" (click)="listClick()">Enter</a>
-            <button mat-flat-button class="btnModalClose" (click)="myDialog.close()">Close</button>
-        </div>
-    </dialog>
-</div>
+<div class="selects">
+<form action="">
+  <div class="search">
+      <mat-icon>search</mat-icon>
+      <input type="text" />    
+  </div>
+</form>
+
+  <mat-form-field class="marques">
+  <mat-label><p>Marques</p></mat-label>
+  <!-- marques select -->
+  <mat-select appSelected
+  (selectionChange)="getMarquesSelectedUser($event)" 
+  (openedChange)="marquesIsOpen(panelMarquesIsOpen)"
+  [disabled]="marqueIsDisabled"
+  [(ngModel)]="reinitSelectMarque"
+  multiple>
+  @for (marque of marques; track marque.id) {
+  <mat-option [value]="marque.name">
+    <p class="listSort">{{marque.name}}</p>
+  </mat-option>
+  }
+  </mat-select>
+</mat-form-field>
+
+  <!-- <button mat-raised-button (click)="getNativeValue({{marquesResult}})">Get Value</button> -->
+  <!-- <mat-select (selectionChange)="getTypeView($event)" multiple></mat-select> case à cocher -->
+   
+<mat-form-field class="vetements">
+  <mat-label><p>Vêtements</p></mat-label>
+  <mat-select appSelected
+  (selectionChange)="getTypeSelectedUser($event)" 
+  (openedChange)="vetementIsOpen(panelVetementIsOpen)"
+  [disabled]="vetementIsDisabled"
+  [(ngModel)]="reinitSelectVetement"
+  multiple>
+    @for (vetement of vetementsList; track $index) {
+  <mat-option [value]="vetement">
+   <p class="listSort">{{vetement}}</p>
+  </mat-option>
+  }
+  </mat-select>
+</mat-form-field>
+
+  <mat-form-field class="genre" >
+  <mat-label><p>Genre</p></mat-label>
+  <mat-select appSelected
+  (selectionChange)="getGenderSelectedUser($event)"
+  (openedChange)="genderIsOpen(panelGenderIsOpen)"
+  [disabled]="genreIsDisabled"
+  [(ngModel)]="reinitSelectGender"
+   multiple>
+  @for (genre of genreList; track $index) {
+  <mat-option [value]="genre">
+  <p class="listSort">{{genre}}</p>
+  </mat-option>
+  }
+  </mat-select>
+</mat-form-field>
 
 </div>
+</body>
+</html>
+
+
+
 

@@ -1,38 +1,21 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './public/home/home.component';
-import { ListOfCollectionsComponent } from './public/list-of-collections/list-of-collections.component';
-import { CollectionComponent } from './public/collection/collection.component';
+
 import { HeaderComponent } from './public/header/header.component';
 import { CarouselComponent } from './public/carousel/carousel.component';
-import { ProductComponent } from './public/product/product.component';
-
-
 
 export const routes: Routes = [
 
-    {path:'',redirectTo:'header',pathMatch:'full'},
+    {path:'',redirectTo:'home',pathMatch:'full'},
     {path:'header',component:HeaderComponent},
     {path:'home',
         title:'Boy-Coté.fr',
-        component: HomeComponent,
-    },
-    {path:'list',
-        title:'List Of Collections',
-        component: ListOfCollectionsComponent
-    },
-    {path:'collection',
-        title:'Collection',
-        component: CollectionComponent
+        component:HomeComponent,
     },
     {path:'carousel',
         title:'Carousel',
         component: CarouselComponent
-    },
-    {path:'product',
-        title:'Produit',
-        component: ProductComponent
     }
-
 
 ];
 

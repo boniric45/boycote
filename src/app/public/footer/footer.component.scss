@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.footer{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 5vh;
+    text-align: center;
+    margin-top: 25px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+
+.logo-instagram{
+    width: 70px;
+    height: 60px;
+    margin-left: 10px;
+    bottom:0;
+}
+
+.logo-tiktok{
+    width: 140px;
+    height: 60px;
+}
+
+.list{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    height: 130px;
+    font-size: 14px;
+    bottom: 0;
+    margin: 0;
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bold;
+    font-style:normal;
+}
+
+.item1, .item2, .item3{
+    margin-bottom: 20px;
+}
+
+.logo-language{
+    width: 140px;
+    height: 70px;
+}

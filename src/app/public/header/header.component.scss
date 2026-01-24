@@ -1,67 +1,128 @@
-h1{
-    text-align: center;
-    }
-    
-    .logoContainer{
-        bottom:3%;
-        position: fixed;
-        height: 55px;
-        :hover{
-            cursor: pointer;
-            }
-        }
+* {
+   margin: 0;
+   padding: 0;
+}
+
+.container{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   top: 0;
+   background-color: #fff;
+}
 
 
-    
-    .titleLogo,li{
-        list-style-type: none;
-    }
-    
-    .titleLogo{
-        margin-left:60px;
-        font-size: 22px;
-        text-decoration: underline;
-    }
-    
-    dialog {
-        background-color: rgba(18, 78, 240, 0.5);
-        color: white;
-        border-color: transparent;
-        overflow: hidden;
-        border-radius: 5px;
-        cursor: pointer;
-        box-shadow: 0 0 20px 8px #d0d0d0;
-        height: 200px;
-        width: 300px;
-     }
-    
-     .btnModalEnter{
-        text-align: center;
-        margin-right: 10px;
-     }
-    
-     .btnModalClose{
-        text-align: center;
-     }
-    
-     .popup{
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        margin-top: 100px;
-     }
-    
-     .popupTitle{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-size: 20px;
-        margin-bottom: 140px;
-     }
-    
-     .btnNav{
-        display:flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-     }
+.img_logo{
+   width: 200px;
+   margin: 0 -200px 10px 10px;
+}
+
+.selects{
+position: absolute;
+top: 10px;
+width: 250px;
+margin-left: 10px;
+}
+
+
+
+/************** Input ************/
+
+input{
+   height: 22px;
+   width: 280px;
+   margin-left: 25px;
+   border: 2px solid grey;
+}
+
+mat-icon{
+   position: absolute;
+   top:0;
+   border: 1px solid black;
+}
+
+   /************** Fin Input ************/
+
+/************** Select ************/
+
+.marques{
+   width: 280px;
+   margin-top: 5px;
+   margin-bottom: -1em;
+   font-family: "Roboto Mono", monospace; // Font Standard
+   font-optical-sizing: auto;
+   font-weight:bold;
+   font-style:normal;
+}  
+
+
+
+.vetements{
+   width: 250px;
+   margin-bottom: -1.25em;
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bold;
+    font-style:normal;
+}
+
+.genre{
+   margin-bottom: -1.25em;
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bold;
+    font-style:normal;
+}
+
+.taille{
+   width: 180px;
+   margin-bottom: -1.25em;
+}
+
+
+p{
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bold;
+    font-style:normal;  
+    font-size: 2.5vh;
+   // color: grey;
+}
+
+.listSort{
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bolder;
+    font-style:normal;  
+    font-size: 1.5vh;
+}
+
+
+
+   /************** Fin Select ************/
+
+   // .btn-panier{
+   //    position: absolute;
+   //    width: 90px;
+   //    height: 90px;
+   //    margin: 30px;
+   //    right: 0;
+   // }
+
+   .img-panier{
+      position:absolute;
+      top: 0;
+      right: 0;
+      width: 93px;
+      height: 100px;
+      padding: 2px 8px;
+   }
+
+
+
+// @media screen and (max-width:800px) {
+//    .img_logo{
+//       width: 100px;
+//    }
+// }
+

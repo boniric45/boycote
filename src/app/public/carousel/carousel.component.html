@@ -1,32 +1,51 @@
-<HTMl lang="en">
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+</head>
 
-<div class="scene">
+<body>
+      <div class="carousel_container">
 
-  <button class="prev" mat-fab extended (click)="prev()" [disabled]="disabled"><i class="fa fa-arrow-circle-left"></i></button>
-      
-     <div class="container_carousel" >
-      @for(collection of mapCollection.keys();track $index){
-          <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(collection)"
-          (click)="getIdCollection(collection)"
-          (click)="btnView()" 
-          >
-          {{collection}}
+        {{products}}
+
+          @for(product of products;track $index)
+          {
+          <div class="btnLeft">
+            <app-component-left (outputLeft)="startCarousel($event)"></app-component-left>
           </div>
+
+         <!-- Fait un champ de recherche sur les marques -->
+          <div #carousel__cell class="carousel__cell" 
+          [ngStyle]="getStyle(product.idImage)">
+          <img class="imgCard" src="/pictures/{{product.idImage}}.png">
+          <div class="card"> {{product.name}} </div>
+          </div>
+      
+        <div class="btnRight" >
+          <app-component-right 
+          (outputRight)="startCarousel($event)" 
+          />
+        </div>
         }
+
+    <div class="nameCollections" >
+      <button class="view" mat-fab extended 
+        (click)="btnView(nameProduct)">ADD TO CARD </button>
+
+    <div class="titleProduct">
+     Produit: {{nameProduct}} - Marque: {{marqueProduct}}
+    </div>
       </div>
-
-    <button class="next" mat-fab extended (click)="next()" [disabled]="disabled" disabled="false"><i class="fa fa-arrow-circle-right"></i></button>     
-</div>
+     </div>
 
 
-<div class="nameCollections">{{txtCollection}}</div>
-
-<div class="btnView">
-  <button  class="view" mat-fab extended (click)="btnView()" ><span class="material-icons notranslate" >visibility</span>View</button>
-</div>
-
-</HTMl>
+</body> 
+</html>
 
 

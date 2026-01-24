@@ -1,0 +1,256 @@
+*{
+   margin: 0;
+   padding: 0;
+   width: 100%;
+}
+
+.carousel-home{
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+   width: 100%;
+   height: 100%;
+}
+
+.container-carousel{
+   position: absolute;
+   top: 100px;
+	left: 43%;
+	transform: translateX(-50%);
+}
+
+.container{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   top: 0;
+   background-color: #fff;
+}
+
+.img_logo{
+   position: absolute;
+   width: 200px;
+   top: 0;
+   left: 50%;
+}
+
+.selects{
+position: absolute;
+top: 0;
+width: 250px;
+margin-left: 10px;
+}
+
+/************** Input ************/
+input{
+   top: 0;
+   height: 30px;
+   width: 275px;
+   font-size: 20px;
+   border: 2px solid grey;
+}
+
+.btnSearch{
+   position: absolute;
+   top: 0;
+   left:278px;
+   width: 34px;
+   height: 34px;
+   background-color: #fff;
+   cursor: pointer;
+}
+
+.btnSelectSearch{
+width: 150px;
+height: 50px;
+margin-top: 5px;
+box-shadow: rgb(38, 57, 77) 8px 10px 10px -5px;
+background-color: rgb(179, 178, 178);
+font-size:20px;
+font-family: "Roboto Mono", monospace; // Font Standard
+font-optical-sizing: auto;
+font-weight:bold;
+font-style:normal;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.btnSelectSearch:hover{
+   scale:0.9;
+   margin-top:2px;
+}
+
+.imgSearch{
+  width: 30px;
+  object-fit: cover; /* Rogne l'image mais adapte l'image, contain ne rogne pas*/
+
+  object-position: center; /* se déplace dans l'image*/
+  margin: 0;
+}
+
+mat-icon{
+   position: absolute;
+   top:19px;
+   left:278px;
+   width: 30px;
+   height: 30px;
+   font-size: 32px;
+   border: 2px solid black;
+}
+   /************** Fin Input ************/
+
+/************** Select ************/
+
+.marques {
+   width: 280px;
+   margin-top: 5px;
+   margin-bottom: -1em;
+   font-family: "Roboto Mono", monospace; // Font Standard
+   font-optical-sizing: auto;
+   font-weight: bold;
+   font-style: normal;
+
+}
+
+.vetements {
+   width: 250px;
+   margin-bottom: -1em;
+   font-family: "Roboto Mono", monospace; // Font Standard
+   font-optical-sizing: auto;
+   font-weight: bold;
+   font-style: normal;
+}
+
+.genre{
+    margin-bottom: -1.25em;
+    width: 200px;
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bold;
+    font-style:normal;
+}
+
+p{
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bold;
+    font-style:normal;  
+    font-size: 2.5vh;
+}
+
+.listSort{
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-weight:bolder;
+    font-style:normal;  
+    font-size: 1.5vh;
+}
+
+   /************** Fin Select ************/
+.img-panier {
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 93px;
+   height: 100px;
+   padding: 2px 8px;
+}
+
+.btnLeft {
+   position: absolute;
+   width: auto;
+   top: 200px;
+   left: 25%;
+}
+
+.btnRight {
+   position: absolute;
+   top: 200px;
+   width: auto;
+   left: 87%;
+}
+
+.carousel__cell {
+   margin-left: 48%;
+   padding-left: 1.2%;
+   padding-right: 1%;
+   width: 30%;
+   transition: transform 1s, opacity 1s, left 1s;
+   cursor: pointer;
+}
+
+  .view {
+     height: 30px;
+     color: rgb(5, 99, 146);
+     border: 2px solid rgb(5, 99, 146);
+     background-color: rgba(0, 213, 255, 0.972);
+     font-family: "Roboto Mono", monospace;
+     font-optical-sizing: auto;
+     font-size: 1.5vh;
+     font-weight: bold;
+     font-style: normal;
+     margin-bottom: 30px;
+  }
+
+  .card{ 
+   position: absolute;
+   top: 150px;
+   //font-family: "Roboto Mono", monospace; // Font Standard
+   font-optical-sizing: auto;
+   font-weight:bold;
+   font-style:bold;
+   font-size: 180px;
+   text-align: center;
+   color: crimson;
+  }
+
+  .titleProduct{
+   position: absolute;
+   text-align: center;
+   bottom: 24px;
+   font-family: "Roboto Mono", monospace; // Font Standard
+   font-optical-sizing: auto;
+   font-weight:bold;
+   font-style:normal;
+   font-size: 18px;
+  }
+
+  .imgCard{
+    height: 70vh;
+  //  border: 2px solid black;
+    background-repeat: no-repeat;
+    background-size:cover; 
+    object-fit: cover; /* Rogne l'image mais adapte l'image, contain ne rogne pas*/
+    background-position: center;
+    object-position: center; /* se déplace dans l'image*/  
+  }
+
+  .footRead{
+   position: absolute;
+   top: 10px;
+   left: 90px;
+   
+   text-align: center;
+   font-family: "Roboto Mono", monospace; // Font Standard
+   font-weight:bold;
+   font-style:normal;
+   font-size: 28px;
+   text-align: center;
+  }
+
+.footer{
+   position: absolute;
+   bottom: -23px;
+   position: fixed;
+}
+
+.btnDisabled{
+   display: none;
+}
+
+.pb{
+position: absolute;
+top: 37%;
+left: 51%;
+}

@@ -1,0 +1,107 @@
+* {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+
+body{
+   height: 70vh;
+   display: flex;
+   justify-content: space-between;
+//    align-items: center;
+ //  border: 3px solid rgb(9, 9, 9);
+   margin: 130px 100px 0 300px;
+}
+
+.container{
+    width: 100%;
+}
+
+.btnLeft{
+    position: absolute;
+    top: 350px;
+    left: 420px;
+}
+
+.btnRight{
+    position: absolute;
+    top: 350px;
+    right: 0;
+}
+
+.carousel__cell {
+    display: flex;
+    justify-content: center;
+    margin-left: 840px;
+    transition: transform 1s, opacity 1s,left 1s;
+    cursor: pointer;
+}
+
+  .view{
+    height: 30px;
+    color:  rgb(5, 99, 146);
+    border: 2px solid rgb(5, 99, 146);
+    background-color: rgba(0, 213, 255, 0.972);
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-size: 1.5vh;
+    font-weight:bold;
+    font-style:normal;
+    margin-bottom: 30px;
+  }
+
+  .card{ 
+   position: absolute;
+   top: 20px;
+   font-family: "Roboto Mono", monospace; // Font Standard
+   font-optical-sizing: auto;
+   font-weight:bold;
+   font-style:normal;
+   font-size: 20px;
+  }
+
+  .titleProduct{
+   position: absolute;
+   text-align: center;
+   bottom: 24px;
+   font-family: "Roboto Mono", monospace; // Font Standard
+   font-optical-sizing: auto;
+   font-weight:bold;
+   font-style:normal;
+   font-size: 18px;
+  }
+
+  .imgCard{
+    height: 70vh;
+    border: 2px solid black;
+    background-repeat: no-repeat;
+    background-size:cover; 
+    object-fit: cover; /* Rogne l'image mais adapte l'image, contain ne rogne pas*/
+    background-position: center;
+    object-position: center; /* se déplace dans l'image*/  
+  }
+
+
+  
+//   .carousel {
+//     transform: translateZ(-288px) rotateY(-160deg);
+//   }
+
+// @media screen and (max-width:1024px){
+//   .container_carousel{
+//   position: relative;
+//   scale: 1; // agrandi le carousel
+//   // display: none;
+//   }
+// }
+
+// @media screen and (max-width:800px){
+
+//   .nameCollections{
+//     font-size: 3vh;
+//     font-style: oblique;
+//     font-weight: 900;
+//     margin-top: 50px;
+//   }
+// }
+

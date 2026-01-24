@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="carousel-home">
+        
+        <div class="container">
+            <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+            <div class="btn-panier">
+                <img src="/pictures/shopping.png" alt="panier" class="img-panier">
+            </div>
+
+        </div>
+        
+        <div class="selects">
+            
+            <form action="">
+                <div class="search">
+
+                    <button class="btnSearch">
+                     <img class="imgSearch" src="pictures\search.png" alt="Search">
+                    </button>
+
+            <!-- <button matMiniFab aria-label="icon button with a menu icon">
+                <mat-icon>menu</mat-icon>
+            </button> -->
+                    <input type="text" [(ngModel)]="searchQuery" [ngModelOptions]="{standalone: true}" placeholder=" Recherche par marques" />
+                </div>
+            </form>
+            
+            <mat-form-field class="marques">
+                <mat-label>
+                    <p>Marques</p>
+                </mat-label>
+                <!-- marques select -->
+                <mat-select (selectionChange)="getMarquesSelectedUser($event)"
+                    (openedChange)="marquesIsOpen(panelMarquesIsOpen)" [disabled]="marqueIsDisabled"
+                    [(ngModel)]="reinitSelectMarque" multiple>
+                    @for (marque of marques; track marque.id) {
+                    <mat-option [value]="marque.name">
+                        <p class="listSort">{{marque.name}}</p>
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="vetements">
+                <mat-label>
+                    <p>Vêtements</p>
+                </mat-label>
+                <mat-select (selectionChange)="getTypeSelectedUser($event)"
+                    (openedChange)="vetementIsOpen(panelVetementIsOpen)" [disabled]="vetementIsDisabled"
+                    [(ngModel)]="reinitSelectVetement" multiple>
+                    @for (vetement of vetementsList; track $index) {
+                    <mat-option [value]="vetement">
+                        <p class="listSort">{{vetement}}</p>
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="genre">
+                <mat-label>
+                    <p>Genre</p>
+                </mat-label>
+                <mat-select (selectionChange)="getGenderSelectedUser($event)"
+                    (openedChange)="genderIsOpen(panelGenderIsOpen)" [disabled]="genreIsDisabled"
+                    [(ngModel)]="reinitSelectGender" multiple>
+                    @for (genre of genreList; track $index) {
+                    <mat-option [value]="genre">
+                        <p class="listSort">{{genre}}</p>
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+                    <button class="btnSelectSearch" (click)="submitButtonSelect()">
+                        Valider
+                    </button>
+
+        </div>
+        
+        <div class="pb">
+            <app-progressbar [isLoading]="loading"></app-progressbar>
+        </div>
+
+    <div class="container-carousel" >
+         
+        <!-- @if(selectedIndexImage == 0){ -->
+        <!-- <div class="btnLeft" 
+        
+        [ngClass]="buttonLeftIsDisabled"
+            ><app-component-left 
+            (outputLeft)="startCarousel($event)" 
+            /></div>
+        } 
+        @else {
+             <div class="btnLeft" 
+            ><app-component-left 
+            (outputLeft)="startCarousel($event)" 
+            /></div>
+
+        } -->
+
+            <div class="btnLeft"><app-component-left 
+            (outputLeft)="startCarousel($event)" 
+            /></div>
+
+
+    
+        
+    @if(loadingCarousel){
+    @for(product of searchWithQuery();track product.idImage; let idx = $index)
+        {
+
+        <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(product.idImage)">
+        
+            <img class="imgCard" src="{{product.pathPictureOne}}">
+        
+            <div class="card">
+                {{product.idImage}} <br>
+                 <!-- {{product.name}} - {{product.marque}} -->
+            </div>
+        </div>
+        } 
+        }
+              <div class="btnRight"><app-component-right 
+            (outputRight)="startCarousel($event)"
+            /></div>
+     
+</div>
+    </div>
+
+    <div class="footer">
+        @if(loadingCarousel){
+            <div class="footRead">
+              {{productView}}
+            </div>
+        }
+
+        <app-footer></app-footer>
+           @for(pro of searchWithQuery();track pro.idImage){
+        {{pro.name}}
+       }
+    </div>
+
+
+</body>
+
+</html>
