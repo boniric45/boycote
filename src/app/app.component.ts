@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CarouselComponent } from "./public/carousel/carousel.component";
-import { HomeComponent } from "./public/home/home.component";
-import { ConstructionComponent } from "./public/construction/construction.component";
+
 
 
 @Component({

@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './public/home/home.component';
 
 import { HeaderComponent } from './public/header/header.component';
-import { CarouselComponent } from './public/carousel/carousel.component';
+import { BoycoteComponent } from './public/boycote/boycote.component';
+
 
 export const routes: Routes = [
 
@@ -14,7 +15,7 @@ export const routes: Routes = [
     },
     {path:'carousel',
         title:'Carousel',
-        component: CarouselComponent
+        component: BoycoteComponent
     }
 
 ];

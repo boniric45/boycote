@@ -4,35 +4,41 @@
 <head>
     <meta charset="UTF-8">
 </head>
-
 <body>
-    <div class="carousel-home">
-        
-        <div class="container">
-            <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
-            <div class="btn-panier">
-                <img src="/pictures/shopping.png" alt="panier" class="img-panier">
-            </div>
 
-        </div>
-        
+    <div class="carousel-home">     
         <div class="selects">
-            
             <form action="">
                 <div class="search">
-
-                    <button class="btnSearch">
-                     <img class="imgSearch" src="pictures\search.png" alt="Search">
-                    </button>
-
-            <!-- <button matMiniFab aria-label="icon button with a menu icon">
+                <!-- <button matMiniFab aria-label="icon button with a menu icon">
                 <mat-icon>menu</mat-icon>
-            </button> -->
-                    <input type="text" [(ngModel)]="searchQuery" [ngModelOptions]="{standalone: true}" placeholder=" Recherche par marques" />
+                </button> -->
+                    
+                <button class="btnSearch" 
+                (click)="submitSearchByMarques()"
+   
+                [ngStyle]="{'display': displayInput}">
+                
+                <img class="imgSearch" src="pictures\search.png" alt="Search">
+                </button>
+        
+                        <input type="text" 
+                        [ngStyle]="{'display':displayInput}"
+                        [(ngModel)]="searchQuery" 
+                        [ngModelOptions]="{standalone: true}"
+                    
+                        placeholder="Recherche par marques" 
+                        (click)="inputClick()" />
+
+                <button class="btnF5" 
+                (click)="refreshList()">
+                <img class="imgSearchRefresh" src="pictures\f5.png" alt="Refresh">
+                </button>        
+
                 </div>
             </form>
-            
-            <mat-form-field class="marques">
+
+            <mat-form-field class="marques" [ngStyle]="{'display':displaySelect}">
                 <mat-label>
                     <p>Marques</p>
                 </mat-label>
@@ -48,7 +54,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="vetements">
+            <mat-form-field class="vetements" [ngStyle]="{'display':displaySelect}">
                 <mat-label>
                     <p>Vêtements</p>
                 </mat-label>
@@ -63,7 +69,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="genre">
+            <mat-form-field class="genre" [ngStyle]="{'display':displaySelect}">
                 <mat-label>
                     <p>Genre</p>
                 </mat-label>
@@ -78,74 +84,111 @@
                 </mat-select>
             </mat-form-field>
 
-                    <button class="btnSelectSearch" (click)="submitButtonSelect()">
-                        Valider
-                    </button>
-
+            <button class="btnSelectSearch" 
+            (click)="submitButtonSelect()" 
+            [ngStyle]="{'display':displaySelect}">
+                Valider
+            </button>
+            <br>
+            <br>      
+            
+            
         </div>
-        
+
+        <div class="container">
+            <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+
+            <div class="btn-panier">
+                <img src="/pictures/shopping.png" alt="panier" class="img-panier">
+            </div>
+        </div>
+
+    @if(carouselStandard) 
+    {
+        <div class="pb">
+            <app-progressbar [isLoading]="loading"></app-progressbar>
+        </div>
+        <div class="container-carousel">
+            <div class="btnLeft"><app-component-left (outputLeft)="startCarouselStandard($event)" /></div>
+            @if(loadingCarousel){
+            @for(product of productCarousel;track product.idImage; let idx = $index)
+            {
+            <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(product.idImage)">
+
+                <img class="imgCard" src="{{product.pathPictureOne}}">
+
+                <div class="card">
+                    {{product.idImage}}
+                </div>
+            </div>
+            }
+            }
+            <div class="btnRight"><app-component-right (outputRight)="startCarouselStandard($event)" /></div>
+            </div>
+    }
+
+    @if(carouselSearchList) 
+    {
+        <div class="pb">
+            <app-progressbar [isLoading]="loading"></app-progressbar>
+        </div>
+        <div class="container-carousel">
+            <div class="btnLeft"><app-component-left (outputLeft)="startCarouselInput($event)" /></div>
+             @if(loadingCarousel){
+            @for(product of visibleItems;track $index; let idx = $index)
+            {
+            <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(idx)">
+            
+                <img class="imgCard" src="{{product.pathPictureOne}}">
+            
+                <div class="card"> {{product.idImage}} </div>
+            </div>
+            }
+            }
+
+
+         
+            <div class="btnRight"><app-component-right (outputRight)="startCarouselInput($event)" /></div>
+            </div>
+    }
+
+    @if(carouselSelectList) 
+    {
+
         <div class="pb">
             <app-progressbar [isLoading]="loading"></app-progressbar>
         </div>
 
-    <div class="container-carousel" >
-         
-        <!-- @if(selectedIndexImage == 0){ -->
-        <!-- <div class="btnLeft" 
-        
-        [ngClass]="buttonLeftIsDisabled"
-            ><app-component-left 
-            (outputLeft)="startCarousel($event)" 
-            /></div>
-        } 
-        @else {
-             <div class="btnLeft" 
-            ><app-component-left 
-            (outputLeft)="startCarousel($event)" 
-            /></div>
+        <div class="container-carousel">
 
-        } -->
+            <div class="btnLeft"><app-component-left (outputLeft)="startCarouselSort($event)" /></div>
 
-            <div class="btnLeft"><app-component-left 
-            (outputLeft)="startCarousel($event)" 
-            /></div>
+            @if(loadingCarousel){
+            @for(product of visibleItemsSort;track $index; let idx = $index)
+            {
+            <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(idx)">
 
+                <img class="imgCard" src="{{product.pathPictureOne}}">
 
-    
-        
-    @if(loadingCarousel){
-    @for(product of searchWithQuery();track product.idImage; let idx = $index)
-        {
-
-        <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(product.idImage)">
-        
-            <img class="imgCard" src="{{product.pathPictureOne}}">
-        
-            <div class="card">
-                {{product.idImage}} <br>
-                 <!-- {{product.name}} - {{product.marque}} -->
+                <div class="card">
+                    {{product.idImage}}
+                </div>
             </div>
-        </div>
-        } 
-        }
-              <div class="btnRight"><app-component-right 
-            (outputRight)="startCarousel($event)"
-            /></div>
-     
-</div>
+            }
+            }
+            <div class="btnRight"><app-component-right (outputRight)="startCarouselSort($event)" /></div>
+            </div>
+    }
     </div>
+
 
     <div class="footer">
         @if(loadingCarousel){
-            <div class="footRead">
-              {{productView}}
-            </div>
+        <div class="footRead">
+            {{productView}}
+        </div>
         }
-
         <app-footer></app-footer>
-           @for(pro of searchWithQuery();track pro.idImage){
-        {{pro.name}}
-       }
     </div>
 
 

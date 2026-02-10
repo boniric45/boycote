@@ -44,19 +44,30 @@ margin-left: 10px;
 /************** Input ************/
 input{
    top: 0;
+   margin-left: 37px;
    height: 30px;
    width: 275px;
    font-size: 20px;
+   text-align: left;
+   text-indent: 5px;
    border: 2px solid grey;
 }
 
 .btnSearch{
    position: absolute;
    top: 0;
-   left:278px;
-   width: 34px;
+   left: 0;
+   width: 38px;
    height: 34px;
-   background-color: #fff;
+   cursor: pointer;
+}
+
+.btnF5{
+   position: absolute;
+   top: 0;
+   left: 316px;
+   width: 38px;
+   height: 34px;
    cursor: pointer;
 }
 
@@ -84,9 +95,15 @@ cursor: pointer;
 .imgSearch{
   width: 30px;
   object-fit: cover; /* Rogne l'image mais adapte l'image, contain ne rogne pas*/
-
   object-position: center; /* se déplace dans l'image*/
   margin: 0;
+}
+
+.imgSearchRefresh{
+  width: 37px;
+  margin: -3px;
+  object-fit: cover; /* Rogne l'image mais adapte l'image, contain ne rogne pas*/
+  object-position: center; /* se déplace dans l'image*/
 }
 
 mat-icon{
@@ -98,7 +115,7 @@ mat-icon{
    font-size: 32px;
    border: 2px solid black;
 }
-   /************** Fin Input ************/
+/************** Fin Input ************/
 
 /************** Select ************/
 
@@ -110,7 +127,6 @@ mat-icon{
    font-optical-sizing: auto;
    font-weight: bold;
    font-style: normal;
-
 }
 
 .vetements {
@@ -179,6 +195,10 @@ p{
    transition: transform 1s, opacity 1s, left 1s;
    cursor: pointer;
 }
+
+// .carousel__cell:nth-child(-n+9) { 
+//    opacity: 1; 
+// }
 
   .view {
      height: 30px;
