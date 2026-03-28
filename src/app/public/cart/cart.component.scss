@@ -1,0 +1,40 @@
+.cart-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.cart-item {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.cart-item img {
+  width: 120px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.info h3 {
+  margin: 0;
+}
+
+button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cart-total {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.pay {
+  background: #2ecc71;
+}

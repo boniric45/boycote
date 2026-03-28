@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+.container {
+    // border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+}
+
+
+// mat-dialog-actions {
+//     justify-content: left;
+//     margin-left: 5px;
+// }
+
+
+.btnClose{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 34px;
+}
+
+.btnClose:hover{
+    cursor: pointer;
+    width: 40px;
+}
+
+.imgProduct {
+    z-index: 0;
+    width: 100%;
+    object-fit: cover;
+    /* Rogne l'image mais adapte l'image, contain ne rogne pas*/
+    background-position: center;
+    object-position: center;
+    /* se déplace dans l'image*/
+}
+

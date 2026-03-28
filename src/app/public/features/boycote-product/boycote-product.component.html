@@ -1,0 +1,92 @@
+
+
+
+
+<div class="parent">
+
+    <div class="div1">
+
+            <div class="container">
+
+                <img class="imgBack" src="pictures\back.png" [routerLink]="['/home']" alt="Back">
+
+                <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+                
+                <div class="cart-wrapper">
+
+                    <img class="btn-panier" src="/pictures/shopping.png" alt="panier" class="img-panier" >
+                    
+                        @if(countPanier > 0){
+                            <span class="cart-badge">
+                                {{ countPanier }}
+                            </span>
+                        }
+                </div>
+                
+            </div>
+
+
+    </div>
+
+    <div class="div2">
+
+            <div class="container-carousel">
+        
+                <div class="btnLeft">
+                    <app-component-left (outputLeft)="startCarouselStandard($event)" />
+                </div>
+                
+                @if(loadingCarousel){
+                  @for(product of listResult;track $index; let idx = $index)
+                    {
+                    <div class="cont">
+                        <div #carousel__cell class="carousel__cell" [ngStyle]="getStyle(idx)">
+                            <img class="imgCard" src="{{product.pathpictureone}}" (click)="readViewProduct(product)">
+                        </div>
+                    </div>
+                    }
+                }
+            
+            <div class="btnRight">
+                <app-component-right (outputRight)="startCarouselStandard($event)" />
+            </div>
+        </div>
+
+        <div class="view">
+            <app-product-card></app-product-card>
+        </div>
+
+
+    </div>
+    
+    <div class="div3">     
+      
+        <!-- <div class="btnmac">    
+            <button class="primary" [style.display]="isDisplay" 
+            (click)="addPanier()"
+            (click)="checkStock(stock)"
+            ><span>ADD TO CARD</span></button>
+        </div>
+        
+        <div class="description" [style]="btnMacIsDisabled" >
+            Marque: {{product.marque}} - {{product.name}} à {{product.ttc}} €
+            <br>
+            Description:  
+             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet eligendi 
+            {{product.description}}
+        </div> -->
+        
+
+<!-- <app-out-of-stock-modal
+  *ngIf="modalService.modalState$ | async"
+  (close)="modalService.close()"
+  (submitEmail)="onEmailSubmit($event)"
+></app-out-of-stock-modal> -->
+        
+
+
+        <!-- <app-footer></app-footer> -->
+    </div>
+    
+
+</div>

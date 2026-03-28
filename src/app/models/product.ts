@@ -1,20 +1,37 @@
 export interface Product {
     id:number;
-    idImage:number;
-    codeEan:string;
+    sku:string;
     name:string;
     description:string;
+    conditions:string;
     marque:string;
     type:string;
     gender:string;
     size:string;
-    pathPictureOne:string;
-    pathPictureTwo:string;
-    pathPictureThree:string;
-    quantity:number;
-    ht:number;
-    tva:number;
-    ttc:number;
+    mesure:string;
+    prix:number;
     stock:number;
+    pathpictureone:string;
+    pathpicturetwo:string;
+    pathpicturethree:string;
+    pathpicturefour:string;
+	pathpicturefive:string;
+    pathpicturesix:string;
+    pathpictureseven:string;
+    pathpictureeight:string;
+    pathpicturenine:string;
+    pathpictureten:string;
+    pictureCabine:string;
+    productLink:string;
+    titleProductCabine:string;
+    zindexcabine:string;
+    xcabine:number;
+    ycabine:number;
+    widthCabine:number;
+    heightCabine:number;
 }
 
+export interface AddProductResponse {
+  success: boolean;
+  id: number;
+}

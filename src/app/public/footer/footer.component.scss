@@ -3,49 +3,64 @@
     padding: 0;
 }
 
-.footer{
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 5vh;
-    text-align: center;
-    margin-top: 25px;
-    font-weight: 600;
+.container-footer{
+    width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: end;
+    justify-content: space-around;
 }
 
 
-.logo-instagram{
-    width: 70px;
-    height: 60px;
-    margin-left: 10px;
-    bottom:0;
-}
-
-.logo-tiktok{
-    width: 140px;
-    height: 60px;
-}
-
-.list{
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    height: 130px;
-    font-size: 14px;
+.container{
+    position: fixed;
     bottom: 0;
-    margin: 0;
-    font-family: "Roboto Mono", monospace; // Font Standard
-    font-optical-sizing: auto;
-    font-weight:bold;
-    font-style:normal;
 }
 
-.item1, .item2, .item3{
+.container-contact{
+    padding: 0;
+    margin: 0;
+}
+
+.contact,
+.cabine,
+.tiktok,
+.instagram,
+.mentions,
+.annulation{
+    transform: scale(0.4);
+    transform-origin: top center;
+    height: 40px; /* ajuste selon la taille souhaitée */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label-contact,
+.label-cabine,
+.label-tiktok,
+.label-instagram,
+.label-mentions,
+.label-annulation {
+    margin: 10px;
+    text-align: center;
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-size: 18px;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
     margin-bottom: 20px;
 }
 
-.logo-language{
-    width: 140px;
-    height: 70px;
+p{
+    font-style: oblique;
+    font-weight: bold;
+    bottom: 0;
+    position: fixed;
 }
+
+

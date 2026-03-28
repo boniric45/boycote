@@ -1,0 +1,302 @@
+
+.container-market{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    font-size: 16px;
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+}
+
+.panier-container {
+  width: 100%;
+  max-width: 380px;
+  background: #e5e5e5;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.9),
+    inset 0 -2px 4px rgba(0,0,0,0.15),
+    0 4px 10px rgba(0,0,0,0.15);
+  border: 1px solid #c8c8c8;
+}
+
+.panier-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centre le texte */
+  position: relative;      /* permet de placer le bouton */
+  padding: 10px 14px;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: oblique;
+}
+
+/* Bouton à droite sans influencer le centrage */
+.btnClose {
+  position: absolute;
+  width: 44px;
+  left: 2px;
+  top: 55%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+
+.panier-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.item-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  gap: 12px;
+
+  background: #f0f0f0;
+  padding: 14px 18px;
+  margin-right: 40px;
+  border-radius: 12px;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.8),
+    inset 0 -1px 2px rgba(0,0,0,0.1),
+    0 3px 6px rgba(0,0,0,0.15);
+
+  border: 1px solid #d0d0d0;
+  width: 100%;
+  
+ // width: fit-content;   /* ← largeur auto selon contenu */
+ // margin: 0 auto;       /* ← CENTRAGE DU FOND */
+}
+
+
+.item-img {
+  width: 70px;      /* ← augmente la largeur */
+  height: 70px;      /* ← garde la hauteur */
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.9),
+    inset 0 -2px 3px rgba(0,0,0,0.15),
+    0 2px 4px rgba(0,0,0,0.2);
+}
+
+.item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.item-name {
+  font-weight: 600;
+}
+
+.item-price {
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.qte-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.qte-controls button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #8f8f8f;
+  background: linear-gradient(to bottom, #f7f7f7, #dcdcdc);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.9);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 0;
+}
+
+
+.delete-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  /* Rouge glacé */
+  background: radial-gradient(circle at 30% 30%, #ff7b7b, #d62828);
+
+  /* Contour noir */
+  border: 1px solid #4d4b4b;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Effet 3D + glacé */
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(0,0,0,0.25),
+    0 2px 4px rgba(0,0,0,0.2);
+
+  cursor: pointer;
+  margin-left: auto;
+  padding: 0;
+  position: relative;
+}
+
+/* Reflet glacé */
+.delete-btn::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 70%;
+  height: 40%;
+  background: rgba(255,255,255,0.45);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.delete-icon {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.delete-icon::before,
+.delete-icon::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 12px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+}
+
+.delete-icon::before {
+  transform: rotate(45deg);
+}
+
+.delete-icon::after {
+  transform: rotate(-45deg);
+}
+
+.delete-btn:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 3px 5px rgba(0,0,0,0.35),
+    inset 0 -1px 2px rgba(255,255,255,0.4);
+  background: radial-gradient(circle at 30% 30%, #d95353, #a81c1c);
+}
+
+.panier-ligne,
+.panier-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: 8px;
+  background: #f2f2f2;
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.9),
+    inset 0 -1px 2px rgba(0,0,0,0.1);
+}
+
+.promo-block{
+    display: flex;
+    justify-content: center;
+
+}
+.promo-block input {
+  flex: 1;
+  padding: 8px;
+  margin-right: 5px;
+  border-radius: 8px;
+  border: 1px solid #bfbfbf;
+  background: #f7f7f7;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.9),
+    inset 0 -2px 3px rgba(0,0,0,0.1);
+}
+
+.promo-block button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #8f8f8f;
+  background: linear-gradient(to bottom, #f7f7f7, #dcdcdc);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.9),
+    inset 0 -1px 2px rgba(0,0,0,0.1),
+    0 2px 4px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+
+.commander-btn {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 10px;
+  border: 1px solid #8f8f8f;
+  background: linear-gradient(to bottom, #fafafa, #dcdcdc);
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.9),
+    inset 0 -2px 3px rgba(0,0,0,0.15),
+    0 3px 6px rgba(0,0,0,0.2);
+  font-weight: bold;
+  color: #000;
+  margin-top: 16px;
+}
+
+button:active,
+.delete-btn:active,
+.promo-block button:active,
+.commander-btn:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 2px 4px rgba(0,0,0,0.25),
+    inset 0 -1px 2px rgba(255,255,255,0.6);
+  background: linear-gradient(to bottom, #dcdcdc, #f0f0f0);
+}
+
+
+/* 📱 Responsive mobile */
+@media (max-width: 480px) {
+  .item-row {
+    gap: 10px;
+  }
+
+  .item-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .item-price {
+    font-size: 15px;
+  }
+
+  .panier-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  padding: 10px 10px;
+  border-top: 1px solid #ccc;
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+}
+
+
+

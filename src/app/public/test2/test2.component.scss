@@ -1,0 +1,118 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif;
+}
+
+.scene {
+  position: relative;
+  width: 340px;
+  height: 260px;
+  overflow: hidden;
+}
+
+.card {
+  position: absolute;
+  width: 120px; height: 175px;
+  top: 50%; left: 50%;
+  margin-top: -87px; margin-left: -60px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #d8d8d8;
+
+  img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    pointer-events: none;
+  }
+}
+
+// Numéro visible en développement — à supprimer en production
+.card-num {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 26px; font-weight: 900;
+  color: rgba(0,0,0,0.22);
+  font-family: monospace;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sold-overlay {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+
+  &::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 16px,
+      rgba(200,0,0,0.52) 16px, rgba(200,0,0,0.52) 19px
+    );
+  }
+}
+
+.sold-label {
+  position: absolute; top: 8px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.82); border-radius: 20px;
+  padding: 2px 10px; font-size: 7px; font-weight: 800;
+  color: #fff; letter-spacing: 2px;
+  text-transform: uppercase; white-space: nowrap;
+}
+
+.infos {
+  text-align: center;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+}
+
+.nom { font-size: 14px; font-weight: 800; color: #111; }
+
+.btn {
+  position: relative; height: 27px; padding: 0 20px;
+  border-radius: 14px; cursor: pointer; overflow: hidden;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
+  color: #fff; font-family: inherit;
+
+  &::before {
+    content: ''; position: absolute; inset: 0 0 50% 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 14px 14px 50% 50%; pointer-events: none;
+  }
+  span { position: relative; z-index: 1; }
+}
+
+.btn-cart {
+  border: 1px solid #2255bb;
+  background: linear-gradient(180deg, #1a44aa 0%, #3377dd 18%, #77bbff 48%, #44aaff 52%, #1155cc 82%, #0a3399 100%);
+}
+
+.btn-sourcing {
+  border: 1px solid #888;
+  background: linear-gradient(180deg, #aaa 0%, #ccc 18%, #e8e8e8 48%, #bbb 52%, #999 100%);
+  color: #333;
+}
+
+.navs { display: flex; gap: 14px; }
+
+.nav {
+  width: 46px; height: 46px; border-radius: 10px;
+  border: 1px solid #9a9a9a; cursor: pointer;
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #d4d4d4 0%, #eaeaea 10%, #f6f6f6 48%, #dcdcdc 52%, #c6c6c6 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), 0 2px 5px rgba(0,0,0,0.22);
+  display: flex; align-items: center; justify-content: center;
+
+  &::before {
+    content: ''; position: absolute; inset: 0 0 50% 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+  }
+  &:active { filter: brightness(0.88); transform: translateY(1px); }
+  svg { position: relative; z-index: 1; }
+}

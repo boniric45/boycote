@@ -1,0 +1,137 @@
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <a class="btn-boutique" routerLink="/boutique">
+    <span>&#9664; Shop</span>
+  </a>
+  <div class="logo">
+    <span class="logo-top">boy</span>
+    <span class="logo-bottom">coté</span>
+  </div>
+  <button class="btn-panier">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+      <path d="M3 6 L21 6"/>
+      <path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+  </button>
+</div>
+
+<div class="page-body">
+  <div class="cabine-box">
+
+    <div class="genre-bar">
+      <select class="genre-select" [value]="gender()" (change)="onGenderChange($event)">
+        <option value="homme">MEN</option>
+        <option value="femme">WOMEN</option>
+      </select>
+    </div>
+
+    <div class="mannequin-row">
+
+      <!-- Flèches GAUCHE -->
+      <div class="arrows-col">
+        <button class="arrow-btn" (click)="prev('chapeau')">
+          <svg viewBox="0 0 24 24"><polygon points="16,3 8,12 16,21"/></svg>
+        </button>
+        <button class="arrow-btn" (click)="prev('haut')">
+          <svg viewBox="0 0 24 24"><polygon points="16,3 8,12 16,21"/></svg>
+        </button>
+        <button class="arrow-btn" (click)="prev('bas')">
+          <svg viewBox="0 0 24 24"><polygon points="16,3 8,12 16,21"/></svg>
+        </button>
+        <button class="arrow-btn" (click)="prev('chaussures')">
+          <svg viewBox="0 0 24 24"><polygon points="16,3 8,12 16,21"/></svg>
+        </button>
+      </div>
+
+      <!-- ══ MANNEQUIN CENTRAL ══ -->
+      <div class="mannequin-center">
+
+        <!-- ── MANNEQUIN PHOTO (PNG réel) ── -->
+        <img class="mannequin-img mannequin-img--homme" [class.hidden]="isFemme()"
+             src="/pictures/mannequin-homme.webp"
+             alt="mannequin homme"/>
+        <img class="mannequin-img mannequin-img--femme" [class.hidden]="isHomme()"
+             src="/pictures/mannequin-femme.webp"
+             alt="mannequin femme"/>
+
+        <!-- ── CALQUES VÊTEMENTS ── -->
+        <!-- Chaque catégorie supporte deux modes :
+             - Mode SVG (test) : shape string rendu dans un <svg>
+             - Mode image (prod) : PNG détouré positionné en absolu avec imgTop/imgLeft/imgWidth -->
+
+        @for (cat of cats; track cat) {
+          @if (hasItem(cat)) {
+            @if (hasImg(cat)) {
+              <!-- MODE IMAGE : PNG détouré superposé sur le mannequin -->
+              <img
+                class="outfit-img"
+                [src]="getImgSrc(cat)"
+                [style.z-index]="getZIndex(cat)"
+                [style.top]="getImgTop(cat)"
+                [style.left]="getImgLeft(cat)"
+                [style.width]="getImgWidth(cat)"
+                [alt]="getNom(cat)"/>
+            } @else {
+              <!-- MODE SVG : formes de test -->
+              <svg class="outfit-svg"
+                   [style.z-index]="getZIndex(cat)"
+                   viewBox="0 0 160 420"
+                   preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <filter [id]="'sf-' + cat">
+                    <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.2"/>
+                  </filter>
+                </defs>
+                <g [attr.filter]="'url(#sf-' + cat + ')'" [innerHTML]="getShape(cat) | safeHtmlPipe"></g>
+              </svg>
+            }
+          }
+        }
+
+      </div>
+
+      <!-- Flèches DROITE -->
+      <div class="arrows-col">
+        <button class="arrow-btn" (click)="next('chapeau')">
+          <svg viewBox="0 0 24 24"><polygon points="8,3 16,12 8,21"/></svg>
+        </button>
+        <button class="arrow-btn" (click)="next('haut')">
+          <svg viewBox="0 0 24 24"><polygon points="8,3 16,12 8,21"/></svg>
+        </button>
+        <button class="arrow-btn" (click)="next('bas')">
+          <svg viewBox="0 0 24 24"><polygon points="8,3 16,12 8,21"/></svg>
+        </button>
+        <button class="arrow-btn" (click)="next('chaussures')">
+          <svg viewBox="0 0 24 24"><polygon points="8,3 16,12 8,21"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INFO TENUE -->
+  <div class="outfit-info">
+    <div class="info-line">
+      <span class="lbl">HAT:</span>
+      @if (hasItem('chapeau')) { <a [href]="getUrl('chapeau')" target="_blank">{{ getNom('chapeau') }}</a> }
+      @else { <span class="none">—</span> }
+    </div>
+    <div class="info-line">
+      <span class="lbl">TOP:</span>
+      @if (hasItem('haut')) { <a [href]="getUrl('haut')" target="_blank">{{ getNom('haut') }}</a> }
+      @else { <span class="none">—</span> }
+    </div>
+    <div class="info-line">
+      <span class="lbl">BOTTOM:</span>
+      @if (hasItem('bas')) { <a [href]="getUrl('bas')" target="_blank">{{ getNom('bas') }}</a> }
+      @else { <span class="none">—</span> }
+    </div>
+    <div class="info-line">
+      <span class="lbl">SHOES:</span>
+      @if (hasItem('chaussures')) { <a [href]="getUrl('chaussures')" target="_blank">{{ getNom('chaussures') }}</a> }
+      @else { <span class="none">—</span> }
+    </div>
+  </div>
+
+</div>

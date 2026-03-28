@@ -1,0 +1,85 @@
+<div class="float-wrapper" *ngIf="visible">
+ <div class="mac-window">
+
+   <div class="title-bar">
+     <span class="title-text">{{ t.bannerTitle }}</span>
+     <button class="btn-lang" (click)="switchLang()">{{ t.lang }}</button>
+   </div>
+
+   <div class="window-body">
+     <p class="cookie-icon">🍪</p>
+     <p class="cookie-title">{{ t.heading }}</p>
+     <p class="cookie-text">{{ t.body }}</p>
+     <div class="divider"></div>
+     <div class="btn-row">
+       <button class="btn-cookie" (click)="decline()"><span>{{ t.decline }}</span></button>
+       <button class="btn-cookie" (click)="openManage()"><span>{{ t.manage }}</span></button>
+       <button class="btn-cookie" (click)="acceptAll()"><span>{{ t.accept }}</span></button>
+     </div>
+     <p class="cookie-legal">
+       {{ t.legal }}<br>
+       <a routerLink="/mention">{{ t.links }}</a>
+     </p>
+   </div>
+
+ </div>
+</div>
+
+<!-- POPUP MANAGE -->
+<div class="popup-overlay" *ngIf="manageOpen" (click)="closeManage()">
+ <div class="manage-window" (click)="$event.stopPropagation()">
+
+   <div class="manage-title-bar">
+     <button class="manage-close" (click)="closeManage()"></button>
+     <span class="title-text">{{ t.manageTitle }}</span>
+   </div>
+
+   <div class="manage-body">
+     <p class="manage-intro">{{ t.manageIntro }}</p>
+
+     <!-- Essentiels — toujours ON -->
+     <div class="cookie-row">
+       <div class="cookie-row-info">
+         <span class="cookie-row-name">{{ t.essential }}</span>
+         <span class="cookie-row-desc">{{ t.essentialDesc }}</span>
+       </div>
+       <label class="toggle toggle-disabled">
+         <div class="toggle-track"></div>
+       </label>
+     </div>
+
+     <!-- Analytics -->
+     <div class="cookie-row">
+       <div class="cookie-row-info">
+         <span class="cookie-row-name">{{ t.analytics }}</span>
+         <span class="cookie-row-desc">{{ t.analyticsDesc }}</span>
+       </div>
+       <label class="toggle">
+         <input type="checkbox" [(ngModel)]="analyticsEnabled">
+         <div class="toggle-track"></div>
+       </label>
+     </div>
+
+     <!-- Marketing -->
+     <div class="cookie-row">
+       <div class="cookie-row-info">
+         <span class="cookie-row-name">{{ t.marketing }}</span>
+         <span class="cookie-row-desc">{{ t.marketingDesc }}</span>
+       </div>
+       <label class="toggle">
+         <input type="checkbox" [(ngModel)]="marketingEnabled">
+         <div class="toggle-track"></div>
+       </label>
+     </div>
+
+     <div class="divider"></div>
+
+     <div class="manage-btn-row">
+       <button class="btn-cookie" (click)="closeManage()"><span>{{ t.cancel }}</span></button>
+       <button class="btn-cookie" (click)="savePreferences()"><span>{{ t.save }}</span></button>
+     </div>
+   </div>
+
+ </div>
+</div>
+

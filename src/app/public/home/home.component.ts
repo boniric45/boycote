@@ -5,13 +5,12 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
-import { BoycoteComponent } from "../boycote/boycote.component";
-
+import { BoycoteComponent } from '../features/boycote/boycote.component';
 
 
 @Component({
   selector: 'app-home',
-  imports: [MatButtonModule, MatDividerModule, MatIconModule, BoycoteComponent],
+  imports: [MatButtonModule, MatDividerModule, MatIconModule, BoycoteComponent ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

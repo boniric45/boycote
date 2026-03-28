@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class ProgressbarComponent {
 
-  @Input() isLoading = false;
+  @Input() pbIsLoading = false;
 
 
 }

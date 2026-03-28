@@ -1,0 +1,65 @@
+<div class="container">
+  <h2 style="text-align: center;margin-right: 10px;">Ajouter un produit</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <label>Nom *</label>
+    <input type="text" formControlName="name">
+
+    <label>Code EAN</label>
+    <input type="text" formControlName="codeEan">
+
+    <label>ID Image *</label>
+    <input type="number" formControlName="idImage">
+
+    <label>Description</label>
+    <textarea formControlName="description"></textarea>
+
+    <label>Marque</label>
+    <input type="text" formControlName="marque">
+
+    <label>Type</label>
+    <input type="text" formControlName="type">
+
+    <label>Genre</label>
+    <input type="text" formControlName="gender">
+
+    <label>Taille</label>
+    <input type="text" formControlName="size">
+
+    <label>Quantité</label>
+    <input type="number" formControlName="quantity">
+
+    <label>Prix HT *</label>
+    <input type="number" formControlName="ht" (input)="updateTTC()">
+
+    <label>TVA (%)</label>
+    <input type="number" formControlName="tva" (input)="updateTTC()">
+
+    <label>Prix TTC</label>
+    <input type="number" formControlName="ttc">
+
+    <label>Stock</label>
+    <input type="number" formControlName="stock">
+
+    <h3>Images</h3>
+
+    <label>Image 1</label>
+    <input type="text" formControlName="pathPictureOne">
+
+    <label>Image 2</label>
+    <input type="text" formControlName="pathPictureTwo">
+
+    <label>Image 3</label>
+    <input type="text" formControlName="pathPictureThree">
+
+    <label>Image 4</label>
+    <input type="text" formControlName="pathPictureFour">
+
+    <label>Image 5</label>
+    <input type="text" formControlName="pathPictureFive">
+
+    <button type="submit" [disabled]="form.invalid">Ajouter</button>
+  </form>
+</div>
+

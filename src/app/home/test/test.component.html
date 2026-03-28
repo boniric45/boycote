@@ -1,0 +1,22 @@
+<div class="mac-select-wrapper">
+
+  <!-- BOUTON PRINCIPAL -->
+  <div class="mac-select-btn" [class.open]="isOpen()" (click)="toggleDropdown($event)">
+    <span class="mac-select-label">{{ label() }}</span>
+    <span class="mac-select-chevron">▼</span>
+  </div>
+
+  <!-- DROPDOWN — toujours dans le DOM, affiché via CSS -->
+  <div class="mac-dropdown" [class.open]="isOpen()" (click)="$event.stopPropagation()">
+    @for (marque of marques(); track marque.id) {
+      <div
+        class="mac-option"
+        [class.selected]="isSelected(marque.name)"
+        (click)="toggleMarque(marque.name, $event)">
+        <div class="mac-checkbox" [class.checked]="isSelected(marque.name)"></div>
+        <span class="mac-option-label">{{ marque.name }}</span>
+      </div>
+    }
+  </div>
+
+</div>

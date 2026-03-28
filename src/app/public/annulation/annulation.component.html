@@ -1,0 +1,100 @@
+<div class="container">
+
+<div class="float-wrapper">
+  <div class="mac-window">
+
+    <div class="title-bar">
+      <span class="title-text">{{ lang() === 'en' ? 'Cancellation & Returns' : 'Annulation & Retours' }}</span>
+      <button class="btn-lang" (click)="changerLangue()">{{ lang() === 'en' ? 'FR' : 'EN' }}</button>
+    </div>
+
+    <!-- CONFIRMATION -->
+    @if (submitted()) {
+      <div class="card-body">
+        <p class="form-heading success">✓ {{ lang() === 'en' ? 'REQUEST SENT' : 'DEMANDE ENVOYÉE' }}</p>
+        <p class="confirm-text">{{ lang() === 'en' ? 'We will get back to you within 24–48 hours.' : 'Nous vous répondrons sous 24 à 48 heures.' }}</p>
+      </div>
+    }
+
+    <!-- FORMULAIRE -->
+    @if (!submitted()) {
+      <div class="card-body">
+
+        <p class="form-heading">{{ lang() === 'en' ? 'REQUEST FORM' : 'FORMULAIRE DE DEMANDE' }}</p>
+        <div class="divider"></div>
+
+        <div class="field">
+          <label class="field-label">{{ lang() === 'en' ? 'Request Type' : 'Type de demande' }} <span class="required">*</span></label>
+          <select class="mac-select"
+            [value]="form().type"
+            (change)="updateForm('type', $any($event.target).value)">
+            <option value="" disabled>{{ lang() === 'en' ? 'Select a request type...' : 'Sélectionnez un type...' }}</option>
+            <option value="cancel">{{ lang() === 'en' ? 'Cancel my order (not yet shipped)' : 'Annuler ma commande (non expédiée)' }}</option>
+            <option value="return">{{ lang() === 'en' ? 'Return my order (already received)' : 'Retourner ma commande (déjà reçue)' }}</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field-label">{{ lang() === 'en' ? 'Order Number' : 'Numéro de commande' }} <span class="required">*</span></label>
+          <input class="mac-input"
+            [value]="form().orderNumber"
+            (input)="updateForm('orderNumber', $any($event.target).value)"
+            type="text" placeholder="e.g. #12345">
+        </div>
+
+        <div class="field">
+          <label class="field-label">{{ lang() === 'en' ? 'Customer Email' : 'Email client' }} <span class="required">*</span></label>
+          <input class="mac-input"
+            [value]="form().email"
+            (input)="updateForm('email', $any($event.target).value)"
+            type="email" placeholder="your@email.com">
+        </div>
+
+        <div class="field">
+          <label class="field-label">{{ lang() === 'en' ? 'Item(s) to Return / Cancel' : 'Article(s) concerné(s)' }} <span class="required">*</span></label>
+          <textarea class="mac-textarea"
+            [value]="form().items"
+            (input)="updateForm('items', $any($event.target).value)"
+            [placeholder]="lang() === 'en' ? 'Describe the item(s)...' : 'Décrivez les articles...'"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            {{ lang() === 'en' ? 'Reason' : 'Raison' }}
+            <span class="optional"> ({{ lang() === 'en' ? 'optional' : 'optionnel' }})</span>
+          </label>
+          <textarea class="mac-textarea"
+            [value]="form().reason"
+            (input)="updateForm('reason', $any($event.target).value)"
+            [placeholder]="lang() === 'en' ? 'Optional...' : 'Optionnel...'"></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="checkbox-row" [style.visibility]="showCheckbox() ? 'visible' : 'hidden'">
+          <input class="mac-checkbox" type="checkbox"
+            [checked]="form().tagConfirmed"
+            (change)="updateForm('tagConfirmed', $any($event.target).checked)"
+            id="tag-check">
+          <label class="checkbox-label" for="tag-check">
+            {{ lang() === 'en'
+              ? 'I understand that the grey security tag must still be attached to be eligible for a refund.'
+              : "Je comprends que l'étiquette de sécurité grise doit être toujours attachée pour être éligible au remboursement." }}
+          </label>
+        </div>
+
+        @if (error()) {
+          <p class="error-text">{{ lang() === 'en' ? 'An error occurred. Please try again.' : 'Une erreur est survenue. Réessayez.' }}</p>
+        }
+
+        <button class="btn-submit" (click)="submit()" [disabled]="!isValid()">
+          <span>{{ lang() === 'en' ? 'SUBMIT REQUEST' : 'ENVOYER LA DEMANDE' }}</span>
+        </button>
+
+      </div>
+    }
+
+  </div>
+</div>
+
+</div>

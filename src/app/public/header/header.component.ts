@@ -58,11 +58,11 @@ export class HeaderComponent implements OnInit{
      this.marqueService.getMarques().subscribe(m => this.marques = m); 
   
     // Récupère tous les produits 
-   this.productService.getProducts().subscribe(p => 
-   {
-    this.listGlobal = p
-   // this.productService.addListProductFiltered(p); // Injecte dans le service
-   });
+  //  this.productService.getProducts().subscribe(p => 
+  //  {
+  //   this.listGlobal = p
+  //  // this.productService.addListProductFiltered(p); // Injecte dans le service
+  //  });
 
    // Récupérer les produits avec le service product 
    // renvoyer le résultat dans le services

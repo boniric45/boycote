@@ -1,0 +1,259 @@
+*{
+   margin: 0;
+   padding: 0;
+   width: 100%;
+}
+
+.parent {
+display: grid;
+grid-template-columns: 1fr;
+grid-column-gap: 0px;
+grid-template-rows: 0.7fr 3.5fr 2fr;
+grid-row-gap: 3px;
+}
+
+.div1 { 
+  grid-area: 1 / 1 / 2 / 2; 
+}
+
+.div2 { 
+  grid-area: 2 / 1 / 3 / 2; 
+  display: flex;
+  justify-content: center;
+}
+
+.div3 {
+  grid-area: 3 / 1 / 4 / 2; 
+}
+
+.imgCard {
+  width: 50%;
+  margin-left: 28.2%;
+  margin-bottom: -65%;
+}
+
+.carousel__cell {
+  scale: 1;
+  transition: transform 1s, opacity 1s, left 1s; // Rotate Carousel
+  cursor: pointer;
+  align-self: center;
+}
+
+.btnLeft {
+  position: absolute;
+  width: 120px;
+  scale: 1.8;
+  margin-top: 25%;
+  left: -210px;
+}
+
+.btnRight {
+  position: absolute;
+  width: 150px;
+  scale: 1.8;
+  margin-top: 25%;
+  right: -210px;
+}
+
+.container-carousel{
+  scale: 0.45;
+  justify-content: space-between;
+  align-self: start;
+  margin-top: 1%;
+}
+
+
+
+.imgBack{
+  width: auto;
+  align-self: flex-start;
+  margin: 7px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.imgBack:hover{
+scale: 1.1;
+}
+
+.imgBack:active{
+  scale: 1;
+}
+
+.img_logo{
+  width: 200px;
+}
+
+.img-panier {
+  align-self: flex-start;
+  margin: 17px 7px 0 0;
+  width: 80px;
+}
+
+body {
+  background: repeating-linear-gradient(#F0F0F0, #F0F0F0 4px, #FFFFFF 4px, #FFFFFF 8px);
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-content: center center;
+  column-gap: 2rem;
+}
+
+button {
+  grid-row: 1;
+  font-size: 3rem; // change me to adjust the scale of the buttons
+  font-family: "myriad-pro", system-ui;
+  height: 1.75em;
+  padding: 0 2em;
+  min-width: 6em;
+  border-radius: 1000px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  outline: none;
+}
+
+@mixin pseudo-positioning {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 33%;
+}
+
+button.primary {
+  width: auto;
+  font-size: 20px;
+  background: linear-gradient(rgba(0, 65, 184, 0.625), rgba(45, 115, 199, 0.625), rgba(33, 160, 196, 0.625));
+  box-shadow: 0 0.375em 0.5em rgba(0, 0, 0, 0.3), 
+              0 0.125em 0.125em rgba(0, 78, 187, 0.5), 
+              inset 0 0.25em 0.5em rgba(0, 17, 49, 0.8),
+              inset 0 0.375em 0.5em 0.25em rgba(0, 78, 187, 0.75)          
+}
+
+button.primary:focus,
+button.primary:active {
+  box-shadow: 0 0.375em 0.5em rgba(0, 0, 0, 0.3), 
+              0 0.125em 0.125em rgba(0, 78, 187, 0.5), 
+              inset 0 0.25em 0.5em rgba(0, 17, 49, 0.8),
+              inset 0 0.375em 0.5em 0.25em rgba(0, 78, 187, 0.75),
+              0 0 0.5em rgba(52, 106, 227, 0.5);
+}
+
+// top shine
+button:before {
+  @include pseudo-positioning;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3));
+  width: calc(100% - 0.875em);
+  border-radius: 2em 2em 0.5em 0.5em;
+  top: 5%;
+  filter: blur(1px);
+  z-index: 2;
+}
+
+// bottom glow
+button:after {
+  @include pseudo-positioning;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgb(255, 255, 255, 0.5));
+  width: calc(100% - 1.25em);
+  border-radius: 0.75em;
+  bottom: 10%;
+  filter: blur(3px);
+}
+
+// text
+button span {
+  position: relative;
+  top: -1px;
+  z-index: 1;  
+  letter-spacing: 0.0375em;
+  -webkit-text-stroke-width: 0.025em;
+  -webkit-text-stroke-color: #000000;
+}
+
+button.primary span {
+  text-shadow: 0 0.25em 0.2em rgba(30, 77, 161, 0.5);
+}
+
+.primary:hover{
+  cursor: pointer;
+  scale: 1.1;
+}
+.primary:active{
+  scale: 1;
+}
+
+.card { 
+  position: absolute;
+  top: 160px;
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-weight:bold;
+  font-style:bold;
+  font-size: 38px;
+  text-align: center;
+  color: rgb(2, 2, 28);
+}
+
+.btnmac {
+  display: flex;
+  justify-content: center;
+  margin-top: 65px;
+  margin-bottom: 40px;
+}
+
+.description {
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  color: rgb(2, 2, 28);
+}
+
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Le wrapper doit être compact */
+.cart-wrapper {
+  position: relative;
+  display: inline-block;   /* surtout PAS flex */
+  width: auto;             /* empêche l'étirement */
+  flex-shrink: 0;          /* empêche de prendre plus de place */
+}
+
+/* Taille de l’icône */
+.btn-panier {
+  width: 32px;
+  height: auto;
+}
+
+/* Badge */
+.cart-badge {
+  position: absolute;
+  top: 76px;
+  right: 56px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;          /* largeur fixe */
+  height: 20px;         /* hauteur fixe */
+  display: flex;        /* pour centrer le texte */
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+
+}
+
+
+.view{
+  margin: 0;
+
+}

@@ -1,0 +1,77 @@
+<div class="container-market">
+
+    <div class="panier-container">
+    
+      <div class="panier-header">
+        <span>Panier</span>
+        <img class="btnClose" src="\pictures\back.png" alt="Close" mat-dialog-close routerLink="/home">
+
+      </div>
+    
+      <!-- Si le panier est vide -->
+      @if (articles.length === 0) {
+        <div class="panier-vide">Votre panier est vide</div>
+      }
+    
+      <!-- Liste des articles -->
+      <ul class="panier-list">
+        @for (article of articles; track article; let i = $index) {
+          <li>
+    
+            <div class="item-row">
+              <img class="item-img" [src]="article.image" alt="{{ article.nom }}" />
+    
+              <div class="item-details">
+                <span class="item-name">{{ article.nom }}</span>
+                <span class="item-price">{{ article.prix.toFixed(2) }} €</span>
+              </div>
+    
+              <button class="delete-btn" (click)="supprimer(i)">
+                    <span class="delete-icon"></span>
+              </button>
+    
+            </div>
+        
+          </li>
+        }
+      </ul>
+    
+      <!-- Code promo -->
+      <div class="promo-block">
+        <input type="text" placeholder="Code promo" [(ngModel)]="codePromo" />
+        <button (click)="appliquerPromo()">OK</button>
+      </div>
+      
+      <!-- Sous-total -->
+      <div class="panier-ligne">
+        <span>Sous-total</span>
+        <span>{{ total.toFixed(2) }} €</span>
+      </div>
+      
+      <!-- Réduction -->
+      @if (reduction > 0) {
+        <div class="panier-ligne reduction">
+          <span>Réduction Promo</span>
+          <span>- {{ reduction.toFixed(2) }} €</span>
+        </div>
+      }
+    
+      <!-- Frais de livraison -->
+      <div class="panier-ligne">
+        <span>Frais de livraison</span>
+        <span>{{ fraisLivraison.toFixed(2) }} €</span>
+      </div>
+    
+    
+      <!-- Total final -->
+      <div class="panier-total">
+        <span>Total</span>
+        <span>{{ totalFinal.toFixed(2) }} €</span>
+      </div>
+    
+      <button class="commander-btn">Commander</button>
+    
+    </div>
+
+</div>
+

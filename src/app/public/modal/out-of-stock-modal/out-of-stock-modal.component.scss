@@ -1,0 +1,100 @@
+/* --- BACKDROP --- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* --- FENÊTRE PRINCIPALE --- */
+.window {
+  width: 300px;
+  background: #c0c0c0;
+  border: 2px solid black;
+  box-shadow: 4px 4px 0 #000;
+  font-family: "MS Sans Serif", sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: rgb(2, 2, 28);
+  text-align: center;
+}
+
+/* --- BARRE DE TITRE WINDOWS 3.1 --- */
+.title-bar {
+  background: #49494a; /* Bleu Windows 3.1 */
+  color: white;
+  padding: 4px 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+/* --- BOUTON DE FERMETURE STYLE WINDOWS 3.1 --- */
+.close-btn {
+  width: 18px;
+  height: 18px;
+  background: #c0c0c0;
+  border: 2px outset #fff;
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* X pixelisé */
+.close-btn::before,
+.close-btn::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  width: 2px;
+  height: 10px;
+  background: black;
+}
+
+.close-btn::before {
+  transform: rotate(45deg);
+}
+
+.close-btn::after {
+  transform: rotate(-45deg);
+}
+
+.close-btn:active {
+  border: 2px inset #fff;
+}
+
+/* --- CONTENU --- */
+.content {
+  padding: 16px;
+  text-align: center;
+}
+
+.content p {
+  margin-bottom: 12px;
+}
+
+/* --- CHAMP EMAIL --- */
+input[type="email"] {
+  width: 90%;
+  padding: 4px;
+  margin-bottom: 12px;
+  border: 2px inset #fff;
+  background: white;
+}
+
+/* --- BOUTON OK --- */
+.ok-btn {
+  background: #c0c0c0;
+  border: 2px outset #fff;
+  padding: 4px 20px;
+  cursor: pointer;
+}
+
+.ok-btn:active {
+  border: 2px inset #fff;
+}

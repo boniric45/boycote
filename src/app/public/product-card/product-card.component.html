@@ -1,0 +1,43 @@
+<div class="enveloppe-flottante">
+<div class="carte-produit">
+
+<div class="barre-titre">
+<span class="texte-titre">Product Details</span>
+<button class="btn-mesures" (click)="afficherMesures = true">MEASUREMENTS</button>
+</div>
+
+<div class="corps-carte">
+<p class="titre-produit">{{ titre }}</p>
+<div class="separateur"></div>
+<p class="description-produit">{{ description }}</p>
+<div class="separateur"></div>
+<div class="bloc-condition">
+<p class="label-condition">Condition</p>
+<p class="texte-condition">{{ etat }}</p>
+</div>
+<div class="infos-produit">
+<p>{{ genre }} — SIZE {{ taille }}</p>
+<p class="prix-produit">{{ prix }}</p>
+</div>
+<div class="conteneur-bouton">
+<button class="primary"><span>ADD TO CART</span></button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- POPUP MESURES -->
+<div class="fond-popup" *ngIf="afficherMesures" (click)="afficherMesures = false">
+<div class="fenetre-popup" (click)="$event.stopPropagation()">
+<div class="barre-popup">
+<button class="bouton-fermer" (click)="afficherMesures = false"></button>
+<span class="titre-popup">Measurements</span>
+</div>
+<div class="corps-popup">
+<div class="zone-mesures">
+<p class="texte-mesures">{{ mesures }}</p>
+</div>
+</div>
+</div>
+</div>

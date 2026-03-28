@@ -1,30 +1,31 @@
-id,idimage,nbview,name,marque,type,gender,size,pathpictureone,pathpicturetwo,pathpicturethree,quantity,ht,tva,ttc,stock
-1,1,1,TShirt,Camper,Haut,Homme,L,\pictures\Produits\Marques\Camper\4.png,NULL,NULL,1,800,160,960,1
-2,2,2,Pantalon,"Zam Barrett",Bas,Femme,L,"\pictures\Produits\Marques\Zam Barrett\1.png",NULL,NULL,1,1000,200,1200,1
-3,3,3,Chaussures,Trippen,Chaussure,Homme,44,\pictures\Produits\Marques\Trippen\1.png,NULL,NULL,1,500,100,600,1
-4,4,4,Casquette,"Martine Rose",Accessoire,Homme,L,"\pictures\Produits\Marques\Martine Rose\1.png",NULL,NULL,1,200,40,240,1
-5,5,5,"Tshirt Fun",Camper,Haut,Femme,XS,\pictures\Produits\Marques\Camper\2.png,NULL,NULL,1,400,80,480,1
-6,6,6,Jupe,Camper,Bas,Femme,M,\pictures\Produits\Marques\Camper\3.png,NULL,NULL,1,600,120,720,1
-7,7,7,Gants,"Comme des Garçons",Accessoire,Homme,L,"\pictures\Produits\Marques\Comme des Garcons\1.png",NULL,NULL,1,450,90,540,1
-8,8,8,Chemise,Balenciaga,Haut,Homme,XL,\pictures\Produits\Marques\Balenciaga\1.png,NULL,NULL,1,1500,300,1800,1
-9,9,9,"Chaussure de Ouf","Damir Doma",Chaussure,Homme,46,"\pictures\Produits\Marques\Damir Doma\1.png",NULL,NULL,1,480,96,576,1
-10,10,10,"Pantalon Smart",Trippen,Bas,Femme,XS,\pictures\Produits\Marques\Trippen\1.png,NULL,NULL,1,800,160,960,1
-11,11,11,"TShirt Fun",Camper,Haut,Femme,L,\pictures\Produits\Marques\Camper\1.png,NULL,NULL,1,780,156,936,1
-12,12,12,Jupe,"Zam Barrett",Bas,Femme,M,"\pictures\Produits\Marques\Zam Barrett\1.png",NULL,NULL,1,600,120,720,1
-13,13,13,Chaussures,"Martine Rose",Chaussure,Homme,44,"\pictures\Produits\Marques\Martine Rose\1.png",NULL,NULL,1,250,50,300,1
-14,14,14,Gants,Balenciaga,Accessoire,Femme,7,\pictures\Produits\Marques\Balenciaga\1.png,NULL,NULL,1,795,159,955,1
-15,15,15,"Mini Jupe","Damir Doma",Bas,Femme,XS,"\pictures\Produits\Marques\Damir Doma\1.png",NULL,NULL,1,200,40,240,1
-16,16,16,Chemisette,Trippen,Haut,Femme,L,\pictures\Produits\Marques\Trippen\1.png,NULL,NULL,1,900,180,1080,1
-17,17,17,Pantacour,"Damir Doma",Bas,Homme,XL,"\pictures\Produits\Marques\Damir Doma\1.png",NULL,NULL,1,2000,400,2400,1
-18,18,18,"Chemise Noire","Jean Paul Gaultier",Haut,Homme,L,"\pictures\Produits\Marques\Jean Paul Gaultier\1.png",NULL,NULL,1,4000,800,4800,1
-19,19,19,"Chemise Rose","Jean Paul Gaultier",Haut,Homme,M,"\pictures\Produits\Marques\Jean Paul Gaultier\1.png",NULL,NULL,1,5000,1000,6000,1
-20,20,20,"Talon Aiguille","Zam Barrett",Chaussure,Femme,42,"\pictures\Produits\Marques\Zam Barrett\1.png",NULL,NULL,1,6000,1200,7200,1
-21,21,21,Pantalon,"Damir Doma",Haut,Homme,44,"\pictures\Produits\Marques\Damir Doma\1.png",NULL,NULL,1,5000,1000,6000,1
-22,22,22,Jupe,Trippen,Bas,Femme,L,"\pictures\Produits\Marques\Damir Doma\1.png",NULL,NULL,1,500,100,600,1
-23,23,23,"Casquette de Ouf","Martine Rose",Accessoire,Homme,L,"\pictures\Produits\Marques\Martine Rose\1.png",NULL,NULL,1,560,112,672,1
-24,24,24,"Chaussure de ville","Jean Paul Gaultier",Accessoire,Homme,46,"\pictures\Produits\Marques\Jean Paul Gaultier\1.png",NULL,NULL,1,225,45,270,1
-25,25,25,Chemise,Balenciaga,Haut,Femme,M,\pictures\Produits\Marques\Balenciaga\1.png,NULL,NULL,1,1000,200,1200,1
-26,26,26,Gants,"Comme des Garçons",Accessoire,Homme,4,"\pictures\Produits\Marques\Comme des Garcons\1.png",NULL,NULL,1,200,40,240,1
-27,27,27,Tshirt,Trippen,Haut,Femme,XL,\pictures\Produits\Marques\Trippen\1.png,NULL,NULL,1,300,60,360,1
-28,28,28,"Tshirt Rose","Martine Rose",Haut,Femme,XS,"\pictures\Produits\Marques\Martine Rose\1.png",NULL,NULL,1,600,120,720,1
-29,29,29,Tong,"Zam Barrett",Accessoire,Homme,42,"\pictures\Produits\Marques\Zam Barrett\1.png",NULL,NULL,1,120,24,144,1
+id,idimage,codeean,name,description,marque,type,gender,size,pathpictureone,pathpicturetwo,pathpicturethree,pathpicturefour,pathpicturefive,quantity,ht,tva,ttc,stock
+1,1,"Code Ean",TShirt,"ceci est une description de ouf de dingue zyva ta vu",CAMPER,Haut,Homme,L,\pictures\Produits\Marques\Camper\4.png,\pictures\Produits\Marques\Balenciaga\1.png,"\pictures\Produits\Marques\Comme des Garcons\1.png",,,1,800,160,960,1
+2,2,NULL,Pantalon,"Pantalon à 1000 Euros Bradé","ZAM BARRETT",Bas,Femme,L,"\pictures\Produits\Marques\Zam Barrett\1.png","\pictures\Produits\Marques\Zam Barrett\1.png","\pictures\Produits\Marques\Zam Barrett\1.png",,,1,1000,200,1200,1
+3,3,NULL,Chaussures,NULL,TRIPPEN,Chaussure,Homme,44,\pictures\Produits\Marques\Trippen\1.png,,,NULL,NULL,1,500,100,600,1
+4,4,NULL,Casquette,NULL,"MARTINE ROSE",Accessoire,Homme,L,"\pictures\Produits\Marques\Martine Rose\1.png",,,NULL,NULL,1,200,40,240,1
+5,5,NULL,"Tshirt Fun",NULL,CAMPER,Haut,Femme,XS,\pictures\Produits\Marques\Camper\2.png,,,NULL,NULL,1,400,80,480,1
+6,6,NULL,Jupe,NULL,CAMPER,Bas,Femme,M,\pictures\Produits\Marques\Camper\3.png,,,NULL,NULL,1,600,120,720,1
+7,7,NULL,Gants,NULL,"COMME DES GARCONS",Accessoire,Homme,L,"\pictures\Produits\Marques\Comme des Garcons\1.png",,,NULL,NULL,1,450,90,540,1
+8,8,NULL,Chemise,NULL,BALENCIAGA,Haut,Homme,XL,\pictures\Produits\Marques\Balenciaga\1.png,,,NULL,NULL,1,1500,300,1800,1
+9,9,NULL,"Chaussure de Ouf",NULL,"DAMIR DOMA",Chaussure,Homme,46,"\pictures\Produits\Marques\Damir Doma\1.png",,,NULL,NULL,1,480,96,576,1
+10,10,NULL,"Pantalon Smart",NULL,TRIPPEN,Bas,Femme,XS,\pictures\Produits\Marques\Trippen\1.png,,,NULL,NULL,1,800,160,960,1
+11,11,NULL,"TShirt Fun",NULL,CAMPER,Haut,Femme,L,\pictures\Produits\Marques\Camper\1.png,,,NULL,NULL,1,780,156,936,1
+12,12,NULL,Jupe,NULL,"ZAM BARRETT",Bas,Femme,M,"\pictures\Produits\Marques\Zam Barrett\1.png",,,NULL,NULL,1,600,120,720,1
+13,13,NULL,Chaussures,NULL,"MARTINE ROSE",Chaussure,Homme,44,"\pictures\Produits\Marques\Martine Rose\1.png",,,NULL,NULL,1,250,50,300,1
+14,14,NULL,Gants,NULL,BALENCIAGA,Accessoire,Femme,7,\pictures\Produits\Marques\Balenciaga\1.png,,,NULL,NULL,1,795,159,955,1
+15,15,NULL,"Mini Jupe",NULL,"DAMIR DOMA",Bas,Femme,XS,"\pictures\Produits\Marques\Damir Doma\1.png",,,NULL,NULL,1,200,40,240,1
+16,16,NULL,Chemisette,NULL,TRIPPEN,Haut,Femme,L,\pictures\Produits\Marques\Trippen\1.png,,,NULL,NULL,1,900,180,1080,1
+17,17,NULL,Pantacour,NULL,"DAMIR DOMA",Bas,Homme,XL,"\pictures\Produits\Marques\Damir Doma\1.png",,,NULL,NULL,1,2000,400,2400,1
+18,18,NULL,"Chemise Noire",NULL,"JEAN PAUL GAULTIER",Haut,Homme,L,"\pictures\Produits\Marques\Jean Paul Gaultier\1.png",,,NULL,NULL,1,4000,800,4800,1
+19,19,NULL,"Chemise Rose",NULL,"JEAN PAUL GAULTIER",Haut,Homme,M,"\pictures\Produits\Marques\Jean Paul Gaultier\1.png",,,NULL,NULL,1,5000,1000,6000,1
+20,20,NULL,"Talon Aiguille",NULL,"ZAM BARRETT",Chaussure,Femme,42,"\pictures\Produits\Marques\Zam Barrett\1.png",,,NULL,NULL,1,6000,1200,7200,1
+21,21,NULL,Pantalon,NULL,"DAMIR DOMA",Haut,Homme,44,"\pictures\Produits\Marques\Damir Doma\1.png",,,NULL,NULL,1,5000,1000,6000,1
+22,22,NULL,Jupe,NULL,TRIPPEN,Bas,Femme,L,"\pictures\Produits\Marques\Damir Doma\1.png",,,NULL,NULL,1,500,100,600,1
+23,23,NULL,"Casquette de Ouf",NULL,"MARTINE ROSE",Accessoire,Homme,L,"\pictures\Produits\Marques\Martine Rose\1.png",,,NULL,NULL,1,560,112,672,1
+24,24,NULL,"Chaussure de ville",NULL,"JEAN PAUL GAULTIER",Accessoire,Homme,46,"\pictures\Produits\Marques\Jean Paul Gaultier\1.png",,,NULL,NULL,1,225,45,270,1
+25,25,NULL,Chemise,NULL,BALENCIAGA,Haut,Femme,M,\pictures\Produits\Marques\Balenciaga\1.png,,,NULL,NULL,1,1000,200,1200,1
+26,26,NULL,Gants,NULL,"COMME DES GARCONS",Accessoire,Homme,4,"\pictures\Produits\Marques\Comme des Garcons\1.png",,,NULL,NULL,1,200,40,240,1
+27,27,NULL,Tshirt,NULL,TRIPPEN,Haut,Femme,XL,\pictures\Produits\Marques\Trippen\1.png,,,NULL,NULL,1,300,60,360,1
+28,28,NULL,"Tshirt Rose",NULL,"MARTINE ROSE",Haut,Femme,XS,"\pictures\Produits\Marques\Martine Rose\1.png",,,NULL,NULL,1,600,120,720,1
+29,29,NULL,Tong,NULL,"ZAM BARRETT",Accessoire,Homme,42,"\pictures\Produits\Marques\Zam Barrett\1.png",,,NULL,NULL,1,120,24,144,1
+30,30,4,"Jupons jaune",dsq,"DAMIR DOMA",Bas,Femme,L,"\pictures\Produits\Marques\Damir Doma\1.png",,,NULL,NULL,1,200,40,240,1

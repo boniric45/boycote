@@ -1,0 +1,104 @@
+
+<div class="container">
+
+
+
+
+<div class="float-wrapper">
+  <div class="mac-window">
+
+    <div class="title-bar">
+      <span class="title-text">{{ t.titre }}</span>
+      <button class="btn-lang" (click)="changerLangue()">{{ t.lang }}</button>
+    </div>
+
+    <div class="window-body">
+      <div class="tab-bar">
+        <button class="tab"
+          *ngFor="let onglet of t.onglets; let i = index"
+          [class.active]="ongletActif === i"
+          (click)="ongletActif = i">{{ onglet }}</button>
+        <button class="tab" (click)="ouvrirCookies()">🍪 Cookies</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="scroll-area">
+        <div class="section">
+          <p class="section-titre">{{ section.titre }}</p>
+          <div class="info-block">
+
+            <!-- Onglets avec rows (Legal Notice) -->
+            <ng-container *ngIf="section.rows">
+              <div class="info-row" *ngFor="let row of section.rows">
+                <span class="info-label">{{ row[0] }}</span>
+                <span class="info-value">{{ row[1] }}</span>
+              </div>
+            </ng-container>
+
+            <!-- Onglets avec cols (tous les autres) -->
+            <ng-container *ngIf="section.cols">
+              <div class="info-col" *ngFor="let col of section.cols">
+                <span class="info-label">{{ col[0] }}</span>
+                <span class="info-value">{{ col[1] }}</span>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- POPUP COOKIE PREFERENCES -->
+<div class="cookie-overlay" *ngIf="cookiePopupOuvert" (click)="fermerCookies()">
+  <div class="cookie-popup" (click)="$event.stopPropagation()">
+    <div class="cookie-popup-bar">
+      <button class="btn-fermer" (click)="fermerCookies()"></button>
+      <span class="title-text">Cookie Preferences</span>
+    </div>
+    <div class="cookie-popup-body">
+      <p class="cookie-intro">Choose which cookies you allow. Essential cookies cannot be disabled.</p>
+
+      <div class="cookie-row">
+        <div class="cookie-row-info">
+          <span class="cookie-row-name">Essential</span>
+          <span class="cookie-row-desc">Required for the site to work. Cannot be disabled.</span>
+        </div>
+        <label class="toggle toggle-disabled"><div class="toggle-track"></div></label>
+      </div>
+
+      <div class="cookie-row">
+        <div class="cookie-row-info">
+          <span class="cookie-row-name">Analytics</span>
+          <span class="cookie-row-desc">Help us understand how visitors use the site.</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="analyticsActif">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="cookie-row">
+        <div class="cookie-row-info">
+          <span class="cookie-row-name">Marketing</span>
+          <span class="cookie-row-desc">Used to show personalised ads.</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" [(ngModel)]="marketingActif">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="divider"></div>
+      <div class="cookie-btn-row">
+        <button class="btn-cookie" (click)="fermerCookies()"><span>CANCEL</span></button>
+        <button class="btn-cookie" (click)="sauvegarder()"><span>SAVE</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>

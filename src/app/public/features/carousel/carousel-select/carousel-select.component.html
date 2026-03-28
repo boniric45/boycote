@@ -1,0 +1,53 @@
+
+<body>
+      <div class="titleCarousel" style="text-align: center;color:red;font-size: 24px;">
+      <h1>Carousel Select</h1>
+    </div>
+  <div class="carousel-wrapper" >
+
+<div class="carousel">
+
+  <button class="nav left desktop" (click)="prev()"><app-component-left></app-component-left></button>
+
+  <div class="items"
+       [class.animating]="isAnimating"
+       [class.left-direction]="direction === 'left'">
+
+    @for (article of visibleArticles; track article.id; let i = $index) {
+      <img
+        [src]="article.pathpictureone"
+        class="item"
+        [style.transform]="getTransform(i)"
+        [style.zIndex]="getZIndex(i)"
+        [style.opacity]="getOpacity(i)"
+      />
+    }
+  </div>
+
+  <button class="nav right desktop" (click)="next()"><app-component-right></app-component-right></button>
+
+</div>
+
+<!-- Flèches mobile -->
+<div class="nav-mobile mobile">
+  <button class="nav" (click)="prev()">
+    <app-component-left></app-component-left>
+  </button>
+  <button class="nav" (click)="next()">
+    <app-component-right></app-component-right>
+  </button>
+</div>
+
+<div class="container">
+    <div class="description">
+        <h2>{{ centralArticle.name }}</h2>
+        <p>Id: {{centralArticle.id}}</p>
+        <p>Description: {{ centralArticle.description }}</p>
+        <p>Condition: {{centralArticle.conditions}}</p>
+        <p>{{centralArticle.mesure}}</p>
+        <p>{{ centralArticle.prix | currency}} </p>
+    </div>
+</div>
+
+</div>
+</body>

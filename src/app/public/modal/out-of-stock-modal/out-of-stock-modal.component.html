@@ -1,0 +1,21 @@
+<div class="backdrop">
+  <div class="window">
+    <div class="title-bar">
+      <span>System message</span>
+      <button class="close-btn" (click)="close.emit()"></button>
+    </div>
+
+    <div class="content">
+      <p>Enter your email so you don’t miss any updates</p>
+
+      <input 
+        type="email" 
+        [(ngModel)]="email" 
+        placeholder="Email"
+        required
+      />
+
+      <button class="ok-btn" (click)="onSubmit()">Ok</button>
+    </div>
+  </div>
+</div>
