@@ -61,12 +61,12 @@ export class BoycoteProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.product = this.data.product; // Récupère le produit du parent Home
+  //  this.product = this.data.product; // Récupère le produit du parent Home
     // si on réactualise redirige vers la page home sinon crée les produits du carousel
     if (!this.product) {
       this.route.navigate(['home']);
     } else {
- //     this.createCarouselWithProduct(this.product);
+      this.createCarouselWithProduct(this.product);
     }
 
     this.cartService.count$.subscribe(value => this.countPanier = value);
@@ -81,36 +81,38 @@ export class BoycoteProductComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
-  // createCarouselWithProduct(prod: Product): Product[] {
-  //   let t: keyof Product;
-  //   let id=1;
-  //   for (let i = 1; i < 3; i++) {
-  //   for (t in this.product) {
-  //       if (t.startsWith('path')) {
-  //         this.listResult.push({
-  //           id,
-  //           name: '',
-  //           description: '',
-  //           marque: '',
-  //           type: '',
-  //           gender: '',
-  //           size: '',
-  //           stock: 0,
-  //           sku: '',
-  //           pathPictureOne: '' + this.product[t], // A chaque boucle il ajoute le lien de chaques photos
-  //           pathPictureTwo: '',
-  //           pathPictureThree: '',
-  //           pathPictureFour: '',
-  //           pathPictureFive: ''
-  //         });
-  //         id++;
-  //       }
-  //     }
+  createCarouselWithProduct(prod: Product){
+    console.log(prod);
+    
+    // let t: keyof Product;
+    // let id=1;
+    // for (let i = 1; i < 3; i++) {
+    // for (t in this.product) {
+    //     if (t.startsWith('path')) {
+    //       this.listResult.push({
+    //         id,
+    //         name: '',
+    //         description: '',
+    //         marque: '',
+    //         type: '',
+    //         gender: '',
+    //         size: '',
+    //         stock: 0,
+    //         sku: '',
+    //       // A chaque boucle il ajoute le lien de chaques photos
+    //         pathPictureTwo: '',
+    //         pathPictureThree: '',
+    //         pathPictureFour: '',
+    //         pathPictureFive: ''
+    //       });
+    //       id++;
+    //     }
+    //   }
       
 
-  //   }
-  //   return this.listResult;
-  // }
+    // }
+    // return this.listResult;
+  }
 
   get cellCount() {
     return this.cells ? this.cells.length : this.cells;

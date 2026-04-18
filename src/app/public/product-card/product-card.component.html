@@ -13,11 +13,11 @@
 <div class="separateur"></div>
 <div class="bloc-condition">
 <p class="label-condition">Condition</p>
-<p class="texte-condition">{{ etat }}</p>
+<p class="texte-condition">{{ condition }}</p>
 </div>
 <div class="infos-produit">
 <p>{{ genre }} — SIZE {{ taille }}</p>
-<p class="prix-produit">{{ prix }}</p>
+<p class="prix-produit">{{ prix | currency:'EUR'}}</p>
 </div>
 <div class="conteneur-bouton">
 <button class="primary"><span>ADD TO CART</span></button>

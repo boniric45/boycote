@@ -1,283 +1,349 @@
-<!DOCTYPE html>
-<html lang="fr">
 
-<body>
+<div>
     @if(isCookiesIsNotSaved()){
-        <div class="cookies">
-            <app-cookies></app-cookies>
-        </div>
-    }
-        
-      <!-- Entête -->
-      <div class="container">
-        <div class="selects">
-            <!-- BARRE DE RECHERCHE -->
-            <form action="">
-                <div class="search">
-                    
-                    <button class="btnF5" 
-                    (click)="refreshList()">
-
-                    <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.36 2.64L21 8" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
-                    <path d="M21 3v5h-5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.36-2.64L3 16" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
-                    <path d="M3 21v-5h5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <!-- <img class="imgSearchRefresh" src="pictures\f5.png" alt="Refresh"> -->
-                    </button>        
-                    
-                    <!-- CHAMP DE RECHERCHE -->
-                    <input type="text" 
-                    [ngStyle]="{'display':displayInput}" 
-                    [(ngModel)]="searchQuery"
-                    [ngModelOptions]="{standalone: true}"
-                    placeholder="Recherche par marques" 
-                    (click)="inputClick()" />
-                    
-                    <!-- BOUTON DE RECHERCHE-->
-                    <button class="btnSearch" 
-                    (click)="submitSearchByMarques()"
-                    [ngStyle]="{'display': displayInput}">
-                    <img class="imgSearch" src="pictures\search.png" alt="Search">
-                    </button>
-                </div>
-            </form>
-
-            <!-- BARRE DE SELECTION -->
-            <div class="selectSort" [ngStyle]="{'display':displaySelect}">
-                <div class="mac-select-wrapper">
-
-                                            <!-- MARQUES -->
-                    <div class="mac-select-btn"
-                         [class.open]="isOpenMarques()"
-                         (click)="toggleMarquesDropdown($event)">
-                        <span class="mac-select-label">{{ labMarques() }}</span>
-                        <span class="mac-select-chevron">▼</span>
-                    </div>
-
-                    <div class="mac-dropdown"
-                         [class.open]="isOpenMarques()"
-                         (click)="$event.stopPropagation()">
-                        @for (m of marques(); track m.id) {
-                            <div class="mac-option"
-                                 [class.selected]="selectedMarques().includes(m.name)"
-                                 (click)="toggleMarque(m.name, $event)">
-                                <div class="mac-checkbox"
-                                     [class.checked]="selectedMarques().includes(m.name)"></div>
-                                <span class="mac-option-label">{{ m.name }}</span>
-                            </div>
-                        }
-                    </div>
-
-                                            <!-- TYPES -->
-                    <div class="mac-select-btn"
-                         [class.open]="isOpenTypes()"
-                         (click)="toggleTypesDropdown($event)">
-                        <span class="mac-select-label">{{ labTypes() }}</span>
-                        <span class="mac-select-chevron">▼</span>
-                    </div>
-
-                    <div class="mac-dropdown"
-                         [class.open]="isOpenTypes()"
-                         (click)="$event.stopPropagation()">
-                        @for (t of types(); track $index) {
-                            <div class="mac-option"
-                                 [class.selected]="selectedTypes().includes(t)"
-                                 (click)="toggleType(t, $event)">
-                                <div class="mac-checkbox"
-                                     [class.checked]="selectedTypes().includes(t)"></div>
-                                <span class="mac-option-label">{{ t }}</span>
-                            </div>
-                        }
-                    </div>
-                                        <!-- GENDERS -->
-                    <div class="mac-select-btn"
-                         [class.open]="isOpenGenders()"
-                         (click)="toggleGendersDropdown($event)">
-                        <span class="mac-select-label">{{ labGenders() }}</span>
-                        <span class="mac-select-chevron">▼</span>
-                    </div>
-
-                    <div class="mac-dropdown"
-                         [class.open]="isOpenGenders()"
-                         (click)="$event.stopPropagation()">
-                        @for (g of genders(); track $index) {
-                            <div class="mac-option"
-                                 [class.selected]="selectedGenders().includes(g)"
-                                 (click)="toggleGender(g, $event)">
-                                <div class="mac-checkbox"
-                                     [class.checked]="selectedGenders().includes(g)"></div>
-                                <span class="mac-option-label">{{ g }}</span>
-                            </div>
-                        }
-                    </div>
-
-
-        
-                    <button class="btnSelectSearch" 
-                    (click)="submitButtonSelect()" 
-                    [ngStyle]="{'display':displaySelect}">
-                        Rechercher
-                    </button>
-                </div>
-            </div>
- 
-            <!-- AFFICHAGE DE LE SELECTION -->
-            <!-- <div class="selectUser" >
-            <div class="title">YOUR SELECTION</div>
-             
-              <div class="subtitle">Marques:</div>
-  
-            <div class="userText">
-                @for(m of selectedMarques();track $index){
-                      <div class="user-line">{{ m }}</div>
-                }
-                {{searchQuery}}
-            </div>
-            <div class="subtitle" [ngStyle]="{'display':displaySelect}">Types:</div>
-            <div class="userText">
-            @for (t of selectedTypes(); track $index) {
-                <div class="user-line">{{ t }}</div>
-            }
-            </div>
-            
-            <div class="subtitle" [ngStyle]="{'display':displaySelect}">Genres:</div>
-            <div class="userText">
-            @for (g of selectedGenders(); track $index) {
-                <div class="user-line">{{ g }}</div>
-            }
-            </div>
-            </div> -->
-
-        </div>
-
-            <!-- LOGO -->
-            <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
-        
-            <!-- PANIER -->
-            <div class="cart-wrapper">
-                <img class="btn-panier" src="/pictures/shopping.png" alt="panier" routerLink="/panier">
-                @if(countPanier > 0){
-                <span class="cart-badge">
-                    {{ countPanier }}
-                </span>
-                }
-            </div>
-        
-        </div>
-
-        
-    <div class="carousel-home">  
-
-
-                                        <!-- CAROUSEL STANDARD -->
-
-            @if(carouselStandard)
-            {
-
-            <div class="pb">
-                <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
-            </div>
-  
-
-            <div class="page-center" >
-
-                @if(displayNoResult){
-                   <div class="noResult">
-                        {{noResult}}
-                    </div>
-                }
-
-                 <div class="carousel-wrapper">
-                 @if (loadingCarousel) 
-                 {
-                    <div class="carouselstd">
-                        <app-carousel-standard></app-carousel-standard> 
-                    </div>
- 
-                  }
-                </div>
-
-            </div>
-             }
-
-                                        <!-- CAROUSEL INPUT -->             
-            
-            @if(carouselSearchList)
-            {
-            <div class="pb">
-                <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
-            </div>
-    
-                  
-            <div class="page-center">
-
-                <div class="carousel-wrapper">
-                    <div class="carouselInput">
-                        <app-carousel-input></app-carousel-input>
-                    </div>
-                </div>
-
-            </div>
-                
-                
-            }
-            
-                                        <!-- CAROUSEL SELECT -->
-            @if(carouselSelectList)
-            {
-            
-            <div class="pb">
-                <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
-            </div>
-                       
-               <div class="page-center">
-
-                <div class="carousel-wrapper">
-                    <div class="carouselSelect">
-                       <app-carousel-select></app-carousel-select>>
-                    </div>
-                </div>
-
-            </div>
-
-
-
-
-
-            }
-
-    </div>
-    
-    
-</body>
-
-<!-- FOOTER -->
-<div class="container-footer">
-    
-    <div class="footer">
-
-    <!-- <div class="btnmac">    
-        <button class="primary" (click)="addPanier()"><span>ADD TO CARD</span></button>
-    </div>
-           
-    <div class="description">
-        Marque: {{product.marque}} - {{product.name}} à {{product.ttc}} €
-        <br>
-        Description:  
-         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet eligendi 
-        {{product.description}}
-    </div> -->
-
-        @if(loadingCarousel){
-        <div class="footRead">
-            {{productView}}
-        </div>
-        }
-        <app-footer></app-footer>
-
-    </div>
+          <div class="cookies">
+              <app-cookies></app-cookies>
+          </div>
+      }
 </div>
+   
+<div class="parent">
 
-</html>
+    <!----------------------------- ENTETE ------------------------->
+    <div class="div1">
+                
+        <!-- LIGNE 2 : HEADER (recherche + filtres + panier) -->
+        <div class="header-row">
+
+            <div class="container-hamburger" (click)="hamburgerClicked()">
+                <app-hamburger></app-hamburger>
+            </div>
+
+         @if(displaySearch){
+              <div class="container-select" >
+                      <div class="selectSort" >
+                              <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
+                              
+                                  <form action="">
+                                  <div class="search" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
+                                      
+                                      <button class="btnF5" 
+                                      (click)="refreshList()">
+      
+                                      <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.36 2.64L21 8" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                      <path d="M21 3v5h-5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.36-2.64L3 16" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                      <path d="M3 21v-5h5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      </svg>
+                                      </button>        
+                                      
+                                      <!-- CHAMP DE RECHERCHE -->
+                                      <input type="text" 
+                                      [ngStyle]="{'display':displayInput}" 
+                                      [(ngModel)]="searchInputValue"
+                                      [ngModelOptions]="{standalone: true}"
+                                      placeholder="Recherche par marques" 
+                                      (click)="inputClick()" />
+                                      
+                                      <!-- BOUTON DE RECHERCHE-->
+                                      <button class="btnSearch" 
+                                      (click)="submitSearchByMarques()"
+                                      [ngStyle]="{'display': displayInput}">
+                                      <img class="imgSearch" src="pictures\search.png" alt="Search">
+                                      </button>
+                                  </div>
+                                  </form>
+      
+                                  <div class="mac-select-wrapper" [ngStyle]="{'visibility':displaySelect}" >
+      
+                                                              <!-- MARQUES -->
+                                      <div class="mac-select-btn"
+                                          [class.open]="isOpenMarques()"
+                                          (click)="toggleMarquesDropdown($event)">
+                                          <span class="mac-select-label">{{ labMarques() }}</span>
+                                          <span class="mac-select-chevron">▼</span>
+                                      </div>
+      
+                                      <div class="mac-dropdown"
+                                          [class.open]="isOpenMarques()"
+                                          (click)="$event.stopPropagation()">
+                                          @for (m of marques(); track m.id) {
+                                              <div class="mac-option"
+                                                  [class.selected]="selectedMarques().includes(m.name)"
+                                                  (click)="toggleMarque(m.name, $event);  $event.stopPropagation()">
+                                                  <div class="mac-checkbox"
+                                                      [class.checked]="selectedMarques().includes(m.name)"></div>
+                                                  <span class="mac-option-label">{{ m.name }}</span>
+                                              </div>
+                                          }
+                                      </div>
+      
+                                                              <!-- TYPES -->
+                                      <div class="mac-select-btn"
+                                          [class.open]="isOpenTypes()"
+                                          (click)="toggleTypesDropdown($event)">
+                                          <span class="mac-select-label">{{ labTypes() }}</span>
+                                          <span class="mac-select-chevron">▼</span>
+                                      </div>
+      
+                                      <div class="mac-dropdown"
+                                          [class.open]="isOpenTypes()"
+                                          (click)="$event.stopPropagation()">
+                                          @for (t of types(); track $index) {
+                                              <div class="mac-option"
+                                                  [class.selected]="selectedTypes().includes(t)"
+                                                  (click)="toggleType(t, $event); $event.stopPropagation()">
+                                                  <div class="mac-checkbox"
+                                                      [class.checked]="selectedTypes().includes(t)"></div>
+                                                  <span class="mac-option-label">{{ t }}</span>
+                                              </div>
+                                          }
+                                      </div>
+                                                          <!-- GENDERS -->
+                                      <div class="mac-select-btn"
+                                          [class.open]="isOpenGenders()"
+                                          (click)="toggleGendersDropdown($event)">
+                                          <span class="mac-select-label">{{ labGenders() }}</span>
+                                          <span class="mac-select-chevron">▼</span>
+                                      </div>
+      
+                                      <div class="mac-dropdown"
+                                          [class.open]="isOpenGenders()"
+                                          (click)="$event.stopPropagation()">
+                                          @for (g of genders(); track $index) {
+                                              <div class="mac-option"
+                                                  [class.selected]="selectedGenders().includes(g)"
+                                                  (click)="toggleGender(g, $event); $event.stopPropagation()">
+                                                  <div class="mac-checkbox"
+                                                      [class.checked]="selectedGenders().includes(g)"></div>
+                                                  <span class="mac-option-label">{{ g }}</span>
+                                              </div>
+                                          }
+                                      </div>
+      
+                                      
+                                      <button class="btnSelectSearch" 
+                                      (click)="submitSearchByFilters()" 
+                                      [ngStyle]="{'display':displaySelect}">
+                                      <p class="btnSearchText">
+                                      <img class="imgSelectSearch" src="pictures\search.png" alt="Search">
+                                      </p>
+                                      </button>
+                                  </div>
+                      </div>
+                  </div>
+          }    
+
+         @if (displaySearchMobile) {
+             <div class="container-select-mobile" >
+                    <div class="selectSort" >
+                            <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
+                            
+                                <form action="">
+                                <div class="search" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
+                                    
+                                    <button class="btnF5" 
+                                    (click)="refreshList()">
+    
+                                    <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.36 2.64L21 8" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                    <path d="M21 3v5h-5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.36-2.64L3 16" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                    <path d="M3 21v-5h5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    </button>        
+                                    
+                                    <!-- CHAMP DE RECHERCHE -->
+                                    <input type="text" 
+                                    [ngStyle]="{'display':displayInput}" 
+                                    [(ngModel)]="searchInputValue"
+                                    [ngModelOptions]="{standalone: true}"
+                                    placeholder="Recherche par marques" 
+                                    (click)="inputClick()" />
+                                    
+                                    <!-- BOUTON DE RECHERCHE-->
+                                    <button class="btnSearch" 
+                                    (click)="submitSearchByMarques()"
+                                    [ngStyle]="{'display': displayInput}">
+                                    <img class="imgSearch" src="pictures\search.png" alt="Search">
+                                    </button>
+                                </div>
+                                </form>
+    
+                                <div class="mac-select-wrapper" [ngStyle]="{'visibility':displaySelect}" >
+    
+                                                            <!-- MARQUES -->
+                                    <div class="mac-select-btn"
+                                        [class.open]="isOpenMarques()"
+                                        (click)="toggleMarquesDropdown($event)">
+                                        <span class="mac-select-label">{{ labMarques() }}</span>
+                                        <span class="mac-select-chevron">▼</span>
+                                    </div>
+    
+                                    <div class="mac-dropdown"
+                                        [class.open]="isOpenMarques()"
+                                        (click)="$event.stopPropagation()">
+                                        @for (m of marques(); track m.id) {
+                                            <div class="mac-option"
+                                                [class.selected]="selectedMarques().includes(m.name)"
+                                                (click)="toggleMarque(m.name, $event);  $event.stopPropagation()">
+                                                <div class="mac-checkbox"
+                                                    [class.checked]="selectedMarques().includes(m.name)"></div>
+                                                <span class="mac-option-label">{{ m.name }}</span>
+                                            </div>
+                                        }
+                                    </div>
+    
+                                                            <!-- TYPES -->
+                                    <div class="mac-select-btn"
+                                        [class.open]="isOpenTypes()"
+                                        (click)="toggleTypesDropdown($event)">
+                                        <span class="mac-select-label">{{ labTypes() }}</span>
+                                        <span class="mac-select-chevron">▼</span>
+                                    </div>
+    
+                                    <div class="mac-dropdown"
+                                        [class.open]="isOpenTypes()"
+                                        (click)="$event.stopPropagation()">
+                                        @for (t of types(); track $index) {
+                                            <div class="mac-option"
+                                                [class.selected]="selectedTypes().includes(t)"
+                                                (click)="toggleType(t, $event); $event.stopPropagation()">
+                                                <div class="mac-checkbox"
+                                                    [class.checked]="selectedTypes().includes(t)"></div>
+                                                <span class="mac-option-label">{{ t }}</span>
+                                            </div>
+                                        }
+                                    </div>
+                                                        <!-- GENDERS -->
+                                    <div class="mac-select-btn"
+                                        [class.open]="isOpenGenders()"
+                                        (click)="toggleGendersDropdown($event)">
+                                        <span class="mac-select-label">{{ labGenders() }}</span>
+                                        <span class="mac-select-chevron">▼</span>
+                                    </div>
+    
+                                    <div class="mac-dropdown"
+                                        [class.open]="isOpenGenders()"
+                                        (click)="$event.stopPropagation()">
+                                        @for (g of genders(); track $index) {
+                                            <div class="mac-option"
+                                                [class.selected]="selectedGenders().includes(g)"
+                                                (click)="toggleGender(g, $event); $event.stopPropagation()">
+                                                <div class="mac-checkbox"
+                                                    [class.checked]="selectedGenders().includes(g)"></div>
+                                                <span class="mac-option-label">{{ g }}</span>
+                                            </div>
+                                        }
+                                    </div>
+    
+                                    
+                                    <button class="btnSelectSearch" 
+                                    (click)="submitSearchByFilters()" 
+                                    [ngStyle]="{'display':displaySelect}">
+                                    <p class="btnSearchText">
+                                    <img class="imgSelectSearch" src="pictures\search.png" alt="Search">
+                                    </p>
+                                    </button>
+                                </div>
+                    </div>
+                </div>
+          }
+            
+            <!-- LOGO -->
+            <div class="container-logo" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
+                <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+            </div>
+
+            @if(displayLogoMobile){
+            <div class="container-logo-mobile">
+                <img class="img_logo_mobile" src="/pictures/logo.png" alt="Logo Boycoté">
+            </div>
+            }
+
+                   
+            <!-- PANIER -->
+            <div class="container-panier">
+            <div class="btn-panier">
+                <app-cart></app-cart>
+            </div>               
+                        <!-- <img class="btn-panier" src="/pictures/shopping.png" alt="panier" routerLink="/panier">
+                        @if(countPanier > 0){
+                        <span class="cart-badge">
+                            {{ countPanier }}
+                        </span>
+                        } -->
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------- CAROUSEL ------------------------->
+    <div class="div2">
+        <div class="container-carousel">  
+
+                                            <!-- CAROUSEL STANDARD -->
+                @if(carouselStandard)
+                {   
+                <div class="page-center" >
+                    @if(displayNoResult){
+                        <div class="result">
+                            {{noResult}}
+                        </div>
+                    }
+
+                    <div class="carousel-wrapper">
+                        <div class="carouselstd">
+                            <app-carousel-standard></app-carousel-standard>
+                        </div>
+                    
+                    </div>
+                </div>
+                }
+
+                                            <!-- CAROUSEL INPUT -->             
+                @if(carouselSearchList)
+                {
+                    @if(displayNoResult){
+                        <div class="noResult">
+                                {{noResult}}
+                        </div>
+                    }
+                <div class="page-center">
+
+                    <div class="carousel-wrapper" [ngClass]="{ 'hidden-carousel': carouselSearchList }">
+                        <div class="carouselInput" >
+                            <app-carousel-input 
+                            [searchQuery] = "searchQuery"
+                            [searchSubmitted]="searchSubmitted">
+                            </app-carousel-input>
+                        </div>
+                    </div>
+                </div>                
+                }
+                
+                                            <!-- CAROUSEL SELECT -->
+                @if(carouselSelectList)
+                {
+                <div class="page-center">
+                    <div class="carousel-wrapper" >
+                        <div class="carouselSelect">
+                            <app-carousel-list 
+                            [filteredArticlesSelected]="filtered"
+                            [loadingPb]="loadingPb">
+                            </app-carousel-list>
+                        </div>
+                    </div>
+                </div>
+                }
+        </div>
+    </div>
+
+
+    <div class="div3">
+        <div class="footer">
+            <app-footer></app-footer>
+        </div>
+    </div>
+
+

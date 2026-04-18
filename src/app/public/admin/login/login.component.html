@@ -1,0 +1,20 @@
+<div class="login-container">
+            <!-- LOGO -->
+  <div class="container-logo"><img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté"></div>
+
+  <form (ngSubmit)="submit()">
+
+    <label>Identifiant</label>
+    <input type="text" [(ngModel)]="username" name="username" required />
+
+    <label>Mot de passe</label>
+    <input type="password" [(ngModel)]="password" name="password" required />
+
+    <button type="submit">Connexion</button>
+
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+  </form>
+</div>
+

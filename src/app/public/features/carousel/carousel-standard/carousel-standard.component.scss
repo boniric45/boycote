@@ -1,4 +1,8 @@
-
+.card{
+  width: 350px;
+  height: 450px;
+  cursor: pointer;
+}
 .carousel-wrapper {
   margin-top: 10rem;
   position: relative;
@@ -32,7 +36,7 @@
   height: 450px;
   object-fit: cover;
   border-radius: 18px;
-
+  cursor: pointer;
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.35s ease;
@@ -70,27 +74,27 @@
 }
 
 .nav-mobile {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   display: flex;
   gap: 1.5rem;
 }
 
-
-.description {
+.description  {
   margin-top: 9rem;
   text-align: center;
   max-width: 600px;
+  font-family: "Roboto Mono", monospace; 
+  font-size: 22px;
+  font-weight: 300;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-.description h2 {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-.description p {
-  font-size: 1rem;
-  opacity: 0.8;
-  line-height: 1.4;
+.price{
+  font-family: "Roboto Mono", monospace; 
+  font-size: 20px;
+  color: #333;
+  font-weight: 100;
 }
 
 
@@ -104,21 +108,73 @@
 }
 
 
+////////////////////// BOUTON ////////////////////////
+
+.conteneur-bouton { 
+  display: flex; 
+  justify-content: center; 
+  margin-top: 10px; 
+  margin-bottom: 10px;
+}
+
+button.primary {
+position: relative; 
+width: 180px; 
+height: 30px; 
+border-radius: 15px;
+border: 1px solid #3366bb; 
+cursor: pointer; 
+overflow: hidden;
+background: linear-gradient(180deg, #2255bb 0%, #4488ee 20%, #88ccff 47%, #55aaff 53%, #2266cc 80%, #1144aa 100%);
+box-shadow: 0 4px 12px rgba(0,60,200,0.35);
+font-size: 11px;
+font-weight: 700; 
+color: #ffffff; 
+letter-spacing: 1.2px;
+text-shadow: 0 1px 2px rgba(0,0,80,0.50);
+font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif;
+}
+
+button.primary::before {
+content: ''; position: absolute; top: 0; left: 0;
+width: 100%; height: 52%;
+background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 100%);
+border-radius: 15px 15px 50% 50%; pointer-events: none; z-index: 2;
+}
+
+button.primary::after {
+content: ''; position: absolute; bottom: 2px; left: 12%;
+width: 76%; height: 38%;
+border-radius: 50%; pointer-events: none; z-index: 2;
+}
+
+button.primary span { position: relative; z-index: 3; }
+button.primary:hover { filter: brightness(1.10); }
+button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
+
+/////////////////////////////////////////////////////////////
+
+
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 600px) { 
 
   .desktop {
     display: none !important;
   }
 
+  .container{
+    margin-top: 70px;
+  }
+
   .nav-mobile {
     display: flex;
     justify-content: center;
-    gap: 0.1rem;
-    width: 100%;
     max-width: 650px;
-    margin-top: 9rem;      /* ✔ flèches plus bas */
-    padding-bottom: 0.2rem;  /* ✔ espace sous les flèches */
+    scale: 0.9;
+  //  margin-top: 2rem;      /* ✔ flèches plus bas */
+   // padding-bottom: 0.2rem;  /* ✔ espace sous les flèches */
+    gap: 2rem;
+    margin-right: 20px;
   }
 
   .nav {
@@ -128,7 +184,17 @@
   }
 
   .description{
-    margin: 0;
+    margin-top: 50px;
     padding: 0;
   }
+
+  .carousel{
+    scale: 0.90;
+    transform: translateX(-1.5%);
+  }
+
+  .carousel-wrapper{
+    height: 150px;
+  }
+
 }

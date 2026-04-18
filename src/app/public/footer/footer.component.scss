@@ -1,66 +1,117 @@
-*{
-    margin: 0;
+* {
     padding: 0;
+    margin: 0;
 }
 
-.container-footer{
+.footer {
     width: 100%;
-    display: flex;
-    align-items: end;
-    justify-content: space-around;
-}
-
-
-.container{
-    position: fixed;
-    bottom: 0;
-}
-
-.container-contact{
-    padding: 0;
+    height: 20px;
     margin: 0;
+  //  padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    scale: 0.7;
 }
 
-.contact,
-.cabine,
-.tiktok,
-.instagram,
-.mentions,
-.annulation{
-    transform: scale(0.4);
+.footer-links {
+    display: flex;
+    width: 100%;
+    justify-content: stretch;
+    flex-wrap: wrap; /* pour le responsive */
+    gap: 35px 30px; /* <-- gap vertical puis horizontal */
+}
+
+.footer-item {
+    flex: 1;
+    min-width: 120px; /* évite que ça devienne trop petit */
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+/* Icônes */
+.icon {
+    transform: scale(0.3);
     transform-origin: top center;
-    height: 40px; /* ajuste selon la taille souhaitée */
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.label-contact,
-.label-cabine,
-.label-tiktok,
-.label-instagram,
-.label-mentions,
-.label-annulation {
-    margin: 10px;
+/* Labels */
+.label {
+   // margin-top: 5px;
     text-align: center;
-    font-family: "Roboto Mono", monospace; // Font Standard
-    font-size: 18px;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-style: normal;
+    font-family: "Roboto Mono", monospace; 
+    font-size: 16px;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-    margin-bottom: 20px;
-}
-
-p{
+/* Copyright */
+.copyright {
+    margin-top: 25px;
+    font-family: "Roboto Mono", monospace;
     font-style: oblique;
-    font-weight: bold;
-    bottom: 0;
-    position: fixed;
+    font-size: 16px;
 }
 
 
+/* Footer responsive */
+@media (max-width: 900px) {
+    .footer-links {
+        gap: 25px;
+    }
+    .label {
+        text-align: center;
+        font-family: "Roboto Mono", monospace; 
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-links {
+        flex-wrap: wrap; /* <-- Passe en plusieurs lignes si nécessaire */
+        gap: 20px;
+    }
+    .icon {
+        transform: scale(0.35);
+    }
+    .label {
+        text-align: center;
+        font-family: "Roboto Mono", monospace; 
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .footer-links {
+        flex-direction: row; /* <-- Mode colonne sur très petit écran */
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    .icon {
+        transform: scale(0.28);
+    }
+    .label {
+        text-align: center;
+        font-family: "Roboto Mono", monospace; 
+        font-size: 16px;
+   
+    }
+}                                                                                                                                                                                                           
+
+.footer-item {
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+.footer-item:link,
+.footer-item:visited,
+.footer-item:hover,
+.footer-item:active {
+    text-decoration: none;
+    color: black;
+}

@@ -7,7 +7,7 @@ import { Marque } from '../models/marque';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 
-  private baseUrl = 'https://www.boycoté.fr/api/';
+  private baseUrl = 'https://www.boycoté.fr/api';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class ApiService {
   }
 
   getProduct(id:number): Observable<Product> {
-    return this.http.get<Product>(`${this.baseUrl}/getProduct.php?id=${id}`); 
+    return this.http.get<Product>(`${this.baseUrl}/getProduct?id=${id}`); 
   }
 
   getMarques(): Observable<Marque[]> {

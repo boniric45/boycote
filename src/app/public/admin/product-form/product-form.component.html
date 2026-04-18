@@ -1,0 +1,88 @@
+  <img class="imgBack" src="pictures\back.png" [routerLink]="['/home']" alt="Back">
+
+<form [formGroup]="form" (ngSubmit)="save()" class="product-form">
+
+  <!-- SECTION 1 : Infos générales -->
+  <section class="block">
+    <h2>Informations générales</h2>
+
+    <div class="block-fields">
+      <label>SKU *<input type="text" formControlName="sku" required></label>
+      <label>Nom *<input type="text" formControlName="name" required></label>
+      <label>Description <textarea formControlName="description"></textarea></label>
+      <label>Conditions <input type="text" formControlName="conditions"></label>
+      <label>Type *<input type="text" formControlName="type" required></label>
+      <label>Genre *<input type="text" formControlName="gender" required></label>
+      <label>Taille *<input type="text" formControlName="size" required></label>
+      <label>Mesure *<input type="text" formControlName="mesure" required></label>
+      <label>Prix (€) *<input type="number" formControlName="prix" required></label>
+      <label>Stock *<input type="number" formControlName="stock" required></label>
+
+      <label>Marque
+        <select formControlName="marque" required>
+          <option value="">-- Choisir --*</option>
+          @for (m of marques; track m.id) {
+            <option [value]="m.name">{{ m.name }}</option>
+          }
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <!-- SECTION 2 : Images produit -->
+  <section class="block">
+    <h2>Images du produit </h2>
+    <h3 style="text-align: center;">Image Principale du Produit sur le carousel est la numéro 1</h3>
+
+    <div class="pictures-grid">
+      @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+        <div class="picture-item">
+
+          <label>Image {{ i }}</label>
+
+    <input type="file" (change)="onFileSelected($event, getPictureField(i), i)">
+
+          @if (form.get(getPictureField(i))?.value) {
+            <img class="preview"
+                 [src]="form.get(getPictureField(i))?.value">
+          }
+
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- SECTION 3 : Cabine -->
+  <section class="block">
+    <h2>Cabine</h2>
+
+    <label>Image cabine
+      <input type="file" (change)="onFileSelected($event, 'pictureCabine','cabine')">
+    </label>
+
+    @if (form.value.pictureCabine) {
+      <img [src]="form.value.pictureCabine" class="preview-large">
+    }
+
+    <label>Titre cabine
+      <input type="text" formControlName="titleProductCabine">
+    </label>
+  </section>
+
+  <!-- SECTION 4 : Paramètres cabine -->
+  <section class="block">
+    <h2>Paramètres cabine</h2>
+
+    <div class="block-fields">
+      <label>Z-index <input type="text" formControlName="zindexcabine"></label>
+      <label>X <input type="number" formControlName="xcabine"></label>
+      <label>Y <input type="number" formControlName="ycabine"></label>
+      <label>Largeur <input type="number" formControlName="widthCabine"></label>
+      <label>Hauteur <input type="number" formControlName="heightCabine"></label>
+      <label>Lien produit <input type="text" formControlName="productLink"></label>
+    </div>
+  </section>
+
+  <button type="submit" class="btn-save">Enregistrer</button>
+
+</form>

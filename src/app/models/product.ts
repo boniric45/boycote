@@ -15,23 +15,38 @@ export interface Product {
     pathpicturetwo:string;
     pathpicturethree:string;
     pathpicturefour:string;
-	pathpicturefive:string;
+	  pathpicturefive:string;
     pathpicturesix:string;
     pathpictureseven:string;
     pathpictureeight:string;
     pathpicturenine:string;
     pathpictureten:string;
-    pictureCabine:string;
-    productLink:string;
-    titleProductCabine:string;
+    picturecabine:string;
+    productlink:string;
+    titleproductcabine:string;
     zindexcabine:string;
     xcabine:number;
     ycabine:number;
-    widthCabine:number;
-    heightCabine:number;
+    widthcabine:number;
+    heightcabine:number;
 }
 
 export interface AddProductResponse {
   success: boolean;
   id: number;
+}
+
+export interface ProductFilter {
+  marque?: string[];
+  type?: string[];
+  gender?: string[];
+}
+
+export interface CartItem {
+  id: number;
+  nom: string;
+  taille: string;
+  genre: string;
+  prix: number;
+  image?: string;
 }

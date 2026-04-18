@@ -1,106 +1,144 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, Input, OnInit, signal, Signal } from '@angular/core';
+import { ApiService } from '../../../../services/api.service';
+import { ProgressbarComponent } from "../../../progressbar/progressbar.component";
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
-import { Product } from '../../../../models/product';
-import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-carousel-input',
-  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent],
+  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, ProgressbarComponent],
   templateUrl: './carousel-input.component.html',
   styleUrl: './carousel-input.component.scss',
 })
 export class CarouselInputComponent implements OnInit{
 
-   ngOnInit(): void {
+  private apiService = inject(ApiService);
 
-    this.loadProducts(); // RECUPERE LA LISTE DES PRODUITS
-    this.updateVisibleCount(); // MAJ ARTICLES
-    
-    window.addEventListener('resize', () => {
-      this.updateVisibleCount();
-    });
-
-    }
-
-
-  private apiService = inject(ApiService); // SERVICE API
-
-  articles: Product[] = []; // INITIALISATION DES ARTICLES
-  visibleCount = 5; // nombre de card visible
+  articles = signal<any[]>([]);
+  visibleCount = 5;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
 
-  // CHARGE LA LISTE DES PRODUITS
-  loadProducts() {
-    this.apiService.getProducts().subscribe((p) => {
-      this.articles = p;
+  @Input({required: true}) searchQuery!: Signal<string>;
+  @Input() searchSubmitted!: Signal<boolean>;
+
+  loadingPb: boolean = true;
+
+  ngOnInit(): void {
+
+    this.loadProducts();
+    this.updateVisibleCount();
+
+    window.addEventListener('resize', () => {
+      this.updateVisibleCount();
     });
   }
 
-  // MAJ DES ARTICLES
-  updateVisibleArticles() {
-    const half = Math.floor(this.visibleCount / 2);
-    this.visibleArticles.toLocaleString([]);
-
-    for (let i = -half; i <= half; i++) {
-      const index = (this.currentIndex + i + this.articles.length) % this.articles.length;
-      this.visibleArticles.push(this.articles[index]);
-    }
+  loadProducts() {
+    this.apiService.getProducts().subscribe((p) => {
+      this.articles.set(p);      
+    });
   }
 
-  // AFFICHE LES ARTICLES
-  get visibleArticles() {
-    const half = Math.floor(this.visibleCount / 2);
-    const result = [];
+  // RECHERCHE DES PRODUITS
+filtered = computed(() => {
+  const term = this.searchQuery().trim().toLowerCase();
 
-    for (let i = -half; i <= half; i++) {
-      const index = (this.currentIndex + i + this.articles.length) % this.articles.length;
-      result.push(this.articles[index]);
-    }
+  // 🔥 Si aucune recherche → aucun résultat
+  if (!term) return [];
 
-    return result;
+  return this.articles().filter(p =>
+    p.marque.toLowerCase().includes(term)
+  );
+});
+
+
+// AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
+canShowCarousel = computed(() => this.filtered().length >= 3);
+
+normalized = computed(() => {
+  const list = this.filtered();
+  console.log('📌 normalized (before logic) =', list);
+
+  // Aucun résultat → tableau vide
+  if (list.length === 0) {
+    return [];
   }
 
-  // AFFICHE 5 ARTICLES POUR UN DESKTOP ET 3 POUR UN MOBILE EN FONCTION DE LA FENETRE
+  // Moins de 5 résultats → duplication
+  if (list.length < 5) {
+    const result = [...list];
+    while (result.length < 5) {
+      result.push(...list);
+    }
+    return result.slice(0, 5);
+  }
+
+  // Sinon → liste normale
+  return list;
+});
+
+
+
+get visibleArticles() {
+  const articles = this.normalized();
+
+  // Si aucun résultat → rien à afficher
+  if (articles.length === 0) {
+    return [];
+  }
+
+  const total = articles.length;
+  const count = Math.min(this.visibleCount, total);
+
+  const start = this.currentIndex - Math.floor(count / 2);
+
+  const result = [];
+
+  for (let i = 0; i < count; i++) {
+    const index = (start + i + total) % total;
+    result.push(articles[index]);
+  }
+
+  return result;
+}
+
+
+  trackByArticle(index: number, article: any) {
+    return article?.id ?? index;
+  }
+
   updateVisibleCount() {
-    if (window.innerWidth < 768) {
-      this.visibleCount = 3;
-    } else {
-      this.visibleCount = 5;
-    }
-
-    this.updateVisibleArticles(); // MAJ DES ARTICLES
+    this.visibleCount = window.innerWidth < 768 ? 3 : 5;
   }
 
-  // ANIMATIONS
   triggerAnimation(dir: 'left' | 'right') {
     this.direction = dir;
     this.isAnimating = true;
-    setTimeout(() => this.isAnimating = false, 180);
+    setTimeout(() => (this.isAnimating = false), 180);
   }
 
-  // BOUTON AVANCER
+
   next() {
-    if (this.isAnimating) return;
-    this.triggerAnimation('right');
-    this.currentIndex = (this.currentIndex + 1) % this.articles.length;
+    const total = this.normalized().length;
+    if (total === 0) return;
+
+    this.currentIndex = (this.currentIndex + 1) % total;
   }
 
-  // BOUTON RETOUR
   prev() {
-    if (this.isAnimating) return;
-    this.triggerAnimation('left');
-    this.currentIndex =
-      (this.currentIndex - 1 + this.articles.length) % this.articles.length;
+    const total = this.normalized().length;
+    if (total === 0) return;
+
+    this.currentIndex = (this.currentIndex - 1 + total) % total;
   }
 
-  // ROTATION DU CAROUSEL
   getTransform(i: number) {
     const middle = Math.floor(this.visibleCount / 2);
     const offset = i - middle;
+
     const rotation = offset * 8;
     const scale = 1 - Math.abs(offset) * 0.06;
     const translateX = offset * 80;
@@ -115,26 +153,21 @@ export class CarouselInputComponent implements OnInit{
     `;
   }
 
-  // LA CARTE RESTE AU DEVANT DES AUTRES
   getZIndex(i: number) {
     const middle = Math.floor(this.visibleCount / 2);
     return 100 - Math.abs(i - middle);
   }
 
-  // CENTRE LA CARTE ACTIVE
   get centralArticle() {
     const middle = Math.floor(this.visibleCount / 2);
     return this.visibleArticles[middle];
   }
 
-  // OPACITE DES CARDS
   getOpacity(i: number) {
     const middle = Math.floor(this.visibleCount / 2);
     const offset = Math.abs(i - middle);
-
-    return 1 - offset * 0.15; // centre = 1, côtés = 0.85, 0.70, etc.
+    return 1 - offset * 0.15;
   }
-
 
 
 }

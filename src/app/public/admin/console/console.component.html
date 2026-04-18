@@ -1,0 +1,52 @@
+<img class="imgBack" src="pictures\back.png" [routerLink]="['/home']" alt="Back">
+
+<img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+
+<button class="logout-btn" (click)="logout()">Logout</button>
+
+<div class="container">
+
+  <div class="product-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Preview</th>
+          <th>Sku</th>
+          <th>Nom</th>
+          <th>Marque</th>
+          <th>Prix</th>
+          <th>Stock</th>
+          <th>Actions</th>
+          <th></th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+        @for (product of products; track product.id) {
+        <tr>
+          <td>
+            <img [src]="getPreview(product)" alt="{{ product.name }}" class="preview" />
+          </td>
+          <td>{{ product.sku }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.marque}}</td>
+          <td>{{ product.prix }} €</td>
+          <td>{{ product.stock }}</td>
+
+          <td class="actions">
+            <button class="update" (click)="edit(product)"><img
+                src="/pictures/modifier.png"></button>
+            <button class="danger" (click)="delete(product.id)"><img src="/pictures/delete.png"></button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cont-btn-add" routerLink="add">
+    <img class="btn-add" src="/pictures/add.png" alt="">
+  </div>
+
+</div>

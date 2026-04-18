@@ -1,0 +1,101 @@
+    @if(product){
+
+        <h1 style="text-align: center;">Produit: {{product.name}} - SKU: {{product.sku}} </h1>
+    }
+      
+  
+    <img class="back-btn" src="pictures\back.png" [routerLink]="['/admin']" alt="Back">
+    <br>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+    <form [formGroup]="form" (ngSubmit)="save()" class="product-form">
+
+        <!-- SECTION 1 : Infos générales -->
+        <section class="block">
+            <h2>Informations générales</h2>
+
+            <div class="block-fields">
+                <label style="color: crimson;">* SKU <input type="text" formControlName="sku" required></label>
+                <label style="color: crimson;">* Nom <input type="text" formControlName="name" required></label>
+                <label>Description <textarea formControlName="description"></textarea></label>
+                <label>Conditions <input type="text" formControlName="conditions"></label>
+                <label style="color: crimson;">* Type<input type="text" formControlName="type" required></label>
+                <label style="color: crimson;">* Genre<input type="text" formControlName="gender" required></label>
+                <label style="color: crimson;">* Taille<input type="text" formControlName="size" required></label>
+                <label style="color: crimson;">* Mesure<input type="text" formControlName="mesure" required></label>
+                <label style="color: crimson;">* Prix (€)<input type="number" formControlName="prix" required></label>
+                <label style="color: crimson;">* Stock<input type="number" formControlName="stock" required></label>
+
+                <label style="color: crimson;">* Marque
+                    <select formControlName="marque" required>
+                        <option value="" style="color: crimson;">* Choisir</option>
+                        @for (m of marques; track m.id) {
+                        <option [value]="m.name" >{{ m.name }}</option>
+                        }
+                    </select>
+                </label>
+            </div>
+        </section>
+
+        <!-- SECTION 2 : Images produit -->
+        <section class="block">
+            <h2>Images du produit </h2>
+
+            <div class="pictures-grid">
+
+        @for (field of pictureFields; track field) {
+        <div class="picture-block">
+         
+            <div class="picture-wrapper">
+            @if (form.get(field)?.value) {
+                <img [src]="form.get(field)?.value" class="preview">
+            } @else {
+                <div class="empty-thumb"></div>
+            }
+            </div>
+
+            <label class="upload-btn">
+            Choisir un fichier
+            <input type="file" class="file-input" (change)="onFileSelected($event, field, $index + 1)">
+            </label>
+
+        </div>
+        }
+
+
+            </div>
+        </section>
+
+        <!-- SECTION 3 : Cabine -->
+        <section class="block">
+            <h2>Cabine</h2>
+
+            <label>Image cabine
+                <input type="file" (change)="onFileSelected($event, 'picturecabine','cabine')">
+            </label>
+
+            @if (form.value.picturecabine) {
+            <img [src]="form.value.picturecabine" class="preview-large">
+            }
+
+            <label>Titre cabine
+                <input type="text" formControlName="titleproductcabine">
+            </label>
+        </section>
+
+        <!-- SECTION 4 : Paramètres cabine -->
+        <section class="block">
+            <h2>Paramètres cabine</h2>
+
+            <div class="block-fields">
+                <label>Z-index <input type="text" formControlName="zindexcabine"></label>
+                <label>X <input type="number" formControlName="xcabine"></label>
+                <label>Y <input type="number" formControlName="ycabine"></label>
+                <label>Largeur <input type="number" formControlName="widthcabine"></label>
+                <label>Hauteur <input type="number" formControlName="heightcabine"></label>
+                <label>Lien produit <input type="text" formControlName="productlink"></label>
+            </div>
+        </section>
+
+        <button type="submit" class="btn-save">Enregistrer</button>
+
+    </form>

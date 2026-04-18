@@ -1,23 +1,70 @@
-<div class="cart-container" *ngIf="items.length > 0; else empty">
-  <h2>Votre panier</h2>
-
-  <div class="cart-item" *ngFor="let item of items">
-    
-    <img [src]="item.product.pathpictureone" alt="{{ item.product.name }}">
-    <div class="info">
-      <h3>{{ item.product.name }}</h3>
-      <p>{{ item.quantity }} x {{ item.product.prix | currency:'EUR' }}</p>
-      <p>Total : {{ item.total | currency:'EUR' }}</p>
-      <button (click)="remove(item.product.id)">Supprimer</button>
+<!-- BOUTON PANIER -->
+<div class="shop-wrapper">
+  <div class="key-btn" (click)="openCart()">
+    <div class="key-bottom"></div>
+    <div class="key-face">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <path d="M 28,36 Q 28,18 40,18 Q 52,18 52,36" stroke="#808080" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 16,36 L 20,62 Q 20,66 24,66 L 56,66 Q 60,66 60,62 L 64,36 Z" stroke="#808080" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </div>
   </div>
-
-  <div class="cart-total">
-    <h3>Total : {{ total | currency:'EUR' }}</h3>
-    <button class="pay" (click)="checkoutStripe()">Payer avec Stripe</button>
-  </div>
+  @if (cart.length > 0) {
+    <div class="cart-badge">{{ cart.length }}</div>
+  }
 </div>
 
-<ng-template #empty>
-  <p>Votre panier est vide.</p>
-</ng-template>
+<!-- OVERLAY PANIER -->
+@if (isOpen) {
+  <div class="cart-overlay" (click)="onOverlayClick($event)">
+    <div class="cart-window">
+
+      <!-- Barre titre -->
+      <div class="title-bar">
+        <button class="btn-close-cart" (click)="closeCart()"></button>
+        <span class="title-text">My Cart</span>
+      </div>
+
+      <!-- Articles -->
+      <div class="cart-body">
+        <div class="divider"></div>
+
+        @if (cart.length === 0) {
+          <p class="cart-empty">Your cart is empty.</p>
+        } @else {
+          @for (item of cart; track item.id; let i = $index) {
+            <div class="cart-item">
+              <div class="cart-item-img-placeholder">👗</div>
+              <div class="cart-item-info">
+                <span class="cart-item-name">{{ item.nom }}</span>
+                <span class="cart-item-sub">{{ item.taille }} · {{ item.genre }}</span>
+                <span class="cart-item-price">€ {{ item.prix }}</span>
+              </div>
+              <button class="btn-remove" (click)="removeItem(i)">✕ Remove</button>
+            </div>
+          }
+        }
+      </div>
+
+      <!-- Footer fixe -->
+      <div class="cart-footer">
+        <div class="divider"></div>
+        <div class="cart-total-row">
+          <span class="cart-total-label">Shipping</span>
+          <span class="cart-shipping-note">Calculated at next step</span>
+        </div>
+        <div class="cart-total-row">
+          <span class="cart-total-label">Total</span>
+          <span class="cart-total-amount">€ {{ total }}</span>
+        </div>
+        <button class="btn-checkout" [disabled]="cart.length === 0" (click)="checkout()">
+          <span>PROCEED TO CHECKOUT →</span>
+        </button>
+        <p class="secure-note">🔒 Secure payment via Stripe</p>
+        <p class="shipping-notes">Apply your code at the final checkout step</p>
+        <p class="shipping-note">🌍 Worldwide shipping. Costs updated at next step.</p>
+      </div>
+
+    </div>
+  </div>
+}
