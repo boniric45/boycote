@@ -4,12 +4,22 @@
 
 <button class="logout-btn" (click)="logout()">Logout</button>
 
+
+
 <div class="container">
 
+  <!---------------- PRODUCTS ---------------->
+  <div class="products">
   <div class="product-table">
     <table>
       <thead>
+
         <tr>
+          <th>
+           <div class="cont-btn-add" routerLink="add">
+              <img class="btn-add" src="/pictures/add.png" alt="">
+          </div>
+          </th>
           <th>Preview</th>
           <th>Sku</th>
           <th>Nom</th>
@@ -25,6 +35,7 @@
       <tbody>
         @for (product of products; track product.id) {
         <tr>
+          <td></td>
           <td>
             <img [src]="getPreview(product)" alt="{{ product.name }}" class="preview" />
           </td>
@@ -44,9 +55,123 @@
       </tbody>
     </table>
   </div>
+    </div>
 
-  <div class="cont-btn-add" routerLink="add">
-    <img class="btn-add" src="/pictures/add.png" alt="">
+  <!---------------- MARQUES ---------------->
+  <div class="marques">
+  <div class="marque-table">
+    <table>
+      <thead>
+        <tr>
+                    <th>
+           <div class="cont-btn-add" routerLink="add">
+              <img class="btn-add" src="/pictures/add.png" alt="">
+          </div>
+          </th>
+          <th>Id</th>
+          <th>Marques</th>
+          <th>Actions</th>
+          <th></th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+        @for (marque of marques; track marque.id) {
+        <tr>
+          <td></td>
+          <td>{{ marque.id }}</td>
+          <td>{{ marque.name }}</td>
+          <td class="actions">
+            <button class="update" (click)="editMarque(marque)"><img
+                src="/pictures/modifier.png"></button>
+            <button class="danger" (click)="deleteMarque(marque.id)"><img src="/pictures/delete.png"></button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
   </div>
+    </div>
+
+  <!---------------- VETEMENTS ---------------->
+  <div class="garments">
+  <div class="garment-table">
+    <table>
+      <thead>
+        <tr>
+                    <th>
+           <div class="cont-btn-add" routerLink="add">
+              <img class="btn-add" src="/pictures/add.png" alt="">
+          </div>
+          </th>
+          <th>Id</th>
+          <th>Vêtements</th>
+          <th>Actions</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (garment of garments; track garment.id) {
+        <tr>
+          <td></td>
+          <td>{{ garment.id }}</td>
+          <td>{{ garment.name }}</td>
+
+          <td class="actions">
+            <button class="update" (click)="editGarment(garment)"><img
+                src="/pictures/modifier.png"></button>
+            <button class="danger" (click)="deleteGarment(garment.id)"><img src="/pictures/delete.png"></button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+    </div>
+
+  <!---------------- GENRES ---------------->
+  <div class="genders">
+  <div class="gender-table">
+    <table>
+      <thead>
+        <tr>
+          <th>
+           <div class="cont-btn-add" routerLink="add">
+              <img class="btn-add" src="/pictures/add.png" alt="">
+          </div>
+          </th>
+          <th>Id</th>
+          <th>Genre</th>
+          <th>Actions</th>
+          <th></th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+        @for (genre of genders; track genre.id) {
+        <tr>
+          <td></td>
+          <td>{{ genre.id }}</td>
+          <td>{{ genre.name }}</td>
+          <td class="actions">
+            <button class="update" (click)="editGender(genre)"><img
+                src="/pictures/modifier.png"></button>
+            <button class="danger" (click)="deleteGender(genre.id)"><img src="/pictures/delete.png"></button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+    </div>
 
 </div>
+
+
+
+
+
+

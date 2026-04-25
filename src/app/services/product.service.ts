@@ -61,7 +61,6 @@ export class ProductService  {
   return finalImages;
   }
 
-
   filterProducts(criteria: ProductFilter): Product[] {
     return this.allProducts.filter(p => {
 

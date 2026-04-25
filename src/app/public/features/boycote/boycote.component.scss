@@ -449,6 +449,13 @@ input[type="text"] {
 // }
 
 
+
+.container-carousel {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
 .div2 {
    // CAROUSEL
    grid-area: 2 / 1 / 3 / 1;
@@ -456,12 +463,6 @@ input[type="text"] {
    justify-content: center;
    margin-right: 5px;
    padding: auto;
-}
-
-.container-carousel {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
 }
 
 .div3 {
@@ -481,8 +482,6 @@ input[type="text"] {
 }
 
 
-
-
 hidden-carousel {
    visibility: hidden;
    opacity: 0;
@@ -492,10 +491,6 @@ hidden-carousel {
 
 @media all and (max-width: 600px) {
 
-   // AU CHARGEMENT DE LA FENETRE 
-   // IL FAUT AFFICHER LE BOUTON HAMBURGER
-   // SI CLIC DESSUS IL FAUT LAISSER LE BOUTON
-   // CACHER LE LOGO, POSITIONNER LA LISTE DEROULANTE AU CENTRE ET SI RECLIC REMETTRE LE LOGO ET RETIRER LA LISTE
    .mac-select-wrapper {
       position: fixed;
       display: flex;
@@ -507,8 +502,6 @@ hidden-carousel {
 
    .header-row {
       display: flex;
-    //  justify-content: space-between;
-    //  align-items: start;
       position: fixed;
       z-index: 9999;
    }
@@ -519,8 +512,6 @@ hidden-carousel {
       grid-template-rows: auto auto auto !important;
       grid-template-columns: auto auto auto;
    }
-
-
 
    .container-logo-mobile{
    display: flex;
@@ -539,10 +530,9 @@ hidden-carousel {
    margin-right: -10px;
    }
 
-.container-select{
+   .container-select{
    display: none;
-}
-
+   }
 
    .img_logo_mobile{
     width: 10rem;
@@ -555,7 +545,6 @@ hidden-carousel {
       margin-right: 55px;
       margin-top: 7px;
    }
-
 
    .btn-menu {
       width: 4rem;
@@ -657,5 +646,10 @@ hidden-carousel {
       }
    }
 
-
+.carouselInput{
+   display: flex;
+   justify-content: center;
+   scale: 0.7;
+  // margin-top: 10px;
+}
 }

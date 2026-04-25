@@ -19,7 +19,7 @@
                 <app-hamburger></app-hamburger>
             </div>
 
-         @if(displaySearch){
+         @if(displaySearchDesktop){
               <div class="container-select" >
                       <div class="selectSort" >
                               <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
@@ -68,10 +68,11 @@
                                       <div class="mac-dropdown"
                                           [class.open]="isOpenMarques()"
                                           (click)="$event.stopPropagation()">
+
                                           @for (m of marques(); track m.id) {
                                               <div class="mac-option"
                                                   [class.selected]="selectedMarques().includes(m.name)"
-                                                  (click)="toggleMarque(m.name, $event);  $event.stopPropagation()">
+                                                  (click)="toggleMarque(m.name, $event); $event.stopPropagation()">
                                                   <div class="mac-checkbox"
                                                       [class.checked]="selectedMarques().includes(m.name)"></div>
                                                   <span class="mac-option-label">{{ m.name }}</span>
@@ -90,13 +91,14 @@
                                       <div class="mac-dropdown"
                                           [class.open]="isOpenTypes()"
                                           (click)="$event.stopPropagation()">
-                                          @for (t of types(); track $index) {
+
+                                          @for (t of types(); track t.id) {
                                               <div class="mac-option"
-                                                  [class.selected]="selectedTypes().includes(t)"
-                                                  (click)="toggleType(t, $event); $event.stopPropagation()">
+                                                  [class.selected]="selectedTypes().includes(t.name)"
+                                                  (click)="toggleType(t.name, $event); $event.stopPropagation()">
                                                   <div class="mac-checkbox"
-                                                      [class.checked]="selectedTypes().includes(t)"></div>
-                                                  <span class="mac-option-label">{{ t }}</span>
+                                                      [class.checked]="selectedTypes().includes(t.name)"></div>
+                                                  <span class="mac-option-label">{{ t.name }}</span>
                                               </div>
                                           }
                                       </div>
@@ -111,13 +113,14 @@
                                       <div class="mac-dropdown"
                                           [class.open]="isOpenGenders()"
                                           (click)="$event.stopPropagation()">
-                                          @for (g of genders(); track $index) {
+
+                                          @for (g of genders(); track g.id) {
                                               <div class="mac-option"
-                                                  [class.selected]="selectedGenders().includes(g)"
-                                                  (click)="toggleGender(g, $event); $event.stopPropagation()">
+                                                  [class.selected]="selectedGenders().includes(g.name)"
+                                                  (click)="toggleGender(g.name, $event); $event.stopPropagation()">
                                                   <div class="mac-checkbox"
-                                                      [class.checked]="selectedGenders().includes(g)"></div>
-                                                  <span class="mac-option-label">{{ g }}</span>
+                                                      [class.checked]="selectedGenders().includes(g.name)"></div>
+                                                  <span class="mac-option-label">{{ g.name }}</span>
                                               </div>
                                           }
                                       </div>
@@ -208,11 +211,11 @@
                                         (click)="$event.stopPropagation()">
                                         @for (t of types(); track $index) {
                                             <div class="mac-option"
-                                                [class.selected]="selectedTypes().includes(t)"
-                                                (click)="toggleType(t, $event); $event.stopPropagation()">
+                                                [class.selected]="selectedTypes().includes(t.name)"
+                                                (click)="toggleType(t.name,$event); $event.stopPropagation()">
                                                 <div class="mac-checkbox"
-                                                    [class.checked]="selectedTypes().includes(t)"></div>
-                                                <span class="mac-option-label">{{ t }}</span>
+                                                    [class.checked]="selectedTypes().includes(t.name)"></div>
+                                                <span class="mac-option-label">{{ t.name }}</span>
                                             </div>
                                         }
                                     </div>
@@ -229,11 +232,11 @@
                                         (click)="$event.stopPropagation()">
                                         @for (g of genders(); track $index) {
                                             <div class="mac-option"
-                                                [class.selected]="selectedGenders().includes(g)"
-                                                (click)="toggleGender(g, $event); $event.stopPropagation()">
+                                                [class.selected]="selectedGenders().includes(g.name)"
+                                                (click)="toggleGender(g.name,$event); $event.stopPropagation()">
                                                 <div class="mac-checkbox"
-                                                    [class.checked]="selectedGenders().includes(g)"></div>
-                                                <span class="mac-option-label">{{ g }}</span>
+                                                    [class.checked]="selectedGenders().includes(g.name)"></div>
+                                                <span class="mac-option-label">{{ g.name }}</span>
                                             </div>
                                         }
                                     </div>
@@ -262,18 +265,12 @@
             </div>
             }
 
-                   
             <!-- PANIER -->
             <div class="container-panier">
             <div class="btn-panier">
                 <app-cart></app-cart>
             </div>               
-                        <!-- <img class="btn-panier" src="/pictures/shopping.png" alt="panier" routerLink="/panier">
-                        @if(countPanier > 0){
-                        <span class="cart-badge">
-                            {{ countPanier }}
-                        </span>
-                        } -->
+
             </div>
         </div>
     </div>
@@ -302,16 +299,12 @@
                 }
 
                                             <!-- CAROUSEL INPUT -->             
-                @if(carouselSearchList)
+                @if(carouselInput)
                 {
-                    @if(displayNoResult){
-                        <div class="noResult">
-                                {{noResult}}
-                        </div>
-                    }
+
                 <div class="page-center">
 
-                    <div class="carousel-wrapper" [ngClass]="{ 'hidden-carousel': carouselSearchList }">
+                    <div class="carousel-wrapper" [ngClass]="{ 'hidden-carousel': carouselInput }">
                         <div class="carouselInput" >
                             <app-carousel-input 
                             [searchQuery] = "searchQuery"

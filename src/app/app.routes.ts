@@ -18,6 +18,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
+    canMatch: [adminGuard],
     title: 'Boy-Coté.fr',
     children: boycoteRoutes
   },

@@ -6,20 +6,24 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Marque } from '../../../models/marque';
 import { Product, ProductFilter } from '../../../models/product';
 import { ApiService } from '../../../services/api.service';
 import { CartService } from '../../../services/cart.service';
 import { CookieService } from '../../../services/cookie.service';
 import { ProductService } from '../../../services/product.service';
+import { CartComponent } from "../../cart/cart.component";
 import { FooterComponent } from '../../footer/footer.component';
 import { CarouselInputComponent } from "../carousel/carousel-input/carousel-input.component";
 import { CarouselListComponent } from '../carousel/carousel-list/carousel-list.component';
 import { CarouselStandardComponent } from "../carousel/carousel-standard/carousel-standard.component";
 import { CookiesComponent } from '../cookies/cookies.component';
-import { CartComponent } from "../../cart/cart.component";
 import { HamburgerComponent } from "../hamburger/hamburger.component";
+import { Garment } from '../../../models/garment';
+import { Gender } from '../../../models/gender';
+import { GarmentService } from '../../../services/garment.service';
+import { GenderService } from '../../../services/gender.service';
 
 
 @Component({
@@ -51,21 +55,28 @@ export class BoycoteComponent implements OnInit {
   private cookiesService = inject(CookieService);
   private route = inject(Router);
   private productService = inject(ProductService);
+  private garmentService = inject(GarmentService);
+  private genderService = inject(GenderService);
 
   // ajout panier
   countPanier = 0;
   product!: Product;
-  vetementsList: string[] = ['Haut', 'Bas', 'Chaussures', 'Accessoires'];
-  genreList: string[] = ['Femme', 'Homme'];
+  garment!: Garment;
+  gender!: Gender;
+
+  // vetementsList: string[] = ['Haut', 'Bas', 'Chaussures', 'Accessoires'];
+  // genreList: string[] = ['Femme', 'Homme'];
   
+  // vetementsList: string[] = [];
+  // genreList: string[] = [];
 
   /** ------------------------------
    *  SIGNALS
    * ------------------------------ */
   marques = signal<Marque[]>([]);
   products = signal<Product[]>([]); //Writable
-  types = signal(this.vetementsList);
-  genders = signal(this.genreList);
+  types = signal<Garment[]>([]);
+  genders = signal<Gender[]>([]);
   
   selectedMarques = signal<string[]>([]);  
   selectedTypes = signal<string[]>([]);
@@ -74,7 +85,6 @@ export class BoycoteComponent implements OnInit {
   searchSubmitted = signal(false);
   searchSubmittedList = signal(false);
   
-
     /** ------------------------------
    *  DROPDOWN STATES
    * ------------------------------ */
@@ -91,13 +101,12 @@ export class BoycoteComponent implements OnInit {
    *  LABELS DYNAMIQUES
    * ------------------------------ */
   labMarques = computed(() => this.labelOf(this.selectedMarques(), 'Marques'));
-  labTypes = computed(() => this.labelOf(this.selectedTypes(), 'Types'));
-  labGenders = computed(() => this.labelOf(this.selectedGenders(), 'Genres'));
+  labTypes = computed(() => this.labelOf(this.selectedTypes(), 'Garments'));
+  labGenders = computed(() => this.labelOf(this.selectedGenders(), 'Genders'));
 
     /** ------------------------------
    *  STYLE
    * ------------------------------ */
-
   reinitSelectMarque: string = '';
   reinitSelectVetement: string = '';
   reinitSelectGender: string = '';
@@ -117,7 +126,7 @@ export class BoycoteComponent implements OnInit {
   productCarousel:Product[] = [];
   
   // Sélectionne le carousel en fonction de sa recherche
-  carouselSearchList:boolean = false;
+  carouselInput:boolean = false;
   carouselSelectList:boolean = false;
   carouselStandard:boolean = false;
   
@@ -125,7 +134,7 @@ export class BoycoteComponent implements OnInit {
   btnSearchByMarqueIsDisabled:boolean = false;
   displayLogoMobile:boolean = true;
   displaySearchMobile:boolean = false;
-  displaySearch:boolean = true;
+  displaySearchDesktop:boolean = true;
   displayInput = '';
   displaySelect = 'visible';
   displayDropdown = 'visible';
@@ -153,6 +162,12 @@ export class BoycoteComponent implements OnInit {
     
     // RECUPERATION DE TOUS LES PRODUITS
     this.loadProducts();
+
+    // RECUPERATION DE TOUS LES GENRES
+    this.loadGenders();
+
+    // RECUPERATION DE TOUS LES TYPES
+    this.loadGarments();
 
     // COOKIES
     const consent = this.cookiesService.get('cookie_consent');
@@ -191,6 +206,22 @@ export class BoycoteComponent implements OnInit {
     });
   }
 
+  // ALIMENTE GENRES
+  loadGenders() {
+    this.genderService.getAll().subscribe(g => {
+      this.genders.set(g);
+    })
+  }
+
+  // ALIMENTE VETEMENTS
+  loadGarments(){
+    this.garmentService.getAll().subscribe(gar => {
+    this.types.set(gar);
+    })
+
+    
+  }
+
   // ALIMENTE PRODUIT
   loadProducts() {
     this.apiService.getProducts().subscribe(p => {
@@ -198,6 +229,7 @@ export class BoycoteComponent implements OnInit {
       this.productService.allProducts = p; // Stocke dans le service pour pouvoir filtrer ensuite
     });
   }
+
 
   launchCarouselStandard(){
     this.loadingPb = true; // lance la progress bar
@@ -234,13 +266,11 @@ export class BoycoteComponent implements OnInit {
       this.displaySearchMobile = false;
       this.displayLogoMobile = true;
     }
-
     
   //  window.innerWidth < 365 ? (this.hiddenLogo) = false : true ;
   }
 
   
-
   updateSearch(value: string){
     this.searchQuery.set(value);
   }
@@ -324,19 +354,18 @@ export class BoycoteComponent implements OnInit {
       case 1: // Standard
           this.carouselStandard = true;
           this.carouselSelectList = false;
-          this.carouselSearchList = false;
+          this.carouselInput = false;
           this.launchCarouselStandard();
           this.resetMarque();
           this.resetVetement();
           this.resetGender();   
-          this.searchQuery.set('');        
-                         
+          this.searchQuery.set('');               
         break;
       
       case 2: // Input
           this.carouselStandard = false;
           this.carouselSelectList = false;
-          this.carouselSearchList = true;
+          this.carouselInput = true;
           this.resetMarque();
           this.displaySelect = 'hidden';
         break;
@@ -344,13 +373,13 @@ export class BoycoteComponent implements OnInit {
       case 3: // List
           this.carouselStandard = false;
           this.carouselSelectList = true;
-          this.carouselSearchList = false;
+          this.carouselInput = false;
         break;
 
       case 4: // List
           this.carouselStandard = false;
           this.carouselSelectList = true;
-          this.carouselSearchList = false;
+          this.carouselInput = false;
           this.loadingPb = true;
           this.displayInput = 'none'; // Cache la zone de saisie
           this.displayDropdown='hidden'; // Cache la zone select
@@ -359,7 +388,7 @@ export class BoycoteComponent implements OnInit {
       default: // Standard
           this.carouselStandard = true;
           this.carouselSelectList = false;
-          this.carouselSearchList = false;
+          this.carouselInput = false;
           this.resetMarque();
           this.resetVetement();
           this.resetGender();   
