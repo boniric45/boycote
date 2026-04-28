@@ -48,7 +48,6 @@ filtered = computed(() => {
 
   // 🔥 Si aucune recherche → aucun résultat
   if (!term) return [];
-
   return this.articles().filter(p =>
     p.marque.toLowerCase().includes(term)
   );

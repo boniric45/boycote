@@ -1,4 +1,3 @@
-
 <div>
     @if(isCookiesIsNotSaved()){
           <div class="cookies">
@@ -13,249 +12,251 @@
     <div class="div1">
                 
         <!-- LIGNE 2 : HEADER (recherche + filtres + panier) -->
-        <div class="header-row">
+
 
             <div class="container-hamburger" (click)="hamburgerClicked()">
                 <app-hamburger></app-hamburger>
             </div>
 
-         @if(displaySearchDesktop){
-              <div class="container-select" >
-                      <div class="selectSort" >
-                              <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
-                              
-                                  <form action="">
-                                  <div class="search" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
-                                      
-                                      <button class="btnF5" 
-                                      (click)="refreshList()">
-      
-                                      <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.36 2.64L21 8" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
-                                      <path d="M21 3v5h-5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                      <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.36-2.64L3 16" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
-                                      <path d="M3 21v-5h5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                      </svg>
-                                      </button>        
-                                      
-                                      <!-- CHAMP DE RECHERCHE -->
-                                      <input type="text" 
-                                      [ngStyle]="{'display':displayInput}" 
-                                      [(ngModel)]="searchInputValue"
-                                      [ngModelOptions]="{standalone: true}"
-                                      placeholder="Recherche par marques" 
-                                      (click)="inputClick()" />
-                                      
-                                      <!-- BOUTON DE RECHERCHE-->
-                                      <button class="btnSearch" 
-                                      (click)="submitSearchByMarques()"
-                                      [ngStyle]="{'display': displayInput}">
-                                      <img class="imgSearch" src="pictures\search.png" alt="Search">
-                                      </button>
-                                  </div>
-                                  </form>
-      
-                                  <div class="mac-select-wrapper" [ngStyle]="{'visibility':displaySelect}" >
-      
-                                                              <!-- MARQUES -->
-                                      <div class="mac-select-btn"
-                                          [class.open]="isOpenMarques()"
-                                          (click)="toggleMarquesDropdown($event)">
-                                          <span class="mac-select-label">{{ labMarques() }}</span>
-                                          <span class="mac-select-chevron">▼</span>
-                                      </div>
-      
-                                      <div class="mac-dropdown"
-                                          [class.open]="isOpenMarques()"
-                                          (click)="$event.stopPropagation()">
+            <div class="container-search">
+                    @if(displaySearchDesktop){
+                        <div class="container-select" >
+                                <div class="selectSort" >
+                                        <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
+                                        
+                                            <form action="">
+                                            <div class="search" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
+                                                
+                                                <button class="btnF5" 
+                                                (click)="refreshList()">
+                
+                                                <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.36 2.64L21 8" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                                <path d="M21 3v5h-5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.36-2.64L3 16" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                                <path d="M3 21v-5h5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                </button>        
+                                                
+                                                <!-- CHAMP DE RECHERCHE -->
+                                                <input type="text" 
+                                                [ngStyle]="{'display':displayInput}" 
+                                                [(ngModel)]="searchInputValue"
+                                                [ngModelOptions]="{standalone: true}"
+                                                placeholder="Recherche par marques" 
+                                                (click)="inputClick() " />
+                                                
+                                                <!-- BOUTON DE RECHERCHE-->
+                                                <button class="btnSearch" 
+                                                (click)="submitSearchByMarques()"
+                                                [ngStyle]="{'display': displayInput}">
+                                                <img class="imgSearch" src="pictures\search.png" alt="Search">
+                                                </button>
+                                            </div>
+                                            </form>
+                
+                                            <div class="mac-select-wrapper" [ngStyle]="{'visibility':displaySelect}" >
+                
+                                                                        <!-- MARQUES -->
+                                                <div class="mac-select-btn"
+                                                    [class.open]="isOpenMarques()"
+                                                    (click)="toggleMarquesDropdown($event)">
+                                                    <span class="mac-select-label">{{ labMarques() }}</span>
+                                                    <span class="mac-select-chevron">▼</span>
+                                                </div>
+                
+                                                <div class="mac-dropdown"
+                                                    [class.open]="isOpenMarques()"
+                                                    (click)="$event.stopPropagation()">
 
-                                          @for (m of marques(); track m.id) {
-                                              <div class="mac-option"
-                                                  [class.selected]="selectedMarques().includes(m.name)"
-                                                  (click)="toggleMarque(m.name, $event); $event.stopPropagation()">
-                                                  <div class="mac-checkbox"
-                                                      [class.checked]="selectedMarques().includes(m.name)"></div>
-                                                  <span class="mac-option-label">{{ m.name }}</span>
-                                              </div>
-                                          }
-                                      </div>
-      
-                                                              <!-- TYPES -->
-                                      <div class="mac-select-btn"
-                                          [class.open]="isOpenTypes()"
-                                          (click)="toggleTypesDropdown($event)">
-                                          <span class="mac-select-label">{{ labTypes() }}</span>
-                                          <span class="mac-select-chevron">▼</span>
-                                      </div>
-      
-                                      <div class="mac-dropdown"
-                                          [class.open]="isOpenTypes()"
-                                          (click)="$event.stopPropagation()">
+                                                    @for (m of marques(); track m.id) {
+                                                        <div class="mac-option"
+                                                            [class.selected]="selectedMarques().includes(m.name)"
+                                                            (click)="toggleMarque(m.name, $event); $event.stopPropagation()">
+                                                            <div class="mac-checkbox"
+                                                                [class.checked]="selectedMarques().includes(m.name)"></div>
+                                                            <span class="mac-option-label">{{ m.name }}</span>
+                                                        </div>
+                                                    }
+                                                </div>
+                
+                                                                        <!-- TYPES -->
+                                                <div class="mac-select-btn"
+                                                    [class.open]="isOpenTypes()"
+                                                    (click)="toggleTypesDropdown($event)">
+                                                    <span class="mac-select-label">{{ labTypes() }}</span>
+                                                    <span class="mac-select-chevron">▼</span>
+                                                </div>
+                
+                                                <div class="mac-dropdown"
+                                                    [class.open]="isOpenTypes()"
+                                                    (click)="$event.stopPropagation()">
 
-                                          @for (t of types(); track t.id) {
-                                              <div class="mac-option"
-                                                  [class.selected]="selectedTypes().includes(t.name)"
-                                                  (click)="toggleType(t.name, $event); $event.stopPropagation()">
-                                                  <div class="mac-checkbox"
-                                                      [class.checked]="selectedTypes().includes(t.name)"></div>
-                                                  <span class="mac-option-label">{{ t.name }}</span>
-                                              </div>
-                                          }
-                                      </div>
-                                                          <!-- GENDERS -->
-                                      <div class="mac-select-btn"
-                                          [class.open]="isOpenGenders()"
-                                          (click)="toggleGendersDropdown($event)">
-                                          <span class="mac-select-label">{{ labGenders() }}</span>
-                                          <span class="mac-select-chevron">▼</span>
-                                      </div>
-      
-                                      <div class="mac-dropdown"
-                                          [class.open]="isOpenGenders()"
-                                          (click)="$event.stopPropagation()">
+                                                    @for (t of types(); track t.id) {
+                                                        <div class="mac-option"
+                                                            [class.selected]="selectedTypes().includes(t.name)"
+                                                            (click)="toggleType(t.name, $event); $event.stopPropagation()">
+                                                            <div class="mac-checkbox"
+                                                                [class.checked]="selectedTypes().includes(t.name)"></div>
+                                                            <span class="mac-option-label">{{ t.name }}</span>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                                    <!-- GENDERS -->
+                                                <div class="mac-select-btn"
+                                                    [class.open]="isOpenGenders()"
+                                                    (click)="toggleGendersDropdown($event)">
+                                                    <span class="mac-select-label">{{ labGenders() }}</span>
+                                                    <span class="mac-select-chevron">▼</span>
+                                                </div>
+                
+                                                <div class="mac-dropdown"
+                                                    [class.open]="isOpenGenders()"
+                                                    (click)="$event.stopPropagation()">
 
-                                          @for (g of genders(); track g.id) {
-                                              <div class="mac-option"
-                                                  [class.selected]="selectedGenders().includes(g.name)"
-                                                  (click)="toggleGender(g.name, $event); $event.stopPropagation()">
-                                                  <div class="mac-checkbox"
-                                                      [class.checked]="selectedGenders().includes(g.name)"></div>
-                                                  <span class="mac-option-label">{{ g.name }}</span>
-                                              </div>
-                                          }
-                                      </div>
-      
-                                      
-                                      <button class="btnSelectSearch" 
-                                      (click)="submitSearchByFilters()" 
-                                      [ngStyle]="{'display':displaySelect}">
-                                      <p class="btnSearchText">
-                                      <img class="imgSelectSearch" src="pictures\search.png" alt="Search">
-                                      </p>
-                                      </button>
-                                  </div>
-                      </div>
-                  </div>
-          }    
-
-         @if (displaySearchMobile) {
-             <div class="container-select-mobile" >
-                    <div class="selectSort" >
-                            <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
-                            
-                                <form action="">
-                                <div class="search" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
-                                    
-                                    <button class="btnF5" 
-                                    (click)="refreshList()">
-    
-                                    <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.36 2.64L21 8" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
-                                    <path d="M21 3v5h-5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.36-2.64L3 16" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
-                                    <path d="M3 21v-5h5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    </button>        
-                                    
-                                    <!-- CHAMP DE RECHERCHE -->
-                                    <input type="text" 
-                                    [ngStyle]="{'display':displayInput}" 
-                                    [(ngModel)]="searchInputValue"
-                                    [ngModelOptions]="{standalone: true}"
-                                    placeholder="Recherche par marques" 
-                                    (click)="inputClick()" />
-                                    
-                                    <!-- BOUTON DE RECHERCHE-->
-                                    <button class="btnSearch" 
-                                    (click)="submitSearchByMarques()"
-                                    [ngStyle]="{'display': displayInput}">
-                                    <img class="imgSearch" src="pictures\search.png" alt="Search">
-                                    </button>
+                                                    @for (g of genders(); track g.id) {
+                                                        <div class="mac-option"
+                                                            [class.selected]="selectedGenders().includes(g.name)"
+                                                            (click)="toggleGender(g.name, $event); $event.stopPropagation()">
+                                                            <div class="mac-checkbox"
+                                                                [class.checked]="selectedGenders().includes(g.name)"></div>
+                                                            <span class="mac-option-label">{{ g.name }}</span>
+                                                        </div>
+                                                    }
+                                                </div>
+                
+                                                
+                                                <button class="btnSelectSearch" 
+                                                (click)="submitSearchByFilters()" 
+                                                [ngStyle]="{'display':displaySelect}">
+                                                <p class="btnSearchText">
+                                                <img class="imgSelectSearch" src="pictures\search.png" alt="Search">
+                                                </p>
+                                                </button>
+                                            </div>
                                 </div>
-                                </form>
-    
-                                <div class="mac-select-wrapper" [ngStyle]="{'visibility':displaySelect}" >
-    
-                                                            <!-- MARQUES -->
-                                    <div class="mac-select-btn"
-                                        [class.open]="isOpenMarques()"
-                                        (click)="toggleMarquesDropdown($event)">
-                                        <span class="mac-select-label">{{ labMarques() }}</span>
-                                        <span class="mac-select-chevron">▼</span>
-                                    </div>
-    
-                                    <div class="mac-dropdown"
-                                        [class.open]="isOpenMarques()"
-                                        (click)="$event.stopPropagation()">
-                                        @for (m of marques(); track m.id) {
-                                            <div class="mac-option"
-                                                [class.selected]="selectedMarques().includes(m.name)"
-                                                (click)="toggleMarque(m.name, $event);  $event.stopPropagation()">
-                                                <div class="mac-checkbox"
-                                                    [class.checked]="selectedMarques().includes(m.name)"></div>
-                                                <span class="mac-option-label">{{ m.name }}</span>
+                            </div>
+                    }    
+
+                    @if (displaySearchMobile) {
+                        <div class="container-select-mobile" >
+                                <div class="selectSort" >
+                                        <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
+                                        
+                                            <form action="">
+                                            <div class="search" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
+                                                
+                                                <button class="btnF5" 
+                                                (click)="refreshList()">
+                
+                                                <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.36 2.64L21 8" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                                <path d="M21 3v5h-5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.36-2.64L3 16" stroke="#555555" stroke-width="2.2" stroke-linecap="round"/>
+                                                <path d="M3 21v-5h5" stroke="#555555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                </button>        
+                                                
+                                                <!-- CHAMP DE RECHERCHE -->
+                                                <input type="text" 
+                                                [ngStyle]="{'display':displayInput}" 
+                                                [(ngModel)]="searchInputValue"
+                                                [ngModelOptions]="{standalone: true}"
+                                                placeholder="Recherche par marques" 
+                                                (click)="inputClick()"/>
+                                       
+                                                <!-- BOUTON DE RECHERCHE-->
+                                                <button class="btnSearch" 
+                                                (click)="submitSearchByMarques()"
+                                                [ngStyle]="{'display': displayInput}">
+                                                <img class="imgSearch" src="pictures\search.png" alt="Search">
+                                                </button>
                                             </div>
-                                        }
-                                    </div>
-    
-                                                            <!-- TYPES -->
-                                    <div class="mac-select-btn"
-                                        [class.open]="isOpenTypes()"
-                                        (click)="toggleTypesDropdown($event)">
-                                        <span class="mac-select-label">{{ labTypes() }}</span>
-                                        <span class="mac-select-chevron">▼</span>
-                                    </div>
-    
-                                    <div class="mac-dropdown"
-                                        [class.open]="isOpenTypes()"
-                                        (click)="$event.stopPropagation()">
-                                        @for (t of types(); track $index) {
-                                            <div class="mac-option"
-                                                [class.selected]="selectedTypes().includes(t.name)"
-                                                (click)="toggleType(t.name,$event); $event.stopPropagation()">
-                                                <div class="mac-checkbox"
-                                                    [class.checked]="selectedTypes().includes(t.name)"></div>
-                                                <span class="mac-option-label">{{ t.name }}</span>
+                                            </form>
+                
+                                            <div class="mac-select-wrapper" [ngStyle]="{'visibility':displaySelect}" >
+                
+                                                                        <!-- MARQUES -->
+                                                <div class="mac-select-btn"
+                                                    [class.open]="isOpenMarques()"
+                                                    (click)="toggleMarquesDropdown($event)">
+                                                    <span class="mac-select-label">{{ labMarques() }}</span>
+                                                    <span class="mac-select-chevron">▼</span>
+                                                </div>
+                
+                                                <div class="mac-dropdown"
+                                                    [class.open]="isOpenMarques()"
+                                                    (click)="$event.stopPropagation()">
+                                                    @for (m of marques(); track m.id) {
+                                                        <div class="mac-option"
+                                                            [class.selected]="selectedMarques().includes(m.name)"
+                                                            (click)="toggleMarque(m.name, $event);  $event.stopPropagation()">
+                                                            <div class="mac-checkbox"
+                                                                [class.checked]="selectedMarques().includes(m.name)"></div>
+                                                            <span class="mac-option-label">{{ m.name }}</span>
+                                                        </div>
+                                                    }
+                                                </div>
+                
+                                                                        <!-- TYPES -->
+                                                <div class="mac-select-btn"
+                                                    [class.open]="isOpenTypes()"
+                                                    (click)="toggleTypesDropdown($event)">
+                                                    <span class="mac-select-label">{{ labTypes() }}</span>
+                                                    <span class="mac-select-chevron">▼</span>
+                                                </div>
+                
+                                                <div class="mac-dropdown"
+                                                    [class.open]="isOpenTypes()"
+                                                    (click)="$event.stopPropagation()">
+                                                    @for (t of types(); track $index) {
+                                                        <div class="mac-option"
+                                                            [class.selected]="selectedTypes().includes(t.name)"
+                                                            (click)="toggleType(t.name,$event); $event.stopPropagation()">
+                                                            <div class="mac-checkbox"
+                                                                [class.checked]="selectedTypes().includes(t.name)"></div>
+                                                            <span class="mac-option-label">{{ t.name }}</span>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                                    <!-- GENDERS -->
+                                                <div class="mac-select-btn"
+                                                    [class.open]="isOpenGenders()"
+                                                    (click)="toggleGendersDropdown($event)">
+                                                    <span class="mac-select-label">{{ labGenders() }}</span>
+                                                    <span class="mac-select-chevron">▼</span>
+                                                </div>
+                
+                                                <div class="mac-dropdown"
+                                                    [class.open]="isOpenGenders()"
+                                                    (click)="$event.stopPropagation()">
+                                                    @for (g of genders(); track $index) {
+                                                        <div class="mac-option"
+                                                            [class.selected]="selectedGenders().includes(g.name)"
+                                                            (click)="toggleGender(g.name,$event); $event.stopPropagation()">
+                                                            <div class="mac-checkbox"
+                                                                [class.checked]="selectedGenders().includes(g.name)"></div>
+                                                            <span class="mac-option-label">{{ g.name }}</span>
+                                                        </div>
+                                                    }
+                                                </div>
+                
+                                                
+                                                <button class="btnSelectSearch" 
+                                                (click)="submitSearchByFilters()" 
+                                                [ngStyle]="{'display':displaySelect}">
+                                                <p class="btnSearchText">
+                                                <img class="imgSelectSearch" src="pictures\search.png" alt="Search">
+                                                </p>
+                                                </button>
                                             </div>
-                                        }
-                                    </div>
-                                                        <!-- GENDERS -->
-                                    <div class="mac-select-btn"
-                                        [class.open]="isOpenGenders()"
-                                        (click)="toggleGendersDropdown($event)">
-                                        <span class="mac-select-label">{{ labGenders() }}</span>
-                                        <span class="mac-select-chevron">▼</span>
-                                    </div>
-    
-                                    <div class="mac-dropdown"
-                                        [class.open]="isOpenGenders()"
-                                        (click)="$event.stopPropagation()">
-                                        @for (g of genders(); track $index) {
-                                            <div class="mac-option"
-                                                [class.selected]="selectedGenders().includes(g.name)"
-                                                (click)="toggleGender(g.name,$event); $event.stopPropagation()">
-                                                <div class="mac-checkbox"
-                                                    [class.checked]="selectedGenders().includes(g.name)"></div>
-                                                <span class="mac-option-label">{{ g.name }}</span>
-                                            </div>
-                                        }
-                                    </div>
-    
-                                    
-                                    <button class="btnSelectSearch" 
-                                    (click)="submitSearchByFilters()" 
-                                    [ngStyle]="{'display':displaySelect}">
-                                    <p class="btnSearchText">
-                                    <img class="imgSelectSearch" src="pictures\search.png" alt="Search">
-                                    </p>
-                                    </button>
                                 </div>
-                    </div>
-                </div>
-          }
+                            </div>
+                    }
+            </div>
             
             <!-- LOGO -->
-            <div class="container-logo" [ngStyle]="{'width': displayInput ? '32px' : '100%'}">
+            <div class="container-logo" >
                 <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
             </div>
 
@@ -266,13 +267,11 @@
             }
 
             <!-- PANIER -->
-            <div class="container-panier">
             <div class="btn-panier">
                 <app-cart></app-cart>
             </div>               
 
-            </div>
-        </div>
+
     </div>
 
     <!----------------------------- CAROUSEL ------------------------->
@@ -301,9 +300,7 @@
                                             <!-- CAROUSEL INPUT -->             
                 @if(carouselInput)
                 {
-
                 <div class="page-center">
-
                     <div class="carousel-wrapper" [ngClass]="{ 'hidden-carousel': carouselInput }">
                         <div class="carouselInput" >
                             <app-carousel-input 

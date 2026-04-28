@@ -64,11 +64,6 @@ export class BoycoteComponent implements OnInit {
   garment!: Garment;
   gender!: Gender;
 
-  // vetementsList: string[] = ['Haut', 'Bas', 'Chaussures', 'Accessoires'];
-  // genreList: string[] = ['Femme', 'Homme'];
-  
-  // vetementsList: string[] = [];
-  // genreList: string[] = [];
 
   /** ------------------------------
    *  SIGNALS
@@ -84,6 +79,7 @@ export class BoycoteComponent implements OnInit {
   searchCustomer = signal<string[]>([]);
   searchSubmitted = signal(false);
   searchSubmittedList = signal(false);
+
   
     /** ------------------------------
    *  DROPDOWN STATES
@@ -129,7 +125,6 @@ export class BoycoteComponent implements OnInit {
   carouselInput:boolean = false;
   carouselSelectList:boolean = false;
   carouselStandard:boolean = false;
-  
   inputIsDisabled:boolean = false;
   btnSearchByMarqueIsDisabled:boolean = false;
   displayLogoMobile:boolean = true;
@@ -145,7 +140,6 @@ export class BoycoteComponent implements OnInit {
   page:number = 1;
   display = 'visible';
   searchInputValue = '';
-
   filtered: Product[] = [];
 
   criteria: ProductFilter = {
@@ -218,8 +212,6 @@ export class BoycoteComponent implements OnInit {
     this.garmentService.getAll().subscribe(gar => {
     this.types.set(gar);
     })
-
-    
   }
 
   // ALIMENTE PRODUIT
@@ -260,11 +252,14 @@ export class BoycoteComponent implements OnInit {
   hamburgerClicked() {
 
     if(this.displayLogoMobile){
+      // Affichage du menu recherche
        this.displayLogoMobile = false;
        this.displaySearchMobile = true;
     } else {
+      // Affichage Logo
       this.displaySearchMobile = false;
       this.displayLogoMobile = true;
+      this.refreshList();
     }
     
   //  window.innerWidth < 365 ? (this.hiddenLogo) = false : true ;
@@ -415,10 +410,15 @@ export class BoycoteComponent implements OnInit {
   submitSearchByMarques(){
   this.searchQuery.set(this.searchInputValue); // LE CAROUSEL REAGIT UNIQUEMENT LORS DU CLIC
    this.searchSubmitted.set(true);
+   console.log('< Cliqued submit >',this.searchQuery());
+   
   }
 
   // Click sur input
   inputClick(){
+    this.searchQuery.set('');
+    this.searchInputValue = '';
+    this.searchSubmitted.set(false);
     this.manageCarousel(2);
   }
 

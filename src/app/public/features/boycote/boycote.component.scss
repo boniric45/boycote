@@ -348,11 +348,6 @@ input[type="text"] {
    transform: translateY(1px);
 }
 
-.btn-panier {
-   width: 2rem;
-   height: 2rem;
-   margin-right: 100px;
-}
 
 .parent {
    display: grid;
@@ -366,9 +361,7 @@ input[type="text"] {
 
 .div1 {
    display: grid;
-   grid-template-rows: auto auto;
-   margin-top: 20px;
-   width: 100%;
+   grid-area: 1 / 1 / 2 / 2; 
 }
 
 .header-row {
@@ -408,15 +401,6 @@ input[type="text"] {
    padding: 0;
 }
 
-/* Colonne droite */
-.container-panier {
-   justify-self: end;
-   align-self: start;
-   /* <-- C’est ça qui place le panier en haut */
-   padding-right: 7px;
-   /* <-- espace sans élargir la page */
-   padding-top: 7px;
-}
 
 .container-hamburger {
    display: none;
@@ -431,24 +415,6 @@ input[type="text"] {
    margin: 0 auto;
 
 }
-
-// @media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ }
-// @media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
-// @media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
-// @media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
-// @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
-// @media (min-width:1281px) { /* hi-res laptops and desktops */ }
-// @media all and (max-device-width: 400px) {
-//     /* styles for devices with a maximum width of 400px and less
-//        Changes only on device orientation */
-// }
-
-// @media all and (max-width: 400px) {
-//     /* styles for target area with a maximum width of 400px and less
-//        Changes on device orientation , browser resize */
-// }
-
-
 
 .container-carousel {
    display: flex;
@@ -491,68 +457,81 @@ hidden-carousel {
 
 @media all and (max-width: 600px) {
 
+   .container-carousel{
+    padding: 0;
+    margin-top: 5px;
+   }
+
    .mac-select-wrapper {
       position: fixed;
       display: flex;
       justify-self: left;
       align-items: center;
-      width: 316px;
+      width: 100%;
+      overflow-x: hidden;
       z-index: 10;
-   }
-
-   .header-row {
-      display: flex;
-      position: fixed;
-      z-index: 9999;
-   }
-
-   .parent {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto !important;
-      grid-template-columns: auto auto auto;
    }
 
    .container-logo-mobile{
    display: flex;
-   justify-self: flex-end;
-   margin-left: 25%;
-   width: 100%;
+   justify-content: center;
+   align-items: center;
+   width: auto;
+   }
+
+   .container-hamburger
+   {
+      position: absolute;
+      left: 5px;
+      top:5px;
+      display: flex;
+      justify-self: flex-start;
+   }
+
+   .btn-panier {
+      position: absolute;
+      right: 5px;
+      top:5px;
+      display: flex;
+      justify-self: flex-start;
+      padding-right: 55px;
+      // padding-top: 3px;
    }
 
    .container-select-mobile{
-   width: 100%;
-   display: flex;
-   justify-content: right;
-   justify-self: flex-end;
-   margin-top: 8px;
-   margin-left: 45px;
-   margin-right: -10px;
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-around;
+      width: 30%;
+   }
+
+   .mac-select-wrapper{
+    //  margin-top: 40px;
+
    }
 
    .container-select{
    display: none;
    }
 
-   .img_logo_mobile{
-    width: 10rem;
-   }
-
-   .container-hamburger {
-      display: flex;
-      align-self: flex-start;
+   .container-search {
+      scale: 0.68;
+      transform: translateX(-5%);
       margin-left: 10px;
-      margin-right: 55px;
-      margin-top: 7px;
+      margin-bottom: 20px;
    }
 
-   .btn-menu {
-      width: 4rem;
-      height: 4rem;
-      margin-left: 7px;
+   .search {
+      width: 100%;
+      justify-content: center;
    }
 
-   .container-logo {
+   .img_logo_mobile{
+    width: 120px
+   }
+
+   .container-logo, 
+   .container-select {
       display: none;
    }
 
@@ -565,35 +544,18 @@ hidden-carousel {
       margin-left: 2px;
    }
 
-   .container-carousel {
-      scale: 0.95;
-      margin-top: 35px;
-      margin-right: 3px;
-   }
-
    .div1{
       margin: 0;
       padding: 0;
-   }
-
-   .div2 {
-      height: 650px;
-   }
-
-   .div3 {
       display: flex;
       justify-content: center;
-      scale: 0.83;
-      margin-top: 100px;
+      justify-self: center;
+      align-items: center;
    }
 
-   .footer {
-      margin-top: 50px;
-      width: 80%;
-   }
-
-   .selectSort {
-      width: 300px;
+   .div2{
+      width: 95%;
+      margin-bottom: 70px;
    }
 
    /* DROPDOWN */
@@ -646,10 +608,28 @@ hidden-carousel {
       }
    }
 
-.carouselInput{
+   .carouselInput{
+      display: flex;
+      justify-content: center;
+      scale: 0.7;
+   // margin-top: 10px;
+   }
+
+
+
+/* ============================
+   FOOTER
+============================ */
+
+.div3 {
    display: flex;
-   justify-content: center;
-   scale: 0.7;
-  // margin-top: 10px;
+   justify-content: center !important;
+   align-items: center !important;
+   margin-top: 50px !important;
+   width: 100%;
+}
+
+.footer {
+   margin-top: 70px;
 }
 }

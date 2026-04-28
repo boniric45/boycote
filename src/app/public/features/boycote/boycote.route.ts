@@ -1,20 +1,13 @@
-import {  Routes } from "@angular/router";
-import { BoycoteComponent } from "./boycote.component";
-import { BoycoteProductComponent } from "../boycote-product/boycote-product.component";
-import { PanierComponent } from "../../panier/panier.component";
+import { Routes } from "@angular/router";
+import { LoginComponent } from "../../admin/login/login.component";
+import { ConstructionComponent } from "../construction/construction.component";
 
 export const boycoteRoutes: Routes = [
     
     {
     path:'',
-    component:BoycoteComponent
+    component:ConstructionComponent
     },
-    // {
-    // path:'product',
-    // title:'Boy-Coté - Product',
-    // component:PanierComponent
-    // },
-
 
 
 

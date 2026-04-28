@@ -1,15 +1,23 @@
 :host { font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif; }
 
 /* ── BOUTON PANIER ── */
-.shop-wrapper { position: relative; display: inline-block;   }
+.shop-wrapper { 
+padding: 0;
+margin: 0;
+//position: relative; 
+// display: flex;
+// align-content: flex-start;
+scale: 0.57;
+}
 
 .key-btn {
+  display: flex;
+  align-self: start;
+  top: 0;
   position: relative;
-  scale: 0.7;
+ // scale: 0.6;
   cursor: pointer;
-  margin-top: 0;
-  margin-left: 60px;
-  margin-bottom: 50px;
+
 }
 
 .key-bottom {

@@ -32,7 +32,7 @@ export class CarouselStandardComponent implements OnInit {
 
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
-    });
+    }); 
     
   }
 
@@ -43,12 +43,12 @@ export class CarouselStandardComponent implements OnInit {
   }
 
   // VERSION FINALE : aucune duplication, aucun undefined
-get visibleArticles() {
+  get visibleArticles() {
   if (!this.articles || this.articles.length === 0) {
     return [];
   }
 
-  const total = this.articles.length;
+  const total = this.articles.length;  
   const count = Math.min(this.visibleCount, total);
 
   const start = this.currentIndex - Math.floor(count / 2);

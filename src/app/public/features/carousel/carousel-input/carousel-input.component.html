@@ -7,13 +7,17 @@
 
   } @else if (visibleArticles.length === 0) {
 
+    @if(visibleArticles.length<3){
     <div class="no-result">
-       No result 
+       NO RESULTS, PLEASE RETRY
     </div>
+    }
+
 
   } @else if (canShowCarousel()) {
 
-    <div class="carousel">
+    <div class="carousel-wrapper">
+      <div class="carousel">
 
       <button class="nav left desktop" (click)="prev()">
         <app-component-left></app-component-left>
@@ -38,25 +42,29 @@
         <app-component-right></app-component-right>
       </button>
 
-    </div>
+      </div>
 
-    <div class="nav-mobile mobile">
-      <button class="nav" (click)="prev()">
-        <app-component-left></app-component-left>
-      </button>
-      <button class="nav" (click)="next()">
-        <app-component-right></app-component-right>
-      </button>
-    </div>
+      <div class="container">
+        <div class="description">
+          <p>{{ centralArticle.name }} de marque {{ centralArticle.marque }}</p>
+          <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
+        </div>
+      </div>
 
+        <div class="conteneur-bouton">
+          <button class="primary"><span>ADD TO CART</span></button>
+        </div>
 
-  <div class="container">
-    <div class="description">
-      <p>{{ centralArticle.name }} de marque {{ centralArticle.marque }}</p>
-      <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
+      <div class="nav-mobile mobile">
+        <button class="nav" (click)="prev()">
+          <app-component-left></app-component-left>
+        </button>
+        <button class="nav" (click)="next()">
+          <app-component-right></app-component-right>
+        </button>
+      </div>
+
     </div>
-  </div>
-  
   }
 
 </div>
