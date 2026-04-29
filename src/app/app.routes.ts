@@ -31,7 +31,7 @@ export const routes: Routes = [
   },
   {
     path:'home/admin/login',
-    component:BoycoteComponent // changer pour loginComponent en production BoycoteComponent en Dev
+    component:LoginComponent // changer pour loginComponent en production BoycoteComponent en Dev
   },
   
 
@@ -44,24 +44,24 @@ export const routes: Routes = [
   // },
     {
     path: 'admin2', // à supprimer plus tard
-   // canMatch: [adminGuard],
+    canMatch: [adminGuard],
     loadComponent: () =>
       import('./public/admin/console/console.component').then(m => m.ConsoleComponent)
   },
   {
     path: 'admin',
-   // canMatch: [adminGuard],
+    canMatch: [adminGuard],
     component: BoycoteComponent
   },
   {
     path: 'admin/add',
-   // canMatch: [adminGuard],
+    canMatch: [adminGuard],
     loadComponent: () =>
       import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
   },
   {
     path: 'admin/update',
-   // canMatch: [adminGuard],
+    canMatch: [adminGuard],
     loadComponent: () =>
       import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
   },

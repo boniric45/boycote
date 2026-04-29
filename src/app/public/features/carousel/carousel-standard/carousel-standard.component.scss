@@ -67,10 +67,6 @@
   right: -220px;
 }
 
-.mobile {
-  display: none;
-}
-
 .description  {
   flex-wrap: wrap;
   text-align: center;
@@ -79,7 +75,7 @@
   font-size: 16px;
   font-weight: 300;
   color: #333;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 
 .price{
@@ -154,36 +150,42 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
     display: none !important;
   }
 
-  .container{
-    margin-top: 70px;
-  }
 
   .nav-mobile {
     display: flex;
     justify-content: center;
     max-width: 650px;
-    scale: 0.8;
+    scale: 0.55;
   //  margin-top: 2rem;      /* ✔ flèches plus bas */
    // padding-bottom: 0.2rem;  /* ✔ espace sous les flèches */
     gap: 2rem;
-    margin-right: 20px;
+    margin-right: 10px;
+  }
+
+  .conteneur-bouton {
+    margin-top: 30px;
+    width: 120px;
+    margin: 0 auto;
+    margin-bottom: 10px;
   }
 
   .nav {
     position: static;
     transform: none;
     margin-right: 0; /* ✔ propre */
+    margin-top: -30px;
   }
 
   .description{
-    margin-top: 50px;
+    margin-top: 35px;
+    margin-bottom: 10px;
     text-align: center;
     padding: 0;
   }
 
   .carousel{
     scale: 0.6;
-    transform: translateX(-2.5%);
+    transform: translateX(-2%);
   }
 
   .carousel-wrapper{

@@ -61,7 +61,7 @@
 /* Footer responsive */
 @media (max-width: 900px) {
     .footer-links {
-        gap: 25px;
+        gap: 5px;
     }
     .label {
         text-align: center;
@@ -73,10 +73,11 @@
 @media (max-width: 600px) {
     .footer-links {
         flex-wrap: wrap; /* <-- Passe en plusieurs lignes si nécessaire */
-        gap: 20px;
+        gap: 5px; // augmenter le gap pour avoir que deux colonnes
+        width: 374px;
     }
     .icon {
-        transform: scale(0.35);
+        transform: scale(0.15);
     }
     .label {
         text-align: center;
@@ -88,12 +89,13 @@
 @media (max-width: 400px) {
 
     .footer-links {
+        width: 374px;
         flex-direction: row; /* <-- Mode colonne sur très petit écran */
-        gap: 15px;
+        gap: 5px;
         margin-bottom: 20px;
     }
     .icon {
-        transform: scale(0.28);
+        transform: scale(0.15);
     }
     .label {
         text-align: center;
@@ -104,7 +106,7 @@
 }                                                                                                                                                                                                           
 
 .footer-item {
-    margin-top: 20px;
+    margin-top: 5px;
     text-decoration: none;
 }
 
