@@ -31,7 +31,7 @@ export const routes: Routes = [
   },
   {
     path:'home/admin/login',
-    component:LoginComponent // changer pour loginComponent en production BoycoteComponent en Dev
+    component:BoycoteComponent // changer pour loginComponent en production BoycoteComponent en Dev
   },
   
 

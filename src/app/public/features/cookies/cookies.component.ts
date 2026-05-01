@@ -83,6 +83,10 @@ export class CookiesComponent implements OnInit {
   // TEXTES ACTIFS
   get t() { return TEXTES[this.langActuelle]; }
 
+  refreshPage(){
+    window.location.reload();
+  }
+
   // CHANGER LANGUE
   switchLang() {
     this.langActuelle = this.langActuelle === 'en' ? 'fr' : 'en';
@@ -98,9 +102,8 @@ export class CookiesComponent implements OnInit {
   this.cookieService.set('marketing', 'true');
 
   this.visible = false;
+  this.refreshPage();
 }
-
-
 
   // TOUT REFUSER
   decline() {
@@ -112,6 +115,7 @@ export class CookiesComponent implements OnInit {
   this.cookieService.set('marketing', 'false');
 
   this.visible = false;
+  this.refreshPage();
   }
 
   // OUVRIR MANAGE
@@ -126,6 +130,7 @@ export class CookiesComponent implements OnInit {
 
   this.manageOpen = false;
   this.visible = false;
+  this.refreshPage();
   }
 
 
