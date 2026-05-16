@@ -22,7 +22,7 @@ export interface CartItem {
 
 export class CartComponent {
 
-  private readonly API = 'https://www.boycoté.fr/api';
+  private readonly API = 'https://boycote.fr/api';
 
   isCartEmpty = computed(() => this.cartService.getItems().length === 0);
 
