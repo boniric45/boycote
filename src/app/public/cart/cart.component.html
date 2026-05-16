@@ -9,9 +9,11 @@
       </svg>
     </div>
   </div>
-  @if (cart.length > 0) {
-    <div class="cart-badge">{{ cart.length }}</div>
-  }
+      @let items = (cart$ | async) ?? [];
+
+      @if (items.length > 0) {
+        <div class="cart-badge">{{ items.length }}</div>
+      }
 </div>
 
 <!-- OVERLAY PANIER -->
@@ -29,18 +31,23 @@
       <div class="cart-body">
         <div class="divider"></div>
 
-        @if (cart.length === 0) {
+        @if ((cart$ | async)?.length === 0) {
           <p class="cart-empty">Your cart is empty.</p>
         } @else {
-          @for (item of cart; track item.id; let i = $index) {
+          @let items = (cart$ | async) ?? [];
+          @for (item of items; track item.product.id; let i = $index) {
             <div class="cart-item">
               <div class="cart-item-img-placeholder">👗</div>
+
               <div class="cart-item-info">
-                <span class="cart-item-name">{{ item.nom }}</span>
-                <span class="cart-item-sub">{{ item.taille }} · {{ item.genre }}</span>
-                <span class="cart-item-price">€ {{ item.prix }}</span>
+                <span class="cart-item-name">{{ item.product.name }}</span>
+                <span class="cart-item-sub">{{ item.product.size }} · {{ item.product.gender }}</span>
+                <span class="cart-item-price">€ {{ item.product.prix }}</span>
               </div>
-              <button class="btn-remove" (click)="removeItem(i)">✕ Remove</button>
+
+              <button class="btn-remove" (click)="removeItem(item.product.id)">
+                ✕ Remove
+              </button>
             </div>
           }
         }
@@ -55,9 +62,9 @@
         </div>
         <div class="cart-total-row">
           <span class="cart-total-label">Total</span>
-          <span class="cart-total-amount">€ {{ total }}</span>
+          <span class="cart-total-amount">€ {{ total() }}</span>
         </div>
-        <button class="btn-checkout" [disabled]="cart.length === 0" (click)="checkout()">
+        <button class="btn-checkout" [disabled]="isCartEmpty()" (click)="checkout()">
           <span>PROCEED TO CHECKOUT →</span>
         </button>
         <p class="secure-note">🔒 Secure payment via Stripe</p>

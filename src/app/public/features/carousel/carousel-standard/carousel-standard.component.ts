@@ -6,6 +6,7 @@ import { ApiService } from '../../../../services/api.service';
 import { ProductService } from '../../../../services/product.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
+import { CartService } from '../../../../services/cart.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class CarouselStandardComponent implements OnInit {
  private apiService = inject(ApiService);
  private productService = inject(ProductService);
  private router = inject(Router);
+ private cartService = inject(CartService);
 
   articles: Product[] = [];
   visibleCount = 5;
@@ -150,6 +152,12 @@ export class CarouselStandardComponent implements OnInit {
     } else {
       this.prev();
     }
+  }
+
+  // ADD TO CART 
+  addToCart(product: Product) {
+  console.log(product);
+  this.cartService.add(product, 1);
   }
 
 }

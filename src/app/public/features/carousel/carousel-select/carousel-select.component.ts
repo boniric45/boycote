@@ -5,6 +5,7 @@ import { ProgressbarComponent } from '../../../progressbar/progressbar.component
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { Product } from '../../../../models/product';
+import { CartService } from '../../../../services/cart.service';
 
 @Component({
   selector: 'app-carousel-select',
@@ -22,6 +23,8 @@ export class CarouselSelectComponent implements OnInit{
 
   @Input() filteredArticlesSelected: Product[] = []; // Parent BoycoteComponent will set this
   @Input() loadingPb: boolean = true;
+
+  private cartService = inject(CartService);
 
   ngOnInit(): void {
     this.updateVisibleCount();
@@ -129,6 +132,8 @@ export class CarouselSelectComponent implements OnInit{
     return 1 - offset * 0.15;
   }
 
-
+  addToCart(product: Product) {
+    this.cartService.add(product, 1);
+  }
 
 }

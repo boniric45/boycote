@@ -1,121 +1,465 @@
-/* ─────────────────────────────────────────────── */
-/*   COMPOSANT PANIER — BOÎTE PRINCIPALE           */
-/* ─────────────────────────────────────────────── */
+/* -------------------------------------------------------
+   BOUTON PANIER (key-btn)
+------------------------------------------------------- */
 
-:host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 55px;      /* taille finale après scale */
-    height: 55px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif;
+.shop-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-/* ─────────────────────────────────────────────── */
-/*   BOUTON 3D — IDENTIQUE AU HAMBURGER            */
-/* ─────────────────────────────────────────────── */
 
 .key-btn {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .key-bottom {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #d0d0d0;
+    border-radius: 12px;
+    transform: translateY(4px);
+    filter: blur(1px);
+  }
+
+  .key-face {
     position: relative;
-    width: 99px;
-    height: 99px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #f7f7f7, #e3e3e3);
+    border-radius: 12px;
+    box-shadow:
+      inset 2px 2px 4px rgba(255,255,255,0.8),
+      inset -2px -2px 4px rgba(0,0,0,0.1),
+      0 4px 8px rgba(0,0,0,0.15);
     display: flex;
-    justify-content: center;
     align-items: center;
-    transform: scale(0.55);
-    transform-origin: center;
-    cursor: pointer;
-}
-
-.key-btn > * {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-/* ─────────────────────────────────────────────── */
-/*   COUCHE INFÉRIEURE (OMBRE)                     */
-/* ─────────────────────────────────────────────── */
-
-.key-bottom {
-    top: 9px;
-    width: 99px;
-    height: 99px;
-    background: linear-gradient(180deg, #b0b0b0 0%, #909090 100%);
-    border-radius: 22px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    z-index: 1;
-}
-
-/* ─────────────────────────────────────────────── */
-/*   FACE SUPÉRIEURE                               */
-/* ─────────────────────────────────────────────── */
-
-.key-face {
-    width: 99px;
-    height: 99px;
-    background: linear-gradient(170deg, #ffffff 0%, #e0e0e0 60%, #cccccc 100%);
-    border-radius: 22px;
-    display: flex;
     justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    z-index: 2;
-    transition: transform 0.08s ease;
+
+    svg {
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  &:active .key-face {
+    transform: translateY(2px);
+    box-shadow:
+      inset 1px 1px 2px rgba(255,255,255,0.7),
+      inset -1px -1px 2px rgba(0,0,0,0.15);
+  }
 }
 
-.key-face::after {
-    content: '';
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 10px;
-    background: rgba(255,255,255,0.75);
-    border-radius: 50%;
-    filter: blur(4px);
-    z-index: 3;
-}
-
-/* Icône panier */
-.key-face svg {
-    width: 60px;
-    height: 60px;
-    z-index: 4;
-}
-
-/* ─────────────────────────────────────────────── */
-/*   ANIMATION DE CLIC                             */
-/* ─────────────────────────────────────────────── */
-
-.key-btn:active .key-face {
-    transform: translateY(8px);
-}
-
-.key-btn:active .key-bottom {
-    transform: scaleY(0.2);
-    transform-origin: bottom;
-}
-
-/* ─────────────────────────────────────────────── */
-/*   BADGE QUANTITÉ                                */
-/* ─────────────────────────────────────────────── */
-
+ /* Badge */
 .cart-badge {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #e03020;
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  position: absolute;
+  top: -6px;
+  right: -6px;
+
+  background: #ff3b30;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  width: 20px;          /* 🔥 largeur fixe */
+  height: 20px;         /* 🔥 hauteur fixe */
+  line-height: 20px;    /* 🔥 centre vertical parfait */
+
+  border-radius: 50%;   /* 🔥 cercle parfait */
+  text-align: center;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
+
+/* -------------------------------------------------------
+   OVERLAY
+------------------------------------------------------- */
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 9999;
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* -------------------------------------------------------
+   CART WINDOW
+------------------------------------------------------- */
+
+.cart-window {
+  width: 380px;
+  height: 100%;
+  background: #fafafa;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.25s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* -------------------------------------------------------
+   TITLE BAR
+------------------------------------------------------- */
+
+.title-bar {
+  height: 60px;
+  padding: 0 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-close-cart {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #e0e0e0;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    background: #d5d5d5;
+  }
+
+  &::before {
+    content: "✕";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+}
+
+.title-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------
+   CART BODY
+------------------------------------------------------- */
+
+.cart-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.divider {
+  height: 1px;
+  background: #e5e5e5;
+  margin-bottom: 20px;
+}
+
+.cart-empty {
+  text-align: center;
+  color: #777;
+  font-size: 15px;
+}
+
+/* -------------------------------------------------------
+   CART ITEM
+------------------------------------------------------- */
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.cart-item-img-placeholder {
+  width: 48px;
+  height: 48px;
+  background: #ececec;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-item-name {
+  font-weight: 600;
+}
+
+.cart-item-sub {
+  font-size: 13px;
+  color: #777;
+}
+
+.cart-item-price {
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: #ff3b30;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* -------------------------------------------------------
+   FOOTER
+------------------------------------------------------- */
+
+.cart-footer {
+  padding: 20px;
+  background: #ffffff;
+  border-top: 1px solid #e5e5e5;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cart-total-label {
+  font-weight: 500;
+}
+
+.cart-total-amount {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.btn-checkout {
+  width: 100%;
+  padding: 14px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: #000;
+  }
+}
+
+.secure-note,
+.shipping-notes,
+.shipping-note {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-top: 6px;
+}
+
+/* -------------------------------------------------------
+   RESPONSIVE
+------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .cart-window {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// /* ─────────────────────────────────────────────── */
+// /*   COMPOSANT PANIER — BOÎTE PRINCIPALE           */
+// /* ─────────────────────────────────────────────── */
+
+// :host {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 55px;      /* taille finale après scale */
+//     height: 55px;
+//     font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif;
+// }
+
+// /* ─────────────────────────────────────────────── */
+// /*   BOUTON 3D — IDENTIQUE AU HAMBURGER            */
+// /* ─────────────────────────────────────────────── */
+
+// .key-btn {
+//     position: relative;
+//     width: 99px;
+//     height: 99px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     transform: scale(0.55);
+//     transform-origin: center;
+//     cursor: pointer;
+// }
+
+// .key-btn > * {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+// }
+
+// /* ─────────────────────────────────────────────── */
+// /*   COUCHE INFÉRIEURE (OMBRE)                     */
+// /* ─────────────────────────────────────────────── */
+
+// .key-bottom {
+//     top: 9px;
+//     width: 99px;
+//     height: 99px;
+//     background: linear-gradient(180deg, #b0b0b0 0%, #909090 100%);
+//     border-radius: 22px;
+//     box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+//     z-index: 1;
+// }
+
+// /* ─────────────────────────────────────────────── */
+// /*   FACE SUPÉRIEURE                               */
+// /* ─────────────────────────────────────────────── */
+
+// .key-face {
+//     width: 99px;
+//     height: 99px;
+//     background: linear-gradient(170deg, #ffffff 0%, #e0e0e0 60%, #cccccc 100%);
+//     border-radius: 22px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     overflow: hidden;
+//     z-index: 2;
+//     transition: transform 0.08s ease;
+// }
+
+// .key-face::after {
+//     content: '';
+//     position: absolute;
+//     bottom: 10px;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     width: 60px;
+//     height: 10px;
+//     background: rgba(255,255,255,0.75);
+//     border-radius: 50%;
+//     filter: blur(4px);
+//     z-index: 3;
+// }
+
+// /* Icône panier */
+// .key-face svg {
+//     width: 60px;
+//     height: 60px;
+//     z-index: 4;
+// }
+
+// /* ─────────────────────────────────────────────── */
+// /*   ANIMATION DE CLIC                             */
+// /* ─────────────────────────────────────────────── */
+
+// .key-btn:active .key-face {
+//     transform: translateY(8px);
+// }
+
+// .key-btn:active .key-bottom {
+//     transform: scaleY(0.2);
+//     transform-origin: bottom;
+// }
+
+// /* ─────────────────────────────────────────────── */
+// /*   BADGE QUANTITÉ                                */
+// /* ─────────────────────────────────────────────── */
+
+// .cart-badge {
+//     position: absolute;
+//     top: -6px;
+//     right: -6px;
+//     width: 20px;
+//     height: 20px;
+//     border-radius: 50%;
+//     background: #e03020;
+//     color: #fff;
+//     font-size: 10px;
+//     font-weight: 700;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     z-index: 10;
+//     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+// }

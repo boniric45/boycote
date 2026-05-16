@@ -60,11 +60,13 @@ export class BoycoteComponent implements OnInit {
   private garmentService = inject(GarmentService);
   private genderService = inject(GenderService);
 
+
   // ajout panier
   countPanier = 0;
   product!: Product;
   garment!: Garment;
   gender!: Gender;
+  cartCount$ = this.cartService.count$;
 
 
   /** ------------------------------
@@ -452,10 +454,5 @@ export class BoycoteComponent implements OnInit {
     this.resetVetement();
     this.resetGender();   
   }
-
-
-
-
-  
 
 }

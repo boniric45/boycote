@@ -4,6 +4,8 @@ import { ApiService } from '../../../../services/api.service';
 import { ProgressbarComponent } from "../../../progressbar/progressbar.component";
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
+import { CartService } from '../../../../services/cart.service';
+import { Product } from '../../../../models/product';
 
 @Component({
   selector: 'app-carousel-input',
@@ -14,6 +16,7 @@ import { ComponentRightComponent } from '../../component-right/component-right.c
 export class CarouselInputComponent implements OnInit {
 
   private apiService = inject(ApiService);
+  private cartService = inject(CartService);
 
   articles = signal<any[]>([]);
   visibleCount = 5;
@@ -23,6 +26,7 @@ export class CarouselInputComponent implements OnInit {
 
   @Input({ required: true }) searchQuery!: Signal<string>;
   @Input() searchSubmitted!: Signal<boolean>;
+  
 
   loadingPb: boolean = true;
 
@@ -165,5 +169,8 @@ export class CarouselInputComponent implements OnInit {
     return 1 - offset * 0.15;
   }
 
+  addToCart(product: Product) {
+    this.cartService.add(product, 1);
+  }
 
 }
