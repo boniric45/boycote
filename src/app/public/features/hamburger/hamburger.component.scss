@@ -1,54 +1,149 @@
+// .key-btn {
+//   position: relative;
+//   width: 99px;
+//   height: 99px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   transform: scale(0.55);
+//   transform-origin: center;
+//   cursor: pointer;
+// }
+
+
+
+// .key-bottom {
+//   position: absolute;
+//   top: 9px; left: 0;
+//   width: 99px; height: 99px;
+//   background: linear-gradient(180deg, #b0b0b0 0%, #909090 100%);
+//   border-radius: 22px;
+//   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+//   z-index: 1;
+// }
+
+// .key-face {
+//   position: absolute;
+//   top: 0; left: 0;
+//   width: 99px; height: 99px;
+//   background: linear-gradient(170deg, #ffffff 0%, #e0e0e0 60%, #cccccc 100%);
+//   border-radius: 22px;
+//   display: flex; align-items: center; justify-content: center;
+//   z-index: 2; overflow: hidden;
+//   transition: transform 0.08s ease;
+
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     bottom: 10px; left: 50%;
+//     transform: translateX(-50%);
+//     width: 60px; height: 10px;
+//     background: rgba(255,255,255,0.55);
+//     border-radius: 50%;
+//     filter: blur(4px);
+//     pointer-events: none; z-index: 3;
+//   }
+// }
+
+// .filter-icon {
+//   position: relative; z-index: 4;
+//   display: flex; flex-direction: column;
+//   gap: 8px; align-items: center;
+
+//   span {
+//     display: block;
+//     width: 42px; height: 4px;
+//     background: #888888;
+//     border-radius: 2px;
+//   }
+// }
+
+// .key-btn:active .key-face   { transform: translateY(8px); }
+// .key-btn:active .key-bottom { transform: scaleY(0.2); transform-origin: bottom; }
+
+
+/* --- CONTENEUR PRINCIPAL DU BOUTON --- */
 .key-btn {
-  position: relative;
-  scale: 0.55;
-  cursor: pointer;
+    position: relative;
+    width: 99px;          /* taille réelle du bouton 3D */
+    height: 99px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.55);   /* réduction propre */
+    transform-origin: center;
+    cursor: pointer;
 }
 
+/* --- LES DEUX COUCHES DU BOUTON 3D --- */
 .key-bottom {
-  position: absolute;
-  top: 9px; left: 0;
-  width: 99px; height: 99px;
-  background: linear-gradient(180deg, #b0b0b0 0%, #909090 100%);
-  border-radius: 22px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-  z-index: 1;
+    position: absolute;
+    top: 9px;              /* ombre 3D */
+    left: 0;
+    width: 99px;
+    height: 99px;
+    background: linear-gradient(180deg, #b0b0b0 0%, #909090 100%);
+    border-radius: 22px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    z-index: 1;
 }
 
 .key-face {
-  position: absolute;
-  top: 0; left: 0;
-  width: 99px; height: 99px;
-  background: linear-gradient(170deg, #ffffff 0%, #e0e0e0 60%, #cccccc 100%);
-  border-radius: 22px;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 2; overflow: hidden;
-  transition: transform 0.08s ease;
+    position: absolute;
+    top: 0;                /* face supérieure */
+    left: 0;
+    width: 99px;
+    height: 99px;
+    background: linear-gradient(170deg, #ffffff 0%, #e0e0e0 60%, #cccccc 100%);
+    border-radius: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 2;
+    transition: transform 0.08s ease;
+}
 
-  &::after {
+/* --- REFLET --- */
+.key-face::after {
     content: '';
     position: absolute;
-    bottom: 10px; left: 50%;
+    bottom: 10px;
+    left: 50%;
     transform: translateX(-50%);
-    width: 60px; height: 10px;
+    width: 60px;
+    height: 10px;
     background: rgba(255,255,255,0.55);
     border-radius: 50%;
     filter: blur(4px);
-    pointer-events: none; z-index: 3;
-  }
+    pointer-events: none;
+    z-index: 3;
 }
 
+/* --- ICÔNE DU HAMBURGER --- */
 .filter-icon {
-  position: relative; z-index: 4;
-  display: flex; flex-direction: column;
-  gap: 8px; align-items: center;
+    position: relative;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
 
-  span {
+.filter-icon span {
     display: block;
-    width: 42px; height: 4px;
+    width: 42px;
+    height: 4px;
     background: #888888;
     border-radius: 2px;
-  }
 }
 
-.key-btn:active .key-face   { transform: translateY(8px); }
-.key-btn:active .key-bottom { transform: scaleY(0.2); transform-origin: bottom; }
+/* --- ANIMATION DE CLIC --- */
+.key-btn:active .key-face {
+    transform: translateY(8px);
+}
+
+.key-btn:active .key-bottom {
+    transform: scaleY(0.2);
+    transform-origin: bottom;
+}

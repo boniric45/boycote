@@ -9,12 +9,18 @@
   cursor: pointer;
 }
 
+.pb{
+  display: flex;
+  justify-content: center;
+  padding-top: 150px;
+}
+
 .carousel-wrapper {
   display: block;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
-  padding-bottom: 233px;
+  margin-top: 10px;
+  margin-bottom: 233px;
   margin-left: 6px;
 }
 
@@ -155,9 +161,9 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
 
 
 
+
 /* Mobile */
 @media all and (max-width: 600px) { 
-  
 
   .desktop {
     display: none !important;
@@ -195,7 +201,7 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
   }
 
   .price{
-    font-size: 4.5vw;
+       font-size: 4.5vw;
   }
 
   .carousel{

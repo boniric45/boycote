@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
-import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
+import { ProductService } from '../../services/product.service';
 import { BoycoteComponent } from '../features/boycote/boycote.component';
 
 
@@ -14,7 +14,7 @@ import { BoycoteComponent } from '../features/boycote/boycote.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   constructor(
     private route:Router,
@@ -24,13 +24,5 @@ export class HomeComponent implements OnInit {
   listClick() {
     this.route.navigateByUrl("/list");    
   }
-
-
-    ngOnInit(): void {
-    
-
-      
-    }
-
 
 }

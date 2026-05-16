@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HeaderComponent } from './header.component';
+import { CarouselSelectComponent } from './carousel-select.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+describe('CarouselSelectComponent', () => {
+  let component: CarouselSelectComponent;
+  let fixture: ComponentFixture<CarouselSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent]
+      imports: [CarouselSelectComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HeaderComponent);
+    fixture = TestBed.createComponent(CarouselSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

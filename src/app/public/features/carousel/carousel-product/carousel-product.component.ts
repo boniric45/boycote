@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Product } from '../../../../models/product';
 import { ApiService } from '../../../../services/api.service';
 import { ProductService } from '../../../../services/product.service';
@@ -8,10 +8,11 @@ import { ComponentRightComponent } from '../../component-right/component-right.c
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { FooterComponent } from "../../../footer/footer.component";
 import { ProductCardComponent } from '../../../product-card/product-card.component';
+import { CartComponent } from "../../../cart/cart.component";
 
 @Component({
   selector: 'app-carousel-product',
-  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, RouterLink, FooterComponent,ProductCardComponent],
+  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, RouterLink, FooterComponent, ProductCardComponent, CartComponent],
   templateUrl: './carousel-product.component.html',
   styleUrl: './carousel-product.component.scss',
 })
@@ -21,68 +22,95 @@ export class CarouselProductComponent implements OnInit{
  private apiService = inject(ApiService);
  private productService = inject(ProductService);
  private router = inject(Router);
+ private route = inject(ActivatedRoute);
 
-  articles: string[] = [];
+  articles = signal<any[]>([]);
   visibleCount = 5;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
   product!:Product;
+  private touchStartX = 0;
+  private touchEndX = 0;
 
-  ngOnInit(): void {
-  
-  // On récupère le produit
-  this.product = this.productService.product;  
-  console.log( 'Carousel > ',this.product);
-  
+ngOnInit(): void {
 
-  // On récupère les images du produit 
-  this.articles = this.productService.getProductImages();
+  // 1. On tente de lire le produit depuis le service
+  this.product = this.productService.product;
 
-  // 1. On calcule visibleCount AVANT de calculer le centre
-  this.visibleCount = this.articles.length;
+  // 2. Si le produit existe déjà (cas normal sans refresh)
+  if (this.product) {
+    const imageList = this.productService.buildImageObjects(this.product);
+    this.articles.set(imageList);
+    return;
+  }
 
-  // 2. On place le centre au milieu
+  // 3. Sinon, on recharge via l’ID dans l’URL (cas refresh)
+  this.route.params.subscribe(params => {
+    const id = params['id'];
+
+    this.productService.getProduct(id).subscribe(res => {
+      if (res.success) {
+        this.product = res.product;
+
+        const imageList = this.productService.buildImageObjects(this.product);
+        this.articles.set(imageList);
+
+      }
+    });
+  });
+
+  // 4. On calcule visibleCount AVANT de calculer le centre
+   this.visibleCount = this.articles().length;
+
+  // 5. On place le centre au milieu
   this.currentIndex = Math.floor(this.visibleCount / 2);
+    // this.currentIndex = Math.floor(this.visibleCount / 2);
 
-  // 3. On met à jour visibleCount SI NÉCESSAIRE (mobile, responsive…)
+  // 6. On met à jour visibleCount SI NÉCESSAIRE (mobile, responsive…)
   this.updateVisibleCount();
 
-  // 4. Et on recalcule le centre APRÈS updateVisibleCount
+  // 7. Et on recalcule le centre APRÈS updateVisibleCount
   this.currentIndex = Math.floor(this.visibleCount / 2);
 
   window.addEventListener('resize', () => {
     this.updateVisibleCount();
     this.currentIndex = Math.floor(this.visibleCount / 2); // 🔥 indispensable
   });
-
 }
 
 
  
   get visibleArticles() {
-    if (!this.articles || this.articles.length === 0) {
+    // SI ARTICLES EST VIDE RENVOI []
+    if (!this.articles() || this.articles().length === 0) {
       return [];
     }
   
-    const total = this.articles.length;
-    const count = Math.min(this.visibleCount, total);
-
-    const start = this.currentIndex - Math.floor(count / 2);
-
+    const total = this.articles().length;
     const result = [];
+    const count = Math.min(this.visibleCount, total);
+    const start = this.currentIndex - Math.floor(count / 2);
 
     for (let i = 0; i < count; i++) {
       const index = (start + i + total) % total;
-      result.push(this.articles[index]);
+      result.push(this.articles()[index]);
     }
 
     return result;
   }
 
   trackByArticle(index: number, article: Product) {
+    const finalImages = [];
+    if (this.articles().length < 10) {
+    for (const img in article) {
+      finalImages.push(img);
+    }
+  }
+
     return article.id ?? index;
   }
+
 
   updateVisibleCount() {
     this.visibleCount = window.innerWidth < 768 ? 5 : 5;
@@ -95,22 +123,20 @@ export class CarouselProductComponent implements OnInit{
   }
 
   next() {
-    if (this.isAnimating) return;
+   if (this.isAnimating) return;
     this.triggerAnimation('right');
-    this.currentIndex = (this.currentIndex + 1) % this.articles.length;
+    this.currentIndex = (this.currentIndex + 1) % this.articles().length;
   }
 
   prev() {
     if (this.isAnimating) return;
     this.triggerAnimation('left');
-    this.currentIndex =
-      (this.currentIndex - 1 + this.articles.length) % this.articles.length;
+    this.currentIndex = (this.currentIndex - 1 + this.articles().length) % this.articles().length;
   }
 
   getTransform(i: number) {
     const middle = Math.floor(this.visibleCount / 2);
     const offset = i - middle;
-
     const rotation = offset * 8;
     const scale = 1 - Math.abs(offset) * 0.06;
     const translateX = offset * 80;
@@ -135,7 +161,6 @@ export class CarouselProductComponent implements OnInit{
       return this.visibleArticles[middle] ;
   }
 
-
   getOpacity(i: number) { 
     const middle = Math.floor(this.visibleCount / 2);
     const offset = Math.abs(i - middle);
@@ -144,8 +169,30 @@ export class CarouselProductComponent implements OnInit{
 
   readViewProduct(product:Product){    
     this.productService.product = product; // Injecte les infos dans ProductService
-     this.router.navigateByUrl('product'); // Navigue vers la page produit
+     this.router.navigateByUrl('/product'); // Navigue vers la page produit
   }
+
+  // HAND SWIPE MOBILE //
+onTouchStart(event: TouchEvent) {
+  this.touchStartX = event.changedTouches[0].clientX;
+}
+
+onTouchEnd(event: TouchEvent) {
+  this.touchEndX = event.changedTouches[0].clientX;
+  this.handleSwipe();
+}
+
+handleSwipe() {
+  const delta = this.touchEndX - this.touchStartX;
+
+  if (Math.abs(delta) < 40) return; // seuil minimal
+
+  if (delta < 0) {
+    this.next();
+  } else {
+    this.prev();
+  }
+}
 
 
 

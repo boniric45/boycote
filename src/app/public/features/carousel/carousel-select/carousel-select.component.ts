@@ -1,27 +1,27 @@
-import { Component, inject, Input, OnInit, Signal, signal } from '@angular/core';
-import { ComponentLeftComponent } from "../../component-left/component-left.component";
-import { ComponentRightComponent } from "../../component-right/component-right.component";
+import { Component, computed, inject, Input, OnInit, signal, Signal } from '@angular/core';
 import { ApiService } from '../../../../services/api.service';
-import { Product } from '../../../../models/product';
 import { CommonModule } from '@angular/common';
 import { ProgressbarComponent } from '../../../progressbar/progressbar.component';
+import { ComponentLeftComponent } from '../../component-left/component-left.component';
+import { ComponentRightComponent } from '../../component-right/component-right.component';
+import { Product } from '../../../../models/product';
 
 @Component({
-  selector: 'app-carousel-list',
-  imports: [ComponentLeftComponent, ComponentRightComponent, CommonModule,ProgressbarComponent],
-  templateUrl: './carousel-list.component.html',
-  styleUrl: './carousel-list.component.scss',
+  selector: 'app-carousel-select',
+  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, ProgressbarComponent],
+  templateUrl: './carousel-select.component.html',
+  styleUrl: './carousel-select.component.scss',
 })
-export class CarouselListComponent implements OnInit {
+export class CarouselSelectComponent implements OnInit{
 
-  articles: Product[] = [];
+  articles = signal<any[]>([]);
   visibleCount = 5;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
-  @Input() filteredArticlesSelected: Product[] = []; // Parent BoycoteComponent will set this
-  @Input() loadingPb: boolean = false;
 
+  @Input() filteredArticlesSelected: Product[] = []; // Parent BoycoteComponent will set this
+  @Input() loadingPb: boolean = true;
 
   ngOnInit(): void {
     this.updateVisibleCount();
@@ -30,6 +30,21 @@ export class CarouselListComponent implements OnInit {
     });
   }
 
+  normalized = computed(() => {
+  const list = this.filteredArticlesSelected;
+
+  if (!list || list.length === 0) return [];
+
+  if (list.length < 5) {
+    const result = [...list];
+    while (result.length < 5) {
+      result.push(...list);
+    }
+    return result.slice(0, 5);
+  }
+
+  return list;
+  });
 
     get visibleArticles() {
       const articles = this.filteredArticlesSelected;
@@ -48,12 +63,16 @@ export class CarouselListComponent implements OnInit {
       return result;
     }
 
+    // AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
+  canShowCarousel = computed(() => this.filteredArticlesSelected.length >= 3);
+
+
   trackByArticle(index: number, article: any) {
-    return this.filteredArticlesSelected[index]?.id ?? index;
+    return article?.id ?? index;
   }
 
   updateVisibleCount() {
-    this.visibleCount = window.innerWidth < 768 ? 3 : 5;
+    this.visibleCount = window.innerWidth < 768 ? 5 : 5;
   }
 
   triggerAnimation(dir: 'left' | 'right') {
@@ -63,18 +82,17 @@ export class CarouselListComponent implements OnInit {
   }
 
   next() {
-    if (this.isAnimating) return;
+    const total = this.normalized().length;
+    if (total === 0) return;
     this.triggerAnimation('right');
-    this.currentIndex =
-      (this.currentIndex + 1) % this.filteredArticlesSelected.length;
+    this.currentIndex = (this.currentIndex + 1) % total;
   }
 
   prev() {
-    if (this.isAnimating) return;
+    const total = this.normalized().length;
+    if (total === 0) return;
     this.triggerAnimation('left');
-    this.currentIndex =
-      (this.currentIndex - 1 + this.filteredArticlesSelected.length) %
-      this.filteredArticlesSelected.length;
+    this.currentIndex = (this.currentIndex - 1 + total) % total;
   }
 
   getTransform(i: number) {
@@ -111,6 +129,6 @@ export class CarouselListComponent implements OnInit {
     return 1 - offset * 0.15;
   }
 
+
+
 }
-
-

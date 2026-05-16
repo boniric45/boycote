@@ -11,7 +11,7 @@ import { ComponentRightComponent } from '../../component-right/component-right.c
   templateUrl: './carousel-input.component.html',
   styleUrl: './carousel-input.component.scss',
 })
-export class CarouselInputComponent implements OnInit{
+export class CarouselInputComponent implements OnInit {
 
   private apiService = inject(ApiService);
 
@@ -21,13 +21,12 @@ export class CarouselInputComponent implements OnInit{
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
 
-  @Input({required: true}) searchQuery!: Signal<string>;
+  @Input({ required: true }) searchQuery!: Signal<string>;
   @Input() searchSubmitted!: Signal<boolean>;
 
   loadingPb: boolean = true;
 
   ngOnInit(): void {
-
     this.loadProducts();
     this.updateVisibleCount();
 
@@ -38,71 +37,71 @@ export class CarouselInputComponent implements OnInit{
 
   loadProducts() {
     this.apiService.getProducts().subscribe((p) => {
-      this.articles.set(p);      
+      this.articles.set(p);
     });
   }
 
   // RECHERCHE DES PRODUITS
-filtered = computed(() => {
-  const term = this.searchQuery().trim().toLowerCase();
+  filtered = computed(() => {
+    const term = this.searchQuery().trim().toLowerCase();
 
-  // 🔥 Si aucune recherche → aucun résultat
-  if (!term) return [];
-  return this.articles().filter(p =>
-    p.marque.toLowerCase().includes(term)
-  );
-});
+    // 🔥 Si aucune recherche → aucun résultat
+    if (!term) return [];
+    return this.articles().filter(p =>
+      p.marque.toLowerCase().includes(term)
+    );
+  });
 
 
-// AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
-canShowCarousel = computed(() => this.filtered().length >= 3);
+  // AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
+  canShowCarousel = computed(() => this.filtered().length >= 3);
 
-normalized = computed(() => {
-  const list = this.filtered();
-  console.log('📌 normalized (before logic) =', list);
+  normalized = computed(() => {
+    const list = this.filtered();
+    console.log('📌 normalized (before logic) =', list);
 
-  // Aucun résultat → tableau vide
-  if (list.length === 0) {
-    return [];
-  }
-
-  // Moins de 5 résultats → duplication
-  if (list.length < 5) {
-    const result = [...list];
-    while (result.length < 5) {
-      result.push(...list);
+    // Aucun résultat → tableau vide
+    if (list.length === 0) {
+      return [];
     }
-    return result.slice(0, 5);
+
+    // Moins de 5 résultats → duplication
+    if (list.length < 5) {
+      const result = [...list];
+      while (result.length < 5) {
+        result.push(...list);
+      }
+      return result.slice(0, 5);
+    }
+
+    // Sinon → liste normale
+    return list;
+  });
+
+
+
+  get visibleArticles() {
+    const articles = this.normalized();
+
+    // Si aucun résultat → rien à afficher
+    if (articles.length === 0) {
+      return [];
+    }
+
+    const total = articles.length;
+    const count = Math.min(this.visibleCount, total);
+
+    const start = this.currentIndex - Math.floor(count / 2);
+
+    const result = [];
+
+    for (let i = 0; i < count; i++) {
+      const index = (start + i + total) % total;
+      result.push(articles[index]);
+    }
+
+    return result;
   }
-
-  // Sinon → liste normale
-  return list;
-});
-
-
-
-get visibleArticles() {
-  const articles = this.normalized();
-
-  // Si aucun résultat → rien à afficher
-  if (articles.length === 0) {
-    return [];
-  }
-
-  const total = articles.length;
-  const count = Math.min(this.visibleCount, total);
-
-  const start = this.currentIndex - Math.floor(count / 2);
-
-  const result = [];
-
-  for (let i = 0; i < count; i++) {
-    const index = (start + i + total) % total;
-    result.push(articles[index]);
-  }
-
-  return result;
-}
 
 
   trackByArticle(index: number, article: any) {
@@ -110,7 +109,7 @@ get visibleArticles() {
   }
 
   updateVisibleCount() {
-    this.visibleCount = window.innerWidth < 768 ? 3 : 5;
+    this.visibleCount = window.innerWidth < 768 ? 5 : 5;
   }
 
   triggerAnimation(dir: 'left' | 'right') {
@@ -123,14 +122,12 @@ get visibleArticles() {
   next() {
     const total = this.normalized().length;
     if (total === 0) return;
-
     this.currentIndex = (this.currentIndex + 1) % total;
   }
 
   prev() {
     const total = this.normalized().length;
     if (total === 0) return;
-
     this.currentIndex = (this.currentIndex - 1 + total) % total;
   }
 

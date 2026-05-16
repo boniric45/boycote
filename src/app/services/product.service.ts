@@ -48,9 +48,9 @@ export class ProductService  {
   // 3. On crée une nouvelle liste qui répète les images dans l'ordre
   const finalImages: string[] = [];
 
-  while (finalImages.length < 8) {
+  while (finalImages.length < 10) {
     for (const img of baseImages) {
-      if (finalImages.length < 8) {
+      if (finalImages.length < 10) {
         finalImages.push(img);
       } else {
         break;
@@ -59,6 +59,31 @@ export class ProductService  {
   }
 
   return finalImages;
+  }
+
+  getProductImagesWithoutDuplicate(): string[] {
+  if (!this.product) return [];
+
+  // 1. Extraction des images pathpicture...
+  const baseImages = Object.entries(this.product)
+    .filter(([key, value]) =>
+      key.toLowerCase().startsWith('pathpicture') &&
+      typeof value === 'string' &&
+      value.trim() !== ''
+    )
+    .map(([_, value]) => value);
+
+  // 2. Si aucune image → retourne vide
+  if (baseImages.length === 0) return [];
+
+  // 3. On crée une nouvelle liste qui répète les images dans l'ordre
+  const finalImages: string[] = [];
+  if (finalImages.length < 10) {
+    for (const img of baseImages) {
+      finalImages.push(img);
+    }
+  }
+    return finalImages;
   }
 
   filterProducts(criteria: ProductFilter): Product[] {
@@ -118,14 +143,41 @@ export class ProductService  {
   }
 
   // A TESTER 
-  getProduct(id: number):Observable<Product>{
-    return this.http.get<Product>('https://www.boycoté.fr/api/getProduct.php'+id);
+getProduct(id: number): Observable<{ success: boolean; product: Product }> {
+  return this.http.get<{ success: boolean; product: Product }>(
+    'https://www.boycoté.fr/api/getProduct.php?id=' + id
+  );
+}
+  // SUPPRIME LA PREMIERE IMAGE DU TABLEAU //
+  deleteFirstPicture(article:string[]):any[]{
+
+    let result = [];
+
+    if(article[0] == null){
+      return [];
+    } else {
+     article.shift();
+     result.push(article);
+    }
+    return result;
   }
 
-  
 
+  buildImageObjects(product: any) {
+    const images: { id: number; pathpictureone: string }[] = [];
+    let id = 1;
 
+    for (const key of Object.keys(product)) {
+      if (key.toLowerCase().startsWith('pathpicture') && product[key]) {
+        images.push({
+          id: id++,
+          pathpictureone: product[key]
+        });
+      }
+    }
 
+    return images;
+  }
 
 
 

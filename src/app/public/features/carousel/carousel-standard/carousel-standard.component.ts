@@ -25,11 +25,12 @@ export class CarouselStandardComponent implements OnInit {
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
+  private touchStartX = 0;
+  private touchEndX = 0;
 
   ngOnInit(): void {
     this.loadProducts();
     this.updateVisibleCount();
-
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
     }); 
@@ -49,6 +50,7 @@ export class CarouselStandardComponent implements OnInit {
   }
 
   const total = this.articles.length;  
+
   const count = Math.min(this.visibleCount, total);
 
   const start = this.currentIndex - Math.floor(count / 2);
@@ -125,8 +127,29 @@ export class CarouselStandardComponent implements OnInit {
 
   readViewProduct(product:Product){    
     this.productService.product = product; // Injecte les infos dans ProductService    
-    this.router.navigateByUrl('product'); // Navigue vers la page produit
+    this.router.navigate(['product', product.id]); // Navigue vers la page produit
   }
-  
+
+  // HAND SWIPE MOBILE //
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].clientX;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].clientX;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const delta = this.touchEndX - this.touchStartX;
+
+    if (Math.abs(delta) < 40) return; // seuil minimal
+
+    if (delta < 0) {
+      this.next();
+    } else {
+      this.prev();
+    }
+  }
 
 }
