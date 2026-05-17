@@ -25,6 +25,9 @@ export class GarmentService {
     return this.http.get(`${this.api}/deleteGarment.php?type=garment&id=${id}`);
   }
 
+  updateOrderList(orderList: { id: number; order: number }[]) {
+    return this.http.post(`${this.api}/update-order-list-garment.php`, orderList);
+  }
 
 
   

@@ -9,7 +9,8 @@
 <div class="container">
 
   <!---------------- PRODUCTS ---------------->
-  <div class="products">
+
+  <!-- <div class="products">
   <div class="product-table">
     <table>
       <thead>
@@ -33,8 +34,7 @@
 
       <tbody>
         @for (product of products; track product.id) {
-        <tr>
-
+        <tr cdkDrag>
           <td>
             <img [src]="getPreview(product)" alt="{{ product.name }}" class="preview" />
           </td>
@@ -54,123 +54,210 @@
       </tbody>
     </table>
   </div>
+    </div> -->
+
+  <!---------------- PRODUCTS ---------------->
+  <div class="products">
+    <div class="product-table">
+
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <div class="cont-btn-add" routerLink="add">
+                <img class="btn-add" src="/pictures/add.png" alt="">
+              </div>
+            </th>
+            <th>Preview</th>
+            <th>Sku</th>
+            <th>Nom</th>
+            <th>Marque</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <!-- 🔥 Activation du drag & drop -->
+        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+
+          @for (product of products; track product.id) {
+          <tr cdkDrag>
+
+            <td>
+              <img [src]="getPreview(product)" alt="{{ product.name }}" class="preview" />
+            </td>
+
+            <td>{{ product.sku }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.marque }}</td>
+            <td>{{ product.prix }} €</td>
+            <td>{{ product.stock }}</td>
+
+            <td class="actions">
+              <button class="update" (click)="edit(product)">
+                <img src="/pictures/modifier.png">
+              </button>
+
+              <button class="danger" (click)="delete(product.id)">
+                <img src="/pictures/delete.png">
+              </button>
+            </td>
+
+          </tr>
+          }
+
+        </tbody>
+      </table>
+
     </div>
+  </div>
 
   <!---------------- MARQUES ---------------->
   <div class="marques">
-  <div class="marque-table">
-    <table>
-      <thead>
-        <tr>
-                    <th>
-           <div class="cont-btn-add" routerLink="add">
-              <img class="btn-add" src="/pictures/add.png" alt="">
-          </div>
-          </th>
-          <th>Id</th>
-          <th>Marques</th>
-          <th>Actions</th>
-          <th></th>
-        </tr>
+    <div class="marque-table">
 
-      </thead>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <div class="cont-btn-add" routerLink="add">
+                <img class="btn-add" src="/pictures/add.png" alt="">
+              </div>
+            </th>
+            <th>Id</th>
+            <th>Marques</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        @for (marque of marques; track marque.id) {
-        <tr>
-          <td></td>
-          <td>{{ marque.id }}</td>
-          <td>{{ marque.name }}</td>
-          <td class="actions">
-            <button class="update" (click)="editMarque(marque)"><img
-                src="/pictures/modifier.png"></button>
-            <button class="danger" (click)="deleteMarque(marque.id)"><img src="/pictures/delete.png"></button>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+        <!-- 🔥 Activation du drag & drop -->
+        <tbody cdkDropList (cdkDropListDropped)="dropMarques($event)">
+
+          @for (marque of marques; track marque.id) {
+          <tr cdkDrag>
+
+            <td></td>
+            <td>{{ marque.id }}</td>
+            <td>{{ marque.name }}</td>
+
+            <td class="actions">
+              <button class="update" (click)="editMarque(marque)">
+                <img src="/pictures/modifier.png">
+              </button>
+
+              <button class="danger" (click)="deleteMarque(marque.id)">
+                <img src="/pictures/delete.png">
+              </button>
+            </td>
+
+          </tr>
+          }
+
+        </tbody>
+      </table>
+
     </div>
+  </div>
 
-  <!---------------- VETEMENTS ---------------->
+
+  <!---------------- VÊTEMENTS ---------------->
   <div class="garments">
-  <div class="garment-table">
-    <table>
-      <thead>
-        <tr>
-                    <th>
-           <div class="cont-btn-add" routerLink="add">
-              <img class="btn-add" src="/pictures/add.png" alt="">
-          </div>
-          </th>
-          <th>Id</th>
-          <th>Vêtements</th>
-          <th>Actions</th>
-          <th></th>
-        </tr>
-      </thead>
+    <div class="garment-table">
 
-      <tbody>
-        @for (garment of garments; track garment.id) {
-        <tr>
-          <td></td>
-          <td>{{ garment.id }}</td>
-          <td>{{ garment.name }}</td>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <div class="cont-btn-add" routerLink="add">
+                <img class="btn-add" src="/pictures/add.png" alt="">
+              </div>
+            </th>
+            <th>Id</th>
+            <th>Vêtements</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-          <td class="actions">
-            <button class="update" (click)="editGarment(garment)"><img
-                src="/pictures/modifier.png"></button>
-            <button class="danger" (click)="deleteGarment(garment.id)"><img src="/pictures/delete.png"></button>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+        <!-- 🔥 Activation du drag & drop -->
+        <tbody cdkDropList (cdkDropListDropped)="dropGarments($event)">
+
+          @for (garment of garments; track garment.id) {
+          <tr cdkDrag>
+
+            <td></td>
+            <td>{{ garment.id }}</td>
+            <td>{{ garment.name }}</td>
+
+            <td class="actions">
+              <button class="update" (click)="editGarment(garment)">
+                <img src="/pictures/modifier.png">
+              </button>
+
+              <button class="danger" (click)="deleteGarment(garment.id)">
+                <img src="/pictures/delete.png">
+              </button>
+            </td>
+
+          </tr>
+          }
+
+        </tbody>
+      </table>
+
     </div>
+  </div>
+
+
+
+
 
   <!---------------- GENRES ---------------->
   <div class="genders">
-  <div class="gender-table">
-    <table>
-      <thead>
-        <tr>
-          <th>
-           <div class="cont-btn-add" routerLink="add">
-              <img class="btn-add" src="/pictures/add.png" alt="">
-          </div>
-          </th>
-          <th>Id</th>
-          <th>Genre</th>
-          <th>Actions</th>
-          <th></th>
-        </tr>
+    <div class="gender-table">
 
-      </thead>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <div class="cont-btn-add" routerLink="add">
+                <img class="btn-add" src="/pictures/add.png" alt="">
+              </div>
+            </th>
+            <th>Id</th>
+            <th>Genre</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        @for (genre of genders; track genre.id) {
-        <tr>
-          <td></td>
-          <td>{{ genre.id }}</td>
-          <td>{{ genre.name }}</td>
-          <td class="actions">
-            <button class="update" (click)="editGender(genre)"><img
-                src="/pictures/modifier.png"></button>
-            <button class="danger" (click)="deleteGender(genre.id)"><img src="/pictures/delete.png"></button>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+        <!-- 🔥 Activation du drag & drop -->
+        <tbody cdkDropList (cdkDropListDropped)="dropGenders($event)">
+
+          @for (gender of genders; track gender.id) {
+          <tr cdkDrag>
+
+            <td></td>
+            <td>{{ gender.id }}</td>
+            <td>{{ gender.name }}</td>
+
+            <td class="actions">
+              <button class="update" (click)="editGender(gender)">
+                <img src="/pictures/modifier.png">
+              </button>
+
+              <button class="danger" (click)="deleteGender(gender.id)">
+                <img src="/pictures/delete.png">
+              </button>
+            </td>
+
+          </tr>
+          }
+
+        </tbody>
+      </table>
+
     </div>
+  </div>
+
 
 </div>
-
-
-
-
-
-

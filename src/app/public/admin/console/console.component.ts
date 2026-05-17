@@ -9,19 +9,20 @@ import { ConsoleProductService } from '../../../services/console-product.service
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
 import { MarqueService } from '../../../services/marque.service';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-console',
-  imports: [RouterLink],
+  imports: [RouterLink, DragDropModule],
   templateUrl: './console.component.html',
   styleUrl: './console.component.scss',
 })
 export class ConsoleComponent implements OnInit {
 
-  products:Product[] = [];
-  marques:Marque[] = [];
-  garments:Garment[] = [];
-  genders:Gender[] = [];
+  products: Product[] = [];
+  marques: Marque[] = [];
+  garments: Garment[] = [];
+  genders: Gender[] = [];
 
   private router = inject(Router);
   private auth = inject(AuthService);
@@ -38,19 +39,82 @@ export class ConsoleComponent implements OnInit {
     this.loadGenders();
   }
 
+  drop(event: CdkDragDrop<Product[]>) {
+    moveItemInArray(this.products, event.previousIndex, event.currentIndex);
+
+    // 🔥 Mettre à jour l’ordre dans la base
+    this.saveOrder();
+  }
+
+  saveOrder() {
+    const ordered = this.products.map((p, index) => ({
+      id: p.id,
+      order: index
+    }));
+
+    this.consoleProductService.updateOrderList(ordered)
+      .subscribe(() => console.log("Ordre mis à jour"));
+  }
+
+  dropMarques(event: CdkDragDrop<Marque[]>) {
+    moveItemInArray(this.marques, event.previousIndex, event.currentIndex);
+    this.saveMarquesOrder();
+  }
+
+  saveMarquesOrder() {
+    const ordered = this.marques.map((m, index) => ({
+      id: m.id,
+      order: index
+    }));
+
+    this.marqueService.updateOrderList(ordered)
+      .subscribe(() => console.log("Ordre marques mis à jour"));
+  }
+
+  dropGenders(event: CdkDragDrop<Gender[]>) {
+    moveItemInArray(this.genders, event.previousIndex, event.currentIndex);
+    this.saveGendersOrder();
+  }
+
+  saveGendersOrder() {
+    const ordered = this.genders.map((g, index) => ({
+      id: g.id,
+      order: index
+    }));
+
+    this.genderService.updateOrderList(ordered)
+      .subscribe(() => console.log("Ordre genres mis à jour"));
+  }
+
+  dropGarments(event: CdkDragDrop<Garment[]>) {
+    moveItemInArray(this.garments, event.previousIndex, event.currentIndex);
+    this.saveGarmentsOrder();
+  }
+
+  saveGarmentsOrder() {
+    const ordered = this.garments.map((g, index) => ({
+      id: g.id,
+      order: index
+    }));
+
+    this.garmentService.updateOrderList(ordered)
+      .subscribe(() => console.log("Ordre vêtements mis à jour"));
+  }
+
+
   loadProducts() {
     this.consoleProductService.getProducts().subscribe(res => this.products = res);
   }
 
-  loadMarques(){
-    this.marqueService.getMarques().subscribe(res => this.marques = res );
+  loadMarques() {
+    this.marqueService.getMarques().subscribe(res => this.marques = res);
   }
 
-  loadGarments(){
+  loadGarments() {
     this.garmentService.getAll().subscribe(res => this.garments = res);
   }
 
-  loadGenders(){
+  loadGenders() {
     this.genderService.getAll().subscribe(res => this.genders = res)
   }
 
@@ -116,13 +180,8 @@ export class ConsoleComponent implements OnInit {
     }
   }
 
-
-
-  logout(){
+  logout() {
     this.auth.logout();
   }
-
-
-
 
 }

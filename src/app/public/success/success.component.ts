@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-success',
@@ -9,4 +10,9 @@ import { RouterLink } from '@angular/router';
 })
 export class SuccessComponent {
 
+  cartService = inject(CartService);
+
+  constructor() {
+    this.cartService.clear(); // 🔥 Vide le panier
+  }
 }

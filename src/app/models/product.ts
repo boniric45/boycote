@@ -29,6 +29,7 @@ export interface Product {
     ycabine:number;
     widthcabine:number;
     heightcabine:number;
+    display_order:number;
 }
 
 export interface AddProductResponse {

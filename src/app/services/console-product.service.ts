@@ -38,6 +38,9 @@ export class ConsoleProductService {
     );
   }
 
+  updateOrderList(orderList: { id: number; order: number }[]) {
+    return this.http.post(`${this.api}/update-order-list-product.php`, orderList);
+  }
 
 
 updateProduct(product: any, pictures: File[], cabine: File | null) {

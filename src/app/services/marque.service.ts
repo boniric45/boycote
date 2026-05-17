@@ -28,5 +28,9 @@ export class MarqueService {
     return this.http.get(`${this.api}/delete.php?type=marque&id=${id}`);
   }
 
+  updateOrderList(orderList: { id: number; order: number }[]) {
+  return this.http.post(`${this.api}/update-order-list-marque.php`, orderList);
+  }
+
   
 }
