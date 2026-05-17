@@ -24,20 +24,23 @@ export class CartService {
   // ------------------------------
   // ADD
   // ------------------------------
+
   add(product: Product, quantity: number = 1) {
 
     const existing = this.items.find(i => i.product.id === product.id);
 
+    // 🔥 Empêcher d'ajouter plusieurs fois le même article
     if (existing) {
-      existing.quantity += quantity;
-      existing.total = existing.quantity * existing.product.prix;
-    } else {
-      this.items.push({
-        product,
-        quantity,
-        total: product.prix * quantity
-      });
+       alert("This item is already in your cart.");
+      return; // On ne cumule pas, on ne touche pas au panier
     }
+
+    // Sinon on ajoute normalement
+    this.items.push({
+      product,
+      quantity,
+      total: product.prix * quantity
+    });
 
     this.sync();
   }
@@ -89,8 +92,6 @@ export class CartService {
       this.count$.next(this.items.length);   // 🔥 recharge le compteur
     }
   }
-
-
   
 }
 

@@ -1,6 +1,6 @@
-import { Component, computed, inject, OnInit, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Component, computed, inject, output } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 
 
@@ -23,69 +23,119 @@ export interface CartItem {
 
 export class CartComponent {
 
+//   private readonly API = 'https://boycote.fr/api';
+
+//   checkout(): void {
+//   const items = this.cartService.getItems();
+ 
+//   if (items.length === 0) return;
+
+//   const payload = {
+//     items: items.map(item => ({
+//       id: item.product.id,
+//       nom: item.product.name,
+//       sku: item.product.sku,
+//       prix: item.product.prix,
+//       image: item.product.pathpictureone
+//     }))
+//   };
+
+//   console.log('Payload > ',payload);
+  
+//   this.http.post<{ url: string }>(`${this.API}/create-checkout.php`, payload)
+//     .subscribe({
+//       next: (res) => {
+//         console.log("Réponse Stripe:", res);
+//         if (res.url) window.location.href = res.url;
+//       },
+//       error: (err) => console.error('Erreur checkout:', err)
+//     });
+// }
+
+//   isCartEmpty = computed(() => this.cartService.getItems().length === 0); // voir pour le refresh
+
+//   goToCheckout = output<void>();
+//   isOpen = false;
+
+//   private http = inject(HttpClient);
+//   private cartService = inject(CartService);
+
+//   // 🔥 Panier global réactif
+//   cart$ = this.cartService.items$;
+
+//   // 🔥 Total dynamique
+//   total = computed(() =>
+//     this.cartService.getItems().reduce((sum, item) => sum + item.total, 0)
+//   );
+
+//   openCart()  { this.isOpen = true; }
+//   closeCart() { this.isOpen = false; }
+
+//   removeItem(productId: number) {
+//     this.cartService.remove(productId);
+//   }
+
+//   onOverlayClick(event: MouseEvent): void {
+//     if ((event.target as HTMLElement).classList.contains('cart-overlay')) {
+//       this.closeCart();
+//     }
+//   }
+
   private readonly API = 'https://boycote.fr/api';
-
-  checkout(): void {
-  const items = this.cartService.getItems();
-
-  console.log('avant > ',items);
-  
-  if (items.length === 0) return;
-
-  const payload = {
-    items: items.map(item => ({
-      id: item.product.id,
-      nom: item.product.name,
-      sku: item.product.sku,
-      prix: item.product.prix,
-      image: item.product.pathpictureone
-    }))
-  };
-
-  console.log('Payload > ',payload);
-  
-  this.http.post<{ url: string }>(`${this.API}/create-checkout.php`, payload)
-    .subscribe({
-      next: (res) => {
-        console.log("Réponse Stripe:", res);
-        if (res.url) window.location.href = res.url;
-      },
-      error: (err) => console.error('Erreur checkout:', err)
-    });
-}
-
-
-  isCartEmpty = computed(() => this.cartService.getItems().length === 0); // voir pour le refresh
-
-  goToCheckout = output<void>();
-  isOpen = false;
-
   private http = inject(HttpClient);
   private cartService = inject(CartService);
 
-  // 🔥 Panier global réactif
   cart$ = this.cartService.items$;
 
-  // 🔥 Total dynamique
-  total = computed(() =>
-    this.cartService.getItems().reduce((sum, item) => sum + item.total, 0)
-  );
+  // 🔥 Total dynamique (recalculé automatiquement)
+  get total() {
+    return this.cartService.getTotal();
+  }
 
-  openCart()  { this.isOpen = true; }
-  closeCart() { this.isOpen = false; }
+  // 🔥 Panier vide ?
+  get isCartEmpty() {
+    return this.cartService.getItems().length === 0;
+  }
 
   removeItem(productId: number) {
     this.cartService.remove(productId);
   }
+
+  checkout(): void {
+    const items = this.cartService.getItems();
+    if (items.length === 0) return;
+
+    const payload = {
+      items: items.map(item => ({
+        id: item.product.id,
+        nom: item.product.name,
+        sku: item.product.sku,
+        prix: item.product.prix,
+        image: item.product.pathpictureone
+      }))
+    };
+
+    this.http.post<{ url: string }>(`${this.API}/create-checkout.php`, payload)
+      .subscribe({
+        next: (res) => { if (res.url) window.location.href = res.url; },
+        error: (err) => console.error('Erreur checkout:', err)
+      });
+  }
+
+  openCart()  { this.isOpen = true; }
+  closeCart() { this.isOpen = false; }
+  isOpen = false;
 
   onOverlayClick(event: MouseEvent): void {
     if ((event.target as HTMLElement).classList.contains('cart-overlay')) {
       this.closeCart();
     }
   }
-
-
 }
+
+
+
+
 
 
 

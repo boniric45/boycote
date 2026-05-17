@@ -68,10 +68,10 @@
         </div>
         <div class="cart-total-row">
           <span class="cart-total-label">Total</span>
-          <span class="cart-total-amount">€ {{ total() }}</span>
+          <span class="cart-total-amount">€ {{ total }}</span>
         </div>
 
-        <button class="btn-checkout" [disabled]="isCartEmpty()" (click)="checkout()">
+        <button class="btn-checkout" [disabled]="isCartEmpty" (click)="checkout()">
           <span>PROCEED TO CHECKOUT →</span>
         </button>
         <p class="secure-note">🔒 Secure payment via Stripe</p>

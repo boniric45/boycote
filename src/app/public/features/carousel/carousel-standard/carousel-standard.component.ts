@@ -29,6 +29,7 @@ export class CarouselStandardComponent implements OnInit {
   direction: 'left' | 'right' = 'right';
   private touchStartX = 0;
   private touchEndX = 0;
+  cart$ = this.cartService.items$;
 
   ngOnInit(): void {
     this.loadProducts();
@@ -144,9 +145,7 @@ export class CarouselStandardComponent implements OnInit {
 
   handleSwipe() {
     const delta = this.touchEndX - this.touchStartX;
-
     if (Math.abs(delta) < 40) return; // seuil minimal
-
     if (delta < 0) {
       this.next();
     } else {
