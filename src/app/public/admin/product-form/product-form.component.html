@@ -10,9 +10,23 @@
       <label>SKU *<input type="text" formControlName="sku" required></label>
       <label>Nom *<input type="text" formControlName="name" required></label>
       <label>Description <textarea formControlName="description"></textarea></label>
-      <label>Conditions <input type="text" formControlName="conditions"></label>
-      <label>Type *<input type="text" formControlName="type" required></label>
-      <label>Genre *<input type="text" formControlName="gender" required></label>
+      <label>Conditions <textarea formControlName="conditions"></textarea></label>
+      <label>Type
+        <select formControlName="type" required>
+          <option value="">-- Choisir --*</option>
+          @for (t of types; track t.id) {
+          <option [value]="t.name">{{ t.name }}</option>
+          }
+        </select>
+      </label>
+      <label>Genre
+        <select formControlName="gender" required>
+          <option value="">-- Choisir --*</option>
+          @for (g of genders; track g.id) {
+          <option [value]="g.name">{{ g.name }}</option>
+          }
+        </select>
+      </label>
       <label>Taille *<input type="text" formControlName="size" required></label>
       <label>Mesure *<input type="text" formControlName="mesure" required></label>
       <label>Prix (€) *<input type="number" formControlName="prix" required></label>

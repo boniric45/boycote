@@ -8,6 +8,10 @@ import { AuthService } from '../../../services/auth.service';
 import { ConsoleProductService } from '../../../services/console-product.service';
 import { MarqueService } from '../../../services/marque.service';
 import { UploadService } from '../../../services/upload.service';
+import { Garment } from '../../../models/garment';
+import { Gender } from '../../../models/gender';
+import { GarmentService } from '../../../services/garment.service';
+import { GenderService } from '../../../services/gender.service';
 
 @Component({
   selector: 'app-product-update',
@@ -21,9 +25,13 @@ export class ProductUpdateComponent implements OnInit {
   //private productService = inject(ProductService);
   private uploadService = inject(UploadService);
   private marqueService = inject(MarqueService);
+  private typeService = inject(GarmentService);
+  private genderService = inject(GenderService);
   private auth = inject(AuthService);
   //private route = inject(Router);
   marques: Marque[] = [];
+  types: Garment[] = [];
+  genders: Gender[] = [];
   product!: Product;
   id = 0;
   mode = '';
@@ -115,6 +123,8 @@ ngOnInit(): void {
  
   constructor() {
     this.marqueService.getMarques().subscribe(res => this.marques = res);
+    this.typeService.getAll().subscribe(res => this.types = res);
+    this.genderService.getAll().subscribe(res => this.genders = res);
   }
 
 

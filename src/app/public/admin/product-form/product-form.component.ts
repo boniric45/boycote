@@ -7,6 +7,10 @@ import { Product } from '../../../models/product';
 import { ConsoleProductService } from '../../../services/console-product.service';
 import { MarqueService } from '../../../services/marque.service';
 import { UploadService } from '../../../services/upload.service';
+import { GarmentService } from '../../../services/garment.service';
+import { Garment } from '../../../models/garment';
+import { GenderService } from '../../../services/gender.service';
+import { Gender } from '../../../models/gender';
 
 @Component({
   selector: 'app-product-form',
@@ -19,8 +23,12 @@ export class ProductFormComponent {
   private productService = inject(ConsoleProductService);
   private uploadService = inject(UploadService);
   private marqueService = inject(MarqueService);
+  private typeService = inject(GarmentService);
+  private genderService = inject(GenderService);
   private route = inject(Router);
   marques: Marque[] = [];
+  types: Garment[] = [];
+  genders: Gender[] = [];
   id = 0;
   mode = '';
 
@@ -92,6 +100,8 @@ export class ProductFormComponent {
 
   constructor() {
     this.marqueService.getMarques().subscribe(res => this.marques = res);
+    this.typeService.getAll().subscribe(res => this.types = res);
+    this.genderService.getAll().subscribe(res => this.genders = res);
   }
 
 
@@ -119,10 +129,10 @@ onFileSelected(event: any, field: string, index: number | string) {
 }
 
 
-
 /** Enregistrement produit */
 save() {
   const product = this.form.value as Product;
+  console.log(product);
 
   if (product.id === 0) {
     this.productService.create(product).subscribe({

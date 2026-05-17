@@ -1,9 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '../../services/product.service';
-import { AddProductResponse } from '../../models/product';
-
+import { AddProductResponse } from '../../../models/product';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-add-product',
@@ -13,8 +12,6 @@ import { AddProductResponse } from '../../models/product';
 })
 
 export class AddProductComponent {
-
-
 
   form!: FormGroup; // déclaration sans initialisation
 

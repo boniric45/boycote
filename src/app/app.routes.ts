@@ -100,6 +100,43 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
   },
+  {
+    path: 'admin/marque/add',
+    // canMatch: [adminGuard],
+    loadComponent: () => import('./public/admin/add-marque/add-marque.component')
+      .then(c => c.AddMarqueComponent)
+  },
+  {
+    path: 'admin/marque/edit/:id',
+    // canMatch: [adminGuard],
+    loadComponent: () => import('./public/admin/edit-marque/edit-marque.component')
+      .then(c => c.EditMarqueComponent)
+  },
+    {
+    path: 'admin/garment/add',
+    // canMatch: [adminGuard],
+    loadComponent: () => import('./public/admin/add-garment/add-garment.component')
+      .then(c => c.AddGarmentComponent)
+  },
+  {
+    path: 'admin/garment/edit/:id',
+    // canMatch: [adminGuard],
+    loadComponent: () => import('./public/admin/edit-garment/edit-garment.component')
+      .then(c => c.EditGarmentComponent)
+  },
+      {
+    path: 'admin/gender/add',
+    // canMatch: [adminGuard],
+    loadComponent: () => import('./public/admin/add-gender/add-gender.component')
+      .then(c => c.AddGenderComponent)
+  },
+  {
+    path: 'admin/gender/edit/:id',
+    // canMatch: [adminGuard],
+    loadComponent: () => import('./public/admin/edit-gender/edit-gender.component')
+      .then(c => c.EditGenderComponent)
+  },
+ 
 
   // AUTRES ROUTES
   {

@@ -9,18 +9,22 @@ import { Gender } from '../models/gender';
 export class GenderService {
 
   private http = inject(HttpClient);
-  private api = 'https://www.boycoté.fr/api/';
+  private api = 'https://www.boycoté.fr/api';
 
     getAll() {
       return this.http.get<Gender[]>(`${this.api}/allGender.php`);
     }
   
-    create(gender:Gender) {
-      return this.http.post(`${this.api}/addGender.php?type=gender`, gender);
+    addGender(name: string) {
+      return this.http.post(`${this.api}/addGender.php`, { name });
     }
-  
-    delete(id:number) {
-      return this.http.get(`${this.api}/deleteGender.php?type=gender&id=${id}`);
+
+    updateGender(id: number, name: string) {
+      return this.http.post(`${this.api}/editGender.php`, { id, name });
+    }
+
+    deleteGender(id: number) {
+      return this.http.post(`${this.api}/deleteGender.php`, { id });
     }
   
     updateOrderList(orderList: { id: number; order: number }[]) {

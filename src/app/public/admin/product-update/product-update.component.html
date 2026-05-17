@@ -17,9 +17,23 @@
                 <label style="color: crimson;">* SKU <input type="text" formControlName="sku" required></label>
                 <label style="color: crimson;">* Nom <input type="text" formControlName="name" required></label>
                 <label>Description <textarea formControlName="description"></textarea></label>
-                <label>Conditions <input type="text" formControlName="conditions"></label>
-                <label style="color: crimson;">* Type<input type="text" formControlName="type" required></label>
-                <label style="color: crimson;">* Genre<input type="text" formControlName="gender" required></label>
+                <label>Conditions <textarea formControlName="conditions"></textarea></label>
+                <label>Type
+                    <select formControlName="type" required>
+                        <option value="">-- Choisir --*</option>
+                        @for (t of types; track t.id) {
+                        <option [value]="t.name">{{ t.name }}</option>
+                        }
+                    </select>
+                </label>
+                <label>Genre
+                    <select formControlName="gender" required>
+                    <option value="">-- Choisir --*</option>
+                    @for (g of genders; track g.id) {
+                    <option [value]="g.name">{{ g.name }}</option>
+                    }
+                    </select>
+                </label>
                 <label style="color: crimson;">* Taille<input type="text" formControlName="size" required></label>
                 <label style="color: crimson;">* Mesure<input type="text" formControlName="mesure" required></label>
                 <label style="color: crimson;">* Prix (€)<input type="number" formControlName="prix" required></label>

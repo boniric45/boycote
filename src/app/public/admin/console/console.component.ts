@@ -138,42 +138,47 @@ export class ConsoleComponent implements OnInit {
     }
   }
 
+  
   editMarque(marque: Marque) {
-    this.router.navigateByUrl('admin/update')
+    this.router.navigateByUrl('admin/marque/edit/'+marque.id);
     console.log(marque.id);
   }
+  
 
   deleteMarque(id: number) {
-    if (confirm('Supprimer le produit avec l\'id: ' + id + ' ?')) {
-      this.consoleProductService.deleteProductById(id)
-        .subscribe(() => {
-          window.location.reload();
-        });
-    }
+    if (!confirm("Supprimer cette marque ?")) return;
+
+    this.marqueService.deleteMarque(id).subscribe(res => {
+      console.log("delete response", res);
+      this.loadMarques(); // recharge la liste
+    });
   }
 
+
   editGarment(garment: Garment) {
-    this.router.navigateByUrl('admin/update')
+    this.router.navigateByUrl('admin/garment/edit/'+garment.id)
     console.log(garment.id);
   }
 
   deleteGarment(id: number) {
     if (confirm('Supprimer le vêtement avec l\'id: ' + id + ' ?')) {
-      this.consoleProductService.deleteProductById(id)
+      this.garmentService.deleteGarment(id)
         .subscribe(() => {
           window.location.reload();
         });
     }
   }
 
+
+
   editGender(gender: Gender) {
-    this.router.navigateByUrl('admin/update')
+    this.router.navigateByUrl('admin/gender/edit/'+gender.id)
     console.log(gender.id);
   }
 
   deleteGender(id: number) {
     if (confirm('Supprimer le genre avec l\'id: ' + id + ' ?')) {
-      this.consoleProductService.deleteProductById(id)
+      this.genderService.deleteGender(id)
         .subscribe(() => {
           window.location.reload();
         });
