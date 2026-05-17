@@ -1,4 +1,4 @@
-<img class="imgBack" src="pictures\back.png" [routerLink]="['/home']" alt="Back">
+<img class="imgBack" src="pictures\back.png" [routerLink]="['/admin']" alt="Back">
 
 <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
 
@@ -13,7 +13,6 @@
   <div class="product-table">
     <table>
       <thead>
-
         <tr>
           <th>
            <div class="cont-btn-add" routerLink="add">
@@ -35,7 +34,7 @@
       <tbody>
         @for (product of products; track product.id) {
         <tr>
-          <td></td>
+
           <td>
             <img [src]="getPreview(product)" alt="{{ product.name }}" class="preview" />
           </td>

@@ -16,6 +16,7 @@ export class CartService {
   items$ = new BehaviorSubject<CartItem[]>([]);
   count$ = new BehaviorSubject<number>(0);
 
+
   constructor() {
     this.loadFromStorage();   // 🔥 recharge le panier au démarrage
   }

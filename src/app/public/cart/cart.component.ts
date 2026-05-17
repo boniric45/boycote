@@ -7,6 +7,7 @@ import { CartService } from '../../services/cart.service';
 export interface CartItem {
   id: number;
   nom: string;
+  sku: string;
   taille: string;
   genre: string;
   prix: number;
@@ -24,7 +25,37 @@ export class CartComponent {
 
   private readonly API = 'https://boycote.fr/api';
 
-  isCartEmpty = computed(() => this.cartService.getItems().length === 0);
+  checkout(): void {
+  const items = this.cartService.getItems();
+
+  console.log('avant > ',items);
+  
+  if (items.length === 0) return;
+
+  const payload = {
+    items: items.map(item => ({
+      id: item.product.id,
+      nom: item.product.name,
+      sku: item.product.sku,
+      prix: item.product.prix,
+      image: item.product.pathpictureone
+    }))
+  };
+
+  console.log('Payload > ',payload);
+  
+  this.http.post<{ url: string }>(`${this.API}/create-checkout.php`, payload)
+    .subscribe({
+      next: (res) => {
+        console.log("Réponse Stripe:", res);
+        if (res.url) window.location.href = res.url;
+      },
+      error: (err) => console.error('Erreur checkout:', err)
+    });
+}
+
+
+  isCartEmpty = computed(() => this.cartService.getItems().length === 0); // voir pour le refresh
 
   goToCheckout = output<void>();
   isOpen = false;
@@ -53,27 +84,7 @@ export class CartComponent {
     }
   }
 
-  checkout(): void {
-    const items = this.cartService.getItems();   // 🔥 panier réel persistant
 
-    if (items.length === 0) return;
-
-    const payload = {
-      items: items.map(item => ({
-        id:     item.product.id,
-        nom:    item.product.name,
-        prix:   item.product.prix,
-        taille: item.product.size,
-        genre:  item.product.gender,
-      }))
-    };
-
-    this.http.post<{ url: string }>(`${this.API}/create-checkout.php`, payload)
-      .subscribe({
-        next: (res) => window.location.href = res.url,
-        error: (err) => console.error('Erreur checkout:', err)
-      });
-  }
 }
 
 

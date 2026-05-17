@@ -1,15 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
+import { Garment } from '../../../models/garment';
+import { Gender } from '../../../models/gender';
+import { Marque } from '../../../models/marque';
 import { Product } from '../../../models/product';
 import { AuthService } from '../../../services/auth.service';
 import { ConsoleProductService } from '../../../services/console-product.service';
-import { ProductService } from '../../../services/product.service';
-import { MarqueService } from '../../../services/marque.service';
-import { GenderService } from '../../../services/gender.service';
 import { GarmentService } from '../../../services/garment.service';
-import { Marque } from '../../../models/marque';
-import { Garment } from '../../../models/garment';
-import { Gender } from '../../../models/gender';
+import { GenderService } from '../../../services/gender.service';
+import { MarqueService } from '../../../services/marque.service';
 
 @Component({
   selector: 'app-console',

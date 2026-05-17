@@ -12,6 +12,7 @@ import { LegalComponent } from './public/legal/legal.component';
 import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
 import { LoginComponent } from './public/admin/login/login.component';
+import { ConsoleComponent } from './public/admin/console/console.component';
 
 export const routes: Routes = [
 
@@ -43,24 +44,59 @@ export const routes: Routes = [
   // },
     {
     path: 'admin2', // à supprimer plus tard
-   // canMatch: [adminGuard],
+    canMatch: [adminGuard],
     loadComponent: () =>
       import('./public/admin/console/console.component').then(m => m.ConsoleComponent)
   },
   {
     path: 'admin',
-    canMatch: [adminGuard],
+    // canMatch: [adminGuard],
     component: BoycoteComponent
   },
+    {
+    path: 'console',
+    // canMatch: [adminGuard],
+    component: ConsoleComponent
+  },
+      {
+    path: 'console',
+    // canMatch: [adminGuard],
+    component: ConsoleComponent
+  },
   {
-    path: 'admin/add',
-   // canMatch: [adminGuard],
+    path: 'console/add',
+    // canMatch: [adminGuard],
     loadComponent: () =>
       import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
   },
   {
+    path: 'console/update',
+    // canMatch: [adminGuard],
+    loadComponent: () =>
+      import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
+  },
+
+  // {
+  //   path: 'admin/add',
+  //   canMatch: [adminGuard],
+  //   loadComponent: () =>
+  //     import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
+  // },
+    {
+    path: 'admin2/add',
+    // canMatch: [adminGuard],
+    loadComponent: () =>
+      import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
+  },
+    {
+    path: 'admin2/update',
+    // canMatch: [adminGuard],
+    loadComponent: () =>
+      import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
+  },
+  {
     path: 'admin/update',
-  //  canMatch: [adminGuard],
+    canMatch: [adminGuard],
     loadComponent: () =>
       import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
   },

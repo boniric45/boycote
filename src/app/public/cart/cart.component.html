@@ -1,4 +1,6 @@
+
 <!-- BOUTON PANIER -->
+
 <div class="shop-wrapper">
   <div class="key-btn" (click)="openCart()">
     <div class="key-bottom"></div>
@@ -32,25 +34,29 @@
         <div class="divider"></div>
 
         @if ((cart$ | async)?.length === 0) {
-          <p class="cart-empty">Your cart is empty.</p>
+        <p class="cart-empty">Your cart is empty.</p>
         } @else {
-          @let items = (cart$ | async) ?? [];
-          @for (item of items; track item.product.id; let i = $index) {
-            <div class="cart-item">
-              <div class="cart-item-img-placeholder">👗</div>
-
-              <div class="cart-item-info">
-                <span class="cart-item-name">{{ item.product.name }}</span>
-                <span class="cart-item-sub">{{ item.product.size }} · {{ item.product.gender }}</span>
-                <span class="cart-item-price">€ {{ item.product.prix }}</span>
-              </div>
-
-              <button class="btn-remove" (click)="removeItem(item.product.id)">
-                ✕ Remove
-              </button>
-            </div>
-          }
+        @let items = (cart$ | async) || [];
+        
+        @for (item of items; track item?.product?.id ?? i; let i = $index) {
+        <div class="cart-item">
+          <div class="cart-item-img-placeholder">
+            <img class="img-cart" [src]="item?.product?.pathpictureone">
+          </div>
+        
+          <div class="cart-item-info">
+            <span class="cart-item-name">{{ item?.product?.name }}</span>
+            <span class="cart-item-sub">{{ item?.product?.size }} · {{ item?.product?.gender }}</span>
+            <span class="cart-item-price">€ {{ item?.product?.prix }}</span>
+          </div>
+        
+          <button class="btn-remove" (click)="removeItem(item.product.id)">
+            ✕ Remove
+          </button>
+        </div>
         }
+        }
+
       </div>
 
       <!-- Footer fixe -->
@@ -64,6 +70,7 @@
           <span class="cart-total-label">Total</span>
           <span class="cart-total-amount">€ {{ total() }}</span>
         </div>
+
         <button class="btn-checkout" [disabled]="isCartEmpty()" (click)="checkout()">
           <span>PROCEED TO CHECKOUT →</span>
         </button>
