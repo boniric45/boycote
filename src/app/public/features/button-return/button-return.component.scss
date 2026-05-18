@@ -1,0 +1,132 @@
+.btn-outer {
+
+  width: 140px;
+
+  height: 140px;
+
+  transform: scale(0.5);
+
+  border-radius: 50%;
+
+  background: linear-gradient(180deg, #f0f0f0 0%, #c8c8c8 40%, #e0e0e0 100%);
+
+  box-shadow:
+
+    0 0 0 1px #c0c0c0,
+
+    0 4px 14px rgba(0,0,0,0.18),
+
+    inset 0 0 0 1px #c4c4c4;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+}
+
+
+
+.btn-inner {
+
+  width: 118px;
+
+  height: 118px;
+
+  border-radius: 50%;
+
+  border: 3px solid #555555;
+
+  background: radial-gradient(circle at 50% 50%, #a0a0a0 0%, #707070 40%, #484848 75%, #383838 100%);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition: transform 0.08s ease, filter 0.08s ease, box-shadow 0.08s ease;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+
+}
+
+
+
+.btn-inner::before {
+
+  content: '';
+
+  position: absolute;
+
+  top: 0;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 114px;
+
+  height: 58px;
+
+  background: radial-gradient(ellipse at 50% 0%, rgba(210,210,210,0.80) 0%, rgba(180,180,180,0.40) 40%, rgba(150,150,150,0) 100%);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+}
+
+
+
+.btn-inner svg {
+
+  width: 88px;
+
+  height: 88px;
+
+  position: relative;
+
+  z-index: 1;
+
+}
+
+
+
+.btn-outer:active .btn-inner {
+
+  transform: scale(0.92) translateY(3px);
+
+  filter: brightness(0.70);
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), inset 0 4px 12px rgba(0,0,0,0.5);
+
+}
+
+
+
+.btn-outer.clicked .btn-inner {
+
+  animation: enfoncement 0.3s ease-out;
+
+}
+
+
+
+@keyframes enfoncement {
+
+  0%   { transform: scale(1) translateY(0); filter: brightness(1); }
+
+  30%  { transform: scale(0.92) translateY(3px); filter: brightness(0.70); }
+
+  100% { transform: scale(1) translateY(0); filter: brightness(1); }
+
+}
+

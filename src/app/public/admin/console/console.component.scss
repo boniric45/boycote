@@ -46,8 +46,8 @@
 }
 
 .cont-btn-add{
-  justify-self: left;
-  margin-left: 10px;
+width: 50px;
+
 }
 
 .img_logo{
@@ -69,15 +69,27 @@
   cursor: pointer;
 }
 
+.tproduct{
+  overflow: auto;
+  border: 1px solid black;
+  table-layout: fixed; /* Harmonise toutes les colonnes */
+  width: 950px;
+  height: 600px;
+  display: block;
+  margin: 0 auto;
+  border-spacing: 0;
+}
+
 table {
   overflow: auto;
   border: 1px solid black;
-  width: 100%;
+  width: auto;
   max-width: 1200px;
   height: 600px;
   display: block;
   margin: 0 auto;
   border-spacing: 0;
+    table-layout: fixed; /* stabilise les colonnes */
 }
 
 th, td {
@@ -107,7 +119,7 @@ tr{
 
 th:last-child,
 td:last-child {
-  border-right-width: 0;
+  border-right-width: auto;
 }
 
 tr:last-child td {

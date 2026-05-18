@@ -13,16 +13,18 @@
   <div class="products">
     <div class="product-table">
 
-      <table>
+      <table class="tproduct">
         <thead>
           <tr>
-            <th>
-              <div class="cont-btn-add" routerLink="add">
+            <th class="cont-btn-add">
+              <div  routerLink="add">
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
+            <th>Ordre</th>
             <th>Preview</th>
             <th>Sku</th>
+            <th>Type</th>
             <th>Nom</th>
             <th>Marque</th>
             <th>Prix</th>
@@ -36,17 +38,17 @@
 
           @for (product of products; track product.id) {
           <tr cdkDrag>
-
+            <td></td>
+            <td>{{ product.display_order }}</td>
             <td>
               <img [src]="getPreview(product)" alt="{{ product.name }}" class="preview" />
             </td>
-
             <td>{{ product.sku }}</td>
+            <td>{{ product.type }}</td>
             <td>{{ product.name }}</td>
             <td>{{ product.marque }}</td>
             <td>{{ product.prix }} €</td>
             <td>{{ product.stock }}</td>
-
             <td class="actions">
               <button class="update" (click)="edit(product)">
                 <img src="/pictures/modifier.png">
@@ -89,8 +91,7 @@
 
           @for (marque of marques; track marque.id) {
           <tr cdkDrag>
-
-            <td></td>
+            <td>*</td>
             <td>{{ marque.id }}</td>
             <td>{{ marque.name }}</td>
 
@@ -138,7 +139,7 @@
           @for (garment of garments; track garment.id) {
           <tr cdkDrag>
 
-            <td></td>
+            <td>*</td>
             <td>{{ garment.id }}</td>
             <td>{{ garment.name }}</td>
 
@@ -185,7 +186,7 @@
           @for (gender of genders; track gender.id) {
           <tr cdkDrag>
 
-            <td></td>
+            <td>*</td>
             <td>{{ gender.id }}</td>
             <td>{{ gender.name }}</td>
 

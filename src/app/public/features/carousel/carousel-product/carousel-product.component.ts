@@ -9,10 +9,11 @@ import { ComponentLeftComponent } from '../../component-left/component-left.comp
 import { FooterComponent } from "../../../footer/footer.component";
 import { ProductCardComponent } from '../../../product-card/product-card.component';
 import { CartComponent } from "../../../cart/cart.component";
+import { ButtonReturnComponent } from "../../button-return/button-return.component";
 
 @Component({
   selector: 'app-carousel-product',
-  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, RouterLink, FooterComponent, ProductCardComponent, CartComponent],
+  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, FooterComponent, ProductCardComponent, CartComponent, ButtonReturnComponent],
   templateUrl: './carousel-product.component.html',
   styleUrl: './carousel-product.component.scss',
 })

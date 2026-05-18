@@ -13,6 +13,7 @@ import { ModalComponent } from '../../modal/modalProduct/modal.component';
 import { ProductCardComponent } from '../../product-card/product-card.component';
 import { ComponentLeftComponent } from '../component-left/component-left.component';
 import { ComponentRightComponent } from '../component-right/component-right.component';
+import { ButtonReturnComponent } from "../button-return/button-return.component";
 
 
 
@@ -23,10 +24,9 @@ import { ComponentRightComponent } from '../component-right/component-right.comp
     NgStyle,
     ComponentLeftComponent,
     ComponentRightComponent,
-    RouterLink,
     CommonModule,
     ProductCardComponent,
-
+    ButtonReturnComponent
 ],
  // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './boycote-product.component.html',

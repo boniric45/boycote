@@ -23,64 +23,6 @@ export interface CartItem {
 
 export class CartComponent {
 
-//   private readonly API = 'https://boycote.fr/api';
-
-//   checkout(): void {
-//   const items = this.cartService.getItems();
- 
-//   if (items.length === 0) return;
-
-//   const payload = {
-//     items: items.map(item => ({
-//       id: item.product.id,
-//       nom: item.product.name,
-//       sku: item.product.sku,
-//       prix: item.product.prix,
-//       image: item.product.pathpictureone
-//     }))
-//   };
-
-//   console.log('Payload > ',payload);
-  
-//   this.http.post<{ url: string }>(`${this.API}/create-checkout.php`, payload)
-//     .subscribe({
-//       next: (res) => {
-//         console.log("Réponse Stripe:", res);
-//         if (res.url) window.location.href = res.url;
-//       },
-//       error: (err) => console.error('Erreur checkout:', err)
-//     });
-// }
-
-//   isCartEmpty = computed(() => this.cartService.getItems().length === 0); // voir pour le refresh
-
-//   goToCheckout = output<void>();
-//   isOpen = false;
-
-//   private http = inject(HttpClient);
-//   private cartService = inject(CartService);
-
-//   // 🔥 Panier global réactif
-//   cart$ = this.cartService.items$;
-
-//   // 🔥 Total dynamique
-//   total = computed(() =>
-//     this.cartService.getItems().reduce((sum, item) => sum + item.total, 0)
-//   );
-
-//   openCart()  { this.isOpen = true; }
-//   closeCart() { this.isOpen = false; }
-
-//   removeItem(productId: number) {
-//     this.cartService.remove(productId);
-//   }
-
-//   onOverlayClick(event: MouseEvent): void {
-//     if ((event.target as HTMLElement).classList.contains('cart-overlay')) {
-//       this.closeCart();
-//     }
-//   }
-
   private readonly API = 'https://boycote.fr/api';
   private http = inject(HttpClient);
   private cartService = inject(CartService);
@@ -115,11 +57,25 @@ export class CartComponent {
       }))
     };
 
-    this.http.post<{ url: string }>(`${this.API}/create-checkout.php`, payload)
+    this.http.post<{ url: string }>( 
+      `${this.API}/create-checkout.php`,
+      payload,
+      { withCredentials: true } // important pour iOS
+    )
       .subscribe({
-        next: (res) => { if (res.url) window.location.href = res.url; },
-        error: (err) => console.error('Erreur checkout:', err)
+        next: (res) => {
+          if (res?.url) {
+            // iOS a besoin d'un "user gesture" → petit timeout
+            setTimeout(() => {
+              window.location.href = res.url;
+            }, 0);
+          }
+        },
+        error: (err) => {
+          console.error('Erreur checkout:', err);
+        }
       });
+
   }
 
   openCart()  { this.isOpen = true; }
