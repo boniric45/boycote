@@ -10,10 +10,11 @@ import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
 import { MarqueService } from '../../../services/marque.service';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-console',
-  imports: [RouterLink, DragDropModule],
+  imports: [RouterLink, DragDropModule, FormsModule],
   templateUrl: './console.component.html',
   styleUrl: './console.component.scss',
 })
@@ -23,6 +24,7 @@ export class ConsoleComponent implements OnInit {
   marques: Marque[] = [];
   garments: Garment[] = [];
   genders: Gender[] = [];
+  search: string = '';
 
   private router = inject(Router);
   private auth = inject(AuthService);
@@ -188,5 +190,19 @@ export class ConsoleComponent implements OnInit {
   logout() {
     this.auth.logout();
   }
+
+get productsFiltered(): Product[] {
+  const f = this.search.toLowerCase().trim();
+  if (!f) return this.products;
+
+  return this.products.filter(p =>
+    p.sku?.toLowerCase().includes(f) ||
+    p.name?.toLowerCase().includes(f) ||
+    p.marque?.toLowerCase().includes(f) ||
+    p.type?.toLowerCase().includes(f)
+  );
+}
+
+
 
 }

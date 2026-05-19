@@ -188,3 +188,27 @@ transform: translateY(5%);
     inset -3px -3px 6px rgba(255, 255, 255, 0.7);
   transform: translateY(1px);
 }
+
+.filter-bar {
+  margin-bottom: 15px;
+  margin: 5px auto;
+  text-align: center;
+}
+
+.filter-bar input {
+  width: 260px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.filter-bar input:focus {
+  border-color: #888;
+  background: #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+}
+

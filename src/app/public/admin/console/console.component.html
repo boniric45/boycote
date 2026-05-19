@@ -11,8 +11,13 @@
 
   <!---------------- PRODUCTS ---------------->
   <div class="products">
-    <div class="product-table">
+    
 
+
+    <div class="product-table">
+      <div class="filter-bar">
+        <input type="text" placeholder="Rechercher (SKU, nom, marque, type)…" [(ngModel)]="search">
+      </div>
       <table class="tproduct">
         <thead>
           <tr>
@@ -36,7 +41,7 @@
         <!-- 🔥 Activation du drag & drop -->
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
 
-          @for (product of products; track product.id) {
+          @for (product of productsFiltered; track product.id) {
           <tr cdkDrag>
             <td></td>
             <td>{{ product.display_order }}</td>
@@ -58,7 +63,6 @@
                 <img src="/pictures/delete.png">
               </button>
             </td>
-
           </tr>
           }
 

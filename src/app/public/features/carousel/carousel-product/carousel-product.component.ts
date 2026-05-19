@@ -1,15 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Product } from '../../../../models/product';
-import { ApiService } from '../../../../services/api.service';
-import { ProductService } from '../../../../services/product.service';
 import { CommonModule } from '@angular/common';
-import { ComponentRightComponent } from '../../component-right/component-right.component';
-import { ComponentLeftComponent } from '../../component-left/component-left.component';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from '../../../../models/product';
+import { ProductService } from '../../../../services/product.service';
+import { CartComponent } from "../../../cart/cart.component";
 import { FooterComponent } from "../../../footer/footer.component";
 import { ProductCardComponent } from '../../../product-card/product-card.component';
-import { CartComponent } from "../../../cart/cart.component";
 import { ButtonReturnComponent } from "../../button-return/button-return.component";
+import { ComponentLeftComponent } from '../../component-left/component-left.component';
+import { ComponentRightComponent } from '../../component-right/component-right.component';
 
 @Component({
   selector: 'app-carousel-product',
@@ -19,8 +18,6 @@ import { ButtonReturnComponent } from "../../button-return/button-return.compone
 })
 export class CarouselProductComponent implements OnInit{
 
-
- private apiService = inject(ApiService);
  private productService = inject(ProductService);
  private router = inject(Router);
  private route = inject(ActivatedRoute);

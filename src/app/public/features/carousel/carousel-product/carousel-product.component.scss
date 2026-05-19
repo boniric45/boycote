@@ -236,12 +236,14 @@
 
   .imgBack {
     width: 55px;
+    transform: scale(0.55);
     display: block;
     position: absolute;
-    left: 5px;
-    top: 5px;
+    left: -15px;
     z-index: 997;
     cursor: pointer;
+    margin-top: 13px;
+    
   }
 
   .img_logo {
