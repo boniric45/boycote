@@ -159,6 +159,14 @@ export class BoycoteComponent implements OnInit {
 
   ngOnInit(): void { 
 
+    // BUG SAFARI
+    const setVh = () => {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    };
+    setVh();
+    window.addEventListener('resize', setVh);
+
+
     // RECUPERATION DES MARQUES
     this.loadMarques();
     
@@ -179,8 +187,12 @@ export class BoycoteComponent implements OnInit {
 
     this.manageCarousel(1); // Lance le carousel standard
     this.cartService.count$.subscribe(value => this.countPanier = value);
+
+
   }
 
+
+  
   applyFilters() {
     this.filtered = this.productService.filterProducts({
       marque: this.selectedMarques(),

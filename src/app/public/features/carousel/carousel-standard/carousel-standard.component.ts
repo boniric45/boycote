@@ -159,4 +159,5 @@ export class CarouselStandardComponent implements OnInit {
   this.cartService.add(product, 1);
   }
 
+ 
 }

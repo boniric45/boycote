@@ -7,10 +7,21 @@
   @include mat.dialog-overrides((
     container-shape: rectangle,  
   ));
+  
+* {
+  box-sizing: border-box;
+  touch-action: manipulation; // desactive le double clic apple
+}
 
-
-html, body { height: 100%; }
-body { margin: 0; font-family: "Roboto Mono", monospace; }
+html, body { 
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100%; 
+}
+body { 
+  font-family: "Roboto Mono", monospace; 
+}
 
 
 }

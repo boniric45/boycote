@@ -9,6 +9,7 @@ import { ProductCardComponent } from '../../../product-card/product-card.compone
 import { ButtonReturnComponent } from "../../button-return/button-return.component";
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
+import { CartService } from '../../../../services/cart.service';
 
 @Component({
   selector: 'app-carousel-product',
@@ -21,6 +22,7 @@ export class CarouselProductComponent implements OnInit{
  private productService = inject(ProductService);
  private router = inject(Router);
  private route = inject(ActivatedRoute);
+ private cartService = inject(CartService);
 
   articles = signal<any[]>([]);
   visibleCount = 5;
@@ -30,6 +32,7 @@ export class CarouselProductComponent implements OnInit{
   product!:Product;
   private touchStartX = 0;
   private touchEndX = 0;
+  isFullscreen = false;
 
 ngOnInit(): void {
 
@@ -77,7 +80,19 @@ ngOnInit(): void {
   });
 }
 
+  // Zoom la photo 
+  fullscreenImage: string | null = null;
 
+  openFullscreen(src: string) {
+    console.log('openFullscreen called with:', src);
+    this.fullscreenImage = src;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeFullscreen() {
+    console.log('closeFullscreen called');
+    this.fullscreenImage = null;
+  }
  
   get visibleArticles() {
     // SI ARTICLES EST VIDE RENVOI []
@@ -167,7 +182,8 @@ ngOnInit(): void {
 
   readViewProduct(product:Product){    
     this.productService.product = product; // Injecte les infos dans ProductService
-     this.router.navigateByUrl('/product'); // Navigue vers la page produit
+     this.router.navigateByUrl('viewpProduct'); // Navigue vers la page produit
+     
   }
 
   // HAND SWIPE MOBILE //
@@ -192,6 +208,10 @@ handleSwipe() {
   }
 }
 
-
+  // ADD TO CART 
+  addToCart(product: Product) {
+  console.log(product);
+  this.cartService.add(product, 1);
+  }
 
 }

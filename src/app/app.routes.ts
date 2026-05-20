@@ -14,6 +14,7 @@ import { SuccessComponent } from './public/success/success.component';
 import { LoginComponent } from './public/admin/login/login.component';
 import { ConsoleComponent } from './public/admin/console/console.component';
 
+
 export const routes: Routes = [
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -189,5 +190,6 @@ export const routes: Routes = [
     title: 'Panier',
     component: PanierComponent
   }
+
 
 ];

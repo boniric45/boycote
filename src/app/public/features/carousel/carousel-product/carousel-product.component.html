@@ -15,9 +15,11 @@
                 </div>
 
                 <!-- PANIER -->
-                <div class="panier">
-                    <app-cart></app-cart>
-                </div>
+                 <div class="panier-wrapper">
+                     <div class="btn-panier">
+                         <app-cart></app-cart>
+                     </div>
+                 </div>
 
             </div>
 
@@ -40,10 +42,15 @@
                             <img 
                             [src]="article.pathpictureone" 
                             class="item" [style.transform]="getTransform(i)" 
+                            [class.fullscreen]="isFullscreen"
+                            (click)="openFullscreen(article.pathpictureone)"
                             [style.zIndex]="getZIndex(i)"
-                            [style.opacity]="getOpacity(i)" />
+                            [style.opacity]="getOpacity(i)" 
+                            />
                             }
+
                         </div>
+
                         
                     <button class="nav right desktop" (click)="next()">
                         <app-component-right></app-component-right>
@@ -62,9 +69,10 @@
                     </button>
                     </div>
 
+
                     <div class="container">
                         <div class="description">
-                            <app-product-card [product]="product"></app-product-card>
+                            <app-product-card (click)="addToCart(product)"></app-product-card>
                         </div>
                     </div>
             
@@ -80,7 +88,9 @@
 
         </div>
         
-
+                    <div class="fullscreen-overlay" *ngIf="fullscreenImage" (click)="closeFullscreen()">
+                        <img [src]="fullscreenImage" class="fullscreen-image" />
+                    </div>
     </div>
 </div>
 

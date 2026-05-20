@@ -44,7 +44,6 @@
   transition:
   transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
   opacity 0.35s ease;
-  background-color: royalblue; // A supprimer pour la production
 }
 
 .items.animating .item {
@@ -158,7 +157,6 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
 /* Mobile */
 @media all and (max-width: 600px) { 
   
-
   .desktop {
     display: none !important;
   }
@@ -167,23 +165,26 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
     display: flex;
     justify-content: center;
     max-width: 650px;
-    scale: 0.8;
-    gap: 2rem;
-    transform: translateX(-5%);
+    transform: scale(1.3);
+    gap: 1rem;
+    transform: translateX(-3%);
   }
 
   .conteneur-bouton {
-    padding-top: 10px;
     width: 180px;
-    margin: 0 auto;
+    margin: 20px auto;
     margin-bottom: 10px;
     cursor: pointer;
+  }
+
+  .primary{
+    margin-right: 5px;
   }
 
   .nav {
     position: static;
     transform: none;
-    margin-right: 0; /* ✔ propre */
+    margin-right: 8px; /* ✔ propre */
   }
 
   .description{
@@ -199,12 +200,13 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
   }
 
   .carousel{
-    scale: 0.6;
-    transform: translateX(-2%);
+    transform: scale(0.55);
+    transform-origin: center;
+    margin-right: 4%;
   }
 
   .carousel-wrapper{
-    height: 180px;
+    // height: 180px;
   }
 
 }

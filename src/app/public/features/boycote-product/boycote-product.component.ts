@@ -197,7 +197,8 @@ export class BoycoteProductComponent implements OnInit {
   this.isDisplay = 'none'; // désactive le bouton
   this.btnMacIsDisabled = 'margin-top: 75px;'; // Garde l'espace qu'occupait le bouton
   // Vérifie la disponibilité du produit 
-  this.stock = this.cartService.getDisponibilityProduct(this.product);
+  
+  // this.stock = this.cartService.getDisponibilityProduct(this.product);
 
   
  }
