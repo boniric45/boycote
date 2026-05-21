@@ -68,7 +68,7 @@ export class CartComponent {
             // iOS a besoin d'un "user gesture" → petit timeout
             setTimeout(() => {
               window.location.href = res.url;
-            }, 0);
+            }, 10);
           }
         },
         error: (err) => {

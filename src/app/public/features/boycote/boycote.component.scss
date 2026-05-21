@@ -567,7 +567,6 @@ app-cart{
       height: 180px;
       transform: scale(0.87);
       transform-origin: top center;
-      // zoom: 0.87;
       margin-top: 120px;
    }
 
@@ -590,11 +589,13 @@ app-cart{
    }
 
    .container-select-mobile {
-      margin-top: 5px;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      width: 50px;
+      margin: 175px 0 0 20px;
+     // transform: scale(1.2);
+
    }
 
    // Cache le select du bureau
@@ -604,14 +605,18 @@ app-cart{
 
    // Barre de recherche
    .container-search {
-      transform: scale(0.7);
+      transform: scale(0.6);
       transform-origin: top center;
       // zoom: 0.7;
    }
 
+   .imgSelectSearch {
+      width: 15px;
+   }
+
    .search {
       top: 0;
-      width: 341px;
+      width: 350px;
       justify-content: center;
    }
 
@@ -622,13 +627,8 @@ app-cart{
 
    // Bouton de recherche des listes déroulantes
    .btnSelectSearch {
-      display: flex;
-      justify-self: center;
-      justify-content: center;
-      align-self: start;
-      margin-top: 3px;
-      padding-left: 10px;
-      padding-right: 10px;
+      margin-top: 2px;
+      height: 28px;
    }
 
    /* SOUS MENU LISTE DEROULANTE */
@@ -643,6 +643,7 @@ app-cart{
       color: #222222;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       font-family: "Roboto Mono", monospace; // Font Standard
+      font-size: 20px;
       //font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif;
       transition: background 0.08s ease;
 
@@ -661,16 +662,15 @@ app-cart{
 
    /*  LISTE DEROULANTE  */
    .mac-dropdown {
-      display: none;
+     display: none;
       position: absolute;
-      top: calc(100% + 6px);
+      top: calc(100% + 16px);
       left: -31px;
-      width: 100%;
    }
 
    // Barre de recherche Globale
    .selectSort{
-      top: 0;
+
    }
 
    .btnF5{

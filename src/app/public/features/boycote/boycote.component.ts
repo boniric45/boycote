@@ -143,7 +143,7 @@ export class BoycoteComponent implements OnInit {
   displayDropdown = 'visible';
   displayNoResult:boolean = false;
   displayF5:boolean = true;
-  noResult = 'No Results';
+
   // pagination 
   resultList:Product[] = [];
   page:number = 1;
