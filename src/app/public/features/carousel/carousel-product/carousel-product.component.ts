@@ -25,7 +25,7 @@ export class CarouselProductComponent implements OnInit{
  private cartService = inject(CartService);
 
   articles = signal<any[]>([]);
-  visibleCount = 5;
+  visibleCount = 3;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';

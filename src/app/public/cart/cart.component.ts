@@ -57,18 +57,38 @@ export class CartComponent {
       }))
     };
 
-    this.http.post<{ url: string }>( 
+    // this.http.post<{ url: string }>( 
+    //   `${this.API}/create-checkout.php`,
+    //   payload,
+    //   { withCredentials: true } // important pour iOS
+    // )
+    //   .subscribe({
+    //     next: (res) => {
+    //       if (res?.url) {
+    //         // iOS a besoin d'un "user gesture" → petit timeout
+    //         setTimeout(() => {
+    //           window.location.href = res.url;
+    //         }, 10);
+    //       }
+    //     },
+    //     error: (err) => {
+    //       console.error('Erreur checkout:', err);
+    //     }
+    //   });
+
+    // Bonne pratique Stripe et Widows open mieux accepter par IOS
+    this.http.post<{ url: string }>(
       `${this.API}/create-checkout.php`,
       payload,
-      { withCredentials: true } // important pour iOS
+      { withCredentials: true }
     )
       .subscribe({
         next: (res) => {
           if (res?.url) {
-            // iOS a besoin d'un "user gesture" → petit timeout
+            // Méthode la plus fiable sur iOS
             setTimeout(() => {
-              window.location.href = res.url;
-            }, 10);
+              window.open(res.url, '_self');
+            }, 0);
           }
         },
         error: (err) => {

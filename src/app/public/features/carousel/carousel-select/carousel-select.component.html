@@ -26,6 +26,7 @@
 
            @for (article of visibleArticles; track trackByArticle($index, article); let i = $index) {
              <img
+               (click)="readViewProduct(article)"
                [src]="article.pathpictureone"
                class="item"
                [style.transform]="getTransform(i)"

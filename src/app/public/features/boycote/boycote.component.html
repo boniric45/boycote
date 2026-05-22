@@ -17,13 +17,15 @@
 
             <!----------------------------- ENTETE ------------------------->
             <div class="div1">
-                <!-- LIGNE 2 : HEADER (recherche + filtres + panier) -->
-                <div class="hamburger-wrapper">
-                    <div class="container-hamburger" (click)="hamburgerClicked()">
+               
+                <div class="hamburger-wrapper" [ngStyle]="{
+                    'opacity':displayHamburgerMobile,
+                    'z-index': displayHamburgerMobile === 0 ? -1 : 10
+                ,}">
+                    <div class="container-hamburger" (click)="hamburgerClicked()" >
                         <app-hamburger></app-hamburger>
                     </div>
                 </div>
-
 
                 <div class="container-search" [ngStyle]="upWidthSearch ? {'margin-top':'7px'} : {}">
 
@@ -33,8 +35,7 @@
                             <!------------------------------- BARRE DE RECHERCHE ---------------------------------------->
                             <form action="">
                                 <!-- reduit le champ lors du clic sur la liste déroulante -->
-                                <div class="search" [ngStyle]="{'width': displayInput ? '32px' : '100%'}" > 
-
+                                <div class="search" [ngStyle]="{'width': displayInput ? '45px' : '250px'}" > 
                                     <button class="btnF5" (click)="refreshList()">
 
                                         <svg class="imgSearchRefresh" viewBox="0 0 24 24" fill="none"
@@ -255,12 +256,15 @@
                 }
 
                 <!-- PANIER -->
-                 <div class="panier-wrapper">
+               
+                 <div class="panier-wrapper"  [ngStyle]="{
+                    'opacity':displayPanierMobile,
+                    'z-index': displayPanierMobile === 0 ? -1 : 10}">
                      <div class="btn-panier">
                          <app-cart></app-cart>
                      </div>
                  </div>
-
+                
 
             </div>
 
@@ -306,16 +310,13 @@
                         </div>
                     </div>
                     }
-
-
                 </div>
-
-
             </div>
-
         </div>
         }
     </div>
 </div>
-<app-footer></app-footer>
+<div class="div3">
+    <app-footer></app-footer>
+</div>
 </div>

@@ -143,6 +143,8 @@ export class BoycoteComponent implements OnInit {
   displayDropdown = 'visible';
   displayNoResult:boolean = false;
   displayF5:boolean = true;
+  displayPanierMobile:number = 1;
+  displayHamburgerMobile:number = 1;
 
   // pagination 
   resultList:Product[] = [];
@@ -188,9 +190,7 @@ export class BoycoteComponent implements OnInit {
     this.manageCarousel(1); // Lance le carousel standard
     this.cartService.count$.subscribe(value => this.countPanier = value);
 
-
   }
-
 
   
   applyFilters() {
@@ -214,22 +214,25 @@ export class BoycoteComponent implements OnInit {
   }
 
   // ALIMENTE MARQUES 
-  loadMarques() {
-    this.apiService.getMarques().subscribe(m => {
-      this.marques.set(m);
-    });
-  }
+loadMarques() {
+  this.apiService.getMarques().subscribe(m => {
+    const sorted = [...m].sort((a, b) => a.display_order - b.display_order);
+    this.marques.set(sorted);
+  });
+}
 
   // ALIMENTE GENRES
   loadGenders() {
     this.genderService.getAll().subscribe(g => {
-      this.genders.set(g);
+    const sorted = [...g].sort((a, b) => a.display_order - b.display_order);
+    this.genders.set(sorted);
     })
   }
 
   // ALIMENTE VETEMENTS
   loadGarments(){
     this.garmentService.getAll().subscribe(gar => {
+      const sorted = [...gar].sort((a, b) => a.display_order - b.display_order);
     this.types.set(gar);
     })
   }
@@ -274,10 +277,14 @@ export class BoycoteComponent implements OnInit {
       // Affichage du menu recherche
        this.displayLogoMobile = false;
        this.displaySearchMobile = true;
+       this.displayHamburgerMobile = 0;
+       this.displayPanierMobile = 0;
     } else {
       // Affichage Logo
       this.displaySearchMobile = false;
       this.displayLogoMobile = true;
+      this.displayHamburgerMobile = 1;
+      this.displayPanierMobile = 1;
       this.refreshList();
     }
   //  window.innerWidth < 365 ? (this.hiddenLogo) = false : true ;
@@ -394,7 +401,7 @@ export class BoycoteComponent implements OnInit {
           this.displayDropdown='hidden'; // Cache la zone select        
           this.displaySelect = 'visible';
           this.upWidthSelect = true;
-          this.displayF5 = false;
+          this.displayF5 = true;
         break;
       
       default: // Standard

@@ -27,6 +27,7 @@
 
         @for (article of visibleArticles; track trackByArticle($index, article); let i = $index) {
         <img 
+        (click)="readViewProduct(article.id)"
         [src]="article.pathpictureone"
         class="item" 
         [style.transform]="getTransform(i)"
@@ -43,13 +44,15 @@
     </div>
 
     <div class="container">
-      <div class="description">
-        @if(centralArticle){
-        <p>Marque: {{ centralArticle.marque }}</p>
-        <p>{{ centralArticle.name }}</p>
-        <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
-        }
-      </div>
+        <div class="description">
+          @if(centralArticle){
+          <a>{{ centralArticle.name }}</a>
+          <p>{{ centralArticle.gender}}</p>
+          <a> {{ centralArticle.size}}</a>
+          <br>
+          <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
+          }
+        </div>
     </div>
 
     <div class="conteneur-bouton">

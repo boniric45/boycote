@@ -6,6 +6,8 @@ import { ComponentLeftComponent } from '../../component-left/component-left.comp
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { Product } from '../../../../models/product';
 import { CartService } from '../../../../services/cart.service';
+import { Router } from '@angular/router';
+import { ProductService } from '../../../../services/product.service';
 
 @Component({
   selector: 'app-carousel-select',
@@ -25,6 +27,8 @@ export class CarouselSelectComponent implements OnInit{
   @Input() loadingPb: boolean = true;
 
   private cartService = inject(CartService);
+    private productService = inject(ProductService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.updateVisibleCount();
@@ -135,5 +139,11 @@ export class CarouselSelectComponent implements OnInit{
   addToCart(product: Product) {
     this.cartService.add(product, 1);
   }
+
+    readViewProduct(product:Product){    
+    this.productService.product = product; // Injecte les infos dans ProductService    
+    this.router.navigate(['product', product.id]); // Navigue vers la page produit
+  }
+
 
 }

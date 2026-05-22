@@ -12,8 +12,6 @@
   <!---------------- PRODUCTS ---------------->
   <div class="products">
     
-
-
     <div class="product-table">
       <div class="filter-bar">
         <input type="text" placeholder="Rechercher (SKU, nom, marque, type)…" [(ngModel)]="search">
@@ -46,11 +44,11 @@
             <td></td>
             <td>{{ product.display_order }}</td>
             <td>
-              <img [src]="getPreview(product)" alt="{{ product.name }}" class="preview" />
+              <img [src]="getPreview(product)" alt="{{ product.name | truncate:6 }}" [title]="product.name" class="preview" />
             </td>
             <td>{{ product.sku }}</td>
             <td>{{ product.type }}</td>
-            <td>{{ product.name }}</td>
+            <td [title]="product.name">{{ product.name | truncate:20}}</td>
             <td>{{ product.marque }}</td>
             <td>{{ product.prix }} €</td>
             <td>{{ product.stock }}</td>
@@ -84,7 +82,7 @@
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
-            <th>Id</th>
+            <th>Ordre</th>
             <th>Marques</th>
             <th>Actions</th>
           </tr>
@@ -96,7 +94,7 @@
           @for (marque of marques; track marque.id) {
           <tr cdkDrag>
             <td>*</td>
-            <td>{{ marque.id }}</td>
+            <td>{{ marque.display_order }}</td>
             <td>{{ marque.name }}</td>
 
             <td class="actions">
@@ -131,7 +129,7 @@
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
-            <th>Id</th>
+            <th>Ordre</th>
             <th>Vêtements</th>
             <th>Actions</th>
           </tr>
@@ -144,7 +142,7 @@
           <tr cdkDrag>
 
             <td>*</td>
-            <td>{{ garment.id }}</td>
+            <td>{{ garment.display_order }}</td>
             <td>{{ garment.name }}</td>
 
             <td class="actions">
@@ -178,7 +176,7 @@
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
-            <th>Id</th>
+            <th>Ordre</th>
             <th>Genre</th>
             <th>Actions</th>
           </tr>
@@ -191,7 +189,7 @@
           <tr cdkDrag>
 
             <td>*</td>
-            <td>{{ gender.id }}</td>
+            <td>{{ gender.display_order }}</td>
             <td>{{ gender.name }}</td>
 
             <td class="actions">

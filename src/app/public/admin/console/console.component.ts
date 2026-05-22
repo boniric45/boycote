@@ -11,10 +11,13 @@ import { GenderService } from '../../../services/gender.service';
 import { MarqueService } from '../../../services/marque.service';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
+import { SlicePipe } from '@angular/common';
+import { TruncatePipe } from "../../../pipes/truncate.pipe";
+
 
 @Component({
   selector: 'app-console',
-  imports: [RouterLink, DragDropModule, FormsModule],
+  imports: [RouterLink, DragDropModule, FormsModule, TruncatePipe],
   templateUrl: './console.component.html',
   styleUrl: './console.component.scss',
 })
@@ -32,7 +35,6 @@ export class ConsoleComponent implements OnInit {
   private marqueService = inject(MarqueService);
   private garmentService = inject(GarmentService);
   private genderService = inject(GenderService);
-
 
   ngOnInit(): void {
     this.loadProducts();
@@ -109,15 +111,24 @@ export class ConsoleComponent implements OnInit {
   }
 
   loadMarques() {
-    this.marqueService.getMarques().subscribe(res => this.marques = res);
+    this.marqueService.getMarques().subscribe(res => {
+      const sorted = [...res].sort((a, b) => a.display_order - b.display_order);
+      this.marques = res;
+    });
   }
 
   loadGarments() {
-    this.garmentService.getAll().subscribe(res => this.garments = res);
+    this.garmentService.getAll().subscribe(res => {
+      const sorted = [...res].sort((a, b) => a.display_order - b.display_order);
+      this.garments = res
+    });
   }
 
   loadGenders() {
-    this.genderService.getAll().subscribe(res => this.genders = res)
+    this.genderService.getAll().subscribe(res => {
+      const sorted = [...res].sort((a, b) => a.display_order - b.display_order);
+      this.genders = res
+    });
   }
 
   getPreview(product: Product): string {
@@ -202,6 +213,7 @@ get productsFiltered(): Product[] {
     p.type?.toLowerCase().includes(f)
   );
 }
+
 
 
 

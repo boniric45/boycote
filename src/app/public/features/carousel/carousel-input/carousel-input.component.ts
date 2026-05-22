@@ -6,6 +6,8 @@ import { ComponentLeftComponent } from '../../component-left/component-left.comp
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CartService } from '../../../../services/cart.service';
 import { Product } from '../../../../models/product';
+import { ProductService } from '../../../../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carousel-input',
@@ -17,6 +19,9 @@ export class CarouselInputComponent implements OnInit {
 
   private apiService = inject(ApiService);
   private cartService = inject(CartService);
+  private productService = inject(ProductService);
+  private router = inject(Router);
+  
 
   articles = signal<any[]>([]);
   visibleCount = 5;
@@ -171,6 +176,11 @@ export class CarouselInputComponent implements OnInit {
 
   addToCart(product: Product) {
     this.cartService.add(product, 1);
+  }
+
+    readViewProduct(idProduct:number){    
+    this.productService.getProduct(idProduct)  // Injecte les infos dans ProductService    
+    this.router.navigate(['product', idProduct]); // Navigue vers la page produit
   }
 
 }

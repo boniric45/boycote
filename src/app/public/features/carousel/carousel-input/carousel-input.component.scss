@@ -182,11 +182,63 @@ button.primary:active {
 /////////////////////////////////////////////////////////////
 
 
+/* Mobile */
+// @media all and (max-width: 600px) {
 
+//   .desktop {
+//     display: none !important;
+//   }
+
+//   .nav-mobile {
+//     display: flex;
+//     justify-content: center;
+//     max-width: 650px;
+//     scale: 0.8;
+//     gap: 2rem;
+//     transform: translateX(-5%);
+//   }
+
+//   .conteneur-bouton {
+//     padding-top: 10px;
+//     width: 180px;
+//     margin: 0 auto;
+//     margin-bottom: 10px;
+//     cursor: pointer;
+//   }
+
+//   .nav {
+//     position: static;
+//     transform: none;
+//     margin-right: 0;
+//     /* ✔ propre */
+//   }
+
+//   .description {
+//     font-size: 4.5vw;
+//     margin-top: 35px;
+//     margin-bottom: 10px;
+//     text-align: center;
+//     padding: 0;
+//   }
+
+//   .price {
+//     font-size: 4.5vw;
+//   }
+
+//   .carousel {
+//     scale: 0.6;
+//     transform: translateX(-2%);
+//   }
+
+//   .carousel-wrapper {
+//     height: 180px;
+//   }
+
+// }
 
 /* Mobile */
-@media all and (max-width: 600px) {
-
+@media all and (max-width: 600px) { 
+  
   .desktop {
     display: none !important;
   }
@@ -195,45 +247,50 @@ button.primary:active {
     display: flex;
     justify-content: center;
     max-width: 650px;
-    scale: 0.8;
-    gap: 2rem;
-    transform: translateX(-5%);
+    transform: scale(1.1);
+    gap: 1rem;
+    transform: translateX(-3%);
   }
 
   .conteneur-bouton {
-    padding-top: 10px;
+    margin-top: 10px;
     width: 180px;
-    margin: 0 auto;
+    margin: 20px auto;
     margin-bottom: 10px;
     cursor: pointer;
+  }
+
+  .primary{
+    margin-right: 5px;
+    margin-bottom: 10px;
   }
 
   .nav {
     position: static;
     transform: none;
-    margin-right: 0;
-    /* ✔ propre */
+    margin-right: 8px; /* ✔ propre */
   }
 
-  .description {
-    font-size: 4.5vw;
-    margin-top: 35px;
-    margin-bottom: 10px;
+  .description{
+    font-size: 1em;
+    position: relative;
+    width: 300px;
     text-align: center;
-    padding: 0;
+    }
+
+
+  .price{
+    line-height: 2; // Interligne
+    font-style: oblique;
+    font-weight: bold;
+    font-size: 1.1em;
   }
 
-  .price {
-    font-size: 4.5vw;
+  .carousel{
+    transform: scale(0.55);
+    transform-origin: center;
+    margin-right: 4%;
   }
 
-  .carousel {
-    scale: 0.6;
-    transform: translateX(-2%);
-  }
-
-  .carousel-wrapper {
-    height: 180px;
-  }
 
 }
