@@ -11,6 +11,8 @@ import { GarmentService } from '../../../services/garment.service';
 import { Garment } from '../../../models/garment';
 import { GenderService } from '../../../services/gender.service';
 import { Gender } from '../../../models/gender';
+import { CabineService } from '../../../services/cabine.service';
+import { Cabin } from '../../../models/cabin';
 
 @Component({
   selector: 'app-product-form',
@@ -26,9 +28,11 @@ export class ProductFormComponent {
   private typeService = inject(GarmentService);
   private genderService = inject(GenderService);
   private route = inject(Router);
+  private cabinService = inject(CabineService);
   marques: Marque[] = [];
   types: Garment[] = [];
   genders: Gender[] = [];
+  cabin!: Cabin;
   id = 0;
   mode = '';
 
@@ -86,16 +90,21 @@ export class ProductFormComponent {
     pathpictureseven: new FormControl(''),
     pathpictureeight: new FormControl(''),
     pathpicturenine: new FormControl(''),
-    pathpictureten: new FormControl(''),
+    pathpictureten: new FormControl('')
+  });
 
-    pictureCabine: new FormControl(''),
-    productLink: new FormControl(''),
-    titleProductCabine: new FormControl(''),
-    zindexcabine: new FormControl(''),
-    xcabine: new FormControl(0),
-    ycabine: new FormControl(0),
-    widthCabine: new FormControl(0),
-    heightCabine: new FormControl(0)
+
+  formCabin = new FormGroup({
+    id: new FormControl(0),
+    picturecabin: new FormControl('', { nonNullable: true }),
+    title: new FormControl('', { nonNullable: true }),
+    productlink: new FormControl(''),
+    gender: new FormControl('', { nonNullable: true }),
+    zindex: new FormControl(0),
+    positionx: new FormControl(0),
+    positiony: new FormControl(0),
+    width: new FormControl(0),
+    height: new FormControl(0)
   });
 
   constructor() {
@@ -104,9 +113,7 @@ export class ProductFormComponent {
     this.genderService.getAll().subscribe(res => this.genders = res);
   }
 
-
-  /** Upload + preview automatique */
-onFileSelected(event: any, field: string, index: number | string) {
+onFileSelectedProduct(event: any, field: string, index: number | string) {
   const file = event.target.files[0];
   const marque = this.form.value.marque;
   const sku = this.form.value.sku;
@@ -125,12 +132,26 @@ onFileSelected(event: any, field: string, index: number | string) {
   this.uploadService.upload(formData).subscribe(res => {
     this.form.patchValue({ [field]: res.path });
   });
-
 }
 
 
+onFileSelectedCabin(event: any, field: string) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  this.uploadService.upload(formData).subscribe(res => {
+    // Ici, field = 'picturecabin'
+    this.formCabin.patchValue({ [field]: res.path });
+  });
+}
+
+
+
 /** Enregistrement produit */
-save() {
+saveProduct() {
   const product = this.form.value as Product;
   console.log(product);
 
@@ -154,6 +175,34 @@ save() {
       error: (err) => {
         console.error(err);
         alert("❌ Erreur serveur lors de la mise à jour : " + (err.error?.error ?? "Erreur inconnue"));
+      }
+    });
+  }
+}
+
+saveCabin() {
+  const cabin = this.formCabin.value as Cabin;
+  console.log(this.formCabin.value);
+
+  if (cabin.id === 0) {
+    this.cabinService.createCabin(cabin).subscribe({
+      next: (res) => {
+        alert(`✔ Cabine créée (ID: ${res.id})`);
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error(err);
+        alert("❌ Erreur serveur lors de la création cabine : " + (err.error?.error ?? "Erreur inconnue"));
+      }
+    });
+  } else {
+    this.cabinService.updateCabin(cabin).subscribe({
+      next: (res) => {
+        alert(`✔ Cabine mise à jour`);
+      },
+      error: (err) => {
+        console.error(err);
+        alert("❌ Erreur serveur lors de la mise à jour cabine : " + (err.error?.error ?? "Erreur inconnue"));
       }
     });
   }

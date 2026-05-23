@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ConsoleProductService {
 
-  private api = 'https://www.boycoté.fr/api';
+  private api = 'https://www.boycote.fr/api';
   private http = inject(HttpClient);
   product!:Product;
 
@@ -25,7 +25,7 @@ export class ConsoleProductService {
   }
 
   create(product:Product) {
-    return this.http.post<{ success: boolean; message: string; id?: number }>(`${this.api}/create.php?type=product`,product);
+    return this.http.post<{ success: boolean; message: string; id?: number }>(`${this.api}/addProduct.php?type=product`,product);
   }
 
   update(product: Product) {
@@ -69,6 +69,9 @@ updateProduct(product: any, pictures: File[], cabine: File | null) {
 }
 
 
+deleteImage(id: number, field: string) {
+  return this.http.delete(`${this.api}/deleteProductImage.php?id=${id}&field=${field}`);
+}
 
 
 deleteProductById(id: number) {

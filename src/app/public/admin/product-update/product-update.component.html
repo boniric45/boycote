@@ -1,5 +1,4 @@
     @if(product){
-
         <h1 style="text-align: center;">Produit: {{product.name}} - SKU: {{product.sku}} </h1>
     }
       
@@ -58,14 +57,19 @@
 
         @for (field of pictureFields; track field) {
         <div class="picture-block">
-         
-            <div class="picture-wrapper">
-            @if (form.get(field)?.value) {
-                <img [src]="form.get(field)?.value" class="preview">
-            } @else {
-                <div class="empty-thumb"></div>
-            }
-            </div>
+
+        <div class="picture-wrapper">
+        @if (form.get(field)?.value) {
+            <img [src]="form.get(field)?.value" class="preview">
+
+            <!-- Bouton delete affiché seulement si une image existe -->
+            <button type="button" class="btn-icon-delete" (click)="deleteProductImage(form.get(field)?.value)">
+            🗑️
+            </button>
+        } @else {
+            <div class="empty-thumb"></div>
+        }
+        </div>
 
             <label class="upload-btn">
             Choisir un fichier

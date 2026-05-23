@@ -12,6 +12,8 @@ import { Garment } from '../../../models/garment';
 import { Gender } from '../../../models/gender';
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
+import { Cabin } from '../../../models/cabin';
+import { CabineService } from '../../../services/cabine.service';
 
 @Component({
   selector: 'app-product-update',
@@ -27,12 +29,14 @@ export class ProductUpdateComponent implements OnInit {
   private marqueService = inject(MarqueService);
   private typeService = inject(GarmentService);
   private genderService = inject(GenderService);
+  private cabinService = inject(CabineService);
   private auth = inject(AuthService);
   //private route = inject(Router);
   marques: Marque[] = [];
   types: Garment[] = [];
   genders: Gender[] = [];
   product!: Product;
+  cabin!: Cabin;
   id = 0;
   mode = '';
 
@@ -60,7 +64,6 @@ ngOnInit(): void {
 
   // Patch du formulaire avec les données du produit
   this.form.patchValue(this.product);
-
 
   console.log("Produit chargé :", this.product);
 }
@@ -117,6 +120,19 @@ ngOnInit(): void {
     ycabine: new FormControl(0),
     widthcabine: new FormControl(0),
     heightcabine: new FormControl(0)
+  });
+
+    formCabin = new FormGroup({
+    id: new FormControl(0),
+    pathpicturecabin: new FormControl('', { nonNullable: true }),
+    title: new FormControl('', { nonNullable: true }),
+    productlink: new FormControl(''),
+    gender: new FormControl('', { nonNullable: true }),
+    zindex: new FormControl(0),
+    positionx: new FormControl(0),
+    positiony: new FormControl(0),
+    width: new FormControl(0),
+    height: new FormControl(0)
   });
 
  
@@ -186,7 +202,81 @@ ngOnInit(): void {
   }
 
 
+deleteCabin() {
+  const id = this.formCabin.value.id;
 
+  if (!confirm("Supprimer définitivement cette cabine ?")) return;
+
+  if(id){
+    this.cabinService.deleteCabin(id).subscribe({
+      next: () => {
+        alert("✔ Cabine supprimée");
+        window.location.reload();
+      },
+      error: () => alert("❌ Erreur suppression cabine")
+    });
+  }
+}
+
+deleteCabinImage() {
+  const id = this.formCabin.value.id;
+
+  if (!id) return;
+  if (!confirm("Supprimer définitivement l’image cabine ?")) return;
+
+  this.cabinService.deleteImage(id).subscribe({
+    next: () => {
+      alert("✔ Image cabine supprimée");
+      this.formCabin.patchValue({ pathpicturecabin: '' });
+    },
+    error: () => alert("❌ Erreur suppression image cabine")
+  });
+}
+
+deleteProductImage(field: string) {
+  if (!confirm("Supprimer définitivement cette image ?")) return;
+
+  const id = Number(this.form.value.id);
+
+  this.consoleProductService.deleteImage(id, field).subscribe({
+    next: () => {
+      this.form.patchValue({ [field]: '' }); // champ vidé dans le formulaire
+      alert("✔ Image supprimée");
+    },
+    error: () => alert("❌ Erreur suppression image")
+  });
+}
+
+
+
+
+saveCabin() {
+  const cabin = this.formCabin.value as Cabin;
+  console.log(cabin);
+
+  if (cabin.id === 0) {
+    this.cabinService.createCabin(cabin).subscribe({
+      next: (res) => {
+        alert(`✔ Cabine créée (ID: ${res.id})`);
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error(err);
+        alert("❌ Erreur serveur lors de la création cabine : " + (err.error?.error ?? "Erreur inconnue"));
+      }
+    });
+  } else {
+    this.cabinService.updateCabin(cabin).subscribe({
+      next: (res) => {
+        alert(`✔ Cabine mise à jour`);
+      },
+      error: (err) => {
+        console.error(err);
+        alert("❌ Erreur serveur lors de la mise à jour cabine : " + (err.error?.error ?? "Erreur inconnue"));
+      }
+    });
+  }
+}
 
 
 

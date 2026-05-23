@@ -1,18 +1,17 @@
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { Garment } from '../../../models/garment';
 import { Gender } from '../../../models/gender';
 import { Marque } from '../../../models/marque';
 import { Product } from '../../../models/product';
+import { TruncatePipe } from "../../../pipes/truncate.pipe";
 import { AuthService } from '../../../services/auth.service';
 import { ConsoleProductService } from '../../../services/console-product.service';
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
 import { MarqueService } from '../../../services/marque.service';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { FormsModule } from '@angular/forms';
-import { SlicePipe } from '@angular/common';
-import { TruncatePipe } from "../../../pipes/truncate.pipe";
 
 
 @Component({

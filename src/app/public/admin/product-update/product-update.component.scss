@@ -294,6 +294,98 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(74,139,255,0.2);
 }
 
+.btn-save {
+  grid-column: span 2;
+  justify-self: center;
+  padding: 0.9rem 3rem;
+  border-radius: 999px;
+  border: 1px solid #003cff;
+  background: linear-gradient(180deg, #4d7dff 0%, #1f4fff 50%, #003cff 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.btn-save:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-save:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.45),
+    inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.btn-delete {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: 999px;
+  width: 200px;
+  border: 1px solid #ff2b2b;
+  background: linear-gradient(180deg, #ff9a9a 0%, #ff4d4d 50%, #d40000 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.btn-delete:hover {
+  filter: brightness(1.1);
+}
+
+.btn-delete:active {
+  transform: translateY(1px);
+}
+
+.picture-wrapper {
+  position: relative; /* conteneur relatif */
+  display: inline-block;
+}
+
+.picture-wrapper img.preview {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.btn-icon-delete {
+  position: absolute;   /* bouton absolu */
+  top: 6px;             /* marge depuis le haut */
+  right: 6px;           /* marge depuis la droite */
+  padding-right: 2px;
+  background: crimson;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: 0.15s ease;
+}
+
+.btn-icon-delete:hover {
+  filter: brightness(1.1);
+}
+
+
+
 
 /* Responsive */
 @media (max-width: 900px) {
