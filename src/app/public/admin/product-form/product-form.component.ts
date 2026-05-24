@@ -13,6 +13,7 @@ import { GenderService } from '../../../services/gender.service';
 import { Gender } from '../../../models/gender';
 import { CabineService } from '../../../services/cabine.service';
 import { Cabin } from '../../../models/cabin';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-product-form',
@@ -22,7 +23,8 @@ import { Cabin } from '../../../models/cabin';
 })
 export class ProductFormComponent {
 
-  private productService = inject(ConsoleProductService);
+  private consoleService = inject(ConsoleProductService);
+  private productService = inject(ProductService);
   private uploadService = inject(UploadService);
   private marqueService = inject(MarqueService);
   private typeService = inject(GarmentService);
@@ -96,15 +98,19 @@ export class ProductFormComponent {
 
   formCabin = new FormGroup({
     id: new FormControl(0),
-    picturecabin: new FormControl('', { nonNullable: true }),
-    title: new FormControl('', { nonNullable: true }),
+    sku: new FormControl(''),
+    idproduct: new FormControl(0),
+    picturecabin: new FormControl(''),
+    title: new FormControl(''),
     productlink: new FormControl(''),
-    gender: new FormControl('', { nonNullable: true }),
-    zindex: new FormControl(0),
     positionx: new FormControl(0),
     positiony: new FormControl(0),
+    zindex: new FormControl(0),
     width: new FormControl(0),
-    height: new FormControl(0)
+    height: new FormControl(0),
+    type: new FormControl(''),
+    genre: new FormControl('', { nonNullable: true }),
+    displayorder: new FormControl(0)
   });
 
   constructor() {
@@ -117,6 +123,7 @@ onFileSelectedProduct(event: any, field: string, index: number | string) {
   const file = event.target.files[0];
   const marque = this.form.value.marque;
   const sku = this.form.value.sku;
+
 
   if (!marque || !sku) {
     alert("Veuillez remplir tous les champs avec une étoiles rouges.");
@@ -134,19 +141,24 @@ onFileSelectedProduct(event: any, field: string, index: number | string) {
   });
 }
 
-
 onFileSelectedCabin(event: any, field: string) {
   const file = event.target.files[0];
-  if (!file) return;
+  const sku = this.formCabin.value.sku;
+
 
   const formData = new FormData();
   formData.append('file', file);
+  // formData.append('sku', sku);
+  formData.append('index', 'cabine');
 
-  this.uploadService.upload(formData).subscribe(res => {
-    // Ici, field = 'picturecabin'
+
+  this.uploadService.uploadCabin(formData).subscribe(res => {
+    console.log('Formdata > ',formData);
+    // ✅ Patch le chemin du fichier dans le formCabin
     this.formCabin.patchValue({ [field]: res.path });
   });
 }
+
 
 
 
@@ -156,7 +168,7 @@ saveProduct() {
   console.log(product);
 
   if (product.id === 0) {
-    this.productService.create(product).subscribe({
+    this.consoleService.create(product).subscribe({
       next: (res) => {
         alert(`✔ ${res.message} (ID: ${res.id})`);
           // 🔥 Recharger la page après upload réussi
@@ -168,7 +180,7 @@ saveProduct() {
       }
     });
   } else {
-    this.productService.update(product).subscribe({
+    this.consoleService.update(product).subscribe({
       next: (res) => {
         alert(`✔ ${res.message}`);
       },
@@ -180,33 +192,130 @@ saveProduct() {
   }
 }
 
-saveCabin() {
-  const cabin = this.formCabin.value as Cabin;
-  console.log(this.formCabin.value);
 
-  if (cabin.id === 0) {
-    this.cabinService.createCabin(cabin).subscribe({
-      next: (res) => {
-        alert(`✔ Cabine créée (ID: ${res.id})`);
-        window.location.reload();
-      },
-      error: (err) => {
-        console.error(err);
-        alert("❌ Erreur serveur lors de la création cabine : " + (err.error?.error ?? "Erreur inconnue"));
-      }
-    });
-  } else {
-    this.cabinService.updateCabin(cabin).subscribe({
-      next: (res) => {
-        alert(`✔ Cabine mise à jour`);
-      },
-      error: (err) => {
-        console.error(err);
-        alert("❌ Erreur serveur lors de la mise à jour cabine : " + (err.error?.error ?? "Erreur inconnue"));
-      }
-    });
+saveCabin() {
+  console.log('Save > ', this.formCabin.value);
+
+  const sku = this.formCabin.value.sku;
+  if (!sku) {
+    alert("❌ SKU manquant");
+    return;
   }
+
+  // Patch toujours le SKU saisi
+  this.formCabin.patchValue({ sku: sku });
+
+  // Charger les produits pour chercher l'ID
+  this.productService.loadProducts().subscribe(products => {
+    const product = products.find(p => p.sku === sku);
+    const idProduct = product ? product.id : 0;
+    this.formCabin.patchValue({ idproduct: idProduct });
+
+    // ✅ Récupère toutes les valeurs du formulaire
+    const cabin = this.formCabin.getRawValue() as Cabin;
+    console.log('Cabin > ', cabin);
+
+    // ✅ Envoie uniquement les infos cabine (pas de fichier)
+    this.cabinService.createCabin(cabin).subscribe(res => {
+      console.log("Cabine sauvegardée:", res);
+    });
+  });
 }
+
+
+// saveCabin() {
+//   console.log('Save > ', this.formCabin.value);
+
+//   const sku = this.formCabin.value.skuproduct;
+//   if (!sku) {
+//     alert("❌ SKU manquant");
+//     return;
+//   }
+
+//   // Patch toujours le SKU saisi
+//   this.formCabin.patchValue({ skuproduct: sku });
+
+//   // Charger les produits pour chercher l'ID
+//   this.productService.loadProducts().subscribe(products => {
+//     const product = products.find(p => p.sku === sku);
+//     const idProduct = product ? product.id : 0;
+//     this.formCabin.patchValue({ idproduct: idProduct });
+
+//     // ✅ Récupère toutes les valeurs du formulaire
+//     const cabin = this.formCabin.getRawValue() as Cabin;
+//     console.log('Cabin > ', cabin);
+
+//     // ✅ Envoie uniquement les infos cabine (pas de fichier)
+//     this.cabinService.createCabin(cabin).subscribe(res => {
+//       console.log("Cabine sauvegardée:", res);
+//     });
+//   });
+// }
+
+
+// saveCabin() {
+
+//   console.log('Save > ',this.formCabin.value);
+  
+//   const sku = this.formCabin.value.skuproduct;
+
+//   if (!sku) {
+//     alert("❌ SKU manquant");
+//     return;
+//   }
+
+//   // Charger les produits avant de chercher l'ID
+//   this.productService.loadProducts().subscribe(products => {
+//     const product = products.find(p => p.sku === sku);
+//     const idProduct = product ? product.id : 0;
+
+//     // Patch l'idproduct dans le formulaire cabine
+//     this.formCabin.patchValue({ idproduct: idProduct });
+//     this.formCabin.patchValue({ skuproduct: this.formCabin.value.skuproduct });
+//     // Récupère toutes les valeurs du formulaire
+//     const cabin = this.formCabin.getRawValue() as Cabin;
+//     console.log('Cabin > ',cabin);
+    
+//     // Enregistre la cabine
+//     this.cabinService.createCabin(cabin).subscribe({
+//       next: (res) => alert(`✔ Cabine créée (ID: ${res.id} - SKU: ${res.skuproduct})`),
+//       error: (err) => console.error(err)
+//     });
+//   });
+// }
+
+
+// saveCabin() {
+//   console.log('Save > ', this.formCabin.value);
+
+//   const sku = this.formCabin.value.skuproduct;
+
+//   if (!sku) {
+//     alert("❌ SKU manquant");
+//     return;
+//   }
+
+//   // Patch toujours le SKU saisi
+//   this.formCabin.patchValue({ skuproduct: sku });
+
+//   // Charger les produits pour chercher l'ID
+//   this.productService.loadProducts().subscribe(products => {
+//     const product = products.find(p => p.sku === sku);
+
+//     // Si trouvé → patch l'idproduct, sinon laisse 0
+//     const idProduct = product ? product.id : 0;
+//     this.formCabin.patchValue({ idproduct: idProduct });
+
+//     // Récupère toutes les valeurs du formulaire
+//     const cabin = this.formCabin.getRawValue() as Cabin;
+//     console.log('Cabin > ', cabin);
+
+//     // Ici tu peux envoyer cabin à ton backend
+//     this.cabinService.createCabin(cabin).subscribe(res => {
+//       console.log("Cabine sauvegardée:", res);
+//     });
+//   });
+// }
 
 
   

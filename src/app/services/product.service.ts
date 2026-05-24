@@ -143,7 +143,7 @@ export class ProductService  {
   }
 
   // A TESTER 
-getProduct(id: number): Observable<{ success: boolean; product: Product }> {
+  getProduct(id: number): Observable<{ success: boolean; product: Product }> {
   return this.http.get<{ success: boolean; product: Product }>(
     'https://www.boycoté.fr/api/getProduct.php?id=' + id
   );
@@ -181,7 +181,13 @@ getProduct(id: number): Observable<{ success: boolean; product: Product }> {
 
 
 
-
+  /* -----------------------------------------------------------
+     GET PRODUCT BY SKU
+  ----------------------------------------------------------- */
+getProductIdBySKU(sku: string): number {
+  const product = this.allProducts.find(p => p.sku === sku);
+  return product ? product.id : 0;
+}
 
 
 

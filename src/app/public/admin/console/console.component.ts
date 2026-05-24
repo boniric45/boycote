@@ -1,5 +1,5 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { Garment } from '../../../models/garment';
@@ -12,6 +12,8 @@ import { ConsoleProductService } from '../../../services/console-product.service
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
 import { MarqueService } from '../../../services/marque.service';
+import { CabineService } from '../../../services/cabine.service';
+import { Cabin } from '../../../models/cabin';
 
 
 @Component({
@@ -26,7 +28,9 @@ export class ConsoleComponent implements OnInit {
   marques: Marque[] = [];
   garments: Garment[] = [];
   genders: Gender[] = [];
-  search: string = '';
+  cabins: Cabin[] = [];
+  searchProduct: string = '';
+  searchCabin: string = '';
 
   private router = inject(Router);
   private auth = inject(AuthService);
@@ -34,12 +38,22 @@ export class ConsoleComponent implements OnInit {
   private marqueService = inject(MarqueService);
   private garmentService = inject(GarmentService);
   private genderService = inject(GenderService);
+  private cabinService = inject(CabineService);
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCabins();
     this.loadMarques();
     this.loadGarments();
     this.loadGenders();
+
+      // écoute du signal refresh
+      effect(() => {
+        const refresh = this.cabinService.refreshTrigger();
+        if (refresh !== null) {
+          this.loadCabins(); // recharge la liste
+        }
+      });
   }
 
   drop(event: CdkDragDrop<Product[]>) {
@@ -104,9 +118,14 @@ export class ConsoleComponent implements OnInit {
       .subscribe(() => console.log("Ordre vêtements mis à jour"));
   }
 
-
   loadProducts() {
     this.consoleProductService.getProducts().subscribe(res => this.products = res);
+  }
+
+  loadCabins(){
+    this.cabinService.getAllCabin().subscribe( c =>{
+      this.cabins = c;
+    })
   }
 
   loadMarques() {
@@ -130,17 +149,17 @@ export class ConsoleComponent implements OnInit {
     });
   }
 
-  getPreview(product: Product): string {
+  getPreviewProduct(product: Product): string {
     return product.pathpictureone || 'assets/no-image.png';
   }
 
-  edit(product: Product) {
+  editProduct(product: Product) {
     this.consoleProductService.product = product;
     this.router.navigateByUrl('admin/update')
     console.log(product.id);
   }
 
-  delete(id: number) {
+  deleteProduct(id: number) {
     if (confirm('Supprimer le produit avec l\'id: ' + id + ' ?')) {
 
       this.consoleProductService.deleteProductById(id)
@@ -149,8 +168,26 @@ export class ConsoleComponent implements OnInit {
         });
     }
   }
-
   
+  editCabin(cabin: any) {
+      console.log("editCabin appelé avec:", cabin);
+    this.cabinService.setCabin(cabin); // met la cabine dans le signal
+
+  }
+
+  getPreviewCabin(cabin: Cabin): string {
+    return cabin.picturecabin || 'assets/no-image.png';
+  }
+
+  deleteCabin(id: number) {
+    if (confirm("Supprimer cette cabine ?")) {
+      this.cabinService.deleteCabin(id).subscribe(() => {
+        this.cabinService.triggerRefresh(); // 🔄 déclenche le refresh
+      });
+    }
+  }
+
+
   editMarque(marque: Marque) {
     this.router.navigateByUrl('admin/marque/edit/'+marque.id);
     console.log(marque.id);
@@ -166,7 +203,6 @@ export class ConsoleComponent implements OnInit {
     });
   }
 
-
   editGarment(garment: Garment) {
     this.router.navigateByUrl('admin/garment/edit/'+garment.id)
     console.log(garment.id);
@@ -180,8 +216,6 @@ export class ConsoleComponent implements OnInit {
         });
     }
   }
-
-
 
   editGender(gender: Gender) {
     this.router.navigateByUrl('admin/gender/edit/'+gender.id)
@@ -202,7 +236,7 @@ export class ConsoleComponent implements OnInit {
   }
 
 get productsFiltered(): Product[] {
-  const f = this.search.toLowerCase().trim();
+  const f = this.searchProduct.toLowerCase().trim();
   if (!f) return this.products;
 
   return this.products.filter(p =>
@@ -210,6 +244,18 @@ get productsFiltered(): Product[] {
     p.name?.toLowerCase().includes(f) ||
     p.marque?.toLowerCase().includes(f) ||
     p.type?.toLowerCase().includes(f)
+  );
+}
+
+get cabinFiltered(): Cabin[] {
+  const f = this.searchCabin.toLowerCase().trim();
+  if (!f) return this.cabins;
+
+  return this.cabins.filter(c =>
+    c.genre?.toLowerCase().includes(f) ||
+    c.title?.toLowerCase().includes(f) ||
+    c.sku?.toLowerCase().includes(f) ||
+    c.productlink?.toLowerCase().includes(f) 
   );
 }
 

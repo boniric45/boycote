@@ -1,0 +1,75 @@
+  <img class="imgBack" src="pictures\back.png" [routerLink]="['/admin']" alt="Back">
+
+<h2 style="text-align: center;">Ajouter un article dans la cabine</h2>
+<br>
+<br>
+
+<form [formGroup]="formCabin" (ngSubmit)="saveCabin()" class="product-form">
+
+    <!-- SECTION 4 : Paramètres cabine -->
+  <section class="block">
+    <h2>Paramètres cabine</h2>
+
+    <div class="block-fields">
+      <!-- <label>Id Produit <input type="text" formControlName="idproduct" ></label> -->
+      <label style="color: red;">SKU<input type="text" formControlName="sku"></label>
+      <label>Z-index <input type="text" formControlName="zindex"></label>
+      <label>X <input type="number" formControlName="positionx"></label>
+      <label>Y <input type="number" formControlName="positiony"></label>
+      <label>Largeur <input type="number" formControlName="width"></label>
+      <label>Hauteur <input type="number" formControlName="height"></label>
+      <label style="color: red;">Lien produit <input type="text" formControlName="productlink"></label>
+    </div>
+  </section>
+
+  <!-- SECTION 3 : Cabine -->
+  <section class="block">
+    <h2>Cabine</h2>
+
+    <label>Image cabine
+      <input type="file" 
+      (change)="onFileSelectedCabin($event)"
+     [disabled]="!formCabin.get('sku')?.value"
+      >
+    </label>
+
+    @if (formCabin.get('picturecabin')?.value) {
+        <img style="width: 100px; height: 100px;" class="preview-large" [src]="formCabin.get('picturecabin')?.value">
+    } @else {
+        <div class="empty-thumb"></div>
+    }
+
+    <!-- @if (formCabin.get('picturecabin')?.value) {
+      <img [src]="formCabin.get('picturecabin')?.value" class="preview-large">
+    } @else {
+      <div class="empty-thumb"></div>
+    } -->
+
+    <label>Titre cabine
+      <input type="text" formControlName="title">
+    </label>
+
+        <label Choisir style="color: red;"> Genre  
+          <select formControlName="genre">
+            <option value="">Choisir</option>
+            <option>WOMAN</option>
+            <option>MAN</option>
+          </select>
+        </label>
+
+      <label style="color: red;">Type
+        <select formControlName="type" required>
+          <option value="">Choisir</option>
+          @for (t of types; track t.id) {
+            <option [value]="t.name">{{ t.name }}</option>
+          }
+        </select>
+      </label>
+
+  </section>
+
+
+
+  <button type="submit" class="btn-save">{{editMode ? 'Mettre à jour ': 'Enregistrer'}} la cabine</button>
+
+</form>

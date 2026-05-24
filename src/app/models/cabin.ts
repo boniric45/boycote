@@ -1,6 +1,7 @@
 export interface Cabin{
-
   id:number;
+  sku:string;
+  idproduct:number;
   picturecabin:string;
   title:string;
   productlink:string;
@@ -9,6 +10,7 @@ export interface Cabin{
   zindex:number;
   width:number;
   height:number;
-  gender:string;
-
+  type:string;
+  genre:string;
+  displayorder:number;
 }

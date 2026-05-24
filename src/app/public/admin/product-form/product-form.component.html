@@ -51,7 +51,6 @@
     <div class="pictures-grid">
       @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
         <div class="picture-item">
-
           <label>Image {{ i }}</label>
 
     <input type="file" (change)="onFileSelectedProduct($event, getPictureField(i),i)">
@@ -66,59 +65,4 @@
   <button type="submit" class="btn-save">Enregistrer le produit</button>
 </form>
 
-<form [formGroup]="formCabin" (ngSubmit)="saveCabin()" class="product-form">
-  <!-- SECTION 3 : Cabine -->
-  <section class="block">
-    <h2>Cabine</h2>
 
-    <label>Image cabine
-      <input type="file" (change)="onFileSelectedCabin($event, 'picturecabin')">
-    </label>
-
-@if (formCabin.get('picturecabin')?.value) {
-  <img [src]="formCabin.get('picturecabin')?.value" class="preview-large">
-} @else {
-  <div class="empty-thumb"></div>
-}
-
-
-
-
-    <label>Titre cabine
-      <input type="text" formControlName="title">
-    </label>
-
-        <label>Genre
-          <select formControlName="gender">
-            <option value="">-- Choisir --</option>
-            <option>WOMAN</option>
-            <option>MAN</option>
-          </select>
-        </label>
-
-  </section>
-
-  <!-- SECTION 4 : Paramètres cabine -->
-  <section class="block">
-    <h2>Paramètres cabine</h2>
-
-    <div class="block-fields">
-
-      <label>Z-index <input type="text" formControlName="zindex"></label>
-      <label>X <input type="number" formControlName="positionx"></label>
-      <label>Y <input type="number" formControlName="positiony"></label>
-      <label>Largeur <input type="number" formControlName="width"></label>
-      <label>Hauteur <input type="number" formControlName="height"></label>
-      <label>Lien produit <input type="text" formControlName="productlink"></label>
-    </div>
-  </section>
-
-    <!-- @if (formCabin.value.pathpicturecabin) {
-      <button type="button" class="btn-delete" (click)="deleteCabin()">
-        Supprimer l'enregistrement cabine
-      </button>
-    } -->
-
-  <button type="submit" class="btn-save">Enregistrer la cabine</button>
-
-</form>

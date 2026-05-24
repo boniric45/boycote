@@ -33,7 +33,7 @@ export const routes: Routes = [
   },
   {
     path:'home/admin/login',
-    component:BoycoteComponent // changer pour loginComponent en production BoycoteComponent en Dev
+    component:LoginComponent // changer pour loginComponent en production BoycoteComponent en Dev
   },
   
   // ADMIN PROTÉGÉ
@@ -83,6 +83,9 @@ export const routes: Routes = [
   //   loadComponent: () =>
   //     import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
   // },
+   { path: 'admin2/cabin/add',
+    loadComponent:()=> import('./public/admin/cabin-form/cabin-form.component').then(m => m.CabinFormComponent)
+   },
     {
     path: 'admin2/add',
     // canMatch: [adminGuard],

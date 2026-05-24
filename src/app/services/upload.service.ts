@@ -10,7 +10,9 @@ upload(formData: FormData) {
   }
 
 
-
+uploadCabin(formData: FormData){
+  return this.http.post<{ path: string }>('https://www.boycote.fr/api/uploadCabin.php', formData);
+}
 
 
 

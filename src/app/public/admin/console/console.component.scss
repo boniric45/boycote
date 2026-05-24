@@ -24,6 +24,17 @@
   margin-bottom: 50px;
 }
 
+.cabins{
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+  margin-top: 5px;
+  overflow-y: auto;     /* Ton scroll vertical */
+  overflow-x:hidden; /* Scroll horizontal caché */
+  margin-bottom: 50px;
+}
+
+
 .marques{
   margin: 5px;
   width: auto;
@@ -78,6 +89,37 @@ width: 50px;
   display: block;
   margin: 0 auto;
   border-spacing: 0;
+}
+
+
+.tcabin{
+  overflow: auto;
+  border: 1px solid black;
+  table-layout: fixed; /* Harmonise toutes les colonnes */
+  width: 800px;
+  height: 600px;
+  display: block;
+  margin: 0 auto;
+  border-spacing: 0;
+}
+
+.tcabin td {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tcabin th.sku-col,
+.tcabin td:nth-child(3) {
+  width: 120px;   /* largeur fixe */
+}
+
+.tcabin td.previewTd img {
+  max-width: 100px;   /* largeur max */
+  max-height: 80px;  /* hauteur max */
+  border-radius: 5px;
+  object-fit: cover; /* garde un rendu propre */
 }
 
 table {

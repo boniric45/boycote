@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cabin } from '../models/cabin';
 
@@ -10,9 +10,23 @@ export class CabineService {
 
   cabins: Cabin[] = [];
 
+  selectedCabin = signal<any | null>(null);
+
+  refreshTrigger = signal<boolean>(false);    // pour déclencher un refresh
   private apiUrl = 'https://www.boycote.fr/api';
 
   http = inject(HttpClient);
+
+  setCabin(cabin: any) {
+    this.selectedCabin.set(cabin);
+    console.log('Service > ',this.selectedCabin());
+  }
+
+    triggerRefresh() {
+    this.refreshTrigger.set(!this.refreshTrigger()); // toggle pour notifier
+  }
+
+
 
   getCabinPictures(): Observable<Cabin[]> {
     return this.http.get<Cabin[]>(`${this.apiUrl}/getAllCabin.php`);
@@ -37,8 +51,9 @@ export class CabineService {
      UPDATE
   ----------------------------------------------------------- */
   updateCabin(cabin: Cabin): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/updateCabin.php?id=${cabin.id}`, cabin);
+    return this.http.post<any>(`${this.apiUrl}/updateCabin.php`, cabin);
   }
+
 
   /* -----------------------------------------------------------
      GET ONE
@@ -67,6 +82,8 @@ export class CabineService {
   deleteImage(id: number) {
   return this.http.delete(`${this.apiUrl}/deleteCabinImage.php?id=${id}`);
 }
+
+
 
 
 }
