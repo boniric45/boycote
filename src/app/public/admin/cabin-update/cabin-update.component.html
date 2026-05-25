@@ -1,5 +1,5 @@
 
-  <img class="imgBack" src="pictures\back.png" [routerLink]="['/admin']" alt="Back">
+<img class="imgBack" src="pictures\back.png" [routerLink]="['/admin']" alt="Back">
 
 <h2 style="text-align: center;">Mise à jour d'un article dans la cabine</h2>
 <br>
@@ -40,11 +40,6 @@
         <div class="empty-thumb"></div>
     }
 
-    <!-- @if (formCabin.get('picturecabin')?.value) {
-      <img [src]="formCabin.get('picturecabin')?.value" class="preview-large">
-    } @else {
-      <div class="empty-thumb"></div>
-    } -->
 
     <label>Titre cabine
       <input type="text" formControlName="title">
@@ -70,6 +65,17 @@
   </section>
 
 
+<app-cabine-preview
+  [item]="{
+    src: formCabin.get('picturecabin')?.value,
+    x: formCabin.value.positionx,
+    y: formCabin.value.positiony,
+    width: formCabin.value.width,
+    height: formCabin.value.height,
+    zIndex: formCabin.value.zindex
+  }"
+  (coordsChange)="updateCoords($event)">
+</app-cabine-preview>
 
   <button type="submit" class="btn-save">Mettre à jour la cabine</button>
 

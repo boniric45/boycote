@@ -1,0 +1,43 @@
+.cabine-container {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  overflow: hidden; /* 🔥 empêche le débordement */
+}
+
+.mannequin-img {
+  position: absolute;
+  width: 100%;   /* occupe toute la largeur du conteneur */
+  height: 100%;  /* occupe toute la hauteur du conteneur */
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.outfit-wrapper {
+  position: absolute;
+  cursor: move;
+  z-index: 999;         /* valeur issue du formulaire */
+}
+
+.outfit-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* garde les proportions */
+}
+
+/* ── Mannequin photo (PNG réel) ── */
+.mannequin-img {
+  position: absolute;
+  width: auto;
+  z-index: 1;
+  transition: opacity 0.25s;
+  display: block;
+  pointer-events: none;
+}
+.mannequin-img.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.mannequin-img--homme{ height: 96.5%;  top: 2%;   left: 52%;   transform: translateX(-50%); }
+.mannequin-img--femme{ height: 105.8%; top: -4%;  left: 49.7%; transform: translateX(-50%); }

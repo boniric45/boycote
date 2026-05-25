@@ -149,17 +149,12 @@ export class ProductService  {
   );
 }
   // SUPPRIME LA PREMIERE IMAGE DU TABLEAU //
-  deleteFirstPicture(article:string[]):any[]{
-
-    let result = [];
-
-    if(article[0] == null){
+  deleteFirstPicture(article: string[]): string[] {
+    if (!article || article.length === 0) {
       return [];
-    } else {
-     article.shift();
-     result.push(article);
     }
-    return result;
+    article.shift(); // enlève le premier élément
+    return article;  // renvoie le tableau restant
   }
 
 

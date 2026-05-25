@@ -39,12 +39,15 @@ ngOnInit(): void {
   // 1. On tente de lire le produit depuis le service
   this.product = this.productService.product;
 
+
   // 2. Si le produit existe déjà (cas normal sans refresh)
   if (this.product) {
-    const imageList = this.productService.buildImageObjects(this.product);
-    this.articles.set(imageList);
+    let imageList = this.productService.buildImageObjects(this.product);
+    this.articles.set(imageList.slice(1)); // On enlève la première image    
     return;
   }
+
+  this.productService.deleteFirstPicture(this.articles());
 
   // 3. Sinon, on recharge via l’ID dans l’URL (cas refresh)
   this.route.params.subscribe(params => {
@@ -54,9 +57,10 @@ ngOnInit(): void {
       if (res.success) {
         this.product = res.product;
 
-        const imageList = this.productService.buildImageObjects(this.product);
-        this.articles.set(imageList);
+        let imageList = this.productService.buildImageObjects(this.product);
 
+        // 🔥 Supprimer la première image directement
+        this.articles.set(imageList.slice(1));
       }
     });
   });

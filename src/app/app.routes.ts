@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
+import { ConsoleComponent } from './public/admin/console/console.component';
 import { AnnulationComponent } from './public/annulation/annulation.component';
 import { CabineComponent } from './public/cabine/cabine.component';
 import { CancelComponent } from './public/cancel/cancel.component';
@@ -11,8 +12,6 @@ import { ContactComponent } from './public/features/contact/contact.component';
 import { LegalComponent } from './public/legal/legal.component';
 import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
-import { LoginComponent } from './public/admin/login/login.component';
-import { ConsoleComponent } from './public/admin/console/console.component';
 
 
 export const routes: Routes = [
@@ -33,7 +32,7 @@ export const routes: Routes = [
   },
   {
     path:'home/admin/login',
-    component:LoginComponent // changer pour loginComponent en production BoycoteComponent en Dev
+    component:BoycoteComponent // changer pour loginComponent en production BoycoteComponent en Dev
   },
   
   // ADMIN PROTÉGÉ

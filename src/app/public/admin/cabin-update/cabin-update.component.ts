@@ -8,11 +8,20 @@ import { Garment } from '../../../models/garment';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { CabinePreviewComponent } from "../../cabine-preview/cabine-preview.component";
 
+
+interface CabinCoords {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+  zindex?: number;
+}
 
 @Component({
   selector: 'app-cabin-update',
-  imports: [ReactiveFormsModule,RouterLink,CommonModule],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule, CabinePreviewComponent],
   templateUrl: './cabin-update.component.html',
   styleUrl: './cabin-update.component.scss',
 })
@@ -109,6 +118,17 @@ export class CabinUpdateComponent implements OnInit {
   });
 
   }
+
+
+updateCoords(coords: CabinCoords) {
+  this.formCabin.patchValue({
+    positionx: coords.x,
+    positiony: coords.y,
+    width: coords.width,
+    height: coords.height,
+    zindex: coords.zindex
+  });
+}
 
 
 }
