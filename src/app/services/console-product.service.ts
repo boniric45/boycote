@@ -30,7 +30,7 @@ export class ConsoleProductService {
 
   update(product: Product) {
     return this.http.post<{ success: boolean; message: string; id?: number }>(
-      `${this.api}/update.php?type=product&id=${product.id}`,
+      `${this.api}/updateProduct.php?type=product&id=${product.id}`,
       product,
       {
         headers: { 'Content-Type': 'application/json' }
@@ -77,7 +77,7 @@ deleteImage(id: number, field: string) {
 deleteProductById(id: number) {
   const formData = new FormData();
   formData.append('id', id.toString());
- return this.http.post('https://www.boycote.fr/api/delete.php', formData);
+ return this.http.post('https://www.boycote.fr/api/deleteProduct.php', formData);
 }
 
   

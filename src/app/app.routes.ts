@@ -86,6 +86,10 @@ export const routes: Routes = [
    { path: 'admin2/cabin/add',
     loadComponent:()=> import('./public/admin/cabin-form/cabin-form.component').then(m => m.CabinFormComponent)
    },
+
+  { path: 'admin2/cabin/edit/:id',
+    loadComponent:()=> import('./public/admin/cabin-update/cabin-update.component').then(m => m.CabinUpdateComponent)
+   },
     {
     path: 'admin2/add',
     // canMatch: [adminGuard],

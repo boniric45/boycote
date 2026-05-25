@@ -23,7 +23,6 @@ export class CabinFormComponent implements OnInit{
   cabin: Cabin | undefined;
   types: Garment[] = [];
   previewUrl: string | null = null;
-  editMode: boolean = false;
   cabins: Cabin[] = [];
   cabinFiltered: any[] = [];
 
@@ -45,29 +44,9 @@ export class CabinFormComponent implements OnInit{
   });
 
   ngOnInit() {
-
-    effect(() => {
-      const cabin = this.cabinService.selectedCabin();
-      console.log('Cabin Form> ', cabin);
-      if (cabin) {
-        this.formCabin.patchValue(cabin);
-        this.editMode = true;
-      }
-    });
     this.typeService.getAll().subscribe( t => this.types = t);
     this.loadCabins();
-      // s'abonne au signal NE FONCTIONNE PAS
-
-        // écoute du signal pour le refresh
-      effect(() => {
-        const refresh = this.cabinService.refreshTrigger();
-        if (refresh !== null) {
-          this.loadCabins(); // recharge la liste
-        }
-      });
   }
-
-
 
 
 onFileSelectedCabin(event: any) {
@@ -98,27 +77,15 @@ onFileSelectedCabin(event: any) {
 
 
 saveCabin() {
-  // const cabin = this.formCabin.getRawValue();
-  // this.cabinService.createCabin(cabin).subscribe(res => {
-  // });
-    console.log("saveCabin déclenché, editMode=", this.editMode);
-    const cabin = this.formCabin.getRawValue();
-      console.log("Cabin envoyé:", cabin);
 
-  if (this.editMode) {
-    // 🔄 Update
-    this.cabinService.updateCabin(cabin).subscribe(res => {
-      console.log("Cabine mise à jour:", res);
-      this.editMode = false;
-      this.loadCabins(); // recharge la liste
-    });
-  } else {
+    const cabin = this.formCabin.getRawValue();
+
     // ➕ Create
     this.cabinService.createCabin(cabin).subscribe(res => {
       console.log("Cabine créée:", res);
       this.loadCabins();
     });
-  }
+  
 
   // Reset Formulaire
   this.formCabin.reset({
@@ -141,7 +108,6 @@ saveCabin() {
 deleteCabin(id: number) {
   if (confirm("Supprimer cette cabine ?")) {
     this.cabinService.deleteCabin(id).subscribe(res => {
-      console.log("Cabine supprimée:", res);
       this.loadCabins(); // recharge la liste
     });
   }
@@ -155,10 +121,7 @@ loadCabins() {
 }
 
 editCabin(cabin: any) {
-      console.log("editMode activé:", this.editMode);
   this.formCabin.patchValue(cabin);
-  this.editMode = true;
-
 }
 
 }

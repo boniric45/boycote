@@ -78,41 +78,9 @@
 
         </div>
         }
-
-
             </div>
         </section>
 
-        <!-- SECTION 3 : Cabine -->
-        <section class="block">
-            <h2>Cabine</h2>
-
-            <label>Image cabine
-                <input type="file" (change)="onFileSelected($event, 'picturecabine','cabine')">
-            </label>
-
-            @if (form.value.picturecabine) {
-            <img [src]="form.value.picturecabine" class="preview-large">
-            }
-
-            <label>Titre cabine
-                <input type="text" formControlName="titleproductcabine">
-            </label>
-        </section>
-
-        <!-- SECTION 4 : Paramètres cabine -->
-        <section class="block">
-            <h2>Paramètres cabine</h2>
-
-            <div class="block-fields">
-                <label>Z-index <input type="text" formControlName="zindexcabine"></label>
-                <label>X <input type="number" formControlName="xcabine"></label>
-                <label>Y <input type="number" formControlName="ycabine"></label>
-                <label>Largeur <input type="number" formControlName="widthcabine"></label>
-                <label>Hauteur <input type="number" formControlName="heightcabine"></label>
-                <label>Lien produit <input type="text" formControlName="productlink"></label>
-            </div>
-        </section>
 
         <button type="submit" class="btn-save">Enregistrer</button>
 

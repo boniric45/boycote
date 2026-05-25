@@ -46,14 +46,6 @@ export class ConsoleComponent implements OnInit {
     this.loadMarques();
     this.loadGarments();
     this.loadGenders();
-
-      // écoute du signal refresh
-      effect(() => {
-        const refresh = this.cabinService.refreshTrigger();
-        if (refresh !== null) {
-          this.loadCabins(); // recharge la liste
-        }
-      });
   }
 
   drop(event: CdkDragDrop<Product[]>) {
@@ -170,9 +162,8 @@ export class ConsoleComponent implements OnInit {
   }
   
   editCabin(cabin: any) {
-      console.log("editCabin appelé avec:", cabin);
-    this.cabinService.setCabin(cabin); // met la cabine dans le signal
-
+    this.router.navigateByUrl('admin2/cabin/edit/'+cabin.id);
+    console.log(cabin);
   }
 
   getPreviewCabin(cabin: Cabin): string {
@@ -182,7 +173,7 @@ export class ConsoleComponent implements OnInit {
   deleteCabin(id: number) {
     if (confirm("Supprimer cette cabine ?")) {
       this.cabinService.deleteCabin(id).subscribe(() => {
-        this.cabinService.triggerRefresh(); // 🔄 déclenche le refresh
+          alert('Article Supprimé')
       });
     }
   }

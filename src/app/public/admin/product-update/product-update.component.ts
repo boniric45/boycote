@@ -111,29 +111,29 @@ ngOnInit(): void {
     pathpictureten: new FormControl(''),
 
     // 🔥 Champs corrigés pour correspondre EXACTEMENT à ton backend
-    picturecabine: new FormControl(''),
-    productlink: new FormControl(''),
-    titleproductcabine: new FormControl(''),
-    zindexcabine: new FormControl(''),
+    // picturecabine: new FormControl(''),
+    // productlink: new FormControl(''),
+    // titleproductcabine: new FormControl(''),
+    // zindexcabine: new FormControl(''),
 
-    xcabine: new FormControl(0),
-    ycabine: new FormControl(0),
-    widthcabine: new FormControl(0),
-    heightcabine: new FormControl(0)
+    // xcabine: new FormControl(0),
+    // ycabine: new FormControl(0),
+    // widthcabine: new FormControl(0),
+    // heightcabine: new FormControl(0)
   });
 
-    formCabin = new FormGroup({
-    id: new FormControl(0),
-    pathpicturecabin: new FormControl('', { nonNullable: true }),
-    title: new FormControl('', { nonNullable: true }),
-    productlink: new FormControl(''),
-    gender: new FormControl('', { nonNullable: true }),
-    zindex: new FormControl(0),
-    positionx: new FormControl(0),
-    positiony: new FormControl(0),
-    width: new FormControl(0),
-    height: new FormControl(0)
-  });
+  //   formCabin = new FormGroup({
+  //   id: new FormControl(0),
+  //   pathpicturecabin: new FormControl('', { nonNullable: true }),
+  //   title: new FormControl('', { nonNullable: true }),
+  //   productlink: new FormControl(''),
+  //   gender: new FormControl('', { nonNullable: true }),
+  //   zindex: new FormControl(0),
+  //   positionx: new FormControl(0),
+  //   positiony: new FormControl(0),
+  //   width: new FormControl(0),
+  //   height: new FormControl(0)
+  // });
 
  
  
@@ -202,36 +202,36 @@ ngOnInit(): void {
   }
 
 
-deleteCabin() {
-  const id = this.formCabin.value.id;
+// deleteCabin() {
+//   const id = this.formCabin.value.id;
 
-  if (!confirm("Supprimer définitivement cette cabine ?")) return;
+//   if (!confirm("Supprimer définitivement cette cabine ?")) return;
 
-  if(id){
-    this.cabinService.deleteCabin(id).subscribe({
-      next: () => {
-        alert("✔ Cabine supprimée");
-        window.location.reload();
-      },
-      error: () => alert("❌ Erreur suppression cabine")
-    });
-  }
-}
+//   if(id){
+//     this.cabinService.deleteCabin(id).subscribe({
+//       next: () => {
+//         alert("✔ Cabine supprimée");
+//         window.location.reload();
+//       },
+//       error: () => alert("❌ Erreur suppression cabine")
+//     });
+//   }
+// }
 
-deleteCabinImage() {
-  const id = this.formCabin.value.id;
+// deleteCabinImage() {
+//   const id = this.formCabin.value.id;
 
-  if (!id) return;
-  if (!confirm("Supprimer définitivement l’image cabine ?")) return;
+//   if (!id) return;
+//   if (!confirm("Supprimer définitivement l’image cabine ?")) return;
 
-  this.cabinService.deleteImage(id).subscribe({
-    next: () => {
-      alert("✔ Image cabine supprimée");
-      this.formCabin.patchValue({ pathpicturecabin: '' });
-    },
-    error: () => alert("❌ Erreur suppression image cabine")
-  });
-}
+//   this.cabinService.deleteImage(id).subscribe({
+//     next: () => {
+//       alert("✔ Image cabine supprimée");
+//       this.formCabin.patchValue({ pathpicturecabin: '' });
+//     },
+//     error: () => alert("❌ Erreur suppression image cabine")
+//   });
+// }
 
 deleteProductImage(field: string) {
   if (!confirm("Supprimer définitivement cette image ?")) return;
@@ -250,33 +250,33 @@ deleteProductImage(field: string) {
 
 
 
-saveCabin() {
-  const cabin = this.formCabin.value as Cabin;
-  console.log(cabin);
+// saveCabin() {
+//   const cabin = this.formCabin.value as Cabin;
+//   console.log(cabin);
 
-  if (cabin.id === 0) {
-    this.cabinService.createCabin(cabin).subscribe({
-      next: (res) => {
-        alert(`✔ Cabine créée (ID: ${res.id})`);
-        window.location.reload();
-      },
-      error: (err) => {
-        console.error(err);
-        alert("❌ Erreur serveur lors de la création cabine : " + (err.error?.error ?? "Erreur inconnue"));
-      }
-    });
-  } else {
-    this.cabinService.updateCabin(cabin).subscribe({
-      next: (res) => {
-        alert(`✔ Cabine mise à jour`);
-      },
-      error: (err) => {
-        console.error(err);
-        alert("❌ Erreur serveur lors de la mise à jour cabine : " + (err.error?.error ?? "Erreur inconnue"));
-      }
-    });
-  }
-}
+//   if (cabin.id === 0) {
+//     this.cabinService.createCabin(cabin).subscribe({
+//       next: (res) => {
+//         alert(`✔ Cabine créée (ID: ${res.id})`);
+//         window.location.reload();
+//       },
+//       error: (err) => {
+//         console.error(err);
+//         alert("❌ Erreur serveur lors de la création cabine : " + (err.error?.error ?? "Erreur inconnue"));
+//       }
+//     });
+//   } else {
+//     this.cabinService.updateCabin(cabin).subscribe({
+//       next: (res) => {
+//         alert(`✔ Cabine mise à jour`);
+//       },
+//       error: (err) => {
+//         console.error(err);
+//         alert("❌ Erreur serveur lors de la mise à jour cabine : " + (err.error?.error ?? "Erreur inconnue"));
+//       }
+//     });
+//   }
+// }
 
 
 

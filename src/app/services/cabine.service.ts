@@ -10,22 +10,9 @@ export class CabineService {
 
   cabins: Cabin[] = [];
 
-  selectedCabin = signal<any | null>(null);
-
-  refreshTrigger = signal<boolean>(false);    // pour déclencher un refresh
   private apiUrl = 'https://www.boycote.fr/api';
 
   http = inject(HttpClient);
-
-  setCabin(cabin: any) {
-    this.selectedCabin.set(cabin);
-    console.log('Service > ',this.selectedCabin());
-  }
-
-    triggerRefresh() {
-    this.refreshTrigger.set(!this.refreshTrigger()); // toggle pour notifier
-  }
-
 
 
   getCabinPictures(): Observable<Cabin[]> {
