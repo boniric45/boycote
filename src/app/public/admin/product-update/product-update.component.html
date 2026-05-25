@@ -60,11 +60,11 @@
 
         <div class="picture-wrapper">
         @if (form.get(field)?.value) {
-            <img [src]="form.get(field)?.value" class="preview">
+            <img [src]="form.get(field)?.value + '?v=' + refreshToken" class="preview">
 
             <!-- Bouton delete affiché seulement si une image existe -->
-            <button type="button" class="btn-icon-delete" (click)="deleteProductImage(form.get(field)?.value)">
-            🗑️
+            <button type="button" class="btn-icon-delete" (click)="deleteProductImage(field)">
+                <img src="pictures\corbeille.png" alt="Supprimer" class="delete-icon">
             </button>
         } @else {
             <div class="empty-thumb"></div>

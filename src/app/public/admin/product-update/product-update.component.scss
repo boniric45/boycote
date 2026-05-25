@@ -326,32 +326,7 @@ select:focus {
     inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-.btn-delete {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1.4rem;
-  border-radius: 999px;
-  width: 200px;
-  border: 1px solid #ff2b2b;
-  background: linear-gradient(180deg, #ff9a9a 0%, #ff4d4d 50%, #d40000 100%);
-  color: white;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
-  cursor: pointer;
-  transition: 0.15s ease;
-}
 
-.btn-delete:hover {
-  filter: brightness(1.1);
-}
-
-.btn-delete:active {
-  transform: translateY(1px);
-}
 
 .picture-wrapper {
   position: relative; /* conteneur relatif */
@@ -368,8 +343,8 @@ select:focus {
   top: 6px;             /* marge depuis le haut */
   right: 6px;           /* marge depuis la droite */
   padding-right: 2px;
-  background: crimson;
-  border: none;
+  background: rgb(255, 255, 255);
+  border: 1px solid black;
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -378,10 +353,23 @@ select:focus {
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   transition: 0.15s ease;
+
+    /* ✅ centrage de l'image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; /* supprime le décalage */
 }
+
 
 .btn-icon-delete:hover {
   filter: brightness(1.1);
+}
+
+
+.btn-icon-delete img {
+  width: 42px;   /* taille de l’icône */
+  height: 42px;
 }
 
 

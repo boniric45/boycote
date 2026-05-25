@@ -173,7 +173,8 @@ export class ConsoleComponent implements OnInit {
   deleteCabin(id: number) {
     if (confirm("Supprimer cette cabine ?")) {
       this.cabinService.deleteCabin(id).subscribe(() => {
-          alert('Article Supprimé')
+          alert('Article Supprimé');
+          this.loadCabins();
       });
     }
   }

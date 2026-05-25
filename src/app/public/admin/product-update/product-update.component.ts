@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Marque } from '../../../models/marque';
 import { Product } from '../../../models/product';
 import { AuthService } from '../../../services/auth.service';
@@ -13,7 +14,7 @@ import { Gender } from '../../../models/gender';
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
 import { Cabin } from '../../../models/cabin';
-import { CabineService } from '../../../services/cabine.service';
+
 
 @Component({
   selector: 'app-product-update',
@@ -29,7 +30,7 @@ export class ProductUpdateComponent implements OnInit {
   private marqueService = inject(MarqueService);
   private typeService = inject(GarmentService);
   private genderService = inject(GenderService);
-  private cabinService = inject(CabineService);
+  private snackBar = inject(MatSnackBar);
   private auth = inject(AuthService);
   //private route = inject(Router);
   marques: Marque[] = [];
@@ -39,6 +40,8 @@ export class ProductUpdateComponent implements OnInit {
   cabin!: Cabin;
   id = 0;
   mode = '';
+  refreshToken = Date.now(); // ou un compteur
+
 
   /** Mapping simple et fiable */
   pictureFields = [
@@ -65,7 +68,7 @@ ngOnInit(): void {
   // Patch du formulaire avec les données du produit
   this.form.patchValue(this.product);
 
-  console.log("Produit chargé :", this.product);
+
 }
 
 
@@ -110,30 +113,7 @@ ngOnInit(): void {
     pathpicturenine: new FormControl(''),
     pathpictureten: new FormControl(''),
 
-    // 🔥 Champs corrigés pour correspondre EXACTEMENT à ton backend
-    // picturecabine: new FormControl(''),
-    // productlink: new FormControl(''),
-    // titleproductcabine: new FormControl(''),
-    // zindexcabine: new FormControl(''),
-
-    // xcabine: new FormControl(0),
-    // ycabine: new FormControl(0),
-    // widthcabine: new FormControl(0),
-    // heightcabine: new FormControl(0)
   });
-
-  //   formCabin = new FormGroup({
-  //   id: new FormControl(0),
-  //   pathpicturecabin: new FormControl('', { nonNullable: true }),
-  //   title: new FormControl('', { nonNullable: true }),
-  //   productlink: new FormControl(''),
-  //   gender: new FormControl('', { nonNullable: true }),
-  //   zindex: new FormControl(0),
-  //   positionx: new FormControl(0),
-  //   positiony: new FormControl(0),
-  //   width: new FormControl(0),
-  //   height: new FormControl(0)
-  // });
 
  
  
@@ -163,6 +143,9 @@ ngOnInit(): void {
 
     this.uploadService.upload(formData).subscribe(res => {
       this.form.patchValue({ [field]: res.path });
+      // RAFRAICHISSEMENT DE L IMAGE
+      const newPath = res.path + '?v=' + Date.now();
+      this.form.patchValue({ [field]: newPath });
     });
 
   }
@@ -202,37 +185,6 @@ ngOnInit(): void {
   }
 
 
-// deleteCabin() {
-//   const id = this.formCabin.value.id;
-
-//   if (!confirm("Supprimer définitivement cette cabine ?")) return;
-
-//   if(id){
-//     this.cabinService.deleteCabin(id).subscribe({
-//       next: () => {
-//         alert("✔ Cabine supprimée");
-//         window.location.reload();
-//       },
-//       error: () => alert("❌ Erreur suppression cabine")
-//     });
-//   }
-// }
-
-// deleteCabinImage() {
-//   const id = this.formCabin.value.id;
-
-//   if (!id) return;
-//   if (!confirm("Supprimer définitivement l’image cabine ?")) return;
-
-//   this.cabinService.deleteImage(id).subscribe({
-//     next: () => {
-//       alert("✔ Image cabine supprimée");
-//       this.formCabin.patchValue({ pathpicturecabin: '' });
-//     },
-//     error: () => alert("❌ Erreur suppression image cabine")
-//   });
-// }
-
 deleteProductImage(field: string) {
   if (!confirm("Supprimer définitivement cette image ?")) return;
 
@@ -245,38 +197,13 @@ deleteProductImage(field: string) {
     },
     error: () => alert("❌ Erreur suppression image")
   });
+
+  this.snackBar.open("✔ Image supprimée", "Fermer", {
+  duration: 3000,
+});
 }
 
 
-
-
-// saveCabin() {
-//   const cabin = this.formCabin.value as Cabin;
-//   console.log(cabin);
-
-//   if (cabin.id === 0) {
-//     this.cabinService.createCabin(cabin).subscribe({
-//       next: (res) => {
-//         alert(`✔ Cabine créée (ID: ${res.id})`);
-//         window.location.reload();
-//       },
-//       error: (err) => {
-//         console.error(err);
-//         alert("❌ Erreur serveur lors de la création cabine : " + (err.error?.error ?? "Erreur inconnue"));
-//       }
-//     });
-//   } else {
-//     this.cabinService.updateCabin(cabin).subscribe({
-//       next: (res) => {
-//         alert(`✔ Cabine mise à jour`);
-//       },
-//       error: (err) => {
-//         console.error(err);
-//         alert("❌ Erreur serveur lors de la mise à jour cabine : " + (err.error?.error ?? "Erreur inconnue"));
-//       }
-//     });
-//   }
-// }
 
 
 

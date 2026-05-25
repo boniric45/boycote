@@ -6,14 +6,13 @@ export class UploadService {
   private http = inject(HttpClient);
 
 upload(formData: FormData) {
-    return this.http.post<{ path: string }>('https://www.boycote.fr/api/upload.php', formData);
+    return this.http.post<{ path: string }>('https://www.boycote.fr/api/uploadProduct.php', formData);
   }
 
 
 uploadCabin(formData: FormData){
   return this.http.post<{ path: string }>('https://www.boycote.fr/api/uploadCabin.php', formData);
 }
-
 
 
 }
