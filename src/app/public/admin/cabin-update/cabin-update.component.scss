@@ -311,3 +311,135 @@ select:focus {
     grid-column: span 1;
   }
 }
+
+/* --- COUCHE D'ÉDITION INTERACTIVE AVEC MANNEQUIN --- */
+.canvas-area {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 3 / 4; /* Même ratio que .mannequin-center */
+  background-color: #f1f5f9;
+  border: 2px dashed #cbd5e1;
+  border-radius: 18px;
+  margin: 1.2rem auto;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Le mannequin de fond dans l'éditeur */
+.mannequin-background {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Alignés sur le 'contain' de la cabine */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Le vêtement (Z-index supérieur au mannequin) */
+.image-wrapper {
+  position: absolute;
+  cursor: move;
+  border: 1px dashed #2b5cff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  user-select: none;
+  z-index: 10; /* Passe au-dessus du mannequin */
+  
+  /* 🌟 CORRECTION : Sécurité gérée de manière fluide sans bloquer les petits objets */
+  min-width: 5%;
+  min-height: 5%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    object-fit: fill; /* 🌟 INDISPENSABLE pour correspondre au rendu final de gauche */
+  }
+}
+
+.resize-handle {
+  width: 14px;
+  height: 14px;
+  background-color: #2b5cff;
+  border: 2px solid #fff;
+  position: absolute;
+  right: -7px;
+  bottom: -7px;
+  cursor: se-resize;
+  border-radius: 50%;
+  z-index: 30;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.canvas-overlay-text {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #64748b;
+  z-index: 5;
+  font-style: italic;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;       /* 🌟 Aligné avec la cabine de gauche */
+  display: block;
+}
+
+/* Applique ceci à tes deux conteneurs (éditeur et cabine) */
+.mannequin-container {
+  position: relative; /* Indispensable : sert d'ancre pour le T-shirt */
+  width: 100%;
+  aspect-ratio: 3 / 4; /* Force un ratio identique partout */
+  overflow: hidden;
+  background: transparent;
+}
+
+/* 2. Force l'image à remplir l'espace de la même manière */
+.mannequin-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 'cover' force le remplissage total du cadre */
+  object-position: top center; /* Garde la tête du mannequin en haut */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.mannequin-center {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: transparent;
+}
+
+.outfit-item {
+  position: absolute;
+  /* Ces propriétés sont injectées par votre code Angular */
+  top: var(--y-pos);
+  left: var(--x-pos);
+  width: var(--width);
+  height: var(--height);
+  pointer-events: none; /* Empêche le vêtement d'interférer avec les clics */
+  z-index: 2; /* S'assure que le vêtement est au-dessus du mannequin */
+}
+
+.outfit-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Garde les proportions réelles */
+  object-position: top center;
+  z-index: 2; /* S'assure que le vêtement est bien au-dessus du mannequin */
+  pointer-events: none; /* Permet de cliquer sur le mannequin même sous le vêtement */
+}

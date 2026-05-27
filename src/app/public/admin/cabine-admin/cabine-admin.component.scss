@@ -1,0 +1,80 @@
+.editor-container {
+  display: flex;
+  gap: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  height: 80vh;
+}
+
+.canvas-area {
+  flex: 1;
+  position: relative;
+  background-color: #f0f2f5;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-wrapper {
+  position: absolute;
+  cursor: move;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid #007bff;
+  user-select: none;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none; /* Évite les conflits de sélection d'image du navigateur */
+}
+
+.resize-handle {
+  width: 14px;
+  height: 14px;
+  background-color: #007bff;
+  border: 2px solid #fff;
+  position: absolute;
+  right: -7px;
+  bottom: -7px;
+  cursor: se-resize;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.sidebar-form {
+  width: 280px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e4e8;
+}
+
+.sidebar-form h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}

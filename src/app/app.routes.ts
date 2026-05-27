@@ -13,6 +13,7 @@ import { LegalComponent } from './public/legal/legal.component';
 import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
 import { ViewCabinComponent } from './public/admin/view-cabin/view-cabin.component';
+import { CabineAdminComponent } from './public/admin/cabine-admin/cabine-admin.component';
 
 
 export const routes: Routes = [
@@ -148,6 +149,11 @@ export const routes: Routes = [
     component: BoycoteComponent
   },
   {
+    path: 'view',
+    title: 'Carousel',
+    component: CabineAdminComponent
+  },
+  {
     path: 'product/:id',
     title: 'Product',
     component: CarouselProductComponent
@@ -191,5 +197,10 @@ export const routes: Routes = [
     path: 'panier',
     title: 'Panier',
     component: PanierComponent
+  },
+  {
+    path: 'cabs',
+    title:'cabs',
+    component: CabineAdminComponent
   }
 ];

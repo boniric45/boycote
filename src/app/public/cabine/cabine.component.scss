@@ -1,5 +1,3 @@
-
-
 :host {
   font-family: 'Roboto Mono', monospace;
   background: #ffffff;
@@ -13,60 +11,57 @@
    HEADER
 ══════════════════════════════════════ */
 .header {
-  // width: 100%;
-  // max-width: 380px;
   height: 100px;
   display: grid;
   grid-template-columns: auto auto 2fr;
   align-items: center;
   padding: 12px 14px 10px;
   margin-top: 5px;
-  
 }
 
 .btn-boutique {
   margin-left: 20px;
   transform: scale(0.5);
   transform-origin: center;
-
-
 }
 
-
-/* Logo */
-.logo{
+.logo {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-     .img_logo_mobile {
-       width: 150px;
-       margin-right: 140px;
-     }
-/* Panier */
+
+.img_logo_mobile {
+  width: 150px;
+  margin-right: 140px;
+}
+
 .btn-panier {
   justify-self: end;
-  width: 40px; height: 40px;
+  width: 40px; 
+  height: 40px;
   background: linear-gradient(to bottom, #f2f2f2, #d6d6d6);
   border: 1px solid #b0b0b0;
   border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 }
+
 .btn-panier svg {
-  width: 21px; height: 21px;
-  stroke: #444; fill: none;
+  width: 21px; 
+  height: 21px;
+  stroke: #444; 
+  fill: none;
   stroke-width: 1.7;
-  stroke-linecap: round; stroke-linejoin: round;
+  stroke-linecap: round; 
+  stroke-linejoin: round;
 }
 
 /* ══════════════════════════════════════
-   REBORDS BLANCS + FENÊTRE GRISE
-   Reproduit exactement la photo :
-   - fond page blanc
-   - padding blanc visible autour de la box
-   - box grise avec bordure fine
+   STRUCTURE & CADRE GLOBAL
 ══════════════════════════════════════ */
 .page-body {
   width: 100%;
@@ -76,11 +71,6 @@
   margin-top: 40px;
 }
 
-/* La fenêtre — structure à 3 gris comme sur la photo originale :
-   1. Bande du haut (genre-bar) : gris MOYEN  #c8c8c8
-   2. Fond principal (mannequin) : gris TRÈS CLAIR  #ebebeb
-   3. Boutons flèches : gris MOYEN 3D avec dégradé
-   La box elle-même n'a pas de fond propre, chaque zone gère le sien */
 .cabine-box {
   border: 1px solid #aaaaaa;
   border-radius: 5px;
@@ -88,20 +78,14 @@
     0 2px 8px rgba(0,0,0,0.18),
     inset 0 1px 0 rgba(255,255,255,0.35);
   overflow: hidden;
-  /* ZONE 2 — fond derrière le mannequin */
   background: #cccccc;
-  /* Dimensions stables — empêche tout rétrécissement */
-  width: 100%;
-  min-width: 0;
+  width: 320px;            /* Fixe la largeur pour correspondre à l'éditeur */
+  max-width: 320px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
-/* ══════════════════════════════════════
-   SÉLECTEUR HOMME / FEMME
-   (barre blanche en haut de la fenêtre comme sur la photo)
-══════════════════════════════════════ */
 .genre-bar {
-  /* ZONE 1 — gris MOYEN : bande du haut, plus foncée que le fond */
   background: linear-gradient(to bottom, #d0d0d0 0%, #c2c2c2 100%);
   border-bottom: 1px solid #aaaaaa;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
@@ -112,11 +96,10 @@
 }
 
 .genre-select {
-  /* Dropdown blanc/gris très clair avec bordure marquée — style macOS classique */
   background: linear-gradient(to bottom, #f8f8f8 0%, #e8e8e8 100%);
   border: 1px solid #999999;
   border-radius: 4px;
-  padding: 5px 14px 5px 14px;
+  padding: 5px 14px;
   font-size: 0.9rem;
   font-weight: 400;
   color: #111;
@@ -136,45 +119,30 @@
 }
 
 /* ══════════════════════════════════════
-   ZONE MANNEQUIN + FLÈCHES
+   ZONE DU MANNEQUIN & DES FLÈCHES
 ══════════════════════════════════════ */
 .mannequin-row {
   display: flex;
   align-items: stretch;
-  padding: 0;
-  height: 380px;
+  justify-content: space-between;
+  width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  height: 365px;           /* Hauteur parfaite ajustée pour le ratio 3/4 */
 }
 
-/* Colonnes flèches */
 .arrows-col {
   width: 72px;
-  min-width: 72px;
-  max-width: 72px;
   flex-shrink: 0;
-  flex-grow: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 18px 0;
-  gap: 0;
   box-sizing: border-box;
-  overflow: hidden;
-  background: transparent;
 }
 
-/* ══ BOUTON FLÈCHE ══
-   Reproduit exactement le bouton gris 3D de la photo
-   Pour remplacer par ton image : voir commentaire dans le HTML
-*/
 .arrow-btn {
   width: 56px;
-  min-width: 56px;
-  max-width: 56px;
   height: 56px;
-  min-height: 56px;
   flex-shrink: 0;
   background: linear-gradient(170deg, #d6d6d6 0%, #c8c8c8 35%, #b0b0b0 100%);
   border: 1px solid #8a8a8a;
@@ -188,9 +156,7 @@
   box-shadow: 4px 4px 8px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -2px 0 rgba(0,0,0,0.12);
   transition: all 0.08s ease;
   padding: 0;
-  position: relative;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .arrow-btn:active {
@@ -200,77 +166,67 @@
 }
 
 .arrow-btn svg {
-  width: 28px; height: 28px;
-  fill: #2a2a2a;
-  filter: drop-shadow(0 1px 2px rgba(255,255,255,0.3));
-}
-.arrow-btn svg {
-  width: 22px; height: 22px;
+  width: 22px; 
+  height: 22px;
   fill: #252525;
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4));
 }
 
-/* Zone centrale mannequin */
-.mannequin-center {
-  flex: 1 1 auto;
-  min-width: 0;
-  position: relative;
+/* Applique ceci à tes deux conteneurs (éditeur et cabine) */
+.mannequin-container {
+  position: relative; /* Indispensable : sert d'ancre pour le T-shirt */
+  width: 100%;
+  aspect-ratio: 3 / 4; /* Force un ratio identique partout */
   overflow: hidden;
-  /* La hauteur s'adapte à la colonne de flèches */
-  align-self: stretch;
+  background: transparent;
 }
 
-/* ── Mannequin photo (PNG réel) ── */
+
+/* 🌟 LA ZONE INTERNE DU MANNEQUIN CENTRAL */
+.mannequin-center {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* 2. Force l'image à remplir l'espace de la même manière */
 .mannequin-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 'cover' force le remplissage total du cadre */
+  object-position: top center; /* Garde la tête du mannequin en haut */
   position: absolute;
-  width: auto;
-  z-index: 1;
-  transition: opacity 0.25s;
-  display: block;
-  pointer-events: none;
-}
-.mannequin-img.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-.mannequin-img--homme{ height: 96.5%;  top: 2%;   left: 52%;   transform: translateX(-50%); }
-.mannequin-img--femme{ height: 105.8%; top: -4%;  left: 49.7%; transform: translateX(-50%); }
-
-/* ── Calques vêtements SVG (mode test) ── */
-.outfit-svg {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  /* z-index géré par [style.z-index] dans le template */
-  pointer-events: none;
-  display: block;
-  overflow: visible;
-  transition: opacity 0.25s;
+  top: 0;
+  left: 0;
 }
 
-/* ── Calques vêtements IMAGE PNG (mode production) ──
-   La position est contrôlée par imgTop/imgLeft/imgWidth dans le catalogue
-   Exemple : chapeau → top: 2%, left: 25%, width: 50%
-             haut    → top: 15%, left: 10%, width: 80%
-             bas     → top: 45%, left: 15%, width: 70%
-             shoes   → top: 78%, left: 10%, width: 80%
-*/
+/* Sécurité d'affichage */
+.hidden {
+  display: none !important;
+}
+
+/* ── CALQUES VÊTEMENTS ── */
+/* Le conteneur du vêtement dans la cabine */
 .outfit-img {
-  position: absolute;
-  /* top, left, width sont bindés dynamiquement depuis le catalogue */
-  object-fit: contain;
-  pointer-events: none;
-  display: block;
-  transition: opacity 0.25s;
+  position: absolute !important; /* Le !important force le respect des coords */
+  top: 0;   /* Les valeurs réelles sont injectées par getStyle */
+  left: 0;
+  
+  /* S'assure qu'aucune marge ne vienne perturber le positionnement */
+  margin: 0 !important; 
+  padding: 0 !important;
+  
+  /* Si ton vêtement est centré, vérifie aussi ceci : */
+  transform: none !important; 
 }
 
 /* ══════════════════════════════════════
-   INFO TENUE — alignement exact de la photo
-   Label en gras à gauche, nom en bleu souligné
+   INFO TENUE
 ══════════════════════════════════════ */
 .outfit-info {
   padding: 14px 4px 0;
-  /* Bloque la largeur — ne peut jamais forcer le parent à s'agrandir */
   overflow: hidden;
   width: 100%;
   box-sizing: border-box;
@@ -284,21 +240,18 @@
   font-size: 0.95rem;
   color: #111;
   line-height: 1.6;
-  /* Empêche la ligne de déborder */
   min-width: 0;
   overflow: hidden;
 }
 
-/* "Chapeau:" "Haut:" etc — texte normal, pas gras, aligné gauche */
 .info-line .lbl {
   font-weight: 400;
   color: #111;
   white-space: nowrap;
   margin-right: 4px;
-  flex-shrink: 0; /* Ne se comprime jamais */
+  flex-shrink: 0;
 }
 
-/* Nom du produit — bleu souligné comme sur la photo */
 .info-line a {
   color: #2a7fd4;
   text-decoration: none;
@@ -308,13 +261,13 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  /* Coupe le texte trop long avec ... au lieu de pousser le layout */
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
 }
+
 .info-line a::after {
   content: "";
   display: inline-block;
@@ -325,9 +278,11 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
 .info-line a.none::after {
   display: none;
 }
+
 .info-line a.none {
   color: #bbb;
   text-decoration: none;
@@ -335,4 +290,21 @@
   font-style: italic;
 }
 
+.outfit-item {
+  position: absolute;
+  /* Ces propriétés sont injectées par votre code Angular */
+  top: var(--y-pos);
+  left: var(--x-pos);
+  width: var(--width);
+  height: var(--height);
+  pointer-events: none; /* Empêche le vêtement d'interférer avec les clics */
+  z-index: 2; /* S'assure que le vêtement est au-dessus du mannequin */
+}
 
+.mannequin-center {
+  border: 3px solid blue !important; /* Le cadre bleu doit faire la taille EXACTE du mannequin */
+}
+
+.outfit-img {
+  border: 2px dashed red !important; /* Le cadre rouge doit être le T-shirt */
+}

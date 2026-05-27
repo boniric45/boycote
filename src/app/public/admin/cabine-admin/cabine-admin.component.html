@@ -1,0 +1,42 @@
+<div class="editor-container">
+  <div class="canvas-area" #canvas>
+    <div 
+      class="image-wrapper"
+      [ngStyle]="{
+        'left.px': x,
+        'top.px': y,
+        'width.px': width,
+        'height.px': height
+      }"
+      (mousedown)="startDrag($event, 'move')"
+    >
+      <img src="https://picsum.photos/800/600" alt="Modifier" draggable="false" />
+      
+      <div class="resize-handle" (mousedown)="startDrag($event, 'resize')"></div>
+    </div>
+  </div>
+
+  <div class="sidebar-form">
+    <h3>Propriétés de l'image</h3>
+    
+    <div class="form-group">
+      <label for="inputX">Position X (px)</label>
+      <input id="inputX" type="number" [(ngModel)]="x" (input)="validateBounds()" />
+    </div>
+
+    <div class="form-group">
+      <label for="inputY">Position Y (px)</label>
+      <input id="inputY" type="number" [(ngModel)]="y" (input)="validateBounds()" />
+    </div>
+
+    <div class="form-group">
+      <label for="inputW">Largeur (W - px)</label>
+      <input id="inputW" type="number" [(ngModel)]="width" (input)="validateBounds()" />
+    </div>
+
+    <div class="form-group">
+      <label for="inputH">Hauteur (H - px)</label>
+      <input id="inputH" type="number" [(ngModel)]="height" (input)="validateBounds()" />
+    </div>
+  </div>
+</div>

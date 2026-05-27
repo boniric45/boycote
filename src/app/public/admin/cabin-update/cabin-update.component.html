@@ -1,56 +1,96 @@
 
-<img class="imgBack" src="pictures\back.png" [routerLink]="['/admin']" alt="Back">
 
-<h2 style="text-align: center;">Mise à jour d'un article dans la cabine</h2>
-<br>
-<br>
+<h2 style="text-align: center; margin-bottom: 2rem;">Mise à jour d'un article dans la cabine</h2>
 
-<form [formGroup]="formCabin" (ngSubmit)="saveCabin()" class="product-form">
+<!-- ════ LAYOUT PRINCIPAL : ALIGNEMENT ET HARMONISATION DES TAILLES ════ -->
+<div class="admin-cabin-layout" style="display: flex; gap: 30px; align-items: flex-start; justify-content: center; padding: 0 20px; max-width: 1200px; margin: 0 auto;">
 
-    <!-- SECTION 4 : Paramètres cabine -->
-  <section class="block">
-    <h2>Paramètres cabine</h2>
+  <!-- 🏛️ COLONNE GAUCHE : L'aperçu réel (Bridé à 360px pour un rendu identique au pixel près) -->
+  <div class="preview-column" style="flex: 0 0 360px; width: 360px;">
+    <app-cabine></app-cabine>
+  </div>
 
-    <div class="block-fields">
-      <!-- <label>Id Produit <input type="text" formControlName="idproduct" ></label> -->
-      <label style="color: red;">SKU<input type="text" formControlName="sku"></label>
-      <label>Z-index <input type="text" formControlName="zindex"></label>
-      <label>X <input type="number" formControlName="positionx"></label>
-      <label>Y <input type="number" formControlName="positiony"></label>
-      <label>Largeur <input type="number" formControlName="width"></label>
-      <label>Hauteur <input type="number" formControlName="height"></label>
-      <label style="color: red;">Lien produit <input type="text" formControlName="productlink"></label>
-    </div>
-  </section>
+  <!-- 🛠️ COLONNE DROITE : Le formulaire d'administration au complet -->
+  <form [formGroup]="formCabin" (ngSubmit)="saveCabin()" class="product-form" style="flex: 1; display: flex; gap: 20px; margin: 0; align-items: flex-start;">
 
-  <!-- SECTION 3 : Cabine -->
-  <section class="block">
-    <h2>Cabine</h2>
+    <!-- BLOCK 1 : Les paramètres numériques -->
+    <section class="block" style="flex: 1; margin: 0;">
+      <h2>Paramètres cabine</h2>
 
-    <label>Image cabine
-      <input type="file" 
-      (change)="onFileSelectedCabin($event)"
-     [disabled]="!formCabin.get('sku')?.value"
-      >
-    </label>
-
-    @if (formCabin.get('picturecabin')?.value) {
-        <img style="width: 100px; height: 100px;" class="preview-large" [src]="formCabin.get('picturecabin')?.value">
-   } @else {
-        <div class="empty-thumb"></div>
-    }
-
-    <label>Titre cabine
-      <input type="text" formControlName="title">
-    </label>
-
-        <label Choisir style="color: red;"> Genre  
-          <select formControlName="genre">
-            <option value="">Choisir</option>
-            <option>WOMAN</option>
-            <option>MAN</option>
-          </select>
+      <div class="block-fields">
+        <label style="color: red;">SKU
+          <input type="text" formControlName="sku">
         </label>
+        
+        <label>Z-index 
+          <input type="number" formControlName="zindex">
+        </label>
+        
+        <label>X (%) 
+          <input type="number" formControlName="positionx" (input)="validateBounds()">
+        </label>
+        
+        <label>Y (%) 
+          <input type="number" formControlName="positiony" (input)="validateBounds()">
+        </label>
+        
+        <label>Largeur (%) 
+          <input type="number" formControlName="width" (input)="validateBounds()">
+        </label>
+        
+        <label>Hauteur (%) 
+          <input type="number" formControlName="height" (input)="validateBounds()">
+        </label>
+        
+        <label style="color: red;">Lien produit 
+          <input type="text" formControlName="productlink">
+        </label>
+      </div>
+    </section>
+
+    <!-- BLOCK 2 : L'import d'image et la zone de drag-and-drop -->
+    <section class="block" style="flex: 1; margin: 0;">
+      <h2>Cabine</h2>
+
+      <label>Image cabine
+        <input type="file" (change)="onFileSelectedCabin($event)" [disabled]="!formCabin.get('sku')?.value">
+      </label>
+
+      <!-- 🌟 LA ZONE INTERACTIVE (CANVAS) DU MANNEQUIN REPLACÉE ICI 🌟 -->
+      <div class="canvas-area" #canvas>
+        
+        <!-- Image de fond du mannequin de l'éditeur -->
+        <img src="pictures/mannequin-model.png" class="mannequin-background" alt="Mannequin de fond" draggable="false" />
+      
+        <!-- Le calque dynamique du vêtement (T-shirt Pepsi) -->
+        @if (formCabin.controls.picturecabin.value) {
+          <div class="image-wrapper" [ngStyle]="{
+                'left.%': formCabin.controls.positionx.value,
+                'top.%': formCabin.controls.positiony.value,
+                'width.%': formCabin.controls.width.value,
+                'height.%': formCabin.controls.height.value,
+                'z-index': formCabin.controls.zindex.value
+              }" (mousedown)="startDrag($event, 'move')">
+            <img [src]="formCabin.controls.picturecabin.value" alt="Preview vêtement" draggable="false" />
+            <div class="resize-handle" (mousedown)="startDrag($event, 'resize')"></div>
+          </div>
+        } @else {
+          <div class="canvas-overlay-text">Sélectionnez un vêtement pour l'ajuster</div>
+        }
+      </div>
+
+      <!-- Les informations de classification -->
+      <label>Titre cabine
+        <input type="text" formControlName="title">
+      </label>
+
+      <label style="color: red;"> Genre  
+        <select formControlName="genre">
+          <option value="">Choisir</option>
+          <option>WOMAN</option>
+          <option>MAN</option>
+        </select>
+      </label>
 
       <label style="color: red;">Type
         <select formControlName="type" required>
@@ -60,23 +100,14 @@
           }
         </select>
       </label>
+    </section>
 
-  </section>
+  </form>
+</div>
 
-
-<!-- Formulaire admin -->
-<form [formGroup]="formCabin">
-  <label>X: <input formControlName="positionx" type="number" /></label>
-  <label>Y: <input formControlName="positiony" type="number" /></label>
-  <label>Largeur: <input formControlName="width" type="number" /></label>
-  <label>Hauteur: <input formControlName="height" type="number" /></label>
-  <label>Z-index: <input formControlName="zindex" type="number" /></label>
-  <label>Image: <input formControlName="picturecabin" type="text" /></label>
-</form>
-
-<!-- Preview branchée sur le même form -->
-<app-cabine-virtuelle-preview [formCabin]="formCabin"></app-cabine-virtuelle-preview>
-
-  <button type="submit" class="btn-save">Mettre à jour la cabine</button>
-
-</form>
+<!-- ══ BOUTON DE SAUVEGARDE EN BAS DE PAGE ══ -->
+<div style="text-align: center; margin-top: 30px; margin-bottom: 50px;">
+  <button type="submit" class="btn-save" (click)="saveCabin()" style="width: 100%; max-width: 800px;">
+    Mettre à jour la cabine
+  </button>
+</div>
