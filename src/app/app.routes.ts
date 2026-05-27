@@ -12,6 +12,7 @@ import { ContactComponent } from './public/features/contact/contact.component';
 import { LegalComponent } from './public/legal/legal.component';
 import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
+import { ViewCabinComponent } from './public/admin/view-cabin/view-cabin.component';
 
 
 export const routes: Routes = [
@@ -54,11 +55,6 @@ export const routes: Routes = [
     component: BoycoteComponent
   },
     {
-    path: 'console',
-    // canMatch: [adminGuard],
-    component: ConsoleComponent
-  },
-      {
     path: 'console',
     // canMatch: [adminGuard],
     component: ConsoleComponent
@@ -143,7 +139,7 @@ export const routes: Routes = [
     loadComponent: () => import('./public/admin/edit-gender/edit-gender.component')
       .then(c => c.EditGenderComponent)
   },
- 
+
 
   // AUTRES ROUTES
   {
@@ -196,6 +192,4 @@ export const routes: Routes = [
     title: 'Panier',
     component: PanierComponent
   }
-
-
 ];

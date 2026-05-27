@@ -36,10 +36,9 @@
 
     @if (formCabin.get('picturecabin')?.value) {
         <img style="width: 100px; height: 100px;" class="preview-large" [src]="formCabin.get('picturecabin')?.value">
-    } @else {
+   } @else {
         <div class="empty-thumb"></div>
     }
-
 
     <label>Titre cabine
       <input type="text" formControlName="title">
@@ -65,17 +64,18 @@
   </section>
 
 
-<app-cabine-preview
-  [item]="{
-    src: formCabin.get('picturecabin')?.value,
-    x: formCabin.value.positionx,
-    y: formCabin.value.positiony,
-    width: formCabin.value.width,
-    height: formCabin.value.height,
-    zIndex: formCabin.value.zindex
-  }"
-  (coordsChange)="updateCoords($event)">
-</app-cabine-preview>
+<!-- Formulaire admin -->
+<form [formGroup]="formCabin">
+  <label>X: <input formControlName="positionx" type="number" /></label>
+  <label>Y: <input formControlName="positiony" type="number" /></label>
+  <label>Largeur: <input formControlName="width" type="number" /></label>
+  <label>Hauteur: <input formControlName="height" type="number" /></label>
+  <label>Z-index: <input formControlName="zindex" type="number" /></label>
+  <label>Image: <input formControlName="picturecabin" type="text" /></label>
+</form>
+
+<!-- Preview branchée sur le même form -->
+<app-cabine-virtuelle-preview [formCabin]="formCabin"></app-cabine-virtuelle-preview>
 
   <button type="submit" class="btn-save">Mettre à jour la cabine</button>
 

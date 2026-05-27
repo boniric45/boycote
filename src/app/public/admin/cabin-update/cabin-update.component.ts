@@ -1,31 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Cabin } from '../../../models/cabin';
+import { Garment } from '../../../models/garment';
 import { CabineService } from '../../../services/cabine.service';
 import { GarmentService } from '../../../services/garment.service';
 import { UploadService } from '../../../services/upload.service';
-import { Cabin } from '../../../models/cabin';
-import { Garment } from '../../../models/garment';
-import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { CabinePreviewComponent } from "../../cabine-preview/cabine-preview.component";
+import { CabineVirtuellePreviewComponent } from "../cabine-virtuelle-preview/cabine-virtuelle-preview.component";
 
-
-interface CabinCoords {
-  x: number;
-  y: number;
-  width?: number;
-  height?: number;
-  zindex?: number;
-}
 
 @Component({
   selector: 'app-cabin-update',
-  imports: [ReactiveFormsModule, RouterLink, CommonModule, CabinePreviewComponent],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule, CabineVirtuellePreviewComponent],
   templateUrl: './cabin-update.component.html',
   styleUrl: './cabin-update.component.scss',
 })
 export class CabinUpdateComponent implements OnInit {
+
 
   formCabin = new FormGroup({
     id: new FormControl(0, { nonNullable: true }),
@@ -53,8 +45,11 @@ export class CabinUpdateComponent implements OnInit {
     types: Garment[] = [];
     previewUrl: string | null = null;
     cabins: Cabin[] = [];
+
   
   ngOnInit(): void {
+
+
     this.typeService.getAll().subscribe( t => this.types = t);
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id')); // Récupère l'id de l'appelant
     if (id) {
@@ -92,7 +87,6 @@ export class CabinUpdateComponent implements OnInit {
 
 
   saveCabin() {
-
       const cabin = this.formCabin.getRawValue();
 
       // ➕ Create
@@ -118,17 +112,5 @@ export class CabinUpdateComponent implements OnInit {
   });
 
   }
-
-
-updateCoords(coords: CabinCoords) {
-  this.formCabin.patchValue({
-    positionx: coords.x,
-    positiony: coords.y,
-    width: coords.width,
-    height: coords.height,
-    zindex: coords.zindex
-  });
-}
-
 
 }

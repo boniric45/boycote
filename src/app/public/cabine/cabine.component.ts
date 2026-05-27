@@ -21,9 +21,10 @@ const mapCat: Record<string, string> = {
 
 @Component({
   selector: 'app-cabine',
+  standalone:true,
   imports: [RouterModule, ButtonReturnComponent, BrowserModule],
   templateUrl: './cabine.component.html',
-  styleUrl: './cabine.component.scss',
+  styleUrl: './cabine.component.scss'
 })
 export class CabineComponent implements OnInit {
 
