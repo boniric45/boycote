@@ -9,11 +9,15 @@ import { Cabin } from '../models/cabin';
 export class CabineService {
 
   cabins: Cabin[] = [];
-
   private apiUrl = 'https://www.boycote.fr/api';
-
   http = inject(HttpClient);
 
+  x = signal(0);
+  y = signal(0);
+  w = signal(0);
+  h = signal(0);
+  z = signal(0);
+  picture = signal('');
 
   getCabinPictures(): Observable<Cabin[]> {
     return this.http.get<Cabin[]>(`${this.apiUrl}/getAllCabin.php`);

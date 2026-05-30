@@ -291,21 +291,54 @@
   z-index: 2; /* S'assure que le vêtement est au-dessus du mannequin */
 }
 
-// .mannequin-center {
-//   border: 3px solid blue !important; /* Le cadre bleu doit faire la taille EXACTE du mannequin */
-// }
+.canvas-area {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
 
-// .outfit-img {
-//   width: 100% !important;
-//   height: 100% !important;
-//   object-fit: fill !important;
-//   display: block !important;
-//   border: 2px dashed red !important; /* Le cadre rouge doit être le T-shirt */
-// }
+.canvas-overlay-text {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #64748b;
+  z-index: 5;
+  font-style: italic;
+}
 
-/* Le conteneur du mannequin doit être le "référent" */
-// .mannequin-wrapper {
-//   position: relative; /* C'EST LA CLÉ : tout ce qui est en absolute dedans se calera sur lui */
-//   display: inline-block;
-// }
+.image-wrapper {
+  position: absolute;
+  border: 2px solid rgb(0, 187, 255);
+  box-sizing: border-box;
+  pointer-events: auto;
+  z-index: 10;
+}
 
+.outfit-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  // object-fit: contain;
+  // object-position: center;
+  pointer-events: none;
+}
+
+.resize-handle {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 2px solid red;
+  border-radius: 50%;
+  cursor: se-resize;
+  z-index: 20;
+}

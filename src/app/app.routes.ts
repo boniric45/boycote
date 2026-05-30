@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
+import { CabinUpdateComponent } from './public/admin/cabin-update/cabin-update.component';
+import { CabineAdminComponent } from './public/admin/cabine-admin/cabine-admin.component';
 import { ConsoleComponent } from './public/admin/console/console.component';
 import { AnnulationComponent } from './public/annulation/annulation.component';
 import { CabineComponent } from './public/cabine/cabine.component';
@@ -12,8 +14,6 @@ import { ContactComponent } from './public/features/contact/contact.component';
 import { LegalComponent } from './public/legal/legal.component';
 import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
-import { ViewCabinComponent } from './public/admin/view-cabin/view-cabin.component';
-import { CabineAdminComponent } from './public/admin/cabine-admin/cabine-admin.component';
 
 
 export const routes: Routes = [
@@ -27,6 +27,11 @@ export const routes: Routes = [
     title: 'Boy-Coté.fr',
     children: boycoteRoutes
   },
+  {
+    path:'v',
+    component:CabinUpdateComponent
+  },
+
   {
     path: 'admin/login',
     loadComponent: () =>
@@ -147,11 +152,6 @@ export const routes: Routes = [
     path: 'carousel',
     title: 'Carousel',
     component: BoycoteComponent
-  },
-  {
-    path: 'view',
-    title: 'Carousel',
-    component: CabineAdminComponent
   },
   {
     path: 'product/:id',

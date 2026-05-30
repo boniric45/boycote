@@ -1,0 +1,60 @@
+.canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.canvas {
+  position: relative;
+  width: 380px;
+  height: 600px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 18px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.6);
+  overflow: hidden;
+}
+
+.mannequin {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-wrapper {
+  position: absolute;
+  border: 2px dashed #0a84ff;
+  cursor: move;
+  overflow: hidden; /* important */
+}
+
+.outfit-img {
+  position: absolute; /* 🔥 obligatoire */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.resize-handle {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 16px;
+  height: 16px;
+  background: #0a84ff;
+  border-radius: 50%;
+  cursor: se-resize;
+}
+
+.outfit-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  border: 2px solid red;
+}
+

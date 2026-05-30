@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Cabin } from '../../../models/cabin';
@@ -7,10 +7,11 @@ import { Garment } from '../../../models/garment';
 import { CabineService } from '../../../services/cabine.service';
 import { GarmentService } from '../../../services/garment.service';
 import { UploadService } from '../../../services/upload.service';
+import { CabinViewAddComponent } from "../cabin-view-add/cabin-view-add.component";
 
 @Component({
   selector: 'app-cabin-form',
-  imports: [ReactiveFormsModule,RouterLink,CommonModule],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule, CabinViewAddComponent],
   templateUrl: './cabin-form.component.html',
   styleUrl: './cabin-form.component.scss',
 })
@@ -49,6 +50,31 @@ export class CabinFormComponent implements OnInit{
   }
 
 
+// onFileSelectedCabin(event: any) {
+//   const file = event.target.files[0];
+//   const sku = this.formCabin.value.sku;
+
+//   if (!file) return;
+//   if (!sku || sku.trim() === '') {
+//     alert("Veuillez saisir un SKU avant l'upload");
+//     return;
+//   }
+
+//   // ✅ Preview immédiate
+//   const previewUrl = URL.createObjectURL(file);
+//   this.formCabin.patchValue({ picturecabin: previewUrl });
+
+//   // ✅ Upload backend
+//   const formData = new FormData();
+//   formData.append('file', file);
+//   formData.append('sku', String(sku));
+//   formData.append('index', 'cabine');
+
+//   this.uploadService.uploadCabin(formData).subscribe(res => {
+//     this.formCabin.patchValue({ picturecabin: res.path });
+//   });
+// }
+
 onFileSelectedCabin(event: any) {
   const file = event.target.files[0];
   const sku = this.formCabin.value.sku;
@@ -59,18 +85,19 @@ onFileSelectedCabin(event: any) {
     return;
   }
 
-  // ✅ Preview immédiate
+  // 👉 Preview immédiate (NE JAMAIS ÉCRASER)
   const previewUrl = URL.createObjectURL(file);
   this.formCabin.patchValue({ picturecabin: previewUrl });
 
-  // ✅ Upload backend
+  // 👉 Upload backend (mais on NE REMPLACE PAS l’aperçu)
   const formData = new FormData();
   formData.append('file', file);
   formData.append('sku', String(sku));
   formData.append('index', 'cabine');
 
   this.uploadService.uploadCabin(formData).subscribe(res => {
-    this.formCabin.patchValue({ picturecabin: res.path });
+    // On stocke le chemin backend dans un autre champ
+    this.formCabin.patchValue({ productlink: res.path });
   });
 }
 
@@ -123,5 +150,8 @@ loadCabins() {
 editCabin(cabin: any) {
   this.formCabin.patchValue(cabin);
 }
+
+
+
 
 }

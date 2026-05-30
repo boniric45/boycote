@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewCabinComponent } from './view-cabin.component';
+import { CabineEditorComponent } from './cabine-editor.component';
 
-describe('ViewCabinComponent', () => {
-  let component: ViewCabinComponent;
-  let fixture: ComponentFixture<ViewCabinComponent>;
+describe('CabineEditorComponent', () => {
+  let component: CabineEditorComponent;
+  let fixture: ComponentFixture<CabineEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewCabinComponent]
+      imports: [CabineEditorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ViewCabinComponent);
+    fixture = TestBed.createComponent(CabineEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

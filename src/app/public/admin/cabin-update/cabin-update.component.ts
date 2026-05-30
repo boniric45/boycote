@@ -1,18 +1,19 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Cabin } from '../../../models/cabin';
 import { Garment } from '../../../models/garment';
 import { CabineService } from '../../../services/cabine.service';
 import { GarmentService } from '../../../services/garment.service';
 import { UploadService } from '../../../services/upload.service';
 import { CabineComponent } from "../../cabine/cabine.component";
+import { CabinViewComponent } from "../cabin-view/cabin-view.component";
 
 @Component({
   selector: 'app-cabin-update',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, CabineComponent],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, CabineComponent, CabinViewComponent],
   templateUrl: './cabin-update.component.html',
   styleUrl: './cabin-update.component.scss',
 })
@@ -56,7 +57,10 @@ export class CabinUpdateComponent implements OnInit {
   private startXPercent: number = 0;
   private startYPercent: number = 0;
 
+
+
 ngOnInit(): void {
+
   this.typeService.getAll().subscribe(t => this.types = t);
   const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
   
@@ -74,6 +78,7 @@ ngOnInit(): void {
         let y = this.formCabin.controls.positiony.value;
         let w = this.formCabin.controls.width.value;
         let h = this.formCabin.controls.height.value;
+        let z = this.formCabin.controls.zindex.value;
 
         if (x > 100 || x < 0) x = 25; // Réajustement automatique au centre
         if (y > 100 || y < 0) y = 25;
@@ -84,7 +89,8 @@ ngOnInit(): void {
           positionx: x,
           positiony: y,
           width: w,
-          height: h
+          height: h,
+          zindex: z
         });
       }
     });
@@ -143,6 +149,7 @@ ngOnInit(): void {
     let y = this.formCabin.controls.positiony.value;
     let w = this.formCabin.controls.width.value;
     let h = this.formCabin.controls.height.value;
+    let z = this.formCabin.controls.zindex.value;
 
     if (x < 0) x = 0;
     if (y < 0) y = 0;
@@ -154,7 +161,7 @@ ngOnInit(): void {
     if (w > 100) w = 100;
     if (h > 100) h = 100;
 
-    this.formCabin.patchValue({ positionx: x, positiony: y, width: w, height: h }, { emitEvent: false });
+    this.formCabin.patchValue({ positionx: x, positiony: y, width: w, height: h, zindex: z }, { emitEvent: false });
   }
   // --------------------------------------------
 
@@ -180,7 +187,6 @@ onFileSelectedCabin(event: Event) {
 
   // 2️⃣ GÉNÉRATION DE L'APERÇU LOCAL IMMÉDIAT
   const localPreviewUrl = URL.createObjectURL(file);
-  
   const currentWidth = this.formCabin.controls.width.value || 30;
   const currentHeight = this.formCabin.controls.height.value || 30;
 
@@ -221,7 +227,17 @@ onFileSelectedCabin(event: Event) {
   input.value = '';
 }
 
+
 saveCabin() {
+  this.formCabin.patchValue({
+    positionx: this.cabinService.x(),
+    positiony: this.cabinService.y(),
+    width: this.cabinService.w(),
+    height: this.cabinService.h(),
+    zindex: this.cabinService.z(),
+    picturecabin: this.cabinService.picture()
+  });
+
   const cabinData = this.formCabin.getRawValue();
 
   // On retire le ?t=... pour que la base de données stocke un chemin propre
@@ -233,8 +249,7 @@ saveCabin() {
 
   this.cabinService.updateCabin(cabinData).subscribe({
     next: (res) => {
-      console.log("3. Enregistrement réussi en base de données !");
-      alert("La cabine a été enregistrée avec succès !");
+      console.log("3. Enregistrement réussi en base de données ! => ",res);
 
       // On reset le formulaire SEULEMENT maintenant que la base est à jour
       this.formCabin.reset({
@@ -242,6 +257,9 @@ saveCabin() {
         picturecabin: '', positionx: 0, positiony: 0,
         width: 0, height: 0, zindex: 0, productlink: '', displayorder: 0
       });
+
+     window.location.reload(); // refresh page
+
       this.cdr.detectChanges();
     },
     error: (err) => {
@@ -249,4 +267,7 @@ saveCabin() {
     }
   });
 }
+
+
+
 }

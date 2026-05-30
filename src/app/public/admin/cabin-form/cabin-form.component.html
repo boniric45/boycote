@@ -68,7 +68,25 @@
 
   </section>
 
+      <section class="block" style="flex: 1; margin: 0;">
+      <h2 style="text-align: center;">Modification Cabine</h2>
+        <div class="zone">
+          <div class="canvas-area" #canvas>
 
+          <app-cabin-view-add
+            [picture]="formCabin.controls.picturecabin.value"
+            [x]="formCabin.controls.positionx.value"
+            [y]="formCabin.controls.positiony.value"
+            [w]="formCabin.controls.width.value"
+            [h]="formCabin.controls.height.value"
+            [z]="formCabin.controls.zindex.value">
+          </app-cabin-view-add>
+
+
+            
+          </div>
+        </div>
+  </section>
 
   <button type="submit" class="btn-save">Enregistrer la cabine</button>
 

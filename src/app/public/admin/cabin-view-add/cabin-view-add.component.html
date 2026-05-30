@@ -1,0 +1,19 @@
+<div class="canvas-wrapper">
+  <div class="canvas" #canvas>
+
+    <img [src]="mannequinImg" class="mannequin" />
+
+    <div class="image-wrapper"
+         [ngStyle]="style"
+         (mousedown)="startDrag($event, 'move')">
+
+      @if(picture){
+        <img [src]="picture" class="outfit-img" draggable="false">
+      }
+
+      <div class="resize-handle"
+           (mousedown)="startDrag($event, 'resize')"></div>
+    </div>
+
+  </div>
+</div>
