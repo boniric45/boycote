@@ -79,14 +79,20 @@
             [y]="formCabin.controls.positiony.value"
             [w]="formCabin.controls.width.value"
             [h]="formCabin.controls.height.value"
-            [z]="formCabin.controls.zindex.value">
+            [z]="formCabin.controls.zindex.value"
+            (update)="onUpdateFromChild($event)">
           </app-cabin-view-add>
+  
 
-
-            
           </div>
         </div>
   </section>
+
+  <section>
+            <app-cabine></app-cabine>
+  </section>
+
+  
 
   <button type="submit" class="btn-save">Enregistrer la cabine</button>
 

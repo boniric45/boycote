@@ -8,10 +8,11 @@ import { CabineService } from '../../../services/cabine.service';
 import { GarmentService } from '../../../services/garment.service';
 import { UploadService } from '../../../services/upload.service';
 import { CabinViewAddComponent } from "../cabin-view-add/cabin-view-add.component";
+import { CabineComponent } from '../../cabine/cabine.component';
 
 @Component({
   selector: 'app-cabin-form',
-  imports: [ReactiveFormsModule, RouterLink, CommonModule, CabinViewAddComponent],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule, CabinViewAddComponent,CabineComponent],
   templateUrl: './cabin-form.component.html',
   styleUrl: './cabin-form.component.scss',
 })
@@ -34,11 +35,11 @@ export class CabinFormComponent implements OnInit{
     picturecabin: new FormControl('', { nonNullable: true }),
     title: new FormControl('', { nonNullable: true }),
     productlink: new FormControl('', { nonNullable: true }),
-    positionx: new FormControl(0, { nonNullable: true }),
-    positiony: new FormControl(0, { nonNullable: true }),
-    zindex: new FormControl(0, { nonNullable: true }),
-    width: new FormControl(0, { nonNullable: true }),
-    height: new FormControl(0, { nonNullable: true }),
+    positionx: new FormControl(50, { nonNullable: true }),
+    positiony: new FormControl(50, { nonNullable: true }),
+    zindex: new FormControl(10, { nonNullable: true }),
+    width: new FormControl(50, { nonNullable: true }),
+    height: new FormControl(50, { nonNullable: true }),
     type: new FormControl('', { nonNullable: true }),
     genre: new FormControl('', { nonNullable: true }),
     displayorder: new FormControl(0, { nonNullable: true })
@@ -47,34 +48,10 @@ export class CabinFormComponent implements OnInit{
   ngOnInit() {
     this.typeService.getAll().subscribe( t => this.types = t);
     this.loadCabins();
+
   }
 
-
-// onFileSelectedCabin(event: any) {
-//   const file = event.target.files[0];
-//   const sku = this.formCabin.value.sku;
-
-//   if (!file) return;
-//   if (!sku || sku.trim() === '') {
-//     alert("Veuillez saisir un SKU avant l'upload");
-//     return;
-//   }
-
-//   // ✅ Preview immédiate
-//   const previewUrl = URL.createObjectURL(file);
-//   this.formCabin.patchValue({ picturecabin: previewUrl });
-
-//   // ✅ Upload backend
-//   const formData = new FormData();
-//   formData.append('file', file);
-//   formData.append('sku', String(sku));
-//   formData.append('index', 'cabine');
-
-//   this.uploadService.uploadCabin(formData).subscribe(res => {
-//     this.formCabin.patchValue({ picturecabin: res.path });
-//   });
-// }
-
+// Récupération du fichier
 onFileSelectedCabin(event: any) {
   const file = event.target.files[0];
   const sku = this.formCabin.value.sku;
@@ -85,22 +62,22 @@ onFileSelectedCabin(event: any) {
     return;
   }
 
-  // 👉 Preview immédiate (NE JAMAIS ÉCRASER)
+  // 1️⃣ Aperçu immédiat (blob)
   const previewUrl = URL.createObjectURL(file);
   this.formCabin.patchValue({ picturecabin: previewUrl });
 
-  // 👉 Upload backend (mais on NE REMPLACE PAS l’aperçu)
+  // 2️⃣ Upload backend
   const formData = new FormData();
   formData.append('file', file);
   formData.append('sku', String(sku));
   formData.append('index', 'cabine');
 
   this.uploadService.uploadCabin(formData).subscribe(res => {
-    // On stocke le chemin backend dans un autre champ
-    this.formCabin.patchValue({ productlink: res.path });
+    // 3️⃣ On remplace le blob par l’URL backend
+    const finalUrl = `https://boycote.fr${res.path}`;
+    this.formCabin.patchValue({ picturecabin: finalUrl });
   });
 }
-
 
 
 saveCabin() {
@@ -109,26 +86,11 @@ saveCabin() {
 
     // ➕ Create
     this.cabinService.createCabin(cabin).subscribe(res => {
-      console.log("Cabine créée:", res);
       this.loadCabins();
     });
   
 
-  // Reset Formulaire
-  this.formCabin.reset({
-  sku: '',
-  title: '',
-  genre: '',
-  type: '',
-  picturecabin: '',
-  positionx: 0,
-  positiony: 0,
-  width: 0,
-  height: 0,
-  zindex: 0,
-  productlink: '',
-  displayorder: 0
-});
+
 
 }
 
@@ -149,6 +111,16 @@ loadCabins() {
 
 editCabin(cabin: any) {
   this.formCabin.patchValue(cabin);
+}
+
+onUpdateFromChild(e: any) {
+  this.formCabin.patchValue({
+    positionx: e.x,
+    positiony: e.y,
+    width: e.w,
+    height: e.h,
+    zindex: e.z
+  });
 }
 
 

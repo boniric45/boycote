@@ -25,7 +25,6 @@ export class AddGenderComponent {
     const name = this.form.value.name ?? '';
 
     this.genderService.addGender(name).subscribe(res => {
-      console.log("add gender response", res);
       this.router.navigate(['/admin']);
     });
   }

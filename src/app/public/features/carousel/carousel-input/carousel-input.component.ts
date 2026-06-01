@@ -67,7 +67,6 @@ export class CarouselInputComponent implements OnInit {
 
   normalized = computed(() => {
     const list = this.filtered();
-    console.log('📌 normalized (before logic) =', list);
 
     // Aucun résultat → tableau vide
     if (list.length === 0) {

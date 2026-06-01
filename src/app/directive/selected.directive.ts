@@ -19,11 +19,6 @@ export class SelectedDirective implements OnInit{
         {
           this.matSelected.close();
         } 
-      // else 
-      // {
-      // console.log('Is Closed => ');
-      //       // console.log('Is Closed', this.matSelected.panel);
-      // }
 
 
     });

@@ -1,0 +1,39 @@
+
+<div class="page-body">
+  <div class="cabine-box">
+
+    <div class="genre-bar">
+      <select class="genre-select" [value]="gender()" (change)="onGenderChange($event)">
+        <option value="MAN">MEN</option>
+        <option value="WOMAN">WOMEN</option>
+      </select>
+    </div>
+
+    <div class="mannequin-row">
+
+      <div class="arrows-col">
+      </div>
+      <div class="mannequin-center" >
+
+        <img class="mannequin-img mannequin-img--homme" [class.hidden]="isFemme()" src="/pictures/mannequin-homme.webp"
+            alt="mannequin homme" />
+        <img class="mannequin-img mannequin-img--femme" [class.hidden]="isHomme()" src="/pictures/mannequin-femme.webp"
+            alt="mannequin femme" />
+        
+    @if(cabin){
+      <div class="garment-wrapper" [ngStyle]="getStyle()" style="position: absolute;pointer-events: none; z-index: 10;">
+
+        <img class="outfit-img"
+              [src]="getFullImageUrl(cabin.picturecabin)"
+              style="width: 100%; height: 100%; display: block; object-fit: fill;" />
+      </div>
+            }
+  </div>
+
+      <div class="arrows-col">
+      </div>
+
+    </div>
+  </div>
+
+</div>

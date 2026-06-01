@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-component-left',

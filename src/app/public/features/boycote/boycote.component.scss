@@ -418,6 +418,8 @@ input[type="text"] {
    padding: 0;
    margin: 0;
    width: 300px;
+   background: transparent;
+
 }
 
 
@@ -484,6 +486,8 @@ hidden-carousel {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: transparent;
+
 }
 
 .panier-wrapper{
@@ -539,6 +543,7 @@ app-footer{
    }
 
    .img_logo_mobile {
+      background: transparent;
       width: 100px
    }
    
@@ -587,6 +592,8 @@ app-footer{
       align-items: center;
       height: 100%; /* important */
       margin-top: 10px;
+      background: transparent;
+
    }
 
    .container-select-mobile {
@@ -624,6 +631,8 @@ app-footer{
    .container-logo,
    .container-select {
       display: none;
+      background: transparent;
+
    }
 
    // Bouton de recherche des listes déroulantes

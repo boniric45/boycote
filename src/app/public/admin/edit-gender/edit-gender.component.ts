@@ -27,7 +27,6 @@ export class EditGenderComponent implements OnInit {
 
     this.genderService.getAll().subscribe(genders => {
       const gender = genders.find(g => Number(g.id) === this.id); 
-      console.log("genre trouvé =", gender);
 
       if (gender) {
         this.form.patchValue({
@@ -42,9 +41,7 @@ export class EditGenderComponent implements OnInit {
 
     const name = this.form.value.name ?? '';
 
-    this.genderService.updateGender(this.id, name).subscribe((res) => {
-      console.log("update gender response",res);
-      
+    this.genderService.updateGender(this.id, name).subscribe((res) => {      
       this.router.navigate(['/admin']);
     });
   }

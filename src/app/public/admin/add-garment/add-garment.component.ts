@@ -23,7 +23,6 @@ export class AddGarmentComponent {
     const name = this.form.value.name ?? '';
 
     this.garmentService.addGarment(name).subscribe(res => {
-      console.log("add garment response", res);
       this.router.navigate(['/admin']);
     });
   }

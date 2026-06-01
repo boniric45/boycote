@@ -45,7 +45,7 @@ export class CartComponent {
 
   checkout(): void {
     const items = this.cartService.getItems();
-    if (items.length === 0) return;
+    if (items.length === 0) return alert('Panier est vide');
 
     const payload = {
       items: items.map(item => ({
@@ -56,25 +56,6 @@ export class CartComponent {
         image: item.product.pathpictureone
       }))
     };
-
-    // this.http.post<{ url: string }>( 
-    //   `${this.API}/create-checkout.php`,
-    //   payload,
-    //   { withCredentials: true } // important pour iOS
-    // )
-    //   .subscribe({
-    //     next: (res) => {
-    //       if (res?.url) {
-    //         // iOS a besoin d'un "user gesture" → petit timeout
-    //         setTimeout(() => {
-    //           window.location.href = res.url;
-    //         }, 10);
-    //       }
-    //     },
-    //     error: (err) => {
-    //       console.error('Erreur checkout:', err);
-    //     }
-    //   });
 
     // Bonne pratique Stripe et Widows open mieux accepter par IOS
     this.http.post<{ url: string }>(

@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import {  Component, Input, output } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-component-right',
@@ -15,8 +15,8 @@ opacity = 1;
 scale ='1';
 
 clickBtnRight():void {
+  this.timeOutButtonDisabled();
  this.outputRight.emit('right');
- this.timeOutButtonDisabled();
 }
 
 

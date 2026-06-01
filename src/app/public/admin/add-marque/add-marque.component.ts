@@ -24,7 +24,6 @@ submit() {
   const name = this.form.value.name ?? '';
 
   this.marqueService.addMarque(name).subscribe(res => {
-    console.log(res);
     this.router.navigate(['/admin']);
   });
 }

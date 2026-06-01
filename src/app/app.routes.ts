@@ -14,6 +14,7 @@ import { ContactComponent } from './public/features/contact/contact.component';
 import { LegalComponent } from './public/legal/legal.component';
 import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
+import { LoginComponent } from './public/admin/login/login.component';
 
 
 export const routes: Routes = [
@@ -202,5 +203,10 @@ export const routes: Routes = [
     path: 'cabs',
     title:'cabs',
     component: CabineAdminComponent
+  },
+    {
+    path: 'admin3',
+    title:'Administration',
+    component: LoginComponent
   }
 ];

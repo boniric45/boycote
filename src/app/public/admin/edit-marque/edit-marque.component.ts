@@ -28,7 +28,6 @@ export class EditMarqueComponent implements OnInit {
       const marque = marques.find(m => m.id === this.id);
       if (marque) {
         this.form.patchValue({ name: marque.name });
-        console.log("marque trouvée =", marque);
       }
     });
 

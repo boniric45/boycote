@@ -209,10 +209,21 @@ ngOnChanges() {
 
 
 getImgSrc(cat: Cat): string | null {
-      const item = this.getItem(cat);
-      if (!item || !item.picturecabin || item.picturecabin === '/') return null;
-      return `https://boycote.fr${item.picturecabin}`;
-    }
+  const item = this.getItem(cat);
+  if (!item || !item.picturecabin || item.picturecabin === '/') return null;
+
+  const url = item.picturecabin;
+
+  // Si l’URL est déjà complète → on ne touche à rien
+  if (url.startsWith('http')) {
+    return url;
+  }
+ 
+  // Sinon → on ajoute le domaine
+  return `https://boycote.fr${url}`;
+}
+
+
 
   getNom(cat: Cat): string { return this.getItem(cat)?.title ?? '—'; }
   getUrl(cat: Cat): string { return this.getItem(cat)?.productlink ?? ''; }

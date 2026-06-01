@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Cabin } from '../models/cabin';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { Cabin } from '../models/cabin';
 export class CabineService {
 
   cabins: Cabin[] = [];
+  cabin!: Cabin;
   private apiUrl = 'https://www.boycote.fr/api';
   http = inject(HttpClient);
 
@@ -23,6 +24,9 @@ export class CabineService {
     return this.http.get<Cabin[]>(`${this.apiUrl}/getAllCabin.php`);
   }
 
+  /* -----------------------------------------------------------
+     GET ALL CABIN
+  ----------------------------------------------------------- */
   getCabins():Cabin[]{
     this.getCabinPictures().subscribe(res=>{
       this.cabins = res;
@@ -75,7 +79,37 @@ export class CabineService {
 }
 
 
+  /* -----------------------------------------------------------
+     GET PICTURE BY CABIN ID RETURN PATH PICTURE 
+  ----------------------------------------------------------- */
+  getPathPictureByIdCabin(id: number): string {
+    let pathCabin = '';
+    if (!id) {
+      // récupère la cabine
+      this.getCabinById(id).subscribe((res) => this.cabin = res);
 
+      // récupère le chemin de l'image en itérant sur l'objet cabin
+      Object.entries(this.cabin).forEach(([key, value]) => {
+        if (`${key}` == 'picturecabin') {
+          pathCabin = `${value}`;
+        }
+      });
+    }
+    return pathCabin;
+  }
+
+  
+  /* -----------------------------------------------------------
+     GET PICTURE BY CABIN ID RETURN OBJECT CABIN
+  ----------------------------------------------------------- */
+  getCabinByIdCabinObject(id: number): Cabin {
+  
+    if (!id) {
+      // récupère la cabine
+      this.getCabinById(id).subscribe((res) => this.cabin = res);
+    }
+    return this.cabin;
+  }
 
 }
 

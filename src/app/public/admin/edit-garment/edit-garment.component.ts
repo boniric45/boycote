@@ -28,8 +28,6 @@ export class EditGarmentComponent implements OnInit {
     this.garmentService.getAll().subscribe(garments => {
       const garment = garments.find(g => Number(g.id) === this.id);
 
-      console.log("garment trouvé =", garment);
-
       if (garment) {
         this.form.patchValue({
           name: garment.name
@@ -42,7 +40,6 @@ export class EditGarmentComponent implements OnInit {
     const name = this.form.value.name ?? '';
 
     this.garmentService.updateGarment(this.id, name).subscribe(res => {
-      console.log("update garment response", res);
       this.router.navigate(['/admin']);
     });
   }

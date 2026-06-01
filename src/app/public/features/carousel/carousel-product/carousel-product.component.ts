@@ -88,13 +88,11 @@ ngOnInit(): void {
   fullscreenImage: string | null = null;
 
   openFullscreen(src: string) {
-    console.log('openFullscreen called with:', src);
     this.fullscreenImage = src;
     document.body.style.overflow = 'hidden';
   }
 
   closeFullscreen() {
-    console.log('closeFullscreen called');
     this.fullscreenImage = null;
   }
  
@@ -214,7 +212,6 @@ handleSwipe() {
 
   // ADD TO CART 
   addToCart(product: Product) {
-  console.log(product);
   this.cartService.add(product, 1);
   }
 

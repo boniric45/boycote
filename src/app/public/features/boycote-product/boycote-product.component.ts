@@ -1,9 +1,9 @@
-import { NgStyle, CommonModule } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import {  ChangeDetectorRef, Component,  ElementRef,  inject,  OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Product } from '../../../models/product';
 import { ApiService } from '../../../services/api.service';
 import { CartService } from '../../../services/cart.service';
@@ -11,9 +11,9 @@ import { ModalService } from '../../../services/modal.service';
 import { ProductService } from '../../../services/product.service';
 import { ModalComponent } from '../../modal/modalProduct/modal.component';
 import { ProductCardComponent } from '../../product-card/product-card.component';
+import { ButtonReturnComponent } from "../button-return/button-return.component";
 import { ComponentLeftComponent } from '../component-left/component-left.component';
 import { ComponentRightComponent } from '../component-right/component-right.component';
-import { ButtonReturnComponent } from "../button-return/button-return.component";
 
 
 
@@ -63,11 +63,11 @@ export class BoycoteProductComponent implements OnInit {
   ngOnInit(): void {
   //  this.product = this.data.product; // Récupère le produit du parent Home
     // si on réactualise redirige vers la page home sinon crée les produits du carousel
-    if (!this.product) {
-      this.route.navigate(['home']);
-    } else {
-      this.createCarouselWithProduct(this.product);
-    }
+    // if (!this.product) {
+    //   this.route.navigate(['home']);
+    // } else {
+    //   this.createCarouselWithProduct(this.product);
+    // }
 
     this.cartService.count$.subscribe(value => this.countPanier = value);
   }

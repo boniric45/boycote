@@ -22,6 +22,7 @@ export class CabinViewAddComponent {
   @Input() h: number = 30;
   @Input() z: number = 10;
 
+
   mannequinImg = 'pictures/mannequin-homme.webp';
 
   private currentAction: 'move' | 'resize' | null = null;

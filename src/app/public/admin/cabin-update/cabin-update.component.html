@@ -1,5 +1,6 @@
 
 
+<app-button-return></app-button-return>
 <h1 style="text-align: center; margin-bottom: 2rem;">Mise à jour d'un article dans la cabine</h1>
 <!-- ════ LAYOUT PRINCIPAL : ALIGNEMENT ET HARMONISATION DES TAILLES ════ -->
 <div class="admin-cabin-layout" style="display: flex; gap: 30px; align-items: flex-start; justify-content: center; padding: 0 20px; max-width: 1200px; margin: 0 auto;">
@@ -86,8 +87,8 @@
             Mettre à jour la cabine
           </button>
         </div>
-      <app-cabine></app-cabine>
-
+        
+        <app-previsualisation-cabin [cabin]="selectedCabin"></app-previsualisation-cabin>
 
     </section>
   </form>

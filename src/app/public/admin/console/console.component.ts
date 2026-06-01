@@ -148,7 +148,6 @@ export class ConsoleComponent implements OnInit {
   editProduct(product: Product) {
     this.consoleProductService.product = product;
     this.router.navigateByUrl('admin/update')
-    console.log(product.id);
   }
 
   deleteProduct(id: number) {
@@ -163,7 +162,7 @@ export class ConsoleComponent implements OnInit {
   
   editCabin(cabin: any) {
     this.router.navigateByUrl('admin2/cabin/edit/'+cabin.id);
-    console.log(cabin);
+
   }
 
   getPreviewCabin(cabin: Cabin): string {
@@ -182,7 +181,7 @@ export class ConsoleComponent implements OnInit {
 
   editMarque(marque: Marque) {
     this.router.navigateByUrl('admin/marque/edit/'+marque.id);
-    console.log(marque.id);
+
   }
   
 
@@ -190,14 +189,12 @@ export class ConsoleComponent implements OnInit {
     if (!confirm("Supprimer cette marque ?")) return;
 
     this.marqueService.deleteMarque(id).subscribe(res => {
-      console.log("delete response", res);
       this.loadMarques(); // recharge la liste
     });
   }
 
   editGarment(garment: Garment) {
     this.router.navigateByUrl('admin/garment/edit/'+garment.id)
-    console.log(garment.id);
   }
 
   deleteGarment(id: number) {
@@ -211,7 +208,6 @@ export class ConsoleComponent implements OnInit {
 
   editGender(gender: Gender) {
     this.router.navigateByUrl('admin/gender/edit/'+gender.id)
-    console.log(gender.id);
   }
 
   deleteGender(id: number) {

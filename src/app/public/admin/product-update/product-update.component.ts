@@ -158,7 +158,7 @@ ngOnInit(): void {
   /** Enregistrement produit */
   save() {
     const product = this.form.value as Product;
-    console.log("ID envoyé :", product.id);
+
     if (product.id === 0) {
       this.consoleProductService.create(product).subscribe({
         next: (res) => {
