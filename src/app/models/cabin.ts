@@ -12,5 +12,4 @@ export interface Cabin{
   height:number;
   type:string;
   genre:string;
-  displayorder:number;
 }

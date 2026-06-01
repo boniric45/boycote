@@ -1,25 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { Cabin } from '../../../models/cabin';
 import { Garment } from '../../../models/garment';
 import { CabineService } from '../../../services/cabine.service';
 import { GarmentService } from '../../../services/garment.service';
 import { UploadService } from '../../../services/upload.service';
-import { CabinViewComponent } from "../cabin-view/cabin-view.component";
-import { PrevisualisationCabinComponent } from "../previsualisation-cabin/previsualisation-cabin.component";
-import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
+import { CabinViewdragAddComponent } from "../cabin-viewdrag-add/cabin-viewdrag-add.component";
 
 @Component({
-  selector: 'app-cabin-update',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule, CabinViewComponent, PrevisualisationCabinComponent, ButtonReturnComponent],
-  templateUrl: './cabin-update.component.html',
-  styleUrl: './cabin-update.component.scss',
+  selector: 'app-cabin-add-form',
+  imports: [ReactiveFormsModule, RouterLink, CommonModule, CabinViewdragAddComponent],
+  templateUrl: './cabin-add-form.component.html',
+  styleUrl: './cabin-add-form.component.scss',
 })
-export class CabinUpdateComponent implements OnInit {
-  @ViewChild('canvas') canvas!: ElementRef;
+export class CabinAddFormComponent implements OnInit{
+@ViewChild('canvas') canvas!: ElementRef;
+  @Input() picture!: string;
+  @Input() x!: number;
+  @Input() y!: number;
+  @Input() w!: number;
+  @Input() h!: number;
+  @Input() z!: number;
+  private typeService = inject(GarmentService);
+  private cabinService = inject(CabineService);
+  private uploadService = inject(UploadService);
+
+  cabin: Cabin | undefined;
+  types: Garment[] = [];
+  previewUrl: string | null = null;
+  cabins: Cabin[] = [];
+  cabinFiltered: any[] = [];
 
   formCabin = new FormGroup({
     id: new FormControl(0, { nonNullable: true }),
@@ -28,28 +40,15 @@ export class CabinUpdateComponent implements OnInit {
     picturecabin: new FormControl('', { nonNullable: true }),
     title: new FormControl('', { nonNullable: true }),
     productlink: new FormControl('', { nonNullable: true }),
-    positionx: new FormControl(0, { nonNullable: true }),
-    positiony: new FormControl(0, { nonNullable: true }),
-    zindex: new FormControl(0, { nonNullable: true }),
-    width: new FormControl(0, { nonNullable: true }),
-    height: new FormControl(0, { nonNullable: true }),
+    positionx: new FormControl(50, { nonNullable: true }),
+    positiony: new FormControl(50, { nonNullable: true }),
+    zindex: new FormControl(10, { nonNullable: true }),
+    width: new FormControl(50, { nonNullable: true }),
+    height: new FormControl(50, { nonNullable: true }),
     type: new FormControl('', { nonNullable: true }),
     genre: new FormControl('', { nonNullable: true }),
-    displayorder: new FormControl(0, { nonNullable: true })
   });
 
-  private typeService = inject(GarmentService);
-  private cabinService = inject(CabineService);
-  private uploadService = inject(UploadService);
-  private activatedRoute = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef);
-
-  cabin: Cabin | undefined;
-  types: Garment[] = [];
-  previewUrl: string | null = null;
-  cabins: Cabin[] = [];
-
-  // Variables d'état pour les mouvements interactifs
   private currentAction: 'move' | 'resize' | null = null;
   private startX: number = 0;
   private startY: number = 0;
@@ -57,47 +56,83 @@ export class CabinUpdateComponent implements OnInit {
   private startHPercent: number = 0;
   private startXPercent: number = 0;
   private startYPercent: number = 0;
-
-
+  
   selectedCabin!: Cabin;
 
-
-  ngOnInit(): void {
-
-    this.typeService.getAll().subscribe(t => this.types = t);
-
-    const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-
-    if (id) {
-      this.cabinService.getCabinById(id).subscribe(cabin => {
-        this.cabin = cabin;
-        if (cabin) {
-          this.formCabin.patchValue(cabin);
-          this.selectedCabin = this.cabin;
-
-          // 2️⃣ Sécurité anti-débordement pour ramener l'image dans le cadre au chargement
-          let x = this.formCabin.controls.positionx.value;
-          let y = this.formCabin.controls.positiony.value;
-          let w = this.formCabin.controls.width.value;
-          let h = this.formCabin.controls.height.value;
-          let z = this.formCabin.controls.zindex.value;
-
-          if (x > 100 || x < 0) x = 25; // Réajustement automatique au centre
-          if (y > 100 || y < 0) y = 25;
-          if (w <= 0 || w > 100) w = 55;
-          if (h <= 0 || h > 100) h = 50;
-
-          this.formCabin.patchValue({
-            positionx: x,
-            positiony: y,
-            width: w,
-            height: h,
-            zindex: z
-          });
-        }
-      });
-    }
+  ngOnInit() {
+    this.typeService.getAll().subscribe( t => this.types = t);
+    this.loadCabins();
   }
+
+// Récupération du fichier
+// onFileSelectedCabin(event: any) {
+//   const file = event.target.files[0];
+//   const sku = this.formCabin.value.sku;
+
+//   if (!file) return;
+//   if (!sku || sku.trim() === '') {
+//     alert("Veuillez saisir un SKU avant l'upload");
+//     return;
+//   }
+
+//   // 1️⃣ Aperçu immédiat (blob)
+//   const previewUrl = URL.createObjectURL(file);
+//   this.formCabin.patchValue({ picturecabin: previewUrl });
+
+//   // 2️⃣ Upload backend
+//   const formData = new FormData();
+//   formData.append('file', file);
+//   formData.append('sku', String(sku));
+//   formData.append('index', 'cabine');
+
+//   this.uploadService.uploadCabin(formData).subscribe(res => {
+//     // 3️⃣ On remplace le blob par l’URL backend
+//     const finalUrl = `https://boycote.fr${res.path}`;
+//     this.formCabin.patchValue({ picturecabin: finalUrl });
+//   });
+// }
+
+
+// saveCabin() {
+
+//     const cabin = this.formCabin.getRawValue();
+
+//     // ➕ Create
+//     this.cabinService.createCabin(cabin).subscribe();
+    
+//     this.loadCabins();
+//     console.log('Enregistrement de la cabine > ', cabin);
+    
+// }
+
+deleteCabin(id: number) {
+  if (confirm("Supprimer cette cabine ?")) {
+    this.cabinService.deleteCabin(id).subscribe(res => {
+      this.loadCabins(); // recharge la liste
+    });
+  }
+}
+
+loadCabins() {
+  this.cabinService.getAllCabin().subscribe(res => {
+    this.cabins = res;
+    this.cabinFiltered = res; // ou applique ton filtre
+  });
+}
+
+editCabin(cabin: any) {
+  this.formCabin.patchValue(cabin);
+}
+
+onUpdateFromChild(e: any) {
+  this.formCabin.patchValue({
+    positionx: e.x,
+    positiony: e.y,
+    width: e.w,
+    height: e.h,
+    zindex: e.z
+  });
+}
 
   // --- LOGIQUE INTERACTIVE : DRAG & RESIZE ---
   startDrag(event: MouseEvent, action: 'move' | 'resize') {
@@ -174,11 +209,6 @@ export class CabinUpdateComponent implements OnInit {
     const file = input.files[0];
     const sku = this.formCabin.controls.sku.value;
 
-    if (!sku || sku.trim() === '') {
-      alert("Veuillez saisir un SKU avant l'upload");
-      input.value = '';
-      return;
-    }
 
     // 1️⃣ SÉCURITÉ : Si une URL Blob locale existait déjà, on la libère pour vider la mémoire
     const previousUrl = this.formCabin.controls.picturecabin.value;
@@ -205,29 +235,44 @@ export class CabinUpdateComponent implements OnInit {
     formData.append('sku', sku);
     formData.append('index', 'cabine');
 
+    // Upload l'image après la sélection de celle ci
     this.uploadService.uploadCabin(formData).subscribe({
-      next: (res) => {
-        if (res && res.path) {
-          // res.path contient ce que ton API PHP renvoie (ex: "uploads/cabine/TEST1.png")
-
-          // On y ajoute le timestamp pour forcer le navigateur à rafraîchir l'image à droite
-          const timestampUrl = `${res.path}?t=${new Date().getTime()}`;
-
-          this.formCabin.patchValue({ picturecabin: timestampUrl });
-          this.cdr.detectChanges();
-
-          console.log("1. Image uploadée et rafraîchie à droite :", timestampUrl);
-        }
+      next:(res) => {
+        console.log('Image uploadé : ',res.path);
+        const pathPicture = res.path;
+        this.formCabin.patchValue({picturecabin: pathPicture});
+        //  this.cdr.detectChanges();
+         console.log(this.formCabin.value);
+         
       },
       error: (err) => {
-        console.error("Erreur lors de l'appel à uploadCabin :", err);
+        console.log(err);
       }
-    });
+    })
+    
+    // this.uploadService.uploadCabin(formData).subscribe({
+    //   next: (res) => {
+    //     if (res && res.path) {
+    //       // res.path contient ce que ton API PHP renvoie (ex: "uploads/cabine/TEST1.png")
+
+    //       // On y ajoute le timestamp pour forcer le navigateur à rafraîchir l'image à droite
+    //       const timestampUrl = `${res.path}?t=${new Date().getTime()}`;
+
+    //       this.formCabin.patchValue({ picturecabin: timestampUrl });
+    //       this.cdr.detectChanges();
+
+    //       console.log("1. Image uploadée et rafraîchie à droite :", timestampUrl);
+    //     }
+    //   },
+    //   error: (err) => {
+    //     console.error("Erreur lors de l'appel à uploadCabin :", err);
+    //   }
+    // });
 
     // Remise à zéro de l'input pour autoriser les changements successifs instantanés
     input.value = '';
   }
-
+  private cdr = inject(ChangeDetectorRef);
 
   saveCabin() {
     this.formCabin.patchValue({
@@ -248,18 +293,9 @@ export class CabinUpdateComponent implements OnInit {
 
     console.log("2. Données propres envoyées à updateCabin :", cabinData);
 
-    this.cabinService.updateCabin(cabinData).subscribe({
+    this.cabinService.createCabin(cabinData).subscribe({
       next: (res) => {
         console.log("3. Enregistrement réussi en base de données ! => ", res);
-
-        // On reset le formulaire SEULEMENT maintenant que la base est à jour
-        this.formCabin.reset({
-          id: 0, sku: '', title: '', genre: '', type: '',
-          picturecabin: '', positionx: 0, positiony: 0,
-          width: 0, height: 0, zindex: 0, productlink: '', displayorder: 0
-        });
-
-        window.location.reload(); // refresh page
 
         this.cdr.detectChanges();
       },
@@ -268,7 +304,6 @@ export class CabinUpdateComponent implements OnInit {
       }
     });
   }
-
 
 
 }

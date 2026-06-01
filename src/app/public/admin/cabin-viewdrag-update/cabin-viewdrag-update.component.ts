@@ -18,12 +18,12 @@ const mapCat: Record<string, string> = {
 };
 
 @Component({
-  selector: 'app-cabin-view',
+  selector: 'app-cabin-viewdrag-update',
   imports: [RouterModule,  CommonModule],
-  templateUrl: './cabin-view.component.html',
-  styleUrl: './cabin-view.component.scss',
+  templateUrl: './cabin-viewdrag-update.component.html',
+  styleUrl: './cabin-viewdrag-update.component.scss',
 })
-export class CabinViewComponent implements OnChanges{
+export class CabinViewdragUpdateComponent implements OnChanges{
 
   @ViewChild('canvas') canvas!: ElementRef;
   

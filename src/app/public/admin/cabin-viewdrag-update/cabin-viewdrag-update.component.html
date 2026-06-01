@@ -1,0 +1,44 @@
+<div class="header">
+
+<div class="page-body">
+  <div class="cabine-box">
+
+    <div class="genre-bar">
+      <select class="genre-select" [value]="gender()" (change)="onGenderChange($event)">
+        <option value="MAN">MEN</option>
+        <option value="WOMAN">WOMEN</option>
+      </select>
+    </div>
+    
+    
+    <div class="mannequin-row">
+
+      <div class="arrows-col">
+      </div>
+
+      <div class="mannequin-center" #canvas>
+      
+        <img [src]="isHomme() ? mannequinImgHomme : mannequinImgFemme" class="mannequin-img" />
+      
+        <div class="image-wrapper" [ngStyle]="{
+              'left.%': formCabin.controls.positionx.value,
+              'top.%': formCabin.controls.positiony.value,
+              'width.%': formCabin.controls.width.value,
+              'height.%': formCabin.controls.height.value,
+              'z-index': formCabin.controls.zindex.value
+                    }" (mousedown)="startDrag($event, 'move')">
+      
+          <img [src]="picture" class="outfit-img" draggable="false" />
+      
+          <div class="resize-handle" (mousedown)="startDrag($event, 'resize')"></div>
+      
+        </div>
+      
+      </div>
+
+
+      <div class="arrows-col">
+      </div>
+    </div>
+  </div>
+</div>

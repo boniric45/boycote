@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
-import { CabinUpdateComponent } from './public/admin/cabin-update/cabin-update.component';
+import { CabinUpdateFormComponent } from './public/admin/cabin-update-form/cabin-update-form.component';
 import { CabineAdminComponent } from './public/admin/cabine-admin/cabine-admin.component';
 import { ConsoleComponent } from './public/admin/console/console.component';
 import { AnnulationComponent } from './public/annulation/annulation.component';
@@ -30,7 +30,7 @@ export const routes: Routes = [
   },
   {
     path:'v',
-    component:CabinUpdateComponent
+    component:CabinUpdateFormComponent
   },
 
   {
@@ -52,7 +52,7 @@ export const routes: Routes = [
   // },
     {
     path: 'admin2', // à supprimer plus tard
-    canMatch: [adminGuard],
+    // canMatch: [adminGuard],
     loadComponent: () =>
       import('./public/admin/console/console.component').then(m => m.ConsoleComponent)
   },
@@ -86,11 +86,11 @@ export const routes: Routes = [
   //     import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
   // },
    { path: 'admin2/cabin/add',
-    loadComponent:()=> import('./public/admin/cabin-form/cabin-form.component').then(m => m.CabinFormComponent)
+    loadComponent:()=> import('./public/admin/cabin-add-form/cabin-add-form.component').then(m => m.CabinAddFormComponent)
    },
 
   { path: 'admin2/cabin/edit/:id',
-    loadComponent:()=> import('./public/admin/cabin-update/cabin-update.component').then(m => m.CabinUpdateComponent)
+    loadComponent:()=> import('./public/admin/cabin-update-form/cabin-update-form.component').then(m => m.CabinUpdateFormComponent)
    },
     {
     path: 'admin2/add',

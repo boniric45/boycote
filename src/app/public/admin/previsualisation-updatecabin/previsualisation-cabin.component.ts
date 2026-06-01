@@ -6,8 +6,8 @@ import { Cabin } from '../../../models/cabin';
 @Component({
   selector: 'app-previsualisation-cabin',
   imports: [CommonModule, RouterModule],
-  templateUrl: './previsualisation-cabin.component.html',
-  styleUrl: './previsualisation-cabin.component.scss',
+  templateUrl: './previsualisation-updatecabin.component.html',
+  styleUrl: './previsualisation-updatecabin.component.scss',
 })
 export class PrevisualisationCabinComponent {
 

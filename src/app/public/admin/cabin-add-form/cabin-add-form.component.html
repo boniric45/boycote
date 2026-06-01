@@ -39,12 +39,6 @@
         <div class="empty-thumb"></div>
     }
 
-    <!-- @if (formCabin.get('picturecabin')?.value) {
-      <img [src]="formCabin.get('picturecabin')?.value" class="preview-large">
-    } @else {
-      <div class="empty-thumb"></div>
-    } -->
-
     <label>Titre cabine
       <input type="text" formControlName="title">
     </label>
@@ -73,27 +67,29 @@
         <div class="zone">
           <div class="canvas-area" #canvas>
 
-          <app-cabin-view-add
-            [picture]="formCabin.controls.picturecabin.value"
+          <app-cabin-viewdrag-add
+            [picture]="formCabin.get('picturecabin')?.value"
             [x]="formCabin.controls.positionx.value"
             [y]="formCabin.controls.positiony.value"
             [w]="formCabin.controls.width.value"
             [h]="formCabin.controls.height.value"
             [z]="formCabin.controls.zindex.value"
             (update)="onUpdateFromChild($event)">
-          </app-cabin-view-add>
+          </app-cabin-viewdrag-add>
   
+          
 
           </div>
         </div>
   </section>
 
   <section>
-            <app-cabine></app-cabine>
+
+            <!-- <app-previsualisation-updatecabin></app-previsualisation-updatecabin> -->
+            <button type="submit" class="btn-save">Enregistrer la cabine</button>
   </section>
 
   
 
-  <button type="submit" class="btn-save">Enregistrer la cabine</button>
 
 </form>

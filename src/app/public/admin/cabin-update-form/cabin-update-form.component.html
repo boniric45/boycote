@@ -13,9 +13,11 @@
       <h2 style="text-align: center;">Modification Cabine</h2>
         <div class="zone">
           <div class="canvas-area" #canvas>
-            <app-cabin-view [picture]="formCabin.controls.picturecabin.value" [x]="formCabin.controls.positionx.value"
+            <app-cabin-viewdrag-update 
+            [picture]="formCabin.controls.picturecabin.value"
+             [x]="formCabin.controls.positionx.value"
               [y]="formCabin.controls.positiony.value" [w]="formCabin.controls.width.value"
-              [h]="formCabin.controls.height.value" [z]="formCabin.controls.zindex.value"></app-cabin-view>
+              [h]="formCabin.controls.height.value" [z]="formCabin.controls.zindex.value"></app-cabin-viewdrag-update>
           </div>
         </div>
 
@@ -88,7 +90,7 @@
           </button>
         </div>
         
-        <app-previsualisation-cabin [cabin]="selectedCabin"></app-previsualisation-cabin>
+        <app-previsualisation-updatecabin [cabin]="selectedCabin"></app-previsualisation-updatecabin>
 
     </section>
   </form>
