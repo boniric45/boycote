@@ -14,6 +14,7 @@ import { ProductCardComponent } from '../../product-card/product-card.component'
 import { ButtonReturnComponent } from "../button-return/button-return.component";
 import { ComponentLeftComponent } from '../component-left/component-left.component';
 import { ComponentRightComponent } from '../component-right/component-right.component';
+import { StopLandscapeComponent } from "../stop-landscape/stop-landscape.component";
 
 
 
@@ -26,7 +27,8 @@ import { ComponentRightComponent } from '../component-right/component-right.comp
     ComponentRightComponent,
     CommonModule,
     ProductCardComponent,
-    ButtonReturnComponent
+    ButtonReturnComponent,
+    StopLandscapeComponent
 ],
  // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './boycote-product.component.html',
@@ -53,7 +55,7 @@ export class BoycoteProductComponent implements OnInit {
   loadingCarousel = true;
   pictureRead:string = "";
   isDisabled: boolean = false;
-
+  isLandscape:boolean = true;
   constructor(
     public data: ProductService,
     private cdRef: ChangeDetectorRef,

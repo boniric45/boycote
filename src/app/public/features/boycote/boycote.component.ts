@@ -24,7 +24,7 @@ import { CarouselSelectComponent } from "../carousel/carousel-select/carousel-se
 import { CarouselStandardComponent } from "../carousel/carousel-standard/carousel-standard.component";
 import { CookiesComponent } from '../cookies/cookies.component';
 import { HamburgerComponent } from "../hamburger/hamburger.component";
-import { PanierComponent } from "../../panier/panier.component";
+import { StopLandscapeComponent } from "../stop-landscape/stop-landscape.component";
 
 
 @Component({
@@ -41,8 +41,7 @@ import { PanierComponent } from "../../panier/panier.component";
     CarouselSelectComponent,
     CartComponent,
     HamburgerComponent,
-    CarouselSelectComponent,
-    
+    CarouselSelectComponent
 ],
   templateUrl: './boycote.component.html',
   styleUrl: './boycote.component.scss',
@@ -158,6 +157,8 @@ export class BoycoteComponent implements OnInit {
     type: [],
     gender: []
   };
+
+  isLandscape:boolean = true;
 
   ngOnInit(): void { 
 

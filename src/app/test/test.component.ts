@@ -1,0 +1,32 @@
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+
+@Component({
+  selector: 'app-test',
+  imports: [],
+  templateUrl: './test.component.html',
+  styleUrl: './test.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+
+})
+export class TestComponent {
+  visible = false;
+  private mq!: MediaQueryList;
+  
+  private handler = (e: MediaQueryListEvent) => {
+    this.visible = e.matches;
+    this.cdr.markForCheck();
+  };
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    if (typeof window === 'undefined') return;
+    this.mq = window.matchMedia('(orientation: landscape) and (max-width: 900px)');
+    this.visible = this.mq.matches;
+    this.mq.addEventListener('change', this.handler);
+  }
+
+  ngOnDestroy() {
+    if (this.mq) this.mq.removeEventListener('change', this.handler);
+  }
+}

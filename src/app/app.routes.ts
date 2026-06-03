@@ -15,6 +15,7 @@ import { LegalComponent } from './public/legal/legal.component';
 import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
 import { LoginComponent } from './public/admin/login/login.component';
+import { TestComponent } from './test/test.component';
 
 
 export const routes: Routes = [
@@ -208,5 +209,11 @@ export const routes: Routes = [
     path: 'admin3',
     title:'Administration',
     component: LoginComponent
+  }
+  ,
+    {
+    path: 'test',
+    title:'test',
+    component: TestComponent
   }
 ];
