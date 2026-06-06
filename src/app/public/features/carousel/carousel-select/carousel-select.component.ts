@@ -8,6 +8,7 @@ import { Product } from '../../../../models/product';
 import { CartService } from '../../../../services/cart.service';
 import { Router } from '@angular/router';
 import { ProductService } from '../../../../services/product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-carousel-select',
@@ -23,11 +24,18 @@ export class CarouselSelectComponent implements OnInit{
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
 
+    private subscription: Subscription = new Subscription();
+    
+    ngOnDestroy(){
+      this.subscription.unsubscribe();
+    }
+    
+
   @Input() filteredArticlesSelected: Product[] = []; // Parent BoycoteComponent will set this
   @Input() loadingPb: boolean = true;
 
   private cartService = inject(CartService);
-    private productService = inject(ProductService);
+  private productService = inject(ProductService);
   private router = inject(Router);
 
   ngOnInit(): void {

@@ -10,6 +10,8 @@ import { ButtonReturnComponent } from "../../button-return/button-return.compone
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CartService } from '../../../../services/cart.service';
+import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-carousel-product',
@@ -23,6 +25,8 @@ export class CarouselProductComponent implements OnInit{
  private router = inject(Router);
  private route = inject(ActivatedRoute);
  private cartService = inject(CartService);
+ private subscription: Subscription = new Subscription();
+ private location = inject(Location);
 
   articles = signal<any[]>([]);
   visibleCount = 3;
@@ -36,9 +40,16 @@ export class CarouselProductComponent implements OnInit{
 
 ngOnInit(): void {
 
+  
   // 1. On tente de lire le produit depuis le service
-  this.product = this.productService.product;
-
+  this.product = this.productService.product; 
+  
+  // en attendant de debuguer ce point 
+  if(!this.product){
+          this.location.back();     
+  }
+  
+  console.log('Product >>>>>>>>>>>>>>>>>>>>> ',this.product);
 
   // 2. Si le produit existe déjà (cas normal sans refresh)
   if (this.product) {
@@ -55,16 +66,22 @@ ngOnInit(): void {
 
     this.productService.getProduct(id).subscribe(res => {
       if (res.success) {
-        this.product = res.product;
+        this.product = res.product; // récupère le produit
+        
+        this.productService.product = res.product;
 
         let imageList = this.productService.buildImageObjects(this.product);
 
+        console.log(imageList);
+        
         // 🔥 Supprimer la première image directement
         this.articles.set(imageList.slice(1));
+          return;
       }
-    });
+    });   
+    
   });
-
+  console.log('Après verif > ',this.product);
   // 4. On calcule visibleCount AVANT de calculer le centre
    this.visibleCount = this.articles().length;
 
@@ -84,6 +101,11 @@ ngOnInit(): void {
   });
 }
 
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+
   // Zoom la photo 
   fullscreenImage: string | null = null;
 
@@ -94,6 +116,7 @@ ngOnInit(): void {
 
   closeFullscreen() {
     this.fullscreenImage = null;
+    document.body.style.overflow = '';
   }
  
   get visibleArticles() {
@@ -122,7 +145,6 @@ ngOnInit(): void {
       finalImages.push(img);
     }
   }
-
     return article.id ?? index;
   }
 
@@ -182,11 +204,11 @@ ngOnInit(): void {
     return 1 - offset * 0.15;
   }
 
-  readViewProduct(product:Product){    
-    this.productService.product = product; // Injecte les infos dans ProductService
-     this.router.navigateByUrl('viewpProduct'); // Navigue vers la page produit
-     
-  }
+  // readViewProduct(product:Product){    
+  //   this.productService.product = product; // Injecte les infos dans ProductService
+
+  //    this.router.navigateByUrl('home'); // Navigue vers la page produit
+  // }
 
   // HAND SWIPE MOBILE //
 onTouchStart(event: TouchEvent) {
@@ -209,7 +231,6 @@ handleSwipe() {
     this.prev();
   }
 }
-
   // ADD TO CART 
   addToCart(product: Product) {
   this.cartService.add(product, 1);

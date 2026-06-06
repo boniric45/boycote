@@ -1,6 +1,6 @@
-<div class="header">
-  <app-button-return class="btn-boutique"></app-button-return>
+<app-button-return class="imgBack"></app-button-return>
 
+<div class="header">
   <div class="logo">
     <img class="img_logo_mobile" src="/pictures/logo.png" alt="Logo Boycoté">
   </div>
@@ -60,14 +60,43 @@
     </div>
   </div>
 
-  <div class="outfit-info" style="text-align: center; margin-top: 20px; font-weight: bold;">
+  <!-- <div class="outfit-info" style="text-align: center; margin-top: 20px; font-weight: bold;">
     @for (cat of cats; track cat) {
       @if (hasItem(cat)) {
         <div class="info-item-line" style="margin: 5px 0; text-transform: uppercase; font-size: 14px;">
+
           {{ cat }} : <span style="color: #666;">{{ getNom(cat) }}</span>
         </div>
       }
     }
+  </div> -->
+
+  <div class="outfit-info">
+    <div class="info-line">
+
+      <span class="lbl">HAT:</span>
+      
+      @if (hasItem('chapeau')) { <a [routerLink]="['/product',29]"  target="_blank">{{ getNom('chapeau') }}</a> }
+      @else { <span class="none">—</span> }
+
+    </div>
+    <div class="info-line">
+      <span class="lbl">TOP:</span>
+      @if (hasItem('haut')) { <a [href]="getUrl('haut')" target="_blank">{{ getNom('haut') }}</a> }
+      @else { <span class="none">—</span> }
+    </div>
+    <div class="info-line">
+      <span class="lbl">BOTTOM:</span>
+      @if (hasItem('bas')) { <a [href]="getUrl('bas')" target="_blank">{{ getNom('bas') }}</a> }
+      @else { <span class="none">—</span> }
+    </div>
+    <div class="info-line">
+      <span class="lbl">SHOES:</span>
+      @if (hasItem('chaussures')) { <a [href]="getUrl('chaussures')" target="_blank">{{ getNom('chaussures') }}</a> }
+      @else { <span class="none">—</span> }
+    </div>
   </div>
 
+
+  <app-mini-footer></app-mini-footer>
 </div>

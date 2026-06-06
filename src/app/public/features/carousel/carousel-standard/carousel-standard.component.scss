@@ -210,6 +210,22 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
     margin-right: 4%;
   }
 
+  .badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centre parfaitement le texte */
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: rgba(255, 0, 0, 0.7); /* Opacité du badge rouge */
+  padding: 10px 20px;
+  border-radius: 5px;
+  pointer-events: none; /* Ignore les clics pour laisser passer vers l'image */
+    z-index: 200;
+  }
 
 }
 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ButtonReturnComponent } from "../features/button-return/button-return.component";
+import { FooterComponent } from "../footer/footer.component";
 
 // ============================================================
 // ✏️ REMPLIS LES CROCHETS [ ] AVEC TES VRAIES INFOS
@@ -151,7 +153,7 @@ const TEXTES = {
 
 @Component({
   selector: 'app-legal',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, ButtonReturnComponent, FooterComponent],
   templateUrl: './legal.component.html',
   styleUrl: './legal.component.scss',
 })
@@ -170,8 +172,5 @@ export class LegalComponent {
   ouvrirCookies() { this.cookiePopupOuvert = true; }
   fermerCookies() { this.cookiePopupOuvert = false; }
   sauvegarder() { this.cookiePopupOuvert = false; }
-
-
-
 
 }

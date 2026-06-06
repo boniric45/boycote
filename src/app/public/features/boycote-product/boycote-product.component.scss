@@ -2,6 +2,7 @@
    margin: 0;
    padding: 0;
    width: 100%;
+   height: 100%;
 }
 
 .parent {
@@ -61,8 +62,6 @@ grid-row-gap: 3px;
   align-self: start;
   margin-top: 1%;
 }
-
-
 
 .imgBack{
   width: auto;
@@ -250,12 +249,11 @@ button.primary span {
   align-items: center;
   font-size: 12px;
   font-weight: bold;
-
 }
-
 
 .view{
-  margin: 0;
-
+  padding-bottom: 100px;
 }
+
+
 

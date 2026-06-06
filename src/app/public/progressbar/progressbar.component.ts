@@ -9,8 +9,5 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './progressbar.component.scss',
 })
 export class ProgressbarComponent {
-
   @Input() pbIsLoading = false;
-
-
 }

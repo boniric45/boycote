@@ -1,6 +1,6 @@
 
 .container{
-    height: 800px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,3 +56,44 @@
 .contact-note { font-size: 11px; color: #555555; line-height: 1.6; text-align: center; text-shadow: 0 1px 0 rgba(255,255,255,0.3); }
 
 .contact-note strong { color: #1a1a1a; font-weight: 700; }
+
+.imgBack{
+  transform: scale(0.8);
+  transform-origin: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.img_logo{
+  width: 150px;
+  height: 100px;
+  background: transparent;
+  margin-top: 20px;
+}
+
+.header-wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+@media all and (max-width: 600px) {
+
+.header-wrapper{
+  display: flex;
+  justify-content: center;
+  transform: scale(0.8);
+}
+
+.imgBack{
+  transform: scale(0.7);
+  transform-origin: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: 999;
+}
+
+}

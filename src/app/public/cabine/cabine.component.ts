@@ -7,6 +7,10 @@ import { Garment } from "../../models/garment";
 import { CabineService } from "../../services/cabine.service";
 import { GarmentService } from "../../services/garment.service";
 import { ButtonReturnComponent } from "../features/button-return/button-return.component";
+import { MiniFooterComponent } from "../mini-footer/mini-footer.component";
+import { Product } from "../../models/product";
+import { routes } from "../../app.routes";
+import { ProductService } from "../../services/product.service";
 
 type Cat = 'chapeau' | 'haut' | 'bas' | 'chaussures';
 
@@ -20,7 +24,7 @@ const mapCat: Record<Cat, string> = {
 @Component({
   selector: 'app-cabine',
   standalone: true,
-  imports: [RouterModule, ButtonReturnComponent, CommonModule],
+  imports: [RouterModule, ButtonReturnComponent, CommonModule, MiniFooterComponent],
   templateUrl: './cabine.component.html',
   styleUrl: './cabine.component.scss'
 })
@@ -38,7 +42,10 @@ export class CabineComponent implements OnInit {
   readonly mannequinImgFemme = 'pictures/mannequin-femme.webp';
 
   private cabinService = inject(CabineService);
+  private productService = inject(ProductService);
   private typeService = inject(GarmentService);
+
+  product!:Product;
 
   // Ton catalogue typé avec MAN/WOMAN
   catalogue: Record<'MAN' | 'WOMAN', Record<string, Cabin[]>> = {
@@ -173,6 +180,22 @@ export class CabineComponent implements OnInit {
 
   getUrl(cat: Cat): string { return this.getItem(cat)?.productlink ?? ''; }
 
+   getId(cat: Cat): string | number{ return this.getItem(cat)?.idproduct ?? ''; }
+
+  getProduct(cat: Cat): string | number {
+    const item = this.getItem(cat);
+    if (!item) return "";
+
+    this.productService.getProduct(item.idproduct).subscribe(res => {
+      if (res.success) {
+        this.product = res.product; // récupère le produit
+      }
+    });
+    return this.product.id;
+  }
+
+
+
   hasImg(cat: Cat): boolean {
     return !!this.getItem(cat)?.picturecabin;
   }
@@ -180,5 +203,7 @@ export class CabineComponent implements OnInit {
   hasItem(cat: Cat): boolean {
     return this.indexes()[cat] !== -1;
   }
+
+  
 
 }

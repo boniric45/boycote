@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CabineEditorComponent } from './cabine-editor.component';
+import { MiniFooterComponent } from './mini-footer.component';
 
-describe('CabineEditorComponent', () => {
-  let component: CabineEditorComponent;
-  let fixture: ComponentFixture<CabineEditorComponent>;
+describe('MiniFooterComponent', () => {
+  let component: MiniFooterComponent;
+  let fixture: ComponentFixture<MiniFooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CabineEditorComponent]
+      imports: [MiniFooterComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CabineEditorComponent);
+    fixture = TestBed.createComponent(MiniFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

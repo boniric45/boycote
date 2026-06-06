@@ -9,7 +9,7 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
-export class ProductCardComponent implements OnInit, OnChanges {
+export class ProductCardComponent implements OnInit {
   
   private productService = inject(ProductService);
   @Input() product!:Product;
@@ -21,9 +21,12 @@ export class ProductCardComponent implements OnInit, OnChanges {
   protected  genre = '';
   protected  taille = '';
   protected  mesures = '';
-
+  afficherMesures = false;
+  
   ngOnInit(): void {
+
     this.product = this.productService.product;
+    console.log('Product-Card > ',this.product);
     
     this.titre = this.product?.name;
     this.description = this.product?.description;
@@ -32,12 +35,11 @@ export class ProductCardComponent implements OnInit, OnChanges {
     this.genre = this.product?.gender;
     this.taille = this.product?.size;
     this.mesures = this.product?.mesure;
-  
   }
 
   ngOnChanges() {
-  if (!this.product) return;
-
+  this.product = this.productService.product;
+  console.log('Product-Card On Change > ',this.product);
   this.titre = this.product.name;
   this.description = this.product.description;
   this.prix = this.product.prix;
@@ -47,6 +49,6 @@ export class ProductCardComponent implements OnInit, OnChanges {
   this.mesures = this.product.mesure;
 }
 
-afficherMesures = false;
+
 
 }

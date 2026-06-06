@@ -2,10 +2,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ButtonReturnComponent } from "../features/button-return/button-return.component";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-annulation',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, ButtonReturnComponent, FooterComponent],
   templateUrl: './annulation.component.html',
   styleUrl: './annulation.component.scss',
 })

@@ -4,6 +4,7 @@ import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, QueryList, Vi
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Product } from '../../../models/product';
 import { ApiService } from '../../../services/api.service';
 import { CartService } from '../../../services/cart.service';
@@ -14,7 +15,6 @@ import { ProductCardComponent } from '../../product-card/product-card.component'
 import { ButtonReturnComponent } from "../button-return/button-return.component";
 import { ComponentLeftComponent } from '../component-left/component-left.component';
 import { ComponentRightComponent } from '../component-right/component-right.component';
-import { StopLandscapeComponent } from "../stop-landscape/stop-landscape.component";
 
 
 
@@ -28,9 +28,8 @@ import { StopLandscapeComponent } from "../stop-landscape/stop-landscape.compone
     CommonModule,
     ProductCardComponent,
     ButtonReturnComponent,
-    StopLandscapeComponent
 ],
- // changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './boycote-product.component.html',
   styleUrl: './boycote-product.component.scss',
 })
@@ -40,12 +39,12 @@ export class BoycoteProductComponent implements OnInit {
   private cartService = inject(CartService);
   private apiService = inject(ApiService);
   modalService = inject(ModalService);
-  stock:number = 0;
+  stock: number = 0;
   countPanier = 0;
   isDisplay = 'block';
   btnMacIsDisabled = '';
   product!: Product;
-  productList:Product[] = [];
+  productList: Product[] = [];
   cellWidth!: number;
   cellHeight!: number;
   listResult: Product[] = [];
@@ -53,9 +52,12 @@ export class BoycoteProductComponent implements OnInit {
   @ViewChildren('carousel__cell') cells!: QueryList<ElementRef>; // Alimente le carousel avec les infos du dom
   indexCarousel: number = 0;
   loadingCarousel = true;
-  pictureRead:string = "";
+  pictureRead: string = "";
   isDisabled: boolean = false;
-  isLandscape:boolean = true;
+  isLandscape: boolean = true;
+
+  private subscription: Subscription = new Subscription();
+
   constructor(
     public data: ProductService,
     private cdRef: ChangeDetectorRef,
@@ -63,57 +65,33 @@ export class BoycoteProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  //  this.product = this.data.product; // Récupère le produit du parent Home
+
+    this.product = this.data.product; // Récupère le produit du parent Home
     // si on réactualise redirige vers la page home sinon crée les produits du carousel
-    // if (!this.product) {
-    //   this.route.navigate(['home']);
-    // } else {
-    //   this.createCarouselWithProduct(this.product);
-    // }
+    if (!this.product) {
+      this.route.navigate(['home']);
+    } else {
+      this.createCarouselWithProduct(this.product);
+
+    }
 
     this.cartService.count$.subscribe(value => this.countPanier = value);
   }
 
   ngAfterContentChecked(): void { // Peut ralentir l'appli
-    if (this.carousel) 
-    {
+    if (this.carousel) {
       this.cellWidth = this.carousel.nativeElement.offsetWidth;
       this.cellHeight = this.carousel.nativeElement.offsetHeight;
     }
     this.cdRef.detectChanges();
   }
 
-  createCarouselWithProduct(prod: Product){
-    console.log(prod);
-    
-    // let t: keyof Product;
-    // let id=1;
-    // for (let i = 1; i < 3; i++) {
-    // for (t in this.product) {
-    //     if (t.startsWith('path')) {
-    //       this.listResult.push({
-    //         id,
-    //         name: '',
-    //         description: '',
-    //         marque: '',
-    //         type: '',
-    //         gender: '',
-    //         size: '',
-    //         stock: 0,
-    //         sku: '',
-    //       // A chaque boucle il ajoute le lien de chaques photos
-    //         pathPictureTwo: '',
-    //         pathPictureThree: '',
-    //         pathPictureFour: '',
-    //         pathPictureFive: ''
-    //       });
-    //       id++;
-    //     }
-    //   }
-      
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
-    // }
-    // return this.listResult;
+  createCarouselWithProduct(prod: Product) {
+    console.log(prod);
   }
 
   get cellCount() {
@@ -128,7 +106,7 @@ export class BoycoteProductComponent implements OnInit {
     this.indexCarousel++;
   }
 
-    // Gère les boutons Carousel Standard
+  // Gère les boutons Carousel Standard
   startCarouselStandard(char: string): void {
     if (char == 'left') {
       this.standardPrev();
@@ -139,7 +117,7 @@ export class BoycoteProductComponent implements OnInit {
 
   // Gère le style du Carousel
   getStyle(index: number) {
-    if (!this.cellCount){
+    if (!this.cellCount) {
       // this.route.navigate(['product']);
       return null;
     } else {
@@ -153,24 +131,22 @@ export class BoycoteProductComponent implements OnInit {
       }
     }
 
-
   }
 
-  readViewProduct(product:Product){
-  const dialogConfig = new MatDialogConfig();
-  const picture = product.pathpictureone;
+  readViewProduct(product: Product) {
+    const dialogConfig = new MatDialogConfig();
+    const picture = product.pathpictureone;
     // Configure the dialog options
-    dialogConfig.disableClose = true, // Prevents closing the dialog by clicking outside
-    dialogConfig.autoFocus = false,   // Disable autofocus to manually control focus
-   // dialogConfig.width='100%',       // Set the width of the dialog
-    dialogConfig.minWidth='20%',
-    dialogConfig.maxWidth='auto',
-    dialogConfig.minHeight='20%',
-    dialogConfig.maxHeight='auto',
-    dialogConfig.data = { name: picture }; // Pass data to the dialog component
-    this.dialog.open(ModalComponent,dialogConfig); // Ouvre la modal avec sa configuration
+      dialogConfig.disableClose = true, // Prevents closing the dialog by clicking outside
+      dialogConfig.autoFocus = false,   // Disable autofocus to manually control focus
+    //  dialogConfig.width='100%',       // Set the width of the dialog
+      dialogConfig.minWidth = '20%',
+      dialogConfig.maxWidth = 'auto',
+      dialogConfig.minHeight = '20%',
+      dialogConfig.maxHeight = 'auto',
+      dialogConfig.data = { name: picture }; // Pass data to the dialog component
+      this.dialog.open(ModalComponent, dialogConfig); // Ouvre la modal avec sa configuration
   }
-
 
   checkStock(stock: number) {
     if (stock === 0) {
@@ -191,17 +167,17 @@ export class BoycoteProductComponent implements OnInit {
 
     console.log("Email reçu :", email);
     console.log(this.product);
-    
+
     this.modalService.close();
   }
 
- addPanier(){
-  this.isDisplay = 'none'; // désactive le bouton
-  this.btnMacIsDisabled = 'margin-top: 75px;'; // Garde l'espace qu'occupait le bouton
-  // Vérifie la disponibilité du produit 
-  
-  // this.stock = this.cartService.getDisponibilityProduct(this.product);
+  addPanier() {
+    this.isDisplay = 'none'; // désactive le bouton
+    this.btnMacIsDisabled = 'margin-top: 75px;'; // Garde l'espace qu'occupait le bouton
+    // Vérifie la disponibilité du produit 
 
-  
- }
+    // this.stock = this.cartService.getDisponibilityProduct(this.product);
+
+
+  }
 }

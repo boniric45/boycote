@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { Router } from "@angular/router";
 import { Product } from '../../../../models/product';
 import { ApiService } from '../../../../services/api.service';
@@ -7,6 +7,7 @@ import { ProductService } from '../../../../services/product.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CartService } from '../../../../services/cart.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -22,6 +23,11 @@ export class CarouselStandardComponent implements OnInit {
  private router = inject(Router);
  private cartService = inject(CartService);
 
+  // 1. Vos données sources
+  allProducts = signal<Product[]>([]); // Votre liste complète
+  productsSoldOut = signal<Product[]>([]); // La liste venant du service
+
+
   articles: Product[] = [];
   visibleCount = 5;
   currentIndex = 0;
@@ -30,42 +36,131 @@ export class CarouselStandardComponent implements OnInit {
   private touchStartX = 0;
   private touchEndX = 0;
   cart$ = this.cartService.items$;
+  private subscription: Subscription = new Subscription();
 
+  // 2. Un signal calculé qui combine les deux
+  productsWithBadge = computed(() => {
+    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+    
+    return this.allProducts().map(product => ({
+      ...product,
+      isSoldOut: soldOutIds.has(product.id) // Ajoute une propriété dynamique
+    }));
+  });
+
+  constructor(){
+    effect(()=> {
+      const data = this.productsSoldOut();
+      if(data.length > 0){
+        console.log('Réaction automatique au changement : ', data);
+        console.log(this.productsWithBadge());
+        
+        // maFonctionDeTraitement(data);
+      }
+
+    })
+
+
+  }
+  
   ngOnInit(): void {
     this.loadProducts();
+    this.loadProductsSoldOut();
     this.updateVisibleCount();
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
     }); 
-    
+    console.log(this.productsWithBadge());
+  
   }
-
+  
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+  
   loadProducts() {
     this.apiService.getProducts().subscribe((p) => {
       this.articles = p;      
+      this.allProducts.set(p);
     });
   }
 
+  // ALIMENTE LA LISTE DES SOLDOUT
+  loadProductsSoldOut(){
+    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+      this.productsSoldOut.set(psoldout);
+    })
+  }
+
+
   // VERSION FINALE : aucune duplication, aucun undefined
+//   get visibleArticles() {
+//   if (!this.articles || this.articles.length === 0) {
+//     return [];
+//   }
+
+//   const total = this.articles.length;  
+
+//   const count = Math.min(this.visibleCount, total);
+
+//   const start = this.currentIndex - Math.floor(count / 2);
+
+//   const result = [];
+
+//   for (let i = 0; i < count; i++) {
+//     const index = (start + i + total) % total;
+//     result.push(this.articles[index]);
+//   }
+//   return result;
+// }
+
+// Si Problème de refraichissement Au lieu d'un getter, vous définissez ceci :
+// visibleArticles = computed(() => {
+//   const articles = this.articles(); // Si articles est un Signal
+//   const soldOuts = this.productsSoldOut(); // Votre signal de rupture
+  
+//   // ... votre logique de calcul ici ...
+//   return result;
+// });
+
   get visibleArticles() {
-  if (!this.articles || this.articles.length === 0) {
-    return [];
+    if (!this.articles || this.articles.length === 0) return [];
+
+    const total = this.articles.length;
+    const count = Math.min(this.visibleCount, total);
+    const start = this.currentIndex - Math.floor(count / 2);
+    
+    // Création d'un Set pour une recherche rapide en O(1)
+    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+
+    const result = [];
+    for (let i = 0; i < count; i++) {
+      const index = (start + i + total) % total;
+      const article = this.articles[index];
+      
+      // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
+      result.push({
+        ...article,
+        isSoldOut: soldOutIds.has(article.id)
+      });
+    }
+    return result;
   }
 
-  const total = this.articles.length;  
-
-  const count = Math.min(this.visibleCount, total);
-
-  const start = this.currentIndex - Math.floor(count / 2);
-
-  const result = [];
-
-  for (let i = 0; i < count; i++) {
-    const index = (start + i + total) % total;
-    result.push(this.articles[index]);
+  getArticleImageWithBadge(article: any):string{
+    if(article.isSoldOut){
+      return `/pictures/sold-out.webp`;
+    }
+    return article.pathpictureone;
   }
-  return result;
-}
+
+//   getArticleImageWithBadge(article: any) {
+//   if (article.isSoldOut) {
+//     // On superpose un voile sombre + l'image
+//     return `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${article.pathpictureone}')`;
+//   }
+//   return `url('${article.pathpictureone}')`;
+// }
 
   trackByArticle(index: number, article: Product) {
     return article.id ?? index;

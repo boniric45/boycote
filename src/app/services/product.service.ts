@@ -1,26 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AddProductResponse, Product, ProductFilter } from '../models/product';
 import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService  {
-  
+export class ProductService {
+
   // SERVICES
   private http = inject(HttpClient);
   private apiService = inject(ApiService);
 
   allProducts: Product[] = [];
   listOfProduct = signal<Product[]>([]);
-  listProductOfCarouselStd:string[] = [];
+  listOfProductSoldOut = signal<Product[]>([]);
+  listProductOfCarouselStd: string[] = [];
   product!: Product;
   private apiUrl = 'https://www.boycoté.fr/api/addProduct.php';
+  private baseUrl = 'https://www.boycote.fr/api';
 
-
-   
   loadProducts() {
     return this.apiService.getProducts().pipe(
       tap((p) => (this.allProducts = p))
@@ -28,61 +28,68 @@ export class ProductService  {
   }
 
   /**
+   * Retourne tous les produits
+   */
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/products`);
+  }
+
+  /**
    * Retourne toutes les images du produit (pathpictureone → pathpictureten)
    */
   getProductImages(): string[] {
-  if (!this.product) return [];
+    if (!this.product) return [];
 
-  // 1. Extraction des images pathpicture...
-  const baseImages = Object.entries(this.product)
-    .filter(([key, value]) =>
-      key.toLowerCase().startsWith('pathpicture') &&
-      typeof value === 'string' &&
-      value.trim() !== ''
-    )
-    .map(([_, value]) => value);
+    // 1. Extraction des images pathpicture...
+    const baseImages = Object.entries(this.product)
+      .filter(([key, value]) =>
+        key.toLowerCase().startsWith('pathpicture') &&
+        typeof value === 'string' &&
+        value.trim() !== ''
+      )
+      .map(([_, value]) => value);
 
-  // 2. Si aucune image → retourne vide
-  if (baseImages.length === 0) return [];
+    // 2. Si aucune image → retourne vide
+    if (baseImages.length === 0) return [];
 
-  // 3. On crée une nouvelle liste qui répète les images dans l'ordre
-  const finalImages: string[] = [];
+    // 3. On crée une nouvelle liste qui répète les images dans l'ordre
+    const finalImages: string[] = [];
 
-  while (finalImages.length < 10) {
-    for (const img of baseImages) {
-      if (finalImages.length < 10) {
-        finalImages.push(img);
-      } else {
-        break;
+    while (finalImages.length < 10) {
+      for (const img of baseImages) {
+        if (finalImages.length < 10) {
+          finalImages.push(img);
+        } else {
+          break;
+        }
       }
     }
-  }
 
-  return finalImages;
+    return finalImages;
   }
 
   getProductImagesWithoutDuplicate(): string[] {
-  if (!this.product) return [];
+    if (!this.product) return [];
 
-  // 1. Extraction des images pathpicture...
-  const baseImages = Object.entries(this.product)
-    .filter(([key, value]) =>
-      key.toLowerCase().startsWith('pathpicture') &&
-      typeof value === 'string' &&
-      value.trim() !== ''
-    )
-    .map(([_, value]) => value);
+    // 1. Extraction des images pathpicture...
+    const baseImages = Object.entries(this.product)
+      .filter(([key, value]) =>
+        key.toLowerCase().startsWith('pathpicture') &&
+        typeof value === 'string' &&
+        value.trim() !== ''
+      )
+      .map(([_, value]) => value);
 
-  // 2. Si aucune image → retourne vide
-  if (baseImages.length === 0) return [];
+    // 2. Si aucune image → retourne vide
+    if (baseImages.length === 0) return [];
 
-  // 3. On crée une nouvelle liste qui répète les images dans l'ordre
-  const finalImages: string[] = [];
-  if (finalImages.length < 10) {
-    for (const img of baseImages) {
-      finalImages.push(img);
+    // 3. On crée une nouvelle liste qui répète les images dans l'ordre
+    const finalImages: string[] = [];
+    if (finalImages.length < 10) {
+      for (const img of baseImages) {
+        finalImages.push(img);
+      }
     }
-  }
     return finalImages;
   }
 
@@ -138,16 +145,15 @@ export class ProductService  {
     });
   }
 
-  addProduct(product: Product):Observable<AddProductResponse> {
+  addProduct(product: Product): Observable<AddProductResponse> {
     return this.http.post<AddProductResponse>(this.apiUrl, product);
   }
 
-  // A TESTER 
   getProduct(id: number): Observable<{ success: boolean; product: Product }> {
-  return this.http.get<{ success: boolean; product: Product }>(
-    'https://www.boycoté.fr/api/getProduct.php?id=' + id
-  );
-}
+    return this.http.get<{ success: boolean; product: Product }>(
+      'https://www.boycoté.fr/api/getProduct.php?id=' + id
+    );
+  }
   // SUPPRIME LA PREMIERE IMAGE DU TABLEAU //
   deleteFirstPicture(article: string[]): string[] {
     if (!article || article.length === 0) {
@@ -156,7 +162,6 @@ export class ProductService  {
     article.shift(); // enlève le premier élément
     return article;  // renvoie le tableau restant
   }
-
 
   buildImageObjects(product: any) {
     const images: { id: number; pathpictureone: string }[] = [];
@@ -174,18 +179,23 @@ export class ProductService  {
     return images;
   }
 
-
-
   /* -----------------------------------------------------------
      GET PRODUCT BY SKU
   ----------------------------------------------------------- */
-getProductIdBySKU(sku: string): number {
-  const product = this.allProducts.find(p => p.sku === sku);
-  return product ? product.id : 0;
-}
+  getProductIdBySKU(sku: string): number {
+    const product = this.allProducts.find(p => p.sku === sku);
+    return product ? product.id : 0;
+  }
 
+  /* -----------------------------------------------------------
+     VERIFY ALL LIST OF PRODUCT AND ADD BADGE SOLD OUT
+  ----------------------------------------------------------- */
+  disponibilityProductSoldOut(): Observable<Product[]> {
+    return this.getProducts().pipe(
+      map(products => products.filter(product => product.stock === 0))
+    );
 
-
+  }
 
 
 

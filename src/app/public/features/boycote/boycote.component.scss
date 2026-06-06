@@ -535,6 +535,7 @@ app-cart{
 app-footer{
    margin: 0;
    padding-top: 50px;
+   flex-grow: 1; // permet au footer de rester en bas
 }
 
   
@@ -544,7 +545,8 @@ app-footer{
 
    .img_logo_mobile {
       background: transparent;
-      width: 100px
+      width: 125px;
+      height: 80px;
    }
    
    .div1 {

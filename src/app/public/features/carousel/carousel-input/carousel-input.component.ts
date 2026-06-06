@@ -8,6 +8,7 @@ import { CartService } from '../../../../services/cart.service';
 import { Product } from '../../../../models/product';
 import { ProductService } from '../../../../services/product.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-carousel-input',
@@ -21,7 +22,11 @@ export class CarouselInputComponent implements OnInit {
   private cartService = inject(CartService);
   private productService = inject(ProductService);
   private router = inject(Router);
+  private subscription: Subscription = new Subscription();
   
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 
   articles = signal<any[]>([]);
   visibleCount = 5;

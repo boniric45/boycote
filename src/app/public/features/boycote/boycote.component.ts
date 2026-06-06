@@ -1,5 +1,5 @@
    import { CommonModule, NgStyle } from '@angular/common';
-import { Component, computed, HostListener, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { Component, computed, effect, HostListener, inject, OnDestroy, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -25,6 +25,7 @@ import { CarouselStandardComponent } from "../carousel/carousel-standard/carouse
 import { CookiesComponent } from '../cookies/cookies.component';
 import { HamburgerComponent } from "../hamburger/hamburger.component";
 import { StopLandscapeComponent } from "../stop-landscape/stop-landscape.component";
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -47,7 +48,7 @@ import { StopLandscapeComponent } from "../stop-landscape/stop-landscape.compone
   styleUrl: './boycote.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class BoycoteComponent implements OnInit {
+export class BoycoteComponent implements OnInit, OnDestroy {
 
   /**
    * SERVICES
@@ -68,12 +69,12 @@ export class BoycoteComponent implements OnInit {
   gender!: Gender;
   cartCount$ = this.cartService.count$;
 
-
   /** ------------------------------
    *  SIGNALS
    * ------------------------------ */
   marques = signal<Marque[]>([]);
   products = signal<Product[]>([]); //Writable
+  productsSoldOut = signal<Product[]>([]);
   types = signal<Garment[]>([]);
   genders = signal<Gender[]>([]);
   
@@ -151,6 +152,8 @@ export class BoycoteComponent implements OnInit {
   display = 'visible';
   searchInputValue = '';
   filtered: Product[] = [];
+  isLandscape:boolean = true;
+  private subscription: Subscription = new Subscription();
 
   criteria: ProductFilter = {
     marque: [],
@@ -158,17 +161,25 @@ export class BoycoteComponent implements OnInit {
     gender: []
   };
 
-  isLandscape:boolean = true;
+  // 2. Un signal calculé qui combine les deux
+  productsWithBadge = computed(() => {
+    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+    return this.products().map(product => ({
+      ...product,
+      isSoldOut: soldOutIds.has(product.id) // Ajoute une propriété dynamique
+    }));
+  });
+
+
 
   ngOnInit(): void { 
-
+    
     // BUG SAFARI
     const setVh = () => {
       document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
     };
     setVh();
     window.addEventListener('resize', setVh);
-
 
     // RECUPERATION DES MARQUES
     this.loadMarques();
@@ -193,7 +204,10 @@ export class BoycoteComponent implements OnInit {
 
   }
 
-  
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+
   applyFilters() {
     this.filtered = this.productService.filterProducts({
       marque: this.selectedMarques(),
@@ -215,12 +229,12 @@ export class BoycoteComponent implements OnInit {
   }
 
   // ALIMENTE MARQUES 
-loadMarques() {
-  this.apiService.getMarques().subscribe(m => {
-    const sorted = [...m].sort((a, b) => a.display_order - b.display_order);
-    this.marques.set(sorted);
-  });
-}
+  loadMarques() {
+    this.apiService.getMarques().subscribe(m => {
+      const sorted = [...m].sort((a, b) => a.display_order - b.display_order);
+      this.marques.set(sorted);
+    });
+  }
 
   // ALIMENTE GENRES
   loadGenders() {
@@ -234,7 +248,8 @@ loadMarques() {
   loadGarments(){
     this.garmentService.getAll().subscribe(gar => {
       const sorted = [...gar].sort((a, b) => a.display_order - b.display_order);
-    this.types.set(gar);
+      this.types.set(sorted);
+      // this.types.set(gar);
     })
   }
 
@@ -246,6 +261,12 @@ loadMarques() {
     });
   }
 
+  // ALIMENTE LA LISTE DES SOLDOUT
+  loadProductsSoldOut(){
+    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+      this.productsSoldOut.set(psoldout);
+    })
+  }
 
   launchCarouselStandard(){
     this.loadingPb = true; // lance la progress bar

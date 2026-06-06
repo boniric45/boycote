@@ -23,22 +23,17 @@
   margin-top: 5px;
 }
 
-.btn-boutique {
-  margin-left: 20px;
-  transform: scale(0.5);
-  transform-origin: center;
-}
 
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+// .logo {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 
-.img_logo_mobile {
-  width: 150px;
-  margin-right: 140px;
-}
+// .img_logo_mobile {
+//   width: 150px;
+//   margin-right: 140px;
+// }
 
 .btn-panier {
   justify-self: end;
@@ -70,7 +65,7 @@
 .page-body {
   width: 100%;
   max-width: 380px;
-  padding: 0 40px 40px;
+  // padding: 0 40px 40px;
   box-sizing: border-box;
   margin-top: 40px;
 }
@@ -216,7 +211,7 @@
    INFO TENUE
 ══════════════════════════════════════ */
 .outfit-info {
-  padding: 14px 4px 0;
+  padding: 20px 4px 0;
   overflow: hidden;
   width: 100%;
   box-sizing: border-box;
@@ -224,6 +219,7 @@
 
 .info-line {
   display: flex;
+  justify-content: center;
   flex-direction: row;
   align-items: baseline;
   margin-bottom: 6px;
@@ -291,3 +287,26 @@
   z-index: 2; /* S'assure que le vêtement est au-dessus du mannequin */
 }
 
+app-mini-footer{
+   margin: 0;
+   padding-top: 30px;
+   flex-grow: 1; // permet au footer de rester en bas
+}
+
+.logo{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.img_logo_mobile {
+  margin-top: 20px;
+  width: 120px;
+}
+
+.imgBack {
+  position: absolute;
+  left: 0;
+  transform: scale(0.65);
+  cursor: pointer;
+}

@@ -1,5 +1,5 @@
 .container{
-    height: 800px;
+    height: 700px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,3 +48,43 @@
 .btn-submit:active:not(:disabled) { filter: brightness(0.88); transform: translateY(1px); }
 .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
+.imgBack{
+  transform: scale(0.8);
+  transform-origin: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.img_logo{
+  width: 150px;
+  height: 100px;
+  background: transparent;
+  margin-top: 20px;
+}
+
+.header-wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+@media all and (max-width: 600px) {
+
+.header-wrapper{
+  display: flex;
+  justify-content: center;
+  transform: scale(0.8);
+}
+
+.imgBack{
+  transform: scale(0.7);
+  transform-origin: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: 999;
+}
+
+}

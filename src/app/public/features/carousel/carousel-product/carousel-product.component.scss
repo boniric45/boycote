@@ -282,10 +282,6 @@
     padding-right: 6px;
   }
 
-    .div3 {
-     padding-top: 300px;
-  }
-
   .nav-mobile {
     display: flex;
     justify-content: center;
@@ -300,13 +296,11 @@
     position: static;
     display: flex;
     justify-self: baseline;
-    //margin-top: 140px;
     transform: none;
     margin-right: 0;
   }
 
   .container-carousel {
-    // position: relative;
     margin-bottom: 100px;
     transform: scale(0.45);
   }
@@ -318,8 +312,6 @@
     transform: scale(1.3);
     margin-top: 150px;
   }
-
-
 
 .panier-wrapper{
   justify-content: flex-end;
@@ -343,6 +335,21 @@
   height: 100vh;
   object-fit: contain;
 }
+
+.footer{
+  // position: absolute;
+  // margin: 0 auto;
+  // display: flex;
+  // align-items: end;
+  // justify-content: center;
+  // bottom:10px;
+
+ // flex-grow: 1; // permet au footer de rester en bas
+
+ margin-top: 400px;
+}
+
+
 
 }
 
