@@ -19,9 +19,18 @@
                 <p>{{ genre }} — SIZE {{ taille }}</p>
                 <p class="prix-produit">{{ prix | currency:'EUR'}}</p>
             </div>
-            <div class="conteneur-bouton">
-                <button class="primary"><span>ADD TO CART</span></button>
-            </div>
+
+      <div class="conteneur-bouton">
+
+        @if(product.stock === 0){
+        <button class="primary" (click)="addToRequest(product.id)"><span>REQUEST SOURCING</span></button>
+        } 
+        @else {
+          <button class="primary" (click)="addToCart(product)"><span>ADD TO CART</span></button>
+        }
+      </div>
+
+
         </div>
 
     </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, Input, OnInit, signal, Signal } from '@angular/core';
+import { Component, computed, effect, inject, Input, OnInit, signal, Signal } from '@angular/core';
 import { ApiService } from '../../../../services/api.service';
 import { ProgressbarComponent } from "../../../progressbar/progressbar.component";
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
@@ -23,25 +23,39 @@ export class CarouselInputComponent implements OnInit {
   private productService = inject(ProductService);
   private router = inject(Router);
   private subscription: Subscription = new Subscription();
-  
-  ngOnDestroy(){
+
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
   articles = signal<any[]>([]);
+  productsSoldOut = signal<Product[]>([]); // La liste venant du service
+
   visibleCount = 5;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
 
+
   @Input({ required: true }) searchQuery!: Signal<string>;
   @Input() searchSubmitted!: Signal<boolean>;
-  
 
   loadingPb: boolean = true;
 
+  constructor() {
+    effect(() => {
+      const data = this.productsSoldOut();
+      if (data.length > 0) {
+        console.log('Réaction automatique au changement : ', data);
+        console.log(this.productsWithBadge());
+        // maFonctionDeTraitement(data);
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.loadProducts();
+    this.loadProductsSoldOut();
     this.updateVisibleCount();
 
     window.addEventListener('resize', () => {
@@ -55,6 +69,12 @@ export class CarouselInputComponent implements OnInit {
     });
   }
 
+  loadProductsSoldOut() {
+    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+      this.productsSoldOut.set(psoldout);
+    })
+  }
+
   // RECHERCHE DES PRODUITS
   filtered = computed(() => {
     const term = this.searchQuery().trim().toLowerCase();
@@ -64,6 +84,16 @@ export class CarouselInputComponent implements OnInit {
     return this.articles().filter(p =>
       p.marque.toLowerCase().includes(term)
     );
+  });
+
+  // 2. Un signal calculé qui combine les deux
+  productsWithBadge = computed(() => {
+    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+
+    return this.articles().map(product => ({
+      ...product,
+      isSoldOut: soldOutIds.has(product.id) // Ajoute une propriété dynamique
+    }));
   });
 
 
@@ -91,28 +121,29 @@ export class CarouselInputComponent implements OnInit {
     return list;
   });
 
-
-
   get visibleArticles() {
-    const articles = this.normalized();
+    if (!this.articles || this.articles.length === 0) return [];
 
-    // Si aucun résultat → rien à afficher
-    if (articles.length === 0) {
-      return [];
-    }
-
-    const total = articles.length;
+    const total = this.articles().length;
     const count = Math.min(this.visibleCount, total);
-
     const start = this.currentIndex - Math.floor(count / 2);
 
-    const result = [];
+    const articles = this.normalized();
+    // Création d'un Set pour une recherche rapide en O(1)
+    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+
+    const result: any = [];
 
     for (let i = 0; i < count; i++) {
       const index = (start + i + total) % total;
-      result.push(articles[index]);
-    }
+      const article = articles[index];
 
+      // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
+      result.push({
+        ...article,
+        isSoldOut: soldOutIds.has(article.id)
+      });
+    }
     return result;
   }
 
@@ -182,7 +213,12 @@ export class CarouselInputComponent implements OnInit {
     this.cartService.add(product, 1);
   }
 
-    readViewProduct(idProduct:number){    
+  addToRequest(id: number) {
+    this.router.navigate(['/request/', id]);
+  }
+
+
+  readViewProduct(idProduct: number) {
     this.productService.getProduct(idProduct)  // Injecte les infos dans ProductService    
     this.router.navigate(['product', idProduct]); // Navigue vers la page produit
   }

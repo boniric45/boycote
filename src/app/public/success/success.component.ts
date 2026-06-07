@@ -8,10 +8,11 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './success.component.html',
   styleUrl: './success.component.scss',
 })
-export class SuccessComponent {
+export class SuccessComponent  {
 
   cartService = inject(CartService);
 
+ 
   constructor() {
     this.cartService.clear(); // 🔥 Vide le panier
   }

@@ -1,5 +1,5 @@
    import { CommonModule, NgStyle } from '@angular/common';
-import { Component, computed, effect, HostListener, inject, OnDestroy, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { Component, computed, HostListener, inject, OnDestroy, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Garment } from '../../../models/garment';
 import { Gender } from '../../../models/gender';
 import { Marque } from '../../../models/marque';
@@ -24,8 +25,6 @@ import { CarouselSelectComponent } from "../carousel/carousel-select/carousel-se
 import { CarouselStandardComponent } from "../carousel/carousel-standard/carousel-standard.component";
 import { CookiesComponent } from '../cookies/cookies.component';
 import { HamburgerComponent } from "../hamburger/hamburger.component";
-import { StopLandscapeComponent } from "../stop-landscape/stop-landscape.component";
-import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -202,6 +201,7 @@ export class BoycoteComponent implements OnInit, OnDestroy {
     this.manageCarousel(1); // Lance le carousel standard
     this.cartService.count$.subscribe(value => this.countPanier = value);
 
+    
   }
 
   ngOnDestroy(){

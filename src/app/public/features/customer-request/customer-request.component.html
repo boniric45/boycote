@@ -1,0 +1,35 @@
+
+
+@if (product) {
+  <div class="popup-overlay" (click)="onOverlayClick($event)">
+    <div class="popup-window">
+
+      <div class="popup-bar">
+        <button class="popup-close" (click)="return()"></button>
+        <span class="popup-title">Request Sourcing</span>
+      </div>
+
+      <div class="popup-body">
+        <div class="article-info">
+            <span><img src="{{product.pathpictureone}}" alt=""></span>
+          <span class="article-nom">{{ product.name }}</span>
+          <span class="article-sku">SKU: {{ product.sku }}</span>
+        </div>
+        <p class="sourcing-message">
+          Interested in this piece? Leave your email and our team will contact you.
+        </p>
+        <input
+          class="mac-input"
+          type="email"
+          placeholder="your@email.com"
+          [(ngModel)]="email" />
+        <div class="popup-btn-row">
+          <button class="btn-notify" (click)="submit()">
+            <span>GET IN TOUCH</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+}

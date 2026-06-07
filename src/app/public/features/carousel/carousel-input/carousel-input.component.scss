@@ -178,63 +178,24 @@ button.primary:active {
   transform: translateY(1px);
 }
 
+.sold {
+  filter: grayscale(100%) opacity(1); /* Rend l'image grise et semi-transparente */
+  cursor: not-allowed;
+}
+
+.img-sold-out{
+  width: 170px;
+  height: 75px;
+  position: absolute;
+  top: -50%;
+  right: 0;
+  z-index: 101;
+}
+
 
 /////////////////////////////////////////////////////////////
 
 
-/* Mobile */
-// @media all and (max-width: 600px) {
-
-//   .desktop {
-//     display: none !important;
-//   }
-
-//   .nav-mobile {
-//     display: flex;
-//     justify-content: center;
-//     max-width: 650px;
-//     scale: 0.8;
-//     gap: 2rem;
-//     transform: translateX(-5%);
-//   }
-
-//   .conteneur-bouton {
-//     padding-top: 10px;
-//     width: 180px;
-//     margin: 0 auto;
-//     margin-bottom: 10px;
-//     cursor: pointer;
-//   }
-
-//   .nav {
-//     position: static;
-//     transform: none;
-//     margin-right: 0;
-//     /* ✔ propre */
-//   }
-
-//   .description {
-//     font-size: 4.5vw;
-//     margin-top: 35px;
-//     margin-bottom: 10px;
-//     text-align: center;
-//     padding: 0;
-//   }
-
-//   .price {
-//     font-size: 4.5vw;
-//   }
-
-//   .carousel {
-//     scale: 0.6;
-//     transform: translateX(-2%);
-//   }
-
-//   .carousel-wrapper {
-//     height: 180px;
-//   }
-
-// }
 
 /* Mobile */
 @media all and (max-width: 600px) { 

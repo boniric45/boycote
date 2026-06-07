@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, OnInit, signal, Signal } from '@angular/core';
+import { Component, computed, effect, inject, Input, OnInit, signal, Signal } from '@angular/core';
 import { ApiService } from '../../../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { ProgressbarComponent } from '../../../progressbar/progressbar.component';
@@ -16,20 +16,43 @@ import { Subscription } from 'rxjs';
   templateUrl: './carousel-select.component.html',
   styleUrl: './carousel-select.component.scss',
 })
-export class CarouselSelectComponent implements OnInit{
+export class CarouselSelectComponent implements OnInit {
 
   articles = signal<any[]>([]);
+  productsSoldOut = signal<Product[]>([]); // La liste venant du service
+
   visibleCount = 5;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
 
-    private subscription: Subscription = new Subscription();
-    
-    ngOnDestroy(){
-      this.subscription.unsubscribe();
-    }
-    
+  private subscription: Subscription = new Subscription();
+
+  constructor() {
+    effect(() => {
+      const data = this.productsSoldOut();
+      if (data.length > 0) {
+        console.log('Réaction automatique au changement : ', data);
+        console.log(this.productsWithBadge());
+        // maFonctionDeTraitement(data);
+      }
+    })
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  // 2. Un signal calculé qui combine les deux
+  productsWithBadge = computed(() => {
+    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+
+    return this.articles().map(product => ({
+      ...product,
+      isSoldOut: soldOutIds.has(product.id) // Ajoute une propriété dynamique
+    }));
+  });
 
   @Input() filteredArticlesSelected: Product[] = []; // Parent BoycoteComponent will set this
   @Input() loadingPb: boolean = true;
@@ -39,6 +62,7 @@ export class CarouselSelectComponent implements OnInit{
   private router = inject(Router);
 
   ngOnInit(): void {
+    this.loadProductsSoldOut();
     this.updateVisibleCount();
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
@@ -46,39 +70,55 @@ export class CarouselSelectComponent implements OnInit{
   }
 
   normalized = computed(() => {
-  const list = this.filteredArticlesSelected;
+    const list = this.filteredArticlesSelected;
 
-  if (!list || list.length === 0) return [];
+    if (!list || list.length === 0) return [];
 
-  if (list.length < 5) {
-    const result = [...list];
-    while (result.length < 5) {
-      result.push(...list);
+    if (list.length < 5) {
+      const result = [...list];
+      while (result.length < 5) {
+        result.push(...list);
+      }
+      return result.slice(0, 5);
     }
-    return result.slice(0, 5);
-  }
 
-  return list;
+    return list;
   });
 
-    get visibleArticles() {
-      const articles = this.filteredArticlesSelected;
+  // ALIMENTE LA LISTE DES SOLDOUT
+  loadProductsSoldOut() {
+    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+      this.productsSoldOut.set(psoldout);
+    })
+  }
 
-      if (!articles || articles.length === 0) return [];
+  get visibleArticles() {
+    const articles = this.filteredArticlesSelected;
 
-      const total = articles.length;
-      const count = Math.min(this.visibleCount, total);
-      const start = this.currentIndex - Math.floor(count / 2);
+    if (!articles || articles.length === 0) return [];
 
-      const result = [];
-      for (let i = 0; i < count; i++) {
-        const index = (start + i + total) % total;
-        result.push(articles[index]);
-      }
-      return result;
+    const total = articles.length;
+    const count = Math.min(this.visibleCount, total);
+    const start = this.currentIndex - Math.floor(count / 2);
+
+    // Création d'un Set pour une recherche rapide en O(1)
+    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+
+    const result = [];
+    for (let i = 0; i < count; i++) {
+      const index = (start + i + total) % total;
+      const article = articles[index];
+
+      // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
+      result.push({
+        ...article,
+        isSoldOut: soldOutIds.has(article.id)
+      });
     }
+    return result;
+  }
 
-    // AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
+  // AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
   canShowCarousel = computed(() => this.filteredArticlesSelected.length >= 3);
 
 
@@ -148,7 +188,11 @@ export class CarouselSelectComponent implements OnInit{
     this.cartService.add(product, 1);
   }
 
-    readViewProduct(product:Product){    
+  addToRequest(id: number) {
+    this.router.navigate(['/request/', id]);
+  }
+
+  readViewProduct(product: Product) {
     this.productService.product = product; // Injecte les infos dans ProductService    
     this.router.navigate(['product', product.id]); // Navigue vers la page produit
   }

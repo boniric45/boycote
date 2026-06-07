@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, computed, inject, Input, OnChanges, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -10,24 +12,27 @@ import { ProductService } from '../../services/product.service';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent implements OnInit {
-  
-  private productService = inject(ProductService);
-  @Input() product!:Product;
 
-  protected  titre = '';
-  protected  description = '';
-  protected  prix = 0;
-  protected  condition = '';
-  protected  genre = '';
-  protected  taille = '';
-  protected  mesures = '';
-  afficherMesures = false;
+  productsSoldOut = signal<Product[]>([]); // La liste venant du service
+  articles = signal<any[]>([]);
+
+  private productService = inject(ProductService);
+
+  product!:Product;
+
+    titre = '';
+    description = '';
+    prix = 0;
+    condition = '';
+    genre = '';
+    taille = '';
+    mesures = '';
+    afficherMesures = false;
+    private router = inject(Router);
+    private cartService = inject(CartService);
   
   ngOnInit(): void {
-
     this.product = this.productService.product;
-    console.log('Product-Card > ',this.product);
-    
     this.titre = this.product?.name;
     this.description = this.product?.description;
     this.prix = this.product?.prix;
@@ -49,6 +54,21 @@ export class ProductCardComponent implements OnInit {
   this.mesures = this.product.mesure;
 }
 
+  loadProductsSoldOut() {
+    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+      this.productsSoldOut.set(psoldout);
+    })
+  }
 
+  
+
+
+  addToCart(product: Product) {
+    this.cartService.add(product, 1);
+  }
+
+    addToRequest(id: number) {
+    this.router.navigate(['/request/', id]);
+  }
 
 }

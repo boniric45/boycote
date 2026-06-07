@@ -41,7 +41,8 @@
                             @for (article of visibleArticles; track trackByArticle($index, article); let i = $index) {
                             <img 
                             [src]="article.pathpictureone" 
-                            class="item" [style.transform]="getTransform(i)" 
+                            class="item" 
+                            [style.transform]="getTransform(i)" 
                             [class.fullscreen]="isFullscreen"
                             (click)="openFullscreen(article.pathpictureone)"
                             [style.zIndex]="getZIndex(i)"
@@ -69,10 +70,9 @@
                     </button>
                     </div>
 
-
                     <div class="container">
                         <div class="description">
-                            <app-product-card (click)="addToCart(product)"></app-product-card>
+                            <app-product-card ></app-product-card>
                         </div>
                     </div>
             
@@ -84,10 +84,11 @@
             </div>
             
         </div>
-        
-        <div class="fullscreen-overlay" *ngIf="fullscreenImage" (click)="closeFullscreen()">
-            <img [src]="fullscreenImage" class="fullscreen-image" />
-        </div>
+        @if(fullscreenImage){
+            <div class="fullscreen-overlay" (click)="closeFullscreen()">
+                <img [src]="fullscreenImage" class="fullscreen-image" />
+            </div>
+        }
     </div>
     <div class="footer">
         <app-footer></app-footer>

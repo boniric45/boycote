@@ -157,6 +157,20 @@ button.primary:hover { filter: brightness(1.10); }
 button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
 
 
+.sold {
+  filter: grayscale(100%) opacity(1); /* Rend l'image grise et semi-transparente */
+  cursor: not-allowed;
+}
+
+.img-sold-out{
+  width: 170px;
+  height: 75px;
+  position: absolute;
+  top: -50%;
+  right: 0;
+  z-index: 101;
+}
+
 /////////////////////////////////////////////////////////////
 
 /* Mobile */

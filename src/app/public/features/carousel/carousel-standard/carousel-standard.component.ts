@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { Router } from "@angular/router";
+import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
 import { ApiService } from '../../../../services/api.service';
+import { CartService } from '../../../../services/cart.service';
 import { ProductService } from '../../../../services/product.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
-import { CartService } from '../../../../services/cart.service';
-import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -27,7 +27,6 @@ export class CarouselStandardComponent implements OnInit {
   allProducts = signal<Product[]>([]); // Votre liste complète
   productsSoldOut = signal<Product[]>([]); // La liste venant du service
 
-
   articles: Product[] = [];
   visibleCount = 5;
   currentIndex = 0;
@@ -37,6 +36,7 @@ export class CarouselStandardComponent implements OnInit {
   private touchEndX = 0;
   cart$ = this.cartService.items$;
   private subscription: Subscription = new Subscription();
+
 
   // 2. Un signal calculé qui combine les deux
   productsWithBadge = computed(() => {
@@ -51,16 +51,13 @@ export class CarouselStandardComponent implements OnInit {
   constructor(){
     effect(()=> {
       const data = this.productsSoldOut();
-      if(data.length > 0){
-        console.log('Réaction automatique au changement : ', data);
-        console.log(this.productsWithBadge());
-        
-        // maFonctionDeTraitement(data);
-      }
+      // if(data.length > 0){
+      //   console.log('Réaction automatique au changement : ', data);
+      //   console.log(this.productsWithBadge());
+      //   // maFonctionDeTraitement(data);
+      // }
 
     })
-
-
   }
   
   ngOnInit(): void {
@@ -92,37 +89,6 @@ export class CarouselStandardComponent implements OnInit {
     })
   }
 
-
-  // VERSION FINALE : aucune duplication, aucun undefined
-//   get visibleArticles() {
-//   if (!this.articles || this.articles.length === 0) {
-//     return [];
-//   }
-
-//   const total = this.articles.length;  
-
-//   const count = Math.min(this.visibleCount, total);
-
-//   const start = this.currentIndex - Math.floor(count / 2);
-
-//   const result = [];
-
-//   for (let i = 0; i < count; i++) {
-//     const index = (start + i + total) % total;
-//     result.push(this.articles[index]);
-//   }
-//   return result;
-// }
-
-// Si Problème de refraichissement Au lieu d'un getter, vous définissez ceci :
-// visibleArticles = computed(() => {
-//   const articles = this.articles(); // Si articles est un Signal
-//   const soldOuts = this.productsSoldOut(); // Votre signal de rupture
-  
-//   // ... votre logique de calcul ici ...
-//   return result;
-// });
-
   get visibleArticles() {
     if (!this.articles || this.articles.length === 0) return [];
 
@@ -147,20 +113,6 @@ export class CarouselStandardComponent implements OnInit {
     return result;
   }
 
-  getArticleImageWithBadge(article: any):string{
-    if(article.isSoldOut){
-      return `/pictures/sold-out.webp`;
-    }
-    return article.pathpictureone;
-  }
-
-//   getArticleImageWithBadge(article: any) {
-//   if (article.isSoldOut) {
-//     // On superpose un voile sombre + l'image
-//     return `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${article.pathpictureone}')`;
-//   }
-//   return `url('${article.pathpictureone}')`;
-// }
 
   trackByArticle(index: number, article: Product) {
     return article.id ?? index;
@@ -252,6 +204,11 @@ export class CarouselStandardComponent implements OnInit {
   addToCart(product: Product) {
   this.cartService.add(product, 1);
   }
+
+  addToRequest(id: number) {   
+  this.router.navigate(['/request/',id]);
+  }
+
 
  
 }

@@ -9,6 +9,10 @@
   cursor: pointer;
 }
 
+.global-wrapper{
+  margin-left: 60px;
+}
+
 .carousel-wrapper {
   display: block;
   justify-content: center;
@@ -152,11 +156,29 @@ button.primary span { position: relative; z-index: 3; }
 button.primary:hover { filter: brightness(1.10); }
 button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
 
+.sold {
+  filter: grayscale(100%) opacity(1); /* Rend l'image grise et semi-transparente */
+  cursor: not-allowed;
+}
+
+.img-sold-out{
+  width: 170px;
+  height: 75px;
+  position: absolute;
+  top: -50%;
+  right: 0;
+  z-index: 101;
+}
+
 
 /////////////////////////////////////////////////////////////
 
 /* Mobile */
 @media all and (max-width: 600px) { 
+
+  .global-wrapper{
+    margin-left: 0px;
+  }
   
   .desktop {
     display: none !important;
@@ -210,22 +232,6 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
     margin-right: 4%;
   }
 
-  .badge {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Centre parfaitement le texte */
-  color: white;
-  font-weight: bold;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  background: rgba(255, 0, 0, 0.7); /* Opacité du badge rouge */
-  padding: 10px 20px;
-  border-radius: 5px;
-  pointer-events: none; /* Ignore les clics pour laisser passer vers l'image */
-    z-index: 200;
-  }
 
 }
 

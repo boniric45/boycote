@@ -16,6 +16,7 @@ import { PanierComponent } from './public/panier/panier.component';
 import { SuccessComponent } from './public/success/success.component';
 import { LoginComponent } from './public/admin/login/login.component';
 import { TestComponent } from './test/test.component';
+import { CustomerRequestComponent } from './public/features/customer-request/customer-request.component';
 
 
 export const routes: Routes = [
@@ -215,5 +216,10 @@ export const routes: Routes = [
     path: 'test',
     title:'test',
     component: TestComponent
+  }  ,
+    {
+    path: 'request/:id',
+    title:'Customer Request',
+    component: CustomerRequestComponent
   }
 ];

@@ -34,6 +34,12 @@
                [style.opacity]="getOpacity(i)"
              />
            }
+           
+          @if(centralArticle.isSoldOut){
+            <img class="img-sold-out" 
+              src="/pictures/sold-out.png" >
+          }
+
       </div>
 
       <button class="nav right desktop" (click)="next()">
@@ -44,17 +50,24 @@
 
       <div class="container">
         <div class="description">
-        @if(centralArticle){
-        <p>Marque: {{ centralArticle.marque }}</p>
-        <p>{{ centralArticle.name }}</p>
-        <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
-      }
+          @if(centralArticle){
+          <p>{{ centralArticle.name }}</p>
+          <p>{{ centralArticle.gender}}</p>
+          <p> {{ centralArticle.size}}</p>
+          <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
+          }
         </div>
       </div>
 
-        <div class="conteneur-bouton">
+      <div class="conteneur-bouton">
+
+        @if(centralArticle.isSoldOut){
+        <button class="primary" (click)="addToRequest(centralArticle.id)"><span>REQUEST SOURCING</span></button>
+        } 
+        @else {
           <button class="primary" (click)="addToCart(centralArticle)"><span>ADD TO CART</span></button>
-        </div>
+        }
+      </div>
 
       <div class="nav-mobile mobile">
         <button class="nav" (click)="prev()">

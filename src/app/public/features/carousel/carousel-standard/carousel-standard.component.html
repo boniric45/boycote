@@ -13,22 +13,21 @@
           [class.animating]="isAnimating" [class.left-direction]="direction === 'left'">
 
           @if(visibleArticles.length > 0){
-
           @for (article of visibleArticles;track trackByArticle($index,article); let i = $index) {
 
-              <img (click)="readViewProduct(article)" 
-              class="item"
-              [src]="getArticleImageWithBadge(article)"
-              [style.transform]="getTransform(i)" 
-              [style.zIndex]="getZIndex(i)" 
-              [style.opacity]="getOpacity(i)" />
-            
-
-          <!-- @if (article.isSoldOut) {
-            <span class="badge">SOLD OUT</span>
-          } -->
+          <img (click)="readViewProduct(article)"
+            class="item"
+            [src]="article.pathpictureone"
+            [class.sold]="article.isSoldOut" 
+            [style.transform]="getTransform(i)" 
+            [style.zIndex]="getZIndex(i)" 
+            [style.opacity]="getOpacity(i)" />
 
             }
+          }
+          @if(centralArticle.isSoldOut){
+            <img class="img-sold-out" 
+              src="/pictures/sold-out.png" >
           }
         </div>
 
@@ -41,18 +40,22 @@
       <div class="container">
         <div class="description">
           @if(centralArticle){
-          <a>{{ centralArticle.name }}</a>
+          <p>{{ centralArticle.name }}</p>
           <p>{{ centralArticle.gender}}</p>
-          <a> {{ centralArticle.size}}</a>
-          <br>
+          <p> {{ centralArticle.size}}</p>
           <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
           }
         </div>
       </div>
 
       <div class="conteneur-bouton">
-        <button class="primary" (click)="addToCart(centralArticle)"><span>ADD TO CART</span>
-        </button>
+
+        @if(centralArticle.isSoldOut){
+        <button class="primary" (click)="addToRequest(centralArticle.id)"><span>REQUEST SOURCING</span></button>
+        } 
+        @else {
+          <button class="primary" (click)="addToCart(centralArticle)"><span>ADD TO CART</span></button>
+        }
       </div>
 
       <div class="nav-mobile mobile">
