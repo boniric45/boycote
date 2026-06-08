@@ -60,7 +60,12 @@
 .article-info {
   background: rgba(0,0,0,0.06); border-radius: 7px;
   border: 1px solid rgba(0,0,0,0.10); border-top: 1px solid rgba(255,255,255,0.55);
-  padding: 8px 12px; display: flex; flex-direction: column; gap: 3px;
+  padding: 8px 12px; 
+  display: flex; 
+  justify-content: center; 
+  flex-direction: column; 
+  gap: 3px;
+  text-align: center;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
 }
 .article-nom { font-size: 12px; font-weight: 700; color: #1a1a1a; }
@@ -98,4 +103,18 @@
   span { position: relative; z-index: 3; }
   &:hover { filter: brightness(1.10); }
   &:active { filter: brightness(0.88); transform: translateY(1px); }
+}
+
+// Centrage Apple
+.img-product{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  object-fit: cover; /* Resizes to fill; clips edges evenly */
+  object-position: center; /* Explicitly forces centering (default behavior) */
+  display: block;      /* Transforme l'image en élément de bloc */
+  margin-left: auto;   /* Pousse l'image par la gauche */
+  margin-right: auto;  /* Pousse l'image par la droite */
+  max-width: 100%;     /* Empêche l'image de dépasser de l'écran de l'iPhone */
+  width: 150px;
+  height: 200px;        /* Conserve les proportions de l'image */
 }

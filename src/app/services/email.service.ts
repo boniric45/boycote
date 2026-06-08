@@ -8,9 +8,11 @@ export class EmailService {
 
 private http = inject(HttpClient);
 
+private apiUrl = 'https://www.boycote.fr/api/send_email.php';
 
-
-
+sendEmail(formData: any) {
+    return this.http.post(this.apiUrl, formData);
+  }
   
   
 }

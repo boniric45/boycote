@@ -48,17 +48,6 @@ export class CarouselStandardComponent implements OnInit {
     }));
   });
 
-  constructor(){
-    effect(()=> {
-      const data = this.productsSoldOut();
-      // if(data.length > 0){
-      //   console.log('Réaction automatique au changement : ', data);
-      //   console.log(this.productsWithBadge());
-      //   // maFonctionDeTraitement(data);
-      // }
-
-    })
-  }
   
   ngOnInit(): void {
     this.loadProducts();

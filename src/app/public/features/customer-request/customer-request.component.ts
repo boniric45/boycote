@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../models/product';
-import { ApiService } from '../../../services/api.service';
+import { EmailService } from '../../../services/email.service';
 import { ProductService } from '../../../services/product.service';
 
 @Component({
@@ -14,6 +14,8 @@ import { ProductService } from '../../../services/product.service';
   templateUrl: './customer-request.component.html',
   styleUrl: './customer-request.component.scss',
 })
+
+
 export class CustomerRequestComponent implements OnInit{
 
   submitted = output<void>();
@@ -22,59 +24,81 @@ export class CustomerRequestComponent implements OnInit{
    */
   // product = signal<Product | any>('');
   product!:Product;
+
   idProduct:number = 0;
   private subscription  = new Subscription();
-  email = signal('');
+  email = '';
   isOpen = signal(true);
-  productsSoldOut = signal<Product[]>([]);
+  productsSoldOut:Product[] = [];
 
   private apiUrl = 'https://www.boycote.fr/api';
 
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
+  private emailService = inject(EmailService);
   private http = inject(HttpClient);
   private location = inject(Location);
 
   ngOnInit(){
       const id = this.route.snapshot.paramMap.get('id');
 
-    this.loadProductsSoldOut();
-    console.log(this.productsSoldOut());
+      if(id) {
+        this.idProduct =+ id;
+        this.loadProductsSoldOut();
+      }
     
   }
 
   ngOnChanges(){
-    console.log(this.product);
+    console.log('Change > ',this.product);
   }
 
-
   // ALIMENTE LA LISTE DES SOLDOUT
-  loadProductsSoldOut(){
-    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
-      this.productsSoldOut.set(psoldout);
-    })
+  loadProductsSoldOut() {
+    this.productService.disponibilityProductSoldOut().subscribe({
+      next:(result)=> {
+        this.productsSoldOut = result;
+        this.productsSoldOut.forEach(p => {
+          if(p.id === this.idProduct ){
+            this.product = p;
+          }
+        })
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
+
   }
 
  OnDestroy(){
   this.subscription.unsubscribe();
  }
 
-
   submit(): void {
-    if (!this.email()) return;
+    if (!this.email) return;
 
-    this.http.post(this.apiUrl, {
-      nom:   this.product.name,
-      sku:   this.product.sku,
-      email: this.email
-    }).subscribe({
-      next: () => {
-        this.isOpen.set(false);
-        this.email.set('');
-        this.submitted.emit();
+    const contactData = {
+          email: this.email,
+          nom:   this.product.name,
+          sku:   this.product.sku,
+          marque: this.product.marque,
+          size: this.product.size
+        };
+
+        console.log('Données envoyées au PHP :', contactData);
+    this.emailService.sendEmail(contactData).subscribe({
+      next:(response)=>{
+        if(response){
+          alert('message sent successfully');
+          this.email='';
+        }
       },
-      error: (err) => console.error('Erreur sourcing:', err)
-    });
+      error:()=>{
+        alert('message not sent, sorry');
+      }
+    })
+
   }
 
 
