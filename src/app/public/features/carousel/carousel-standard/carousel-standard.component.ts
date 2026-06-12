@@ -199,5 +199,10 @@ export class CarouselStandardComponent implements OnInit {
   }
 
 
+
+
+
+
+  
  
 }

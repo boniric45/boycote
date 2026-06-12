@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
-import { BoycoteComponent } from "../boycote/boycote.component";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 
 @Component({
   selector: 'app-stop-landscape',
@@ -10,10 +9,8 @@ import { BoycoteComponent } from "../boycote/boycote.component";
 })
 export class StopLandscapeComponent {
 
-  // @Input() visible:boolean = false;
-  visible: boolean = false;
+  visible = false;
   private mq!: MediaQueryList;
-  
   private handler = (e: MediaQueryListEvent) => {
     this.visible = e.matches;
     this.cdr.markForCheck();
@@ -31,6 +28,5 @@ export class StopLandscapeComponent {
   ngOnDestroy() {
     if (this.mq) this.mq.removeEventListener('change', this.handler);
   }
-
 
 }

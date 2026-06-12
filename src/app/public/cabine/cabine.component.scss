@@ -219,7 +219,7 @@
 
 .info-line {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   flex-direction: row;
   align-items: baseline;
   margin-bottom: 6px;
@@ -228,6 +228,7 @@
   line-height: 1.6;
   min-width: 0;
   overflow: hidden;
+  padding-left: 5%;
 }
 
 .info-line .lbl {
@@ -287,11 +288,12 @@
   z-index: 2; /* S'assure que le vêtement est au-dessus du mannequin */
 }
 
-app-mini-footer{
+app-footer{
    margin: 0;
    padding-top: 30px;
    flex-grow: 1; // permet au footer de rester en bas
 }
+
 
 .logo{
   display: flex;

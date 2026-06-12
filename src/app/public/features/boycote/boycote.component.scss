@@ -1,13 +1,14 @@
-
 * {
    margin: 0;
    padding: 0;
 }
+
 *,
 *::before,
 *::after {
    box-sizing: border-box;
 }
+
 
 
 .page {
@@ -388,10 +389,10 @@ input[type="text"] {
 
 .parent {
    display: grid;
-   grid-template-columns: 1fr;
-   grid-template-rows: auto 3fr auto !important;
+   grid-template-columns: auto;
+   grid-template-rows: auto auto auto !important;
    grid-column-gap: 3px;
-   grid-row-gap: 0px;
+   grid-row-gap: 8px;
 }
 
 // ENTETE
@@ -419,9 +420,7 @@ input[type="text"] {
    margin: 0;
    width: 300px;
    background: transparent;
-
 }
-
 
 .container-hamburger {
    display: none;
@@ -439,6 +438,7 @@ input[type="text"] {
 .container-carousel {
    display: flex;
    flex-direction: column;
+   justify-content: center;
    align-items: center;
 }
 
@@ -450,7 +450,6 @@ input[type="text"] {
 .div3 {
    // PIED DE PAGE
    grid-area: 3 / 1 / 4 / 2;
-   margin: 5px;
 }
 
 .container-logo-mobile,
@@ -463,6 +462,7 @@ hidden-carousel {
    opacity: 0;
    pointer-events: none;
 }
+
 
 @media all and (min-width: 601px) {
    .panier-wrapper {
@@ -479,103 +479,113 @@ hidden-carousel {
 
 @media all and (max-width: 600px) {
 
-.hamburger-wrapper,
-.logo-mobile-wrapper,
-.panier-wrapper {
-    width: 33%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
+   .global-content {
+      display: flex;
+      justify-content: center;
+   }
 
-}
+   .container-boycote {
+      width: 100%;
+      max-width: 420px;
+      /* largeur idéale mobile */
+      margin: 0 auto;
+   }
 
-.panier-wrapper{
-  justify-content: flex-end;
-  margin-top: 2px;
-  margin-right: 14px;
-  z-index: 99;
-}
+   .hamburger-wrapper {
+      justify-content: flex-start;
+   }
 
-.hamburger-wrapper {
-    justify-content: flex-start;
-}
+   .panier-wrapper {
+      justify-content: flex-end;
+   }
 
-.container-hamburger
- {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+   .hamburger-wrapper,
+   .logo-mobile-wrapper,
+   .panier-wrapper {
+      width: 33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+   }
 
-app-hamburger{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px; /* ou 45px selon ton design */
-    width: 50px;
-    margin-right: 5px;
-    margin-top: 2px;
-}
+   .hamburger-wrapper,
+   .logo-mobile-wrapper,
+   .panier-wrapper {
+      flex: 1;
+   }
 
-app-hamburger svg {
-    height: 100%;
-    width: auto;
-    display: block;
-}
+   .panier-wrapper {
+      justify-content: flex-end;
+      margin-top: 2px;
+      margin-right: 4px;
+      z-index: 99;
+   }
 
-app-cart{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 48px; /* ou 45px selon ton design */
-    width: 48px;
-}
+   .hamburger-wrapper {
+      justify-content: flex-start;
+   }
 
-app-footer{
-   margin: 0;
-   padding-top: 50px;
-   flex-grow: 1; // permet au footer de rester en bas
-}
+   .container-hamburger {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+   }
 
-  
-   .container-hamburger{
+   app-hamburger {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      /* ou 45px selon ton design */
+      width: 50px;
+      margin-right: 5px;
+      margin-top: 2px;
+   }
+
+   app-hamburger svg {
+      height: 100%;
+      width: auto;
+      display: block;
+   }
+
+   app-footer {
+      margin: 0;
+      // padding-top: 50px;
+      flex-grow: 1; // permet au footer de rester en bas
+   }
+
+   .container-hamburger {
       transform: scale(0.8);
    }
 
    .img_logo_mobile {
       background: transparent;
-      width: 125px;
-      height: 80px;
+      width: 100px;
+      height: auto;
    }
-   
+
    .div1 {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 80px;
-      margin-bottom: 30px;
+
    }
 
-   .div2{
-      width: 100%;
-      height: auto;
-      margin-top: 150px;
+   .div2 {
+      margin-top: 10px;
+      margin-bottom: 10px;
    }
-   
-.div3{
-  padding-top: 50px ;
-}
+
+   .div3 {
+      padding-top: 50px;
+   }
 
    .container-carousel {
       display: flex;
       justify-content: center;
-      position: relative;
-      width: 100%;
-      height: 180px;
-      transform: scale(0.87);
-      transform-origin: top center;
-      margin-top: 120px;
+      width: auto;
    }
 
    // Liste déroulante
@@ -592,7 +602,8 @@ app-footer{
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%; /* important */
+      height: 100%;
+      /* important */
       margin-top: 10px;
       background: transparent;
 
@@ -604,7 +615,7 @@ app-footer{
       align-items: center;
       width: 50px;
       margin: 175px 0 0 20px;
-     // transform: scale(1.2);
+      // transform: scale(1.2);
 
    }
 
@@ -634,7 +645,6 @@ app-footer{
    .container-select {
       display: none;
       background: transparent;
-
    }
 
    // Bouton de recherche des listes déroulantes
@@ -675,32 +685,49 @@ app-footer{
 
    /*  LISTE DEROULANTE  */
    .mac-dropdown {
-     display: none;
+      display: none;
       position: absolute;
       top: calc(100% + 16px);
-      left: -31px; 
+      left: -31px;
    }
 
    // Barre de recherche Globale
-   .selectSort{
+   .selectSort {
       z-index: 9999;
       transform: scale(1.5);
    }
 
-   .btnF5{
+   .btnF5 {
       margin-right: 20px;
    }
-   
-   input[type="text"]{
-      margin-right: 20px ;
+
+   input[type="text"] {
+      margin-right: 20px;
       transform: scale(1.15);
    }
 
    .mac-checkbox {
-   width: 20px;
-   height: 20px;
-   margin-right: 5px;
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
    }
+
+.container-carousel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-center,
+.carousel-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.page-center{
+   height: 650px;
+}
 
 
 }

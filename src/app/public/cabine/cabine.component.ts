@@ -4,13 +4,12 @@ import { RouterModule } from "@angular/router";
 import { forkJoin } from 'rxjs';
 import { Cabin } from "../../models/cabin";
 import { Garment } from "../../models/garment";
+import { Product } from "../../models/product";
 import { CabineService } from "../../services/cabine.service";
 import { GarmentService } from "../../services/garment.service";
-import { ButtonReturnComponent } from "../features/button-return/button-return.component";
-import { MiniFooterComponent } from "../mini-footer/mini-footer.component";
-import { Product } from "../../models/product";
-import { routes } from "../../app.routes";
 import { ProductService } from "../../services/product.service";
+import { ButtonReturnComponent } from "../features/button-return/button-return.component";
+import { FooterComponent } from "../footer/footer.component";
 
 type Cat = 'chapeau' | 'haut' | 'bas' | 'chaussures';
 
@@ -24,7 +23,7 @@ const mapCat: Record<Cat, string> = {
 @Component({
   selector: 'app-cabine',
   standalone: true,
-  imports: [RouterModule, ButtonReturnComponent, CommonModule, MiniFooterComponent],
+  imports: [RouterModule, ButtonReturnComponent, CommonModule,  FooterComponent],
   templateUrl: './cabine.component.html',
   styleUrl: './cabine.component.scss'
 })

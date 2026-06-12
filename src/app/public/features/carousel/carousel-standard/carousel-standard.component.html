@@ -22,18 +22,20 @@
             [style.transform]="getTransform(i)" 
             [style.zIndex]="getZIndex(i)" 
             [style.opacity]="getOpacity(i)" />
+
+            @if(centralArticle.isSoldOut){
+              <img  class="img-sold-out" 
+                #soldBadge
+                src="/pictures/sold-out.png">
             }
-          }
-          @if(centralArticle.isSoldOut){
-            <img class="img-sold-out" 
-              src="/pictures/sold-out.png" >
+
+            }
           }
         </div>
 
         <button class="nav right desktop" (click)="next()">
           <app-component-right></app-component-right>
         </button>
-
       </div>
 
       <div class="container">
@@ -48,7 +50,6 @@
       </div>
 
       <div class="conteneur-bouton">
-
         @if(centralArticle.isSoldOut){
         <button class="primary" (click)="addToRequest(centralArticle.id)"><span>REQUEST SOURCING</span></button>
         } 

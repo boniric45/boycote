@@ -7,7 +7,7 @@ export class CookieService {
 
   set(name: string, value: string, days = 365) {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
   }
 
   get(name: string): string | null {
@@ -19,6 +19,14 @@ export class CookieService {
 
   delete(name: string) {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+  }
+
+  getBoolean(name: string): boolean {
+    return this.get(name) === 'true';
+  }
+
+  setBoolean(name: string, value: boolean, days: number = 365): void {
+    this.set(name, value ? 'true' : 'false', days);
   }
 
   

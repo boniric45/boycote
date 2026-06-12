@@ -42,6 +42,7 @@ import { HamburgerComponent } from "../hamburger/hamburger.component";
     CartComponent,
     HamburgerComponent,
     CarouselSelectComponent
+
 ],
   templateUrl: './boycote.component.html',
   styleUrl: './boycote.component.scss',
@@ -100,9 +101,9 @@ export class BoycoteComponent implements OnInit, OnDestroy {
     /** ------------------------------
    *  LABELS DYNAMIQUES
    * ------------------------------ */
-  labMarques = computed(() => this.labelOf(this.selectedMarques(), 'Brands'));
-  labTypes = computed(() => this.labelOf(this.selectedTypes(), 'Garments'));
-  labGenders = computed(() => this.labelOf(this.selectedGenders(), 'Genders'));
+  labMarques = computed(() => this.labelOf(this.selectedMarques(), 'BRANDS'));
+  labTypes = computed(() => this.labelOf(this.selectedTypes(), 'TYPES'));
+  labGenders = computed(() => this.labelOf(this.selectedGenders(), 'GENDERS'));
 
     /** ------------------------------
    *  STYLE
@@ -199,9 +200,7 @@ export class BoycoteComponent implements OnInit, OnDestroy {
     }
 
     this.manageCarousel(1); // Lance le carousel standard
-    this.cartService.count$.subscribe(value => this.countPanier = value);
-
-    
+    this.cartService.count$.subscribe(value => this.countPanier = value);    
   }
 
   ngOnDestroy(){

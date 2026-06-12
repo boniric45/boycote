@@ -2,6 +2,7 @@
 <div class="imgBack">
   <app-button-return></app-button-return>
 </div>
+
 <div class="header-wrapper">
   <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
 </div>
@@ -18,15 +19,15 @@
 
     <div class="window-body">
       <div class="tab-bar">
-        <button class="tab"
-          *ngFor="let onglet of t.onglets; let i = index"
-          [class.active]="ongletActif === i"
-          (click)="ongletActif = i">{{ onglet }}</button>
-        <button class="tab" (click)="ouvrirCookies()">🍪 Cookies</button>
+          <button class="tab"
+            *ngFor="let onglet of t.onglets; let i = index"
+            [class.active]="ongletActif === i"
+            (click)="ongletActif = i">{{ onglet }}</button>
+          <button class="tab" (click)="ouvrirCookies()">🍪 Cookies</button>
+
       </div>
 
       <div class="divider"></div>
-
       <div class="scroll-area">
         <div class="section">
           <p class="section-titre">{{ section.titre }}</p>
@@ -56,6 +57,7 @@
   </div>
 </div>
 
+
 <!-- POPUP COOKIE PREFERENCES -->
 <div class="cookie-overlay" *ngIf="cookiePopupOuvert" (click)="fermerCookies()">
   <div class="cookie-popup" (click)="$event.stopPropagation()">
@@ -80,7 +82,9 @@
           <span class="cookie-row-desc">Help us understand how visitors use the site.</span>
         </div>
         <label class="toggle">
-          <input type="checkbox" [(ngModel)]="analyticsActif">
+          <input type="checkbox" 
+          [(ngModel)]="analyticsActif"
+          (change)="updateAnalytics()">
           <div class="toggle-track"></div>
         </label>
       </div>
@@ -91,18 +95,19 @@
           <span class="cookie-row-desc">Used to show personalised ads.</span>
         </div>
         <label class="toggle">
-          <input type="checkbox" [(ngModel)]="marketingActif">
+          <input type="checkbox" 
+          [(ngModel)]="marketingActif"
+          (change)="updateMarketing()">
           <div class="toggle-track"></div>
         </label>
       </div>
 
       <div class="divider"></div>
-      <div class="cookie-btn-row">
-        <button class="btn-cookie" (click)="fermerCookies()"><span>CANCEL</span></button>
-        <button class="btn-cookie" (click)="sauvegarder()"><span>SAVE</span></button>
-      </div>
     </div>
   </div>
 </div>
+
+
 </div>
+
 <app-footer></app-footer>

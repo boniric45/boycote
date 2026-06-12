@@ -163,12 +163,14 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
 }
 
 .img-sold-out{
-  width: 170px;
-  height: 75px;
+  width: 340px;
+  height: 150px;
   position: absolute;
-  top: -50%;
-  right: 0;
+  top: -62%;
+  right: -5%;
+  left: 0;
   z-index: 101;
+  transition: top 0.25s ease-out, left 0.25s ease-out;
 }
 
 /////////////////////////////////////////////////////////////

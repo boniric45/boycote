@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
 import { CabinUpdateFormComponent } from './public/admin/cabin-update-form/cabin-update-form.component';
-import { CabineAdminComponent } from './public/admin/cabine-admin/cabine-admin.component';
 import { ConsoleComponent } from './public/admin/console/console.component';
+import { LoginComponent } from './public/admin/login/login.component';
 import { AnnulationComponent } from './public/annulation/annulation.component';
 import { CabineComponent } from './public/cabine/cabine.component';
 import { CancelComponent } from './public/cancel/cancel.component';
@@ -11,12 +11,10 @@ import { BoycoteComponent } from './public/features/boycote/boycote.component';
 import { boycoteRoutes } from './public/features/boycote/boycote.route';
 import { CarouselProductComponent } from './public/features/carousel/carousel-product/carousel-product.component';
 import { ContactComponent } from './public/features/contact/contact.component';
-import { LegalComponent } from './public/legal/legal.component';
-import { PanierComponent } from './public/panier/panier.component';
-import { SuccessComponent } from './public/success/success.component';
-import { LoginComponent } from './public/admin/login/login.component';
-import { TestComponent } from './test/test.component';
 import { CustomerRequestComponent } from './public/features/customer-request/customer-request.component';
+import { LegalComponent } from './public/legal/legal.component';
+import { SuccessComponent } from './public/success/success.component';
+import { CookiesComponent } from './public/features/cookies/cookies.component';
 
 
 export const routes: Routes = [
@@ -149,7 +147,6 @@ export const routes: Routes = [
       .then(c => c.EditGenderComponent)
   },
 
-
   // AUTRES ROUTES
   {
     path: 'carousel',
@@ -196,30 +193,15 @@ export const routes: Routes = [
     title: 'Annulation',
     component: AnnulationComponent
   },
-  {
-    path: 'panier',
-    title: 'Panier',
-    component: PanierComponent
-  },
-  {
-    path: 'cabs',
-    title:'cabs',
-    component: CabineAdminComponent
-  },
     {
     path: 'admin3',
     title:'Administration',
     component: LoginComponent
-  }
-  ,
-    {
-    path: 'test',
-    title:'test',
-    component: TestComponent
-  }  ,
-    {
+  },
+  {
     path: 'request/:id',
     title:'Customer Request',
     component: CustomerRequestComponent
   }
+
 ];
