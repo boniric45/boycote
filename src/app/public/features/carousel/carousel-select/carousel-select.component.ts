@@ -1,18 +1,21 @@
-import { Component, computed, effect, inject, Input, OnInit, signal, Signal } from '@angular/core';
-import { ApiService } from '../../../../services/api.service';
 import { CommonModule } from '@angular/common';
+import { Component, computed, effect, inject, Input, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Product } from '../../../../models/product';
+import { ApiService } from '../../../../services/api.service';
+import { CartService } from '../../../../services/cart.service';
+import { LogicSelectService } from '../../../../services/logic-select.service';
+import { ProductService } from '../../../../services/product.service';
 import { ProgressbarComponent } from '../../../progressbar/progressbar.component';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
-import { Product } from '../../../../models/product';
-import { CartService } from '../../../../services/cart.service';
-import { Router } from '@angular/router';
-import { ProductService } from '../../../../services/product.service';
-import { Subscription } from 'rxjs';
+import { CarouselMiniCardComponent } from '../carousel-mini-card/carousel-mini-card.component';
 
 @Component({
   selector: 'app-carousel-select',
-  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, ProgressbarComponent],
+  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, ProgressbarComponent, CarouselMiniCardComponent],
+  providers: [LogicSelectService],
   templateUrl: './carousel-select.component.html',
   styleUrl: './carousel-select.component.scss',
 })
@@ -26,19 +29,38 @@ export class CarouselSelectComponent implements OnInit {
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
 
+  @Input() filteredArticlesSelected: Product[] = []; // Parent BoycoteComponent will set this
+  @Input() loadingPb: boolean = true;
+
+  private apiService = inject(ApiService);
+  private cartService = inject(CartService);
+  private productService = inject(ProductService);
+  private router = inject(Router);
   private subscription: Subscription = new Subscription();
+  logic = inject(LogicSelectService);
+
+  ngOnChanges() {
+  console.log("SELECT INPUT:", this.filteredArticlesSelected);
+  this.logic.setArticles(this.filteredArticlesSelected);
+  }
+
 
   constructor() {
+
     effect(() => {
       const data = this.productsSoldOut();
       if (data.length > 0) {
         console.log('Réaction automatique au changement : ', data);
         console.log(this.productsWithBadge());
-        // maFonctionDeTraitement(data);
       }
     })
+
+
   }
 
+  get visibleArticles() { return this.logic.visible(); }
+
+  get showCarousel() { return this.logic.canShowCarousel(); }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -54,73 +76,67 @@ export class CarouselSelectComponent implements OnInit {
     }));
   });
 
-  @Input() filteredArticlesSelected: Product[] = []; // Parent BoycoteComponent will set this
-  @Input() loadingPb: boolean = true;
-
-  private cartService = inject(CartService);
-  private productService = inject(ProductService);
-  private router = inject(Router);
-
   ngOnInit(): void {
-    this.loadProductsSoldOut();
+    this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
+
     this.updateVisibleCount();
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
     });
   }
 
-  normalized = computed(() => {
-    const list = this.filteredArticlesSelected;
 
-    if (!list || list.length === 0) return [];
+  // normalized = computed(() => {
+  //   const list = this.filteredArticlesSelected;
 
-    if (list.length < 5) {
-      const result = [...list];
-      while (result.length < 5) {
-        result.push(...list);
-      }
-      return result.slice(0, 5);
-    }
+  //   if (!list || list.length === 0) return [];
 
-    return list;
-  });
+  //   if (list.length < 5) {
+  //     const result = [...list];
+  //     while (result.length < 5) {
+  //       result.push(...list);
+  //     }
+  //     return result.slice(0, 5);
+  //   }
+
+  //   return list;
+  // });
 
   // ALIMENTE LA LISTE DES SOLDOUT
-  loadProductsSoldOut() {
-    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
-      this.productsSoldOut.set(psoldout);
-    })
-  }
+  // loadProductsSoldOut() {
+  //   this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+  //     this.productsSoldOut.set(psoldout);
+  //   })
+  // }
 
-  get visibleArticles() {
-    const articles = this.filteredArticlesSelected;
+  // get visibleArticles() {
+  //   const articles = this.filteredArticlesSelected;
 
-    if (!articles || articles.length === 0) return [];
+  //   if (!articles || articles.length === 0) return [];
 
-    const total = articles.length;
-    const count = Math.min(this.visibleCount, total);
-    const start = this.currentIndex - Math.floor(count / 2);
+  //   const total = articles.length;
+  //   const count = Math.min(this.visibleCount, total);
+  //   const start = this.currentIndex - Math.floor(count / 2);
 
-    // Création d'un Set pour une recherche rapide en O(1)
-    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+  //   // Création d'un Set pour une recherche rapide en O(1)
+  //   const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
 
-    const result = [];
-    for (let i = 0; i < count; i++) {
-      const index = (start + i + total) % total;
-      const article = articles[index];
+  //   const result = [];
+  //   for (let i = 0; i < count; i++) {
+  //     const index = (start + i + total) % total;
+  //     const article = articles[index];
 
-      // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
-      result.push({
-        ...article,
-        isSoldOut: soldOutIds.has(article.id)
-      });
-    }
-    return result;
-  }
+  //     // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
+  //     result.push({
+  //       ...article,
+  //       isSoldOut: soldOutIds.has(article.id)
+  //     });
+  //   }
+  //   return result;
+  // }
 
   // AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
   canShowCarousel = computed(() => this.filteredArticlesSelected.length >= 3);
-
 
   trackByArticle(index: number, article: any) {
     return article?.id ?? index;
@@ -136,19 +152,22 @@ export class CarouselSelectComponent implements OnInit {
     setTimeout(() => (this.isAnimating = false), 180);
   }
 
-  next() {
-    const total = this.normalized().length;
-    if (total === 0) return;
-    this.triggerAnimation('right');
-    this.currentIndex = (this.currentIndex + 1) % total;
-  }
+  // next() {
+  //   const total = this.normalized().length;
+  //   if (total === 0) return;
+  //   this.triggerAnimation('right');
+  //   this.currentIndex = (this.currentIndex + 1) % total;
+  // }
 
-  prev() {
-    const total = this.normalized().length;
-    if (total === 0) return;
-    this.triggerAnimation('left');
-    this.currentIndex = (this.currentIndex - 1 + total) % total;
-  }
+  // prev() {
+  //   const total = this.normalized().length;
+  //   if (total === 0) return;
+  //   this.triggerAnimation('left');
+  //   this.currentIndex = (this.currentIndex - 1 + total) % total;
+  // }
+
+  next() { this.logic.next(); }
+  prev() { this.logic.prev(); }
 
   getTransform(i: number) {
     const middle = Math.floor(this.visibleCount / 2);
@@ -167,6 +186,7 @@ export class CarouselSelectComponent implements OnInit {
       scale(${scale})
     `;
   }
+
 
   getZIndex(i: number) {
     const middle = Math.floor(this.visibleCount / 2);

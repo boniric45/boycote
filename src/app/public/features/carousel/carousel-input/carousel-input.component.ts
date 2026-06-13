@@ -1,18 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, Input, OnInit, signal, Signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Product } from '../../../../models/product';
 import { ApiService } from '../../../../services/api.service';
+import { CartService } from '../../../../services/cart.service';
+import { LogicInputService } from '../../../../services/logic-input.service';
+import { ProductService } from '../../../../services/product.service';
 import { ProgressbarComponent } from "../../../progressbar/progressbar.component";
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
-import { CartService } from '../../../../services/cart.service';
-import { Product } from '../../../../models/product';
-import { ProductService } from '../../../../services/product.service';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { CarouselMiniCardComponent } from "../carousel-mini-card/carousel-mini-card.component";
 
 @Component({
   selector: 'app-carousel-input',
-  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, ProgressbarComponent],
+  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, ProgressbarComponent, CarouselMiniCardComponent],
+  providers: [LogicInputService],
   templateUrl: './carousel-input.component.html',
   styleUrl: './carousel-input.component.scss',
 })
@@ -23,6 +26,7 @@ export class CarouselInputComponent implements OnInit {
   private productService = inject(ProductService);
   private router = inject(Router);
   private subscription: Subscription = new Subscription();
+  logic = inject(LogicInputService);
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -51,28 +55,23 @@ export class CarouselInputComponent implements OnInit {
         // maFonctionDeTraitement(data);
       }
     })
+
+    effect(() => {
+      this.logic.setSearch(this.searchQuery());
+    });
+
+
   }
 
   ngOnInit(): void {
-    this.loadProducts();
-    this.loadProductsSoldOut();
+    this.apiService.getProducts().subscribe(p => this.logic.setArticles(p));
+    this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
+
     this.updateVisibleCount();
 
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
     });
-  }
-
-  loadProducts() {
-    this.apiService.getProducts().subscribe((p) => {
-      this.articles.set(p);
-    });
-  }
-
-  loadProductsSoldOut() {
-    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
-      this.productsSoldOut.set(psoldout);
-    })
   }
 
   // RECHERCHE DES PRODUITS
@@ -98,7 +97,7 @@ export class CarouselInputComponent implements OnInit {
 
 
   // AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
-  canShowCarousel = computed(() => this.filtered().length >= 3);
+  // canShowCarousel = computed(() => this.filtered().length >= 3);
 
   normalized = computed(() => {
     const list = this.filtered();
@@ -121,31 +120,9 @@ export class CarouselInputComponent implements OnInit {
     return list;
   });
 
-  get visibleArticles() {
-    if (!this.articles || this.articles.length === 0) return [];
+  get visibleArticles() { return this.logic.visible(); }
 
-    const total = this.articles().length;
-    const count = Math.min(this.visibleCount, total);
-    const start = this.currentIndex - Math.floor(count / 2);
-
-    const articles = this.normalized();
-    // Création d'un Set pour une recherche rapide en O(1)
-    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
-
-    const result: any = [];
-
-    for (let i = 0; i < count; i++) {
-      const index = (start + i + total) % total;
-      const article = articles[index];
-
-      // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
-      result.push({
-        ...article,
-        isSoldOut: soldOutIds.has(article.id)
-      });
-    }
-    return result;
-  }
+  get showCarousel() { return this.logic.canShowCarousel(); }
 
 
   trackByArticle(index: number, article: any) {
@@ -163,17 +140,20 @@ export class CarouselInputComponent implements OnInit {
   }
 
 
-  next() {
-    const total = this.normalized().length;
-    if (total === 0) return;
-    this.currentIndex = (this.currentIndex + 1) % total;
-  }
+  // next() {
+  //   const total = this.normalized().length;
+  //   if (total === 0) return;
+  //   this.currentIndex = (this.currentIndex + 1) % total;
+  // }
 
-  prev() {
-    const total = this.normalized().length;
-    if (total === 0) return;
-    this.currentIndex = (this.currentIndex - 1 + total) % total;
-  }
+  // prev() {
+  //   const total = this.normalized().length;
+  //   if (total === 0) return;
+  //   this.currentIndex = (this.currentIndex - 1 + total) % total;
+  // }
+
+  next() { this.logic.next(); }
+  prev() { this.logic.prev(); }
 
   getTransform(i: number) {
     const middle = Math.floor(this.visibleCount / 2);

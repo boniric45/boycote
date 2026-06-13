@@ -6,17 +6,23 @@
       <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
     </div>
   } 
-  @else if (visibleArticles.length === 0) {
-
-    @if(visibleArticles.length<3){
+  @else if(logic.noResult()){
     <div class="no-result"> NO RESULTS, PLEASE RETRY</div>
-    }
-  } @else if (canShowCarousel()) {
+  } 
+  @else if (logic.fallbackMode()) {
+    <div class="mini-carousel-wrapper">
+      @for(article of logic.filtered();track article.id){
+        <app-carousel-mini-card 
+        [article]="article" />
+      }
+    </div>
+  }
+  @else if (showCarousel) {
 
     <div class="carousel-wrapper">
       <div class="carousel">
 
-      <button class="nav left desktop" (click)="prev()">
+      <button class="nav left desktop" (click)="logic.prev()">
         <app-component-left></app-component-left>
       </button>
 
@@ -42,7 +48,7 @@
 
       </div>
 
-      <button class="nav right desktop" (click)="next()">
+      <button class="nav right desktop" (click)="logic.next()">
         <app-component-right></app-component-right>
       </button>
 

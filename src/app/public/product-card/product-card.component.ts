@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, Input, OnChanges, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-product-card',
@@ -28,40 +29,34 @@ export class ProductCardComponent implements OnInit {
     taille = '';
     mesures = '';
     afficherMesures = false;
+    private route = inject(ActivatedRoute);
     private router = inject(Router);
     private cartService = inject(CartService);
+    private apiService = inject(ApiService);
   
   ngOnInit(): void {
-    this.product = this.productService.product;
-    this.titre = this.product?.name;
-    this.description = this.product?.description;
-    this.prix = this.product?.prix;
-    this.condition = this.product?.conditions;
-    this.genre = this.product?.gender;
-    this.taille = this.product?.size;
-    this.mesures = this.product?.mesure;
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    console.log('Get >Id >>>>>>>>> card ',id);
+
+    // this.apiService.getProduct(id).subscribe(product => {
+    //   this.product = product;
+    //   console.log(this.product);
+    // });
+
+    this.apiService.getProduct(id).subscribe({
+  next: (p) => console.log("NEXT :", p),
+  error: (e) => console.log("ERROR :", e),
+  complete: () => console.log("COMPLETE")
+});
+
   }
 
-  ngOnChanges() {
-  this.product = this.productService.product;
-  console.log('Product-Card On Change > ',this.product);
-  this.titre = this.product.name;
-  this.description = this.product.description;
-  this.prix = this.product.prix;
-  this.condition = this.product.conditions;
-  this.genre = this.product.gender;
-  this.taille = this.product.size;
-  this.mesures = this.product.mesure;
-}
 
   loadProductsSoldOut() {
     this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
       this.productsSoldOut.set(psoldout);
     })
   }
-
-  
-
 
   addToCart(product: Product) {
     this.cartService.add(product, 1);

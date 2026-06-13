@@ -271,8 +271,8 @@
                 {
                 <div class="page-center">
                     <div class="carousel-wrapper">
-                        <div class="carouselstd">
-                            <app-carousel-standard></app-carousel-standard>
+                        <div class="carouselStd">
+                            <app-carousel-standard class="appCarousel"></app-carousel-standard>
                         </div>
                     </div>
                 </div>
@@ -297,8 +297,10 @@
                 <div class="page-center">
                     <div class="carousel-wrapper">
                         <div class="carouselSelect">
-                            <app-carousel-select [filteredArticlesSelected]="filtered"
-                                [loadingPb]="loadingPb"></app-carousel-select>
+                            <app-carousel-select 
+                                [filteredArticlesSelected]="filteredArticlesSelected()"
+                                [loadingPb]="loadingPb">
+                            </app-carousel-select>
                         </div>
                     </div>
                 </div>
@@ -308,7 +310,6 @@
             </div>
             <!-- </div> -->
             <div class="div3">
-                <!-- <app-footer></app-footer> -->
             </div>
         </div>
     </div>

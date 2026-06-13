@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { Marque } from '../models/marque';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 
-  private baseUrl = 'https://www.boycoté.fr/api';
+  private baseUrl = 'https://www.boycote.fr/api';
 
   constructor(private http: HttpClient) {}
 
@@ -19,9 +19,15 @@ export class ApiService {
     return this.http.get<Product>(`${this.baseUrl}/getDispo.php?id=${id}`); 
   }
 
+  // getProduct(id:number): Observable<Product> {
+  //   return this.http.get<Product>(`${this.baseUrl}/getProduct.php?id=${id}`); 
+  // }
+
   getProduct(id:number): Observable<Product> {
-    return this.http.get<Product>(`${this.baseUrl}/getProduct?id=${id}`); 
-  }
+  return this.http
+    .get<{success: boolean, product: Product}>(`${this.baseUrl}/getProduct.php?id=${id}`)
+    .pipe(map(res => res.product));
+}
 
   getMarques(): Observable<Marque[]> {
     return this.http.get<Marque[]>(`${this.baseUrl}/marques.php`);

@@ -84,6 +84,8 @@ export class BoycoteComponent implements OnInit, OnDestroy {
   searchCustomer = signal<string[]>([]);
   searchSubmitted = signal(false);
   searchSubmittedList = signal(false);
+  filteredArticlesSelected = signal<Product[]>([]);
+
 
   
     /** ------------------------------
@@ -171,7 +173,6 @@ export class BoycoteComponent implements OnInit, OnDestroy {
   });
 
 
-
   ngOnInit(): void { 
     
     // BUG SAFARI
@@ -208,11 +209,13 @@ export class BoycoteComponent implements OnInit, OnDestroy {
   }
 
   applyFilters() {
-    this.filtered = this.productService.filterProducts({
+    const result = this.productService.filterProducts({
       marque: this.selectedMarques(),
       type: this.selectedTypes(),
       gender: this.selectedGenders()
     });
+
+    this.filteredArticlesSelected.set(result);
   }
 
   onMarquesChange(values: string[]) {    
@@ -490,10 +493,11 @@ export class BoycoteComponent implements OnInit, OnDestroy {
 
   submitSearchByFilters() {
     this.applyFilters();
+    this.manageCarousel(3);
     this.loadingPb = false; // Arrete la progress bar
-    this.resetMarque();
-    this.resetVetement();
-    this.resetGender();   
+    // this.resetMarque();
+    // this.resetVetement();
+    // this.resetGender();   
   }
 
 }

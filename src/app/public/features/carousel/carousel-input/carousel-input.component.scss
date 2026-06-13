@@ -253,6 +253,12 @@ button.primary:active {
     transform-origin: center;
     margin-right: 4%;
   }
+}
 
-
+.mini-carousel-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 0;
 }

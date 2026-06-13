@@ -49,15 +49,16 @@
         </div>
       </div>
 
-      <div class="conteneur-bouton">
-        @if(centralArticle.isSoldOut){
+      @if(centralArticle){
+      <div class="conteneur-bouton">       
+        @if(centralArticle.stock === 0){
         <button class="primary" (click)="addToRequest(centralArticle.id)"><span>REQUEST SOURCING</span></button>
         } 
         @else {
           <button class="primary" (click)="addToCart(centralArticle)"><span>ADD TO CART</span></button>
         }
       </div>
-
+      }
       <div class="nav-mobile mobile">
         <button class="nav" (click)="prev()">
           <app-component-left></app-component-left>

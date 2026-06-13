@@ -59,19 +59,19 @@
 }
 
 
-/* Footer responsive */
-@media (max-width: 900px) {
-    .footer-links {
-        gap: 5px;
-    }
-    .label {
-        text-align: center;
-        font-family: "Roboto Mono", monospace; 
-        font-size: 3.5vw;
-    }
-}
+// /* Footer responsive */
+// @media (max-width: 900px) {
+//     .footer-links {
+//         gap: 5px;
+//     }
+//     .label {
+//         text-align: center;
+//         font-family: "Roboto Mono", monospace; 
+//         font-size: 3.5vw;
+//     }
+// }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .footer-links {
         flex-wrap: wrap; /* <-- Passe en plusieurs lignes si nécessaire */
         gap: 2px; // augmenter le gap pour avoir que deux colonnes

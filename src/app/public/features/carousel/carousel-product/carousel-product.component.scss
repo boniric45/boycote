@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+.page{
+  min-height: 100vh;
+  position: relative;
+}
+
 .container {
   width: 100%;
   height: auto;
@@ -17,11 +22,15 @@
   position: relative;
   display: flex;
   justify-content: center;
-  justify-self: center;
   align-items: center;
   width: 300px;
   height: 240px;
+  margin-left: auto;
+  /* Pousse l'image par la gauche */
+  margin-right: auto;
+  /* Pousse l'image par la droite */
 }
+
 
 .item {
   position: absolute;
@@ -31,8 +40,8 @@
   border-radius: 18px;
   cursor: pointer;
   transition:
-  transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-  opacity 0.35s ease;
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
 }
 
 .items.animating .item {
@@ -114,10 +123,10 @@
   width: 300px;
 }
 
-  .panier {
-    display: flex;
-    transform: scale(1.6);
-  }
+.panier {
+  display: flex;
+  transform: scale(1.6);
+}
 
 .container-carousel {
   display: block;
@@ -164,33 +173,6 @@
   display: none;
 }
 
-.nav{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 200;
-  border: none;
-  background: white;
-}
-
-/* BUREAU */
-@media all and (min-width: 601px) {
-
-.container-carousel{
-  margin-top: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.description{
-  display:flex;
-  justify-content: right;
-  align-items: center;
-  margin-left: 350px;
-  margin-right: 50px;
-}
-
 .nav {
   position: absolute;
   top: 50%;
@@ -200,74 +182,131 @@
   background: white;
 }
 
-.left {
-  position: relative;
-  left:-20rem;
-  top: 3rem;
-}
+/* BUREAU */
+@media all and (min-width: 1201px) {
 
-.right {
-  position: relative;
-  left: 18rem;
-  top: 3rem;
-}
+  .wrapper-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    z-index: 999;
+  }
 
-.items{
-  transform: scale(1.3);
-}
+  /* Colonne gauche : bouton retour */
+  .imgBack {
+    position: absolute;
+    width: 50px;
+    top: 0;
+    left: 0;
+    transform: scale(0.70);
+    transform-origin: left;
+    margin-top: 5px;
+  }
 
+  .img_logo {
+    width: 230px;
+    height: 150px;
+    margin-top: 100px;
+  }
+
+  .panier {
+    position: absolute;
+    transform: scale(1.3);
+    top: 0;
+    right: 10px;
+  }
+
+  .desktop {
+    display: flex !important;
+  }
+
+  .mobile {
+    display: none !important;
+  }
+
+  .description {
+    position: absolute;
+    right: 20px;
+    top: 18%;
+  }
+
+  .carousel-product{
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    transform: scale(0.9);
+  }
+
+  app-component-left{
+    position: relative;
+    margin-left: 60px;
+  }
+
+  app-component-right{
+    position: relative;
+    margin-left: -60px;
+    margin-top: -60px ;
+  }
+
+  
 }
 
 /* MOBILE */
-@media all and (max-width: 600px) {
+@media all and (max-width: 1200px) {
 
-.wrapper-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 3 colonnes équilibrées */
-  width: 100%;
-  height: 90px; /* ajuste selon ton design */
-  padding: 0 10px;
-  position: relative;
-  top: 0;
-  left: 0;
-  z-index: 999;
-}
+  .wrapper-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* 3 colonnes équilibrées */
+    width: 100%;
+    height: 90px;
+    /* ajuste selon ton design */
+    padding: 0 10px;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
 
-/* Colonne gauche : bouton retour */
-.imgBack {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  transform: scale(0.65);
-}
+  /* Colonne gauche : bouton retour */
+  .imgBack {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform: scale(0.60);
+    transform-origin: left;
+    margin-top: 5px;
+  }
 
-/* Colonne centre : logo */
-.img_logo {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px; /* ajuste selon ton logo */
-  width: auto;
-}
+  /* Colonne centre : logo */
+  .img_logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    /* ajuste selon ton logo */
+    width: auto;
+  }
 
-/* Colonne droite : panier */
-.panier {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  transform: scale(0.95);
-
-}
+  /* Colonne droite : panier */
+  .panier {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    transform: scale(0.95);
+  }
 
   .desktop {
     display: none !important;
   }
 
-  .items{
+  .items {
     transform: scale(1.15);
   }
 
@@ -281,7 +320,7 @@
 
 
   .div2 {
-    height:300px;
+    height: 300px;
     padding-right: 6px;
   }
 
@@ -313,32 +352,34 @@
     display: flex;
     justify-content: center;
     transform: scale(1.3);
-    margin-top: 150px;
+    margin-top: 160px;
   }
 
+  /* Overlay fullscreen */
+  .fullscreen-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+  }
 
-/* Overlay fullscreen */
-.fullscreen-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999999;
+  .fullscreen-image {
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+  }
+
+   app-footer {
+      margin: 0;
+      // padding-top: 50px;
+      flex-grow: 1; // permet au footer de rester en bas
+   }
 }
 
-.fullscreen-image {
-  width: 100vw;
-  height: 100vh;
-  object-fit: contain;
+
+.div3 {
+  margin-top: 390px; /* espace pour compenser les éléments absolus */
 }
-
-.footer{
- margin-top: 400px;
-}
-
-
-
-}
-
