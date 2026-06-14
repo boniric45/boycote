@@ -7,26 +7,26 @@
         </div>
 
         <div class="corps-carte">
-            <p class="titre-produit">{{ titre }}</p>
+            <p class="titre-produit">{{ article.name }}</p>
             <div class="separateur"></div>
-            <p class="description-produit">{{ description }}</p>
+            <p class="description-produit">{{ article.description }}</p>
             <div class="separateur"></div>
             <div class="bloc-condition">
                 <p class="label-condition">Condition</p>
-                <p class="texte-condition">{{ condition }}</p>
+                <p class="texte-condition">{{ article.conditions }}</p>
             </div>
             <div class="infos-produit">
-                <p>{{ genre }} — SIZE {{ taille }}</p>
-                <p class="prix-produit">{{ prix | currency:'EUR'}}</p>
+                <p>{{ article.gender }} — SIZE {{ article.size }}</p>
+                <p class="prix-produit">{{ article.prix | currency:'EUR'}}</p>
             </div>
 
             <div class="conteneur-bouton">
-            @if(product){
-                @if(product.stock === 0){
-                <button class="primary" (click)="addToRequest(product.id)"><span>REQUEST SOURCING</span></button>
+            @if(article){
+                @if(article.stock === 0){
+                <button class="primary" (click)="addToRequest(article.id)"><span>REQUEST SOURCING</span></button>
                 }
                 @else {
-                <button class="primary" (click)="addToCart(product)"><span>ADD TO CART</span></button>
+                <button class="primary" (click)="addToCart(article)"><span>ADD TO CART</span></button>
                 }
                 }
             </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="corps-popup">
             <div class="zone-mesures">
-                <p class="texte-mesures">{{ mesures }}</p>
+                <p class="texte-mesures">{{ article.mesure }}</p>
             </div>
         </div>
     </div>

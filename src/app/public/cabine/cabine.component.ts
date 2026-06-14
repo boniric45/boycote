@@ -179,7 +179,7 @@ export class CabineComponent implements OnInit {
 
   getUrl(cat: Cat): string { return this.getItem(cat)?.productlink ?? ''; }
 
-   getId(cat: Cat): string | number{ return this.getItem(cat)?.idproduct ?? ''; }
+  getId(cat: Cat): string | number{ return this.getItem(cat)?.id ?? ''; }
 
   getProduct(cat: Cat): string | number {
     const item = this.getItem(cat);

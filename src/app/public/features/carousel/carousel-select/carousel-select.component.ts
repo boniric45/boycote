@@ -40,13 +40,12 @@ export class CarouselSelectComponent implements OnInit {
   logic = inject(LogicSelectService);
 
   ngOnChanges() {
-  console.log("SELECT INPUT:", this.filteredArticlesSelected);
-  this.logic.setArticles(this.filteredArticlesSelected);
+    this.logic.setArticles(this.filteredArticlesSelected);
   }
 
 
   constructor() {
-
+ console.log("CONSTRUCTOR");
     effect(() => {
       const data = this.productsSoldOut();
       if (data.length > 0) {
@@ -78,7 +77,7 @@ export class CarouselSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
-
+  console.log("ONINIT");
     this.updateVisibleCount();
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
@@ -136,6 +135,7 @@ export class CarouselSelectComponent implements OnInit {
   // }
 
   // AFFICHE LE CAROUSEL SEULEMENT SI IL Y A TROIS IMAGES
+  
   canShowCarousel = computed(() => this.filteredArticlesSelected.length >= 3);
 
   trackByArticle(index: number, article: any) {

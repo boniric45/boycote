@@ -77,31 +77,80 @@ export class CarouselStandardComponent implements OnInit {
       this.productsSoldOut.set(psoldout);
     })
   }
+  // a retirer en production
+fixLocalUrl(url: string): string {
+  if (!url) return '';
 
-  get visibleArticles() {
-    if (!this.articles || this.articles.length === 0) return [];
-
-    const total = this.articles.length;
-    const count = Math.min(this.visibleCount, total);
-    const start = this.currentIndex - Math.floor(count / 2);
-    
-    // Création d'un Set pour une recherche rapide en O(1)
-    const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
-
-    const result = [];
-    for (let i = 0; i < count; i++) {
-      const index = (start + i + total) % total;
-      const article = this.articles[index];
-      
-      // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
-      result.push({
-        ...article,
-        isSoldOut: soldOutIds.has(article.id)
-      });
-    }
-    return result;
+  // 1. Si l’URL commence par localhost → remplacer
+  if (url.startsWith('http://localhost:4200')) {
+    return url.replace('http://localhost:4200', 'https://boycote.fr');
   }
 
+  // 2. Si l’URL est relative → préfixer ton domaine
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return `https://boycote.fr/${url.replace(/^\//, '')}`;
+  }
+
+  // 3. Sinon on renvoie tel quel
+  return url;
+}
+
+
+  // get visibleArticles() {
+  //   if (!this.articles || this.articles.length === 0) return [];
+
+  //   const total = this.articles.length;
+  //   const count = Math.min(this.visibleCount, total);
+  //   const start = this.currentIndex - Math.floor(count / 2);
+    
+  //   // Création d'un Set pour une recherche rapide en O(1)
+  //   const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+
+  //   const result = [];
+  //   for (let i = 0; i < count; i++) {
+  //     const index = (start + i + total) % total;
+  //     const article = this.articles[index];
+      
+  //     // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
+  //     result.push({
+  //       ...article,
+  //       isSoldOut: soldOutIds.has(article.id)
+  //     });
+
+  //           this.fixLocalUrl(article.pathpictureone);
+  //   }
+  //   return result;
+  // }
+
+get visibleArticles() {
+  if (!this.articles || this.articles.length === 0) return [];
+
+  const total = this.articles.length;
+  const count = Math.min(this.visibleCount, total);
+  const start = this.currentIndex - Math.floor(count / 2);
+
+  const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
+
+  const result = [];
+
+  for (let i = 0; i < count; i++) {
+    const index = (start + i + total) % total;
+    const article = this.articles[index];
+
+    const fixedUrl = this.fixLocalUrl(article.pathpictureone);
+
+    result.push({
+      ...article,
+      pathpictureone: fixedUrl,
+      isSoldOut: soldOutIds.has(article.id)
+    });
+  }
+
+  return result;
+}
+
+
+  
 
   trackByArticle(index: number, article: Product) {
     return article.id ?? index;
@@ -198,11 +247,4 @@ export class CarouselStandardComponent implements OnInit {
   this.router.navigate(['/request/',id]);
   }
 
-
-
-
-
-
-  
- 
 }

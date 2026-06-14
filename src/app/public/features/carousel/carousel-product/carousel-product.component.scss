@@ -229,7 +229,7 @@
   .description {
     position: absolute;
     right: 20px;
-    top: 18%;
+    top: 25%;
   }
 
   .carousel-product{
@@ -241,19 +241,18 @@
 
   app-component-left{
     position: relative;
-    margin-left: 60px;
+    margin-left: 20px;
   }
 
   app-component-right{
     position: relative;
-    margin-left: -60px;
+    margin-left: -20px;
     margin-top: -60px ;
   }
 
   
 }
 
-/* MOBILE */
 @media all and (max-width: 1200px) {
 
   .wrapper-header {

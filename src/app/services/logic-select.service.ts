@@ -6,7 +6,7 @@ import { Product } from '../models/product';
 })
 export class LogicSelectService {
 
-   private articles = signal<Product[]>([]);
+  private articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
 
   visibleCount = signal(5);
@@ -30,24 +30,70 @@ export class LogicSelectService {
     }));
   });
 
+  // normalized = computed(() => {
+  //   const list = this.merged().map(a => ({
+  //     ...a,
+  //     pathpictureone: this.fixLocalUrl(a.pathpictureone)   // 🔥 correction ici
+  //   }));
+
+  //   if (list.length === 0) return [];
+
+  //   if (list.length < 5) {
+  //     const result = [...list];
+  //     while (result.length < 5) result.push(...list);
+  //     return result.slice(0, 5);
+  //   }
+
+  //   return list;
+  // });
+
+  // a retirer en production
+  fixLocalUrl(url: string): string {
+    console.log('URL > ', url);
+
+    if (!url) return '';
+
+    // 1. Si l’URL commence par localhost → remplacer
+    if (url.startsWith('http://localhost:4200')) {
+      return url.replace('http://localhost:4200', 'https://boycote.fr');
+    }
+
+    // 2. Si l’URL est relative → préfixer ton domaine
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `https://boycote.fr/${url.replace(/^\//, '')}`;
+    }
+
+    // 3. Sinon on renvoie tel quel
+    return url;
+  }
+
+
   normalized = computed(() => {
-    const list = this.merged();
+    const list = this.merged().map(a => ({
+      ...a,
+      pathpictureone: this.fixLocalUrl(a.pathpictureone)
+    }));
+    console.log("MERGED EXECUTED");
+
     if (list.length === 0) return [];
+
     if (list.length < 5) {
       const result = [...list];
       while (result.length < 5) result.push(...list);
       return result.slice(0, 5);
     }
+
     return list;
   });
+
 
   visible = computed(() => {
     const list = this.normalized();
     const total = list.length;
     const count = this.visibleCount();
     const start = this.currentIndex() - Math.floor(count / 2);
-
     const result: any[] = [];
+
     for (let i = 0; i < count; i++) {
       const index = (start + i + total) % total;
       result.push(list[index]);
@@ -105,5 +151,5 @@ export class LogicSelectService {
     const middle = Math.floor(this.visibleCount() / 2);
     return 1 - Math.abs(i - middle) * 0.15;
   }
-  
+
 }

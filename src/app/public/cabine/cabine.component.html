@@ -65,23 +65,24 @@
 
       <span class="lbl">HAT:</span>
       
-      @if (hasItem('chapeau')) { <a [routerLink]="['/product',29]"  target="_blank">{{ getNom('chapeau') }}</a> }
+      @if (hasItem('chapeau')) { 
+        <a [routerLink]="['/product',getId('chapeau')]"  target="_blank">{{ getNom('chapeau') }}</a> }
       @else { <span class="none">—</span> }
 
     </div>
     <div class="info-line">
       <span class="lbl">TOP:</span>
-      @if (hasItem('haut')) { <a [href]="getUrl('haut')" target="_blank">{{ getNom('haut') }}</a> }
+      @if (hasItem('haut')) { <a [routerLink]="['/product',getId('haut')]" target="_blank">{{ getNom('haut') }}</a> }
       @else { <span class="none">—</span> }
     </div>
     <div class="info-line">
       <span class="lbl">BOTTOM:</span>
-      @if (hasItem('bas')) { <a [href]="getUrl('bas')" target="_blank">{{ getNom('bas') }}</a> }
+      @if (hasItem('bas')) { <a [routerLink]="['/product',getId('bas')]"target="_blank">{{ getNom('bas') }}</a> }
       @else { <span class="none">—</span> }
     </div>
     <div class="info-line">
       <span class="lbl">SHOES:</span>
-      @if (hasItem('chaussures')) { <a [href]="getUrl('chaussures')" target="_blank">{{ getNom('chaussures') }}</a> }
+      @if (hasItem('chaussures')) { <a [routerLink]="['/product',getId('chaussures')]" target="_blank">{{ getNom('chaussures') }}</a> }
       @else { <span class="none">—</span> }
     </div>
   </div>

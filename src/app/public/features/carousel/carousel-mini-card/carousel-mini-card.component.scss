@@ -10,6 +10,8 @@
   flex-direction: column;
   cursor: pointer;
   transition: transform .25s ease;
+  padding: 10px;
+  margin-bottom: 20px;
 
   &:hover {
     transform: scale(1.04);

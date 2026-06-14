@@ -15,94 +15,93 @@ import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-carousel-product',
-  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, FooterComponent, ProductCardComponent, CartComponent, ButtonReturnComponent],
+  imports: [
+     CommonModule,
+     ComponentRightComponent, 
+     ComponentLeftComponent, 
+     FooterComponent, 
+     ProductCardComponent, 
+     CartComponent, 
+     ButtonReturnComponent],
   templateUrl: './carousel-product.component.html',
   styleUrl: './carousel-product.component.scss',
 })
-export class CarouselProductComponent implements OnInit{
+export class CarouselProductComponent implements OnInit {
 
- private productService = inject(ProductService);
- private router = inject(Router);
- private route = inject(ActivatedRoute);
- private cartService = inject(CartService);
- private subscription: Subscription = new Subscription();
- private location = inject(Location);
+  private productService = inject(ProductService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private cartService = inject(CartService);
+  private subscription: Subscription = new Subscription();
+  private location = inject(Location);
 
   articles = signal<any[]>([]);
   visibleCount = 3;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
-  product!:Product;
+  product!: Product;
   private touchStartX = 0;
   private touchEndX = 0;
   isFullscreen = false;
 
-ngOnInit(): void {
 
-  
-  // 1. On tente de lire le produit depuis le service
-  this.product = this.productService.product; 
-  
-  // en attendant de debuguer ce point 
-  if(!this.product){
-          this.location.back();     
-  }
-  
-  console.log('Product >>>>>>>>>>>>>>>>>>>>> ',this.product);
+  ngOnInit(): void {
 
-  // 2. Si le produit existe déjà (cas normal sans refresh)
-  if (this.product) {
-    let imageList = this.productService.buildImageObjects(this.product);
-    this.articles.set(imageList.slice(1)); // On enlève la première image    
-    return;
-  }
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
-  this.productService.deleteFirstPicture(this.articles());
-
-  // 3. Sinon, on recharge via l’ID dans l’URL (cas refresh)
-  this.route.params.subscribe(params => {
-    const id = params['id'];
-
+    // 1. Charger le produit depuis l’API
     this.productService.getProduct(id).subscribe(res => {
-      if (res.success) {
-        this.product = res.product; // récupère le produit
-        
-        this.productService.product = res.product;
 
-        let imageList = this.productService.buildImageObjects(this.product);
-
-        console.log(imageList);
-        
-        // 🔥 Supprimer la première image directement
-        this.articles.set(imageList.slice(1));
-          return;
+      if (!res.success || !res.product) {
+        this.location.back();
+        return;
       }
-    });   
-    
-  });
-  console.log('Après verif > ',this.product);
-  // 4. On calcule visibleCount AVANT de calculer le centre
-   this.visibleCount = this.articles().length;
 
-  // 5. On place le centre au milieu
-  this.currentIndex = Math.floor(this.visibleCount / 2);
-    // this.currentIndex = Math.floor(this.visibleCount / 2);
+      // 2. Stocker le produit
+      this.product = res.product;
+      this.productService.product = res.product; // si tu veux garder le cache
 
-  // 6. On met à jour visibleCount SI NÉCESSAIRE (mobile, responsive…)
-  this.updateVisibleCount();
+      console.log("Produit chargé :", this.product);
 
-  // 7. Et on recalcule le centre APRÈS updateVisibleCount
-  this.currentIndex = Math.floor(this.visibleCount / 2);
+      // 3. Construire les images
+      let imageList = this.productService.buildImageObjects(this.product);
 
-  window.addEventListener('resize', () => {
-    this.updateVisibleCount();
-    this.currentIndex = Math.floor(this.visibleCount / 2); // 🔥 indispensable
-  });
-}
+      // 4. Supprimer la première image
+      this.articles.set(imageList.slice(1));
+
+      // 5. Initialiser le carousel
+      this.visibleCount = this.articles().length;
+      this.currentIndex = Math.floor(this.visibleCount / 2);
+
+      // 6. Responsive
+      this.updateVisibleCount();
+      this.currentIndex = Math.floor(this.visibleCount / 2);
+
+      // 7. Resize listener
+      window.addEventListener('resize', () => {
+        this.updateVisibleCount();
+        this.currentIndex = Math.floor(this.visibleCount / 2);
+      });
+    });
+  }
 
 
-  ngOnDestroy(){
+  fixLocalUrl(url: string): string {
+    if (!url) return '';
+
+    if (url.startsWith('http://localhost:4200')) {
+      return url.replace('http://localhost:4200', 'https://boycote.fr');
+    }
+
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `https://boycote.fr/${url.replace(/^\//, '')}`;
+    }
+
+    return url;
+  }
+  
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
@@ -118,13 +117,13 @@ ngOnInit(): void {
     this.fullscreenImage = null;
     document.body.style.overflow = '';
   }
- 
+
   get visibleArticles() {
     // SI ARTICLES EST VIDE RENVOI []
     if (!this.articles() || this.articles().length === 0) {
       return [];
     }
-  
+
     const total = this.articles().length;
     const result = [];
     const count = Math.min(this.visibleCount, total);
@@ -141,10 +140,10 @@ ngOnInit(): void {
   trackByArticle(index: number, article: Product) {
     const finalImages = [];
     if (this.articles().length < 10) {
-    for (const img in article) {
-      finalImages.push(img);
+      for (const img in article) {
+        finalImages.push(img);
+      }
     }
-  }
     return article.id ?? index;
   }
 
@@ -160,7 +159,7 @@ ngOnInit(): void {
   }
 
   next() {
-   if (this.isAnimating) return;
+    if (this.isAnimating) return;
     this.triggerAnimation('right');
     this.currentIndex = (this.currentIndex + 1) % this.articles().length;
   }
@@ -194,11 +193,11 @@ ngOnInit(): void {
   }
 
   get centralArticle() {
-      const middle = Math.floor(this.visibleCount / 2);
-      return this.visibleArticles[middle] ;
+    const middle = Math.floor(this.visibleCount / 2);
+    return this.visibleArticles[middle];
   }
 
-  getOpacity(i: number) { 
+  getOpacity(i: number) {
     const middle = Math.floor(this.visibleCount / 2);
     const offset = Math.abs(i - middle);
     return 1 - offset * 0.15;
@@ -211,29 +210,29 @@ ngOnInit(): void {
   // }
 
   // HAND SWIPE MOBILE //
-onTouchStart(event: TouchEvent) {
-  this.touchStartX = event.changedTouches[0].clientX;
-}
-
-onTouchEnd(event: TouchEvent) {
-  this.touchEndX = event.changedTouches[0].clientX;
-  this.handleSwipe();
-}
-
-handleSwipe() {
-  const delta = this.touchEndX - this.touchStartX;
-
-  if (Math.abs(delta) < 40) return; // seuil minimal
-
-  if (delta < 0) {
-    this.next();
-  } else {
-    this.prev();
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].clientX;
   }
-}
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].clientX;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const delta = this.touchEndX - this.touchStartX;
+
+    if (Math.abs(delta) < 40) return; // seuil minimal
+
+    if (delta < 0) {
+      this.next();
+    } else {
+      this.prev();
+    }
+  }
   // ADD TO CART 
   addToCart(product: Product) {
-  this.cartService.add(product, 1);
+    this.cartService.add(product, 1);
   }
 
 }
