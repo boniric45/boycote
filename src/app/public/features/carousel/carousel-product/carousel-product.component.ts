@@ -147,9 +147,9 @@ export class CarouselProductComponent implements OnInit {
     return article.id ?? index;
   }
 
-
   updateVisibleCount() {
-    this.visibleCount = window.innerWidth < 768 ? 5 : 5;
+      this.visibleCount = 3;  // ✔️ Toujours 3
+    // this.visibleCount = window.innerWidth < 768 ? 3 : 5; // suivant la taille de l'écran
   }
 
   triggerAnimation(dir: 'left' | 'right') {
