@@ -1,0 +1,133 @@
+/* ================================
+   BOUTON PRINCIPAL (AQUA)
+   ================================ */
+.mac-select-btn {
+  width: 100%;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #999;
+
+  background: linear-gradient(
+    180deg,
+    #d8d8d8 0%,
+    #e8e8e8 12%,
+    #f4f4f4 48%,
+    #dcdcdc 52%,
+    #c8c8c8 100%
+  );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 1px 3px rgba(0, 0, 0, 0.20);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 12px;
+  font-size: 15px;
+  font-family: "Roboto Mono", monospace;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mac-select-btn.open .mac-select-chevron {
+  transform: rotate(180deg);
+}
+
+
+/* ================================
+   CHEVRON
+   ================================ */
+.mac-select-chevron {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+
+/* ================================
+   MENU DÉROULANT (AQUA)
+   ================================ */
+.mac-dropdown {
+  display: none;
+  position: relative;
+  width: 100%;
+  margin-top: 4px;
+
+  background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 100%);
+  border-radius: 8px;
+  border: 1px solid #999;
+
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.80);
+
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 200;
+}
+
+.mac-dropdown.open {
+  display: block;
+}
+
+
+/* ================================
+   OPTION (AQUA)
+   ================================ */
+.mac-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  cursor: pointer;
+
+  font-size: 15px;
+  font-family: "Roboto Mono", monospace;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.mac-option:last-child {
+  border-bottom: none;
+}
+
+.mac-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.mac-option.selected {
+  background: rgba(51, 102, 187, 0.12);
+}
+
+
+/* ================================
+   CHECKBOX MAC‑OS
+   ================================ */
+.mac-checkbox {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1px solid #999;
+
+  background: linear-gradient(180deg, #f8f8f8 0%, #eee 100%);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mac-checkbox.checked {
+  background: linear-gradient(180deg, #4488ee 0%, #2266cc 100%);
+  border-color: #3366bb;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+}
+
+.mac-checkbox.checked::after {
+  content: "✓";
+  font-size: 11px;
+  color: white;
+  font-weight: bold;
+}

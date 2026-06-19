@@ -1,0 +1,37 @@
+/* ============================
+   HEADER STRUCTURE
+   ============================ */
+.header-wrapper {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 65px;
+  padding: 0 10px;
+}
+
+.header-left,
+.header-right {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img_logo_mobile {
+  width: 140px;
+}
+
+

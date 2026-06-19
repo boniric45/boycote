@@ -76,7 +76,6 @@ export class CartComponent {
           console.error('Erreur checkout:', err);
         }
       });
-
   }
 
   openCart()  { this.isOpen = true; }

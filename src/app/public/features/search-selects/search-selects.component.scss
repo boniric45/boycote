@@ -1,0 +1,189 @@
+.search-selects {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 20px;
+}
+
+.select-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.select-row select {
+  flex: 1;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #b5b5b5;
+  background: linear-gradient(180deg, #f7f7f7 0%, #e5e5e5 100%);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+  padding: 0 10px;
+  font-size: 14px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='12' width='12' xmlns='http://www.w3.org/2000/svg'><polygon points='0,0 12,0 6,8'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.btn-search {
+  width: 50px;
+  font-size: 18px;
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-style: normal;
+  border: none;
+  box-shadow: rgb(38, 57, 77) 8px 10px 10px -5px;
+  color: rgb(56, 55, 55);
+  color: black;
+  background-color: rgb(224, 226, 236);
+  font-size: 18px;
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-style: normal;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #c8c8c8 0%, #e0e0e0 12%, #f2f2f2 48%, #d4d4d4 52%, #bebebe 100%) !important;
+  border: 1px solid #999999 !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 3px rgba(0, 0, 0, 0.20) !important;
+  color: #0f0f0f !important;
+  font-weight: 400 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.btnSelectSearch {
+  height: 36px;
+  box-shadow: rgb(38, 57, 77) 8px 10px 10px -5px;
+  color: rgb(56, 55, 55);
+  color: black;
+  background-color: rgb(224, 226, 236);
+  font-size: 18px;
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-style: normal;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #c8c8c8 0%, #e0e0e0 12%, #f2f2f2 48%, #d4d4d4 52%, #bebebe 100%) !important;
+  border: 1px solid #999999 !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 3px rgba(0, 0, 0, 0.20) !important;
+  color: #0f0f0f !important;
+  font-weight: 400 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+
+.btnSelectSearch {
+  width: 42px;
+  height: 35px;
+  border-radius: 12px;
+  background: linear-gradient(#f5f5f5, #dcdcdc);
+  border: 1px solid #bfbfbf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.imgSelectSearch {
+  width: 22px;
+  height: 22px;
+}
+
+.mac-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mac-select-btn {
+  background: #f2f2f2;
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.mac-dropdown {
+  display: none;
+  background: white;
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+  padding: 6px 0;
+}
+
+.mac-dropdown.open {
+  display: block;
+}
+
+.mac-option {
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.mac-option.selected {
+  background: #e8e8e8;
+}
+
+.mac-checkbox {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid #999;
+}
+
+.mac-checkbox.checked {
+  background: #007aff;
+  border-color: #007aff;
+}
+
+/* REFRESH */
+.btn-refresh {
+  width: 45px;
+  height: 36px;
+
+  top: 10px;
+  left: 19px;
+
+  box-shadow: rgb(38, 57, 77) 8px 10px 10px -5px;
+  color: rgb(56, 55, 55);
+  color: black;
+  background-color: rgb(224, 226, 236);
+  font-size: 18px;
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-style: normal;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #c8c8c8 0%, #e0e0e0 12%, #f2f2f2 48%, #d4d4d4 52%, #bebebe 100%) !important;
+  border: 1px solid #999999 !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 3px rgba(0, 0, 0, 0.20) !important;
+  color: #0f0f0f !important;
+  font-weight: 400 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.imgSearchRefresh {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.select-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}

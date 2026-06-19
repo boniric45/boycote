@@ -1,0 +1,139 @@
+.search-input-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 0 6px;
+  /* réduit pour éviter le débordement */
+  box-sizing: border-box;
+  margin-bottom: 6px;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  min-width: 0;
+  /* CRITIQUE : empêche le débordement */
+  display: flex;
+  align-items: center;
+  height: 36px;
+
+  /* même style que tes boutons */
+  border-radius: 6px;
+  border: 1px solid #999999;
+  background: linear-gradient(180deg,
+      #c8c8c8 0%, #e0e0e0 12%, #f2f2f2 48%, #d4d4d4 52%, #bebebe 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 1px 3px rgba(0, 0, 0, 0.20);
+
+}
+
+.search-input-wrapper input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  outline: none;
+}
+
+/* LOUPE */
+.btn-search {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #b5b5b5;
+  background: linear-gradient(180deg, #ffffff 0%, #dcdcdc 100%);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+}
+
+/* REFRESH */
+.btn-refresh {
+  height: 36px;
+  box-shadow: rgb(38, 57, 77) 8px 10px 10px -5px;
+  color: rgb(56, 55, 55);
+  color: black;
+  background-color: rgb(224, 226, 236);
+  font-size: 18px;
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-style: normal;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #c8c8c8 0%, #e0e0e0 12%, #f2f2f2 48%, #d4d4d4 52%, #bebebe 100%) !important;
+  border: 1px solid #999999 !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 3px rgba(0, 0, 0, 0.20) !important;
+  color: #0f0f0f !important;
+  font-weight: 400 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.imgSearchRefresh {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgSelectSearch {
+  width: 18px;
+}
+
+.btn-search {
+  box-shadow: rgb(38, 57, 77) 8px 10px 10px -5px;
+  color: rgb(56, 55, 55);
+  color: black;
+  background-color: rgb(224, 226, 236);
+  font-size: 18px;
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-optical-sizing: auto;
+  font-style: normal;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #c8c8c8 0%, #e0e0e0 12%, #f2f2f2 48%, #d4d4d4 52%, #bebebe 100%) !important;
+  border: 1px solid #999999 !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 1px 3px rgba(0, 0, 0, 0.20) !important;
+  color: #0f0f0f !important;
+  font-weight: 400 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.input-search {
+  height: 100%;
+  border-radius: 5px;
+  // border: 1px solid #999999;
+  background: linear-gradient(180deg, #f8f8f8 0%, #ffffff 100%);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.10);
+  padding: 0 10px;
+  font-size: 12px;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif;
+  outline: none;
+
+  &:focus {
+    border-color: #5b8fc9;
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.08), 0 0 0 3px rgba(91, 143, 201, 0.30);
+  }
+
+  &::placeholder {
+    color: #403f3f;
+    opacity: 1;
+  }
+
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+

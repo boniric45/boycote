@@ -1,7 +1,19 @@
 <div class="global-wrapper">
+  <!-- <app-cookies></app-cookies> -->
     <div class="global-content">
+
+<app-header
+  [marques]="marques()"
+  [types]="types()"
+  [genders]="gendersList()"
+  (searchInput)="onSearchInput($event)"
+  (searchFilters)="onSearchFilters($event)"
+  (refresh)="onRefresh()">
+</app-header>
+
+
       <router-outlet></router-outlet>
-      <!-- bloque le landscape pour tout le site -->
-          <app-stop-landscape></app-stop-landscape>  
+      <app-stop-landscape></app-stop-landscape>  
+      <app-footer></app-footer>
   </div>
 </div>

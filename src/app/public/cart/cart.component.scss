@@ -4,15 +4,14 @@
 .shop-wrapper { 
   position: relative; 
   display: inline-block; 
-  transform: scale(0.5);
-  transform-origin: right;
-  margin-top: 8px;
-  margin-right: 10px;
+  transform: scale(0.51);
+  transform-origin: center;
+  
 }
 
 .key-btn {
   position: relative;
-  width: 100px; height: 108px;
+  width: 99px; height: 99px;
   cursor: pointer;
 }
 

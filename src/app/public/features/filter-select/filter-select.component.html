@@ -1,0 +1,27 @@
+<div class="mac-select-btn" 
+     [class.open]="isOpen()"
+     (click)="toggleOpen($event)">
+
+  <span class="mac-select-label">
+    {{ selected.length === 0 ? label : selected.length === 1 ? selected[0] : label + ': ' + selected.length }}
+  </span>
+
+  <span class="mac-select-chevron">▼</span>
+</div>
+
+<div class="mac-dropdown" 
+     [class.open]="isOpen()" 
+     (click)="$event.stopPropagation()">
+
+  @for (opt of options; track opt) {
+    <div class="mac-option"
+         [class.selected]="selected.includes(opt)"
+         (click)="onSelect(opt, $event)">
+
+      <div class="mac-checkbox" [class.checked]="selected.includes(opt)"></div>
+      <span class="mac-option-label">{{ opt }}</span>
+
+    </div>
+  }
+</div>
+

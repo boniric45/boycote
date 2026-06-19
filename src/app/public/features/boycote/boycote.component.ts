@@ -33,7 +33,7 @@ import { HamburgerComponent } from "../hamburger/hamburger.component";
     MatButtonModule, MatDividerModule, MatIconModule,
     MatFormFieldModule, MatSelectModule, FormsModule,
     ReactiveFormsModule, CommonModule, NgStyle, FormsModule,
-    MatButtonModule, FooterComponent,
+    MatButtonModule, 
     CookiesComponent,
     MatSelectModule,
     CarouselStandardComponent,

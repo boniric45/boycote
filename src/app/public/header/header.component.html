@@ -1,0 +1,52 @@
+<div class="header-wrapper">
+
+  <!-- ============================
+       ÉTAT INITIAL (pas de recherche)
+       ============================ -->
+  @if(!searchOpen()){
+    <div class="header">
+
+      <!-- HAMBURGER -->
+      <div class="header-left" (click)="openSearch()">
+        <app-hamburger></app-hamburger>
+      </div>
+
+      <!-- LOGO -->
+      <div class="header-center">
+        <img src="/pictures/logo.png" class="img_logo_mobile" alt="Boycoté">
+      </div>
+
+      <!-- PANIER -->
+      <div class="header-right">
+        <app-cart></app-cart>
+      </div>
+
+    </div>
+  }
+
+  <!-- ============================
+       MODE RECHERCHE
+       ============================ -->
+  @if(searchOpen()){
+
+    <!-- INPUT -->
+    @if(inputActive()){
+      <app-search-input 
+        (focusInput)="onInputFocus()"
+        (searchInput)="onSearchInput($event)"
+        (reset)="resetSearch()">
+      </app-search-input>
+    }
+
+    <!-- SELECTS -->
+    @if(selectActive()){
+      <app-search-selects
+        [selectActive]="selectActive()"
+        [inputActive]="inputActive()"
+        (focusSelect)="onSelectFocus()"
+        (searchFilters)="onSearchFilters($event)"
+        (reset)="resetSearch()">
+      </app-search-selects>
+    }
+  }
+</div>

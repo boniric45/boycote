@@ -1,0 +1,71 @@
+<!-- LISTE DÉROULANTE -->
+<div class="mac-select-wrapper" (click)="onFocus()">
+
+
+  <!-- MARQUES -->
+  <div class="mac-select-btn" [class.open]="isOpenMarques()" (click)="toggleMarquesDropdown($event)">
+    <span class="mac-select-label">{{ labMarques() }}</span>
+  </div>
+
+  <div class="mac-dropdown" [class.open]="isOpenMarques()" (click)="$event.stopPropagation()">
+    @for (m of marques; track m.id) {
+    <div class="mac-option" [class.selected]="selectedMarques().includes(m.name)"
+      (click)="toggleMarque(m.name, $event)">
+      <div class="mac-checkbox" [class.checked]="selectedMarques().includes(m.name)"></div>
+      <span class="mac-option-label">{{ m.name }}</span>
+    </div>
+    }
+  </div>
+
+  <!-- TYPES -->
+  <div class="mac-select-btn" [class.open]="isOpenTypes()" (click)="toggleTypesDropdown($event)">
+    <span class="mac-select-label">{{ labTypes() }}</span>
+  </div>
+
+  <div class="mac-dropdown" [class.open]="isOpenTypes()" (click)="$event.stopPropagation()">
+    @for (t of types; track t.id) {
+    <div class="mac-option" [class.selected]="selectedTypes().includes(t.name)" (click)="toggleType(t.name, $event)">
+      <div class="mac-checkbox" [class.checked]="selectedTypes().includes(t.name)"></div>
+      <span class="mac-option-label">{{ t.name }}</span>
+    </div>
+    }
+  </div>
+
+  <!-- GENDERS -->
+  <div class="mac-select-btn" [class.open]="isOpenGenders()" (click)="toggleGendersDropdown($event)">
+    <span class="mac-select-label">{{ labGenders() }}</span>
+  </div>
+
+  <div class="mac-dropdown" [class.open]="isOpenGenders()" (click)="$event.stopPropagation()">
+    @for (g of genders; track g.id) {
+    <div class="mac-option" [class.selected]="selectedGenders().includes(g.name)"
+      (click)="toggleGender(g.name, $event)">
+      <div class="mac-checkbox" [class.checked]="selectedGenders().includes(g.name)"></div>
+      <span class="mac-option-label">{{ g.name }}</span>
+    </div>
+    }
+  </div>
+
+  @if(selectActive && !inputActive){
+  <div class="select-title">
+
+    <button class="btn-refresh" (click)="onRefresh()">
+      <div class="imgSearchRefresh">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26px" height="26px">
+          <path
+            d="M 7.59375 3 L 9.0625 5 L 13 5 C 16.324219 5 19 7.675781 19 11 L 19 15 L 16 15 L 20 20.46875 L 24 15 L 21 15 L 21 11 C 21 6.59375 17.40625 3 13 3 Z M 4 3.53125 L 0 9 L 3 9 L 3 13 C 3 17.40625 6.59375 21 11 21 L 16.40625 21 L 14.9375 19 L 11 19 C 7.675781 19 5 16.324219 5 13 L 5 9 L 8 9 Z" />
+        </svg>
+      </div>
+    </button>
+
+
+    <!-- BOUTON DE VALIDATION -->
+    <button class="btnSelectSearch" (click)="submitSearchByFilters()">
+      <img class="imgSelectSearch" src="pictures/search.png" alt="Search">
+    </button>
+
+  </div>
+
+  }
+
+</div>

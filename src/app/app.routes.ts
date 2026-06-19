@@ -15,6 +15,7 @@ import { CustomerRequestComponent } from './public/features/customer-request/cus
 import { LegalComponent } from './public/legal/legal.component';
 import { SuccessComponent } from './public/success/success.component';
 import { CookiesComponent } from './public/features/cookies/cookies.component';
+import { PageCentraleComponent } from './public/page-centrale/page-centrale.component';
 
 
 export const routes: Routes = [
@@ -40,7 +41,7 @@ export const routes: Routes = [
   },
   {
     path:'home/admin/login',
-    component:BoycoteComponent // changer pour loginComponent en production BoycoteComponent en Dev
+    component:PageCentraleComponent // changer pour loginComponent en production BoycoteComponent en Dev
   },
   
   // ADMIN PROTÉGÉ
