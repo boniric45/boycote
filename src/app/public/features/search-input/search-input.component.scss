@@ -54,6 +54,7 @@
 
 /* REFRESH */
 .btn-refresh {
+  width: 36px;
   height: 36px;
   box-shadow: rgb(38, 57, 77) 8px 10px 10px -5px;
   color: rgb(56, 55, 55);
@@ -75,12 +76,33 @@
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
 }
 
+.btn-refresh,
+.btn-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  /* IMPORTANT */
+}
+
+.btn-refresh svg,
+.btn-search img {
+  width: 18px;
+  height: 18px;
+  display: block;
+  /* évite les espaces inline */
+}
+
+
+
 .imgSearchRefresh {
   width: 18px;
   height: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .imgSelectSearch {
@@ -136,4 +158,63 @@ input:focus::placeholder {
   color: transparent;
 }
 
+// Mobile
+@media (max-width:600px) {
 
+  .search-input-row {
+    width: 90%;
+    max-width: 340px;
+    margin: 0 auto 12px auto;
+    /* centre + espace */
+    padding: 0;
+    /* on enlève le padding horizontal */
+  }
+
+  .search-input-wrapper {
+    height: 34px;
+  }
+
+  .btn-refresh,
+  .btn-search {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mac-select-wrapper {
+    margin-bottom: 20px;
+    /* identique */
+  }
+}
+
+// Landscape
+@media (min-width:600px) and (max-width:900px) {
+
+  .search-input-row {
+    width: 70%;
+    max-width: 420px;
+    margin: 0 auto 12px auto;
+    padding: 0;
+  }
+
+  .mac-select-wrapper {
+    margin-bottom: 22px;
+  }
+}
+
+// Bureau
+@media (min-width:900px) {
+
+  .search-input-row {
+    width: 363px;
+    padding: 0;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  .mac-select-wrapper {
+    width: 260px;
+    margin-left: 10px;
+    margin-bottom: 18px;
+    align-items: stretch;
+  }
+}

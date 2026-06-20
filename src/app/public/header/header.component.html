@@ -1,13 +1,13 @@
-<div class="header-wrapper">
+<!-- ============================
+     HEADER MOBILE (disparaît en recherche)
+     ============================ -->
+<div class="header-wrapper mobile-only">
 
-  <!-- ============================
-       ÉTAT INITIAL (pas de recherche)
-       ============================ -->
   @if(!searchOpen()){
     <div class="header">
 
       <!-- HAMBURGER -->
-      <div class="header-left" (click)="openSearch()">
+      <div class="header-left" (click)="onHamburgerClick()">
         <app-hamburger></app-hamburger>
       </div>
 
@@ -24,9 +24,39 @@
     </div>
   }
 
-  <!-- ============================
-       MODE RECHERCHE
-       ============================ -->
+</div>
+
+
+
+<!-- ============================
+     HEADER DESKTOP (toujours visible)
+     ============================ -->
+<div class="header desktop-only">
+
+  <!-- HAMBURGER -->
+  <div class="header-left" (click)="onHamburgerClick()">
+    <app-hamburger></app-hamburger>
+  </div>
+
+  <!-- LOGO CENTRÉ -->
+  <div class="header-center">
+    <img src="/pictures/logo.png" class="img_logo_mobile" alt="Boycoté">
+  </div>
+
+  <!-- PANIER -->
+  <div class="header-right">
+    <app-cart></app-cart>
+  </div>
+
+</div>
+
+
+
+<!-- ============================
+     ZONE RECHERCHE (mobile + desktop)
+     ============================ -->
+<div class="search-zone">
+
   @if(searchOpen()){
 
     <!-- INPUT -->
@@ -49,4 +79,5 @@
       </app-search-selects>
     }
   }
+
 </div>

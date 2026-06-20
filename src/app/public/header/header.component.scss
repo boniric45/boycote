@@ -34,4 +34,56 @@
   width: 140px;
 }
 
+.mobile-only {
+  display: block;
+}
 
+.desktop-only {
+  display: none;
+}
+
+/* MOBILE : hamburger visible */
+.header-left {
+  display: flex;
+  cursor: pointer;
+}
+
+@media (min-width: 900px) {
+
+  .header-left {
+    display: flex;
+    /* visible */
+    cursor: pointer;
+  }
+
+  .header-wrapper {
+    padding: 20px 0;
+    /* un peu plus d’air en desktop */
+  }
+
+  .header {
+    height: 80px;
+    padding: 0 30px;
+  }
+
+  .header-left,
+  .header-right {
+    width: 80px;
+    /* équilibre visuel */
+    height: 80px;
+  }
+
+  .img_logo_mobile {
+    width: 140px;
+    /* logo plus grand en desktop */
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: flex;
+  }
+
+}

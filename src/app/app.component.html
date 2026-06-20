@@ -1,19 +1,15 @@
 <div class="global-wrapper">
-  <!-- <app-cookies></app-cookies> -->
-    <div class="global-content">
-
-<app-header
-  [marques]="marques()"
-  [types]="types()"
-  [genders]="gendersList()"
-  (searchInput)="onSearchInput($event)"
-  (searchFilters)="onSearchFilters($event)"
-  (refresh)="onRefresh()">
-</app-header>
-
-
-      <router-outlet></router-outlet>
-      <app-stop-landscape></app-stop-landscape>  
-      <app-footer></app-footer>
+  @if(isCookiesIsNotSaved()){
+  <div class="overlay">
+    <div class="cookies">
+      <app-cookies></app-cookies>
+    </div>
+  </div>
+  }
+  <div class="global-content">
+    <app-header>
+    </app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
   </div>
 </div>

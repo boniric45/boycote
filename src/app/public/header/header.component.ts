@@ -30,6 +30,14 @@ export class HeaderComponent {
   inputActive = signal(true);    // Input visible
   selectActive = signal(false);   // Selects visibles
 
+
+  /* ============================
+   0- RESOLUTION DESKTOP
+   ============================ */
+  isDesktop(): boolean {
+    return window.innerWidth >= 900;
+  }
+
   /* ============================
      1) CLIC SUR LE HAMBURGER
      ============================ */
@@ -38,6 +46,35 @@ export class HeaderComponent {
     this.inputActive.set(true);
     this.selectActive.set(true);
   }
+
+onHamburgerClick() {
+  const isDesktop = window.innerWidth >= 900;
+
+  if (isDesktop) {
+
+    // Si la recherche est déjà ouverte → on ferme tout
+    if (this.searchOpen()) {
+      this.searchOpen.set(false);
+      this.inputActive.set(false);
+      this.selectActive.set(false);
+      return;
+    }
+
+    // Sinon → on ouvre tout
+    this.searchOpen.set(true);
+    this.inputActive.set(true);
+    this.selectActive.set(true);
+
+  } else {
+
+    // MOBILE : comportement normal
+    this.openSearch();
+  }
+}
+
+
+
+
 
   /* ============================
      2) INPUT PREND LE FOCUS
@@ -81,5 +118,6 @@ export class HeaderComponent {
 
 
 
-  }
+
+}
 

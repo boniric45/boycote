@@ -1,22 +1,41 @@
-@media all and (max-width: 600px) {
-
-.global-wrapper {
+.overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
    width: 100%;
-   min-height: 100dvh;
+   height: 100%;
+   /* Couleur sombre semi-transparente + flou */
+   //  background-color: rgba(0, 0, 0, 0.5); 
+   backdrop-filter: blur(5px);
+   -webkit-backdrop-filter: blur(5px);
+   /* Pour Safari */
+   /* Centrage de la div enfant */
    display: flex;
    justify-content: center;
-   padding: 0;
+   align-items: center;
+   z-index: 999;
 }
 
-.global-content {
-   width: 100%;
-   max-width: 460px;
-   min-height: 100dvh;
-   background-color: #fff;
-
+.cookies {
+   z-index: 9999;
 }
 
+@media all and (max-width: 600px) {
+
+   .global-wrapper {
+      width: 100%;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+   }
+
+   .global-content {
+      width: 100%;
+      max-width: 460px;
+      min-height: 100dvh;
+      background-color: #fff;
+
+   }
+
 }
-
-
-
