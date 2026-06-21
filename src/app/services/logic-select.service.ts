@@ -8,6 +8,7 @@ export class LogicSelectService {
 
   private articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
+  private filters = signal<any | null>(null);
 
   visibleCount = signal(5);
   currentIndex = signal(0);
@@ -16,8 +17,22 @@ export class LogicSelectService {
 
   setArticles(list: Product[]) { this.articles.set(list); }
   setSoldOut(list: Product[]) { this.soldOut.set(list); }
+  setFilters(f: any) { this.filters.set(f); }
 
-  filtered = computed(() => this.articles()); // pas de search
+  filtered = computed(() => {
+    const f = this.filters();
+    let list = this.articles();
+
+    if (!f) return list;
+
+    if (f.gender) list = list.filter(p => p.gender === f.gender);
+    if (f.size) list = list.filter(p => p.size === f.size);
+    if (f.priceMin != null) list = list.filter(p => p.prix >= f.priceMin);
+    if (f.priceMax != null) list = list.filter(p => p.prix <= f.priceMax);
+
+    return list;
+  });
+
   noResult = computed(() => this.filtered().length === 0);
   fallbackMode = computed(() => this.filtered().length > 0 && this.filtered().length < 3);
   canShowCarousel = computed(() => this.filtered().length >= 3);
@@ -30,70 +45,24 @@ export class LogicSelectService {
     }));
   });
 
-  // normalized = computed(() => {
-  //   const list = this.merged().map(a => ({
-  //     ...a,
-  //     pathpictureone: this.fixLocalUrl(a.pathpictureone)   // 🔥 correction ici
-  //   }));
-
-  //   if (list.length === 0) return [];
-
-  //   if (list.length < 5) {
-  //     const result = [...list];
-  //     while (result.length < 5) result.push(...list);
-  //     return result.slice(0, 5);
-  //   }
-
-  //   return list;
-  // });
-
-  // a retirer en production
-  fixLocalUrl(url: string): string {
-    console.log('URL > ', url);
-
-    if (!url) return '';
-
-    // 1. Si l’URL commence par localhost → remplacer
-    if (url.startsWith('http://localhost:4200')) {
-      return url.replace('http://localhost:4200', 'https://boycote.fr');
-    }
-
-    // 2. Si l’URL est relative → préfixer ton domaine
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      return `https://boycote.fr/${url.replace(/^\//, '')}`;
-    }
-
-    // 3. Sinon on renvoie tel quel
-    return url;
-  }
-
-
   normalized = computed(() => {
-    const list = this.merged().map(a => ({
-      ...a,
-      pathpictureone: this.fixLocalUrl(a.pathpictureone)
-    }));
-    console.log("MERGED EXECUTED");
-
+    const list = this.merged();
     if (list.length === 0) return [];
-
     if (list.length < 5) {
       const result = [...list];
       while (result.length < 5) result.push(...list);
       return result.slice(0, 5);
     }
-
     return list;
   });
-
 
   visible = computed(() => {
     const list = this.normalized();
     const total = list.length;
     const count = this.visibleCount();
     const start = this.currentIndex() - Math.floor(count / 2);
-    const result: any[] = [];
 
+    const result: any[] = [];
     for (let i = 0; i < count; i++) {
       const index = (start + i + total) % total;
       result.push(list[index]);

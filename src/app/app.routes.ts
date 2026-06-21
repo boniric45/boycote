@@ -1,208 +1,233 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
-import { CabinUpdateFormComponent } from './public/admin/cabin-update-form/cabin-update-form.component';
-import { ConsoleComponent } from './public/admin/console/console.component';
-import { LoginComponent } from './public/admin/login/login.component';
-import { AnnulationComponent } from './public/annulation/annulation.component';
-import { CabineComponent } from './public/cabine/cabine.component';
-import { CancelComponent } from './public/cancel/cancel.component';
-import { CartComponent } from './public/cart/cart.component';
-import { BoycoteComponent } from './public/features/boycote/boycote.component';
-import { boycoteRoutes } from './public/features/boycote/boycote.route';
-import { CarouselProductComponent } from './public/features/carousel/carousel-product/carousel-product.component';
-import { ContactComponent } from './public/features/contact/contact.component';
-import { CustomerRequestComponent } from './public/features/customer-request/customer-request.component';
-import { LegalComponent } from './public/legal/legal.component';
-import { SuccessComponent } from './public/success/success.component';
-import { CookiesComponent } from './public/features/cookies/cookies.component';
-import { PageCentraleComponent } from './public/page-centrale/page-centrale.component';
 
+// export const routes: Routes = [
+
+//   { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+//   // LOGIN PUBLIC
+//   {
+//     path: 'home',
+//     // canMatch: [adminGuard], 
+//     title: 'Boy-Coté.fr',
+//     children: boycoteRoutes
+//   },
+//   {
+//     path: 'admin/login',
+//     loadComponent: () =>
+//       import('./public/admin/login/login.component').then(m => m.LoginComponent)
+//   },
+//   {
+//     path: 'home/admin/login',
+//     component: CarouselHostComponent // changer pour loginComponent en production BoycoteComponent en Dev
+//   },
+
+//   // ADMIN PROTÉGÉ
+//   // {
+//   //   path: 'admin',
+//   //   canMatch: [adminGuard],
+//   //   loadComponent: () =>
+//   //     import('./public/admin/console/console.component').then(m => m.ConsoleComponent)
+//   // },
+//   {
+//     path: 'admin2', // à supprimer plus tard
+//     // canMatch: [adminGuard],
+//     loadComponent: () =>
+//       import('./public/admin/console/console.component').then(m => m.ConsoleComponent)
+//   },
+//   {
+//     path: 'admin',
+//     // canMatch: [adminGuard],
+//     component: BoycoteComponent
+//   },
+//   {
+//     path: 'console',
+//     // canMatch: [adminGuard],
+//     component: ConsoleComponent
+//   },
+//   {
+//     path: 'console/add',
+//     // canMatch: [adminGuard],
+//     loadComponent: () =>
+//       import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
+//   },
+//   {
+//     path: 'console/update',
+//     // canMatch: [adminGuard],
+//     loadComponent: () =>
+//       import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
+//   },
+
+//   // {
+//   //   path: 'admin/add',
+//   //   canMatch: [adminGuard],
+//   //   loadComponent: () =>
+//   //     import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
+//   // },
+//   {
+//     path: 'admin2/cabin/add',
+//     loadComponent: () => import('./public/admin/cabin-add-form/cabin-add-form.component').then(m => m.CabinAddFormComponent)
+//   },
+
+//   {
+//     path: 'admin2/cabin/edit/:id',
+//     loadComponent: () => import('./public/admin/cabin-update-form/cabin-update-form.component').then(m => m.CabinUpdateFormComponent)
+//   },
+//   {
+//     path: 'admin2/add',
+//     // canMatch: [adminGuard],
+//     loadComponent: () =>
+//       import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
+//   },
+//   {
+//     path: 'admin2/update',
+//     // canMatch: [adminGuard],
+//     loadComponent: () =>
+//       import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
+//   },
+//   {
+//     path: 'admin/update',
+//     canMatch: [adminGuard],
+//     loadComponent: () =>
+//       import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
+//   },
+//   {
+//     path: 'admin/marque/add',
+//     // canMatch: [adminGuard],
+//     loadComponent: () => import('./public/admin/add-marque/add-marque.component')
+//       .then(c => c.AddMarqueComponent)
+//   },
+//   {
+//     path: 'admin/marque/edit/:id',
+//     // canMatch: [adminGuard],
+//     loadComponent: () => import('./public/admin/edit-marque/edit-marque.component')
+//       .then(c => c.EditMarqueComponent)
+//   },
+//   {
+//     path: 'admin/garment/add',
+//     // canMatch: [adminGuard],
+//     loadComponent: () => import('./public/admin/add-garment/add-garment.component')
+//       .then(c => c.AddGarmentComponent)
+//   },
+//   {
+//     path: 'admin/garment/edit/:id',
+//     // canMatch: [adminGuard],
+//     loadComponent: () => import('./public/admin/edit-garment/edit-garment.component')
+//       .then(c => c.EditGarmentComponent)
+//   },
+//   {
+//     path: 'admin/gender/add',
+//     // canMatch: [adminGuard],
+//     loadComponent: () => import('./public/admin/add-gender/add-gender.component')
+//       .then(c => c.AddGenderComponent)
+//   },
+//   {
+//     path: 'admin/gender/edit/:id',
+//     // canMatch: [adminGuard],
+//     loadComponent: () => import('./public/admin/edit-gender/edit-gender.component')
+//       .then(c => c.EditGenderComponent)
+//   },
+
+//   // AUTRES ROUTES
+//   {
+//     path: 'carousel',
+//     title: 'Carousel',
+//     component: BoycoteComponent
+//   },
+//   {
+//     path: 'product/:id',
+//     title: 'Product',
+//     component: CarouselProductComponent
+//   },
+//   {
+//     path: 'success',
+//     title: 'Success',
+//     component: SuccessComponent
+//   },
+//   {
+//     path: 'cancel',
+//     title: 'Cancel',
+//     component: CancelComponent
+//   },
+//   {
+//     path: 'cart',
+//     title: 'Cart',
+//     component: CartComponent
+//   },
+//   {
+//     path: 'cabine',
+//     title: 'Cabine',
+//     component: CabineComponent
+//   },
+//   {
+//     path: 'contact',
+//     title: 'Contact',
+//     component: ContactComponent
+//   },
+//   {
+//     path: 'mention',
+//     title: 'Mentions',
+//     component: LegalComponent
+//   },
+//   {
+//     path: 'annulation',
+//     title: 'Annulation',
+//     component: AnnulationComponent
+//   },
+//   {
+//     path: 'request/:id',
+//     title: 'Customer Request',
+//     component: CustomerRequestComponent
+//   }
+
+// ];
 
 export const routes: Routes = [
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
-  // LOGIN PUBLIC
-  {
-    path: 'home',
-   // canMatch: [adminGuard], 
-    title: 'Boy-Coté.fr',
-    children: boycoteRoutes
-  },
-  {
-    path:'v',
-    component:CabinUpdateFormComponent
-  },
+  // HOME
+  // {
+  //   path: 'home',
+  //   title: 'Boy-Coté.fr',
+  //   loadComponent: () =>
+  //     import('./public/home/home.component')
+  //       .then(m => m.HomeComponent)
+  // },
 
+  // LOGIN
   {
     path: 'admin/login',
     loadComponent: () =>
-      import('./public/admin/login/login.component').then(m => m.LoginComponent)
+      import('./public/admin/login/login.component')
+        .then(m => m.LoginComponent)
   },
-  {
-    path:'home/admin/login',
-    component:PageCentraleComponent // changer pour loginComponent en production BoycoteComponent en Dev
-  },
-  
-  // ADMIN PROTÉGÉ
-  // {
-  //   path: 'admin',
-  //   canMatch: [adminGuard],
-  //   loadComponent: () =>
-  //     import('./public/admin/console/console.component').then(m => m.ConsoleComponent)
-  // },
-    {
-    path: 'admin2', // à supprimer plus tard
-    // canMatch: [adminGuard],
-    loadComponent: () =>
-      import('./public/admin/console/console.component').then(m => m.ConsoleComponent)
-  },
+
+  // ADMIN
   {
     path: 'admin',
-    // canMatch: [adminGuard],
-    component: BoycoteComponent
-  },
-    {
-    path: 'console',
-    // canMatch: [adminGuard],
-    component: ConsoleComponent
-  },
-  {
-    path: 'console/add',
-    // canMatch: [adminGuard],
-    loadComponent: () =>
-      import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
-  },
-  {
-    path: 'console/update',
-    // canMatch: [adminGuard],
-    loadComponent: () =>
-      import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
-  },
-
-  // {
-  //   path: 'admin/add',
-  //   canMatch: [adminGuard],
-  //   loadComponent: () =>
-  //     import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
-  // },
-   { path: 'admin2/cabin/add',
-    loadComponent:()=> import('./public/admin/cabin-add-form/cabin-add-form.component').then(m => m.CabinAddFormComponent)
-   },
-
-  { path: 'admin2/cabin/edit/:id',
-    loadComponent:()=> import('./public/admin/cabin-update-form/cabin-update-form.component').then(m => m.CabinUpdateFormComponent)
-   },
-    {
-    path: 'admin2/add',
-    // canMatch: [adminGuard],
-    loadComponent: () =>
-      import('./public/admin/product-form/product-form.component').then(m => m.ProductFormComponent)
-  },
-    {
-    path: 'admin2/update',
-    // canMatch: [adminGuard],
-    loadComponent: () =>
-      import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
-  },
-  {
-    path: 'admin/update',
     canMatch: [adminGuard],
-    loadComponent: () =>
-      import('./public/admin/product-update/product-update.component').then(m => m.ProductUpdateComponent)
-  },
-  {
-    path: 'admin/marque/add',
-    // canMatch: [adminGuard],
-    loadComponent: () => import('./public/admin/add-marque/add-marque.component')
-      .then(c => c.AddMarqueComponent)
-  },
-  {
-    path: 'admin/marque/edit/:id',
-    // canMatch: [adminGuard],
-    loadComponent: () => import('./public/admin/edit-marque/edit-marque.component')
-      .then(c => c.EditMarqueComponent)
-  },
-    {
-    path: 'admin/garment/add',
-    // canMatch: [adminGuard],
-    loadComponent: () => import('./public/admin/add-garment/add-garment.component')
-      .then(c => c.AddGarmentComponent)
-  },
-  {
-    path: 'admin/garment/edit/:id',
-    // canMatch: [adminGuard],
-    loadComponent: () => import('./public/admin/edit-garment/edit-garment.component')
-      .then(c => c.EditGarmentComponent)
-  },
-      {
-    path: 'admin/gender/add',
-    // canMatch: [adminGuard],
-    loadComponent: () => import('./public/admin/add-gender/add-gender.component')
-      .then(c => c.AddGenderComponent)
-  },
-  {
-    path: 'admin/gender/edit/:id',
-    // canMatch: [adminGuard],
-    loadComponent: () => import('./public/admin/edit-gender/edit-gender.component')
-      .then(c => c.EditGenderComponent)
+    loadChildren: () =>
+      import('./public/admin/admin.routes')
+        .then(m => m.ADMIN_ROUTES)
   },
 
-  // AUTRES ROUTES
-  {
-    path: 'carousel',
-    title: 'Carousel',
-    component: BoycoteComponent
-  },
+  // PRODUCT PAGE (pas de carousel ici)
   {
     path: 'product/:id',
-    title: 'Product',
-    component: CarouselProductComponent
+    loadComponent: () =>
+      import('./public/features/carousel/carousel-product/carousel-product.component')
+        .then(m => m.CarouselProductComponent)
   },
-  {
-    path: 'success',
-    title: 'Success',
-    component: SuccessComponent
-  },
-  {
-    path: 'cancel',
-    title: 'Cancel',
-    component: CancelComponent
-  },
-  {
-    path: 'cart',
-    title: 'Cart',
-    component: CartComponent
-  },
-  {
-    path: 'cabine',
-    title: 'Cabine',
-    component: CabineComponent
-  },
-  {
-    path: 'contact',
-    title: 'Contact',
-    component: ContactComponent
-  },
-  {
-    path: 'mention',
-    title: 'Mentions',
-    component: LegalComponent
-  },
-  {
-    path: 'annulation',
-    title: 'Annulation',
-    component: AnnulationComponent
-  },
-    {
-    path: 'admin3',
-    title:'Administration',
-    component: LoginComponent
-  },
-  {
-    path: 'request/:id',
-    title:'Customer Request',
-    component: CustomerRequestComponent
-  }
 
+  // AUTRES PAGES
+  { path: 'cart', loadComponent: () => import('./public/cart/cart.component').then(m => m.CartComponent) },
+  { path: 'cabine', loadComponent: () => import('./public/cabine/cabine.component').then(m => m.CabineComponent) },
+  { path: 'contact', loadComponent: () => import('./public/features/contact/contact.component').then(m => m.ContactComponent) },
+  { path: 'mention', loadComponent: () => import('./public/legal/legal.component').then(m => m.LegalComponent) },
+  { path: 'annulation', loadComponent: () => import('./public/annulation/annulation.component').then(m => m.AnnulationComponent) },
+  { path: 'request/:id', loadComponent: () => import('./public/features/customer-request/customer-request.component').then(m => m.CustomerRequestComponent) },
+
+  // 404
+  { path: '**', redirectTo: 'home' }
 ];

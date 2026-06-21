@@ -19,22 +19,38 @@ export class LogicInputService {
   isAnimating = signal(false);
   direction = signal<'left' | 'right'>('right');
 
-  setArticles(list: Product[]) { this.articles.set(list); }
+  setArticles(list: Product[]) {
+    console.log("📦 SERVICE REÇOIT ARTICLES =", list);
+    this.articles.set(list);
+  }
   setSoldOut(list: Product[]) { this.soldOut.set(list); }
-  setSearch(term: string) { this.search.set(term.toLowerCase()); }
 
-  filtered = computed(() => {
-    const term = normalize(this.search().trim());
-    if (!term) return this.articles(); // IMPORTANT : affiche tout si champ vide
-
-    return this.articles().filter(p =>
-      normalize(p.marque).includes(term)
-    );
-  });
+  setSearch(term: string) {
+    console.log("🔎 SERVICE REÇOIT SEARCH =", term);
+    this.search.set(term.toLowerCase());
+  }
 
   noResult = computed(() => this.filtered().length === 0);
   fallbackMode = computed(() => this.filtered().length > 0 && this.filtered().length < 3);
   canShowCarousel = computed(() => this.filtered().length >= 3);
+
+  filtered = computed(() => {
+    console.log("FILTERED INPUT =", this.search());
+    const term = normalize(this.search());
+    const list = this.articles();
+    console.log("ARTICLES =", list);
+    // const result = list.filter(p => p.marque.toLowerCase().includes(term));
+    const result = list.filter(p => {
+  console.log("TEST MARQUE =", p.marque);
+  return p.marque.toLowerCase().includes(term);
+});
+
+    console.log("FILTERED RESULT =", result);
+    console.log("EXEMPLE PRODUIT =", list[0]);
+    console.log("TERM RAW =", JSON.stringify(term));
+    return result;
+  });
+
 
   merged = computed(() => {
     const sold = new Set(this.soldOut().map(p => p.id));
@@ -120,5 +136,5 @@ export class LogicInputService {
     return 1 - Math.abs(i - middle) * 0.15;
   }
 
-  
+
 }

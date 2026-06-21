@@ -4,18 +4,28 @@
     top: 0;
 }
 
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+
 .img-btn{
-    width: 120px;
+    width: 100px;
     border: none;
     cursor: pointer;
     border-image-slice: 30 fill;
     background: transparent;
+      outline: none;
 } :active{
     scale: 0.95;
 }
 
-.btn{
+.btn {
+    all:unset;
     border: none;
-    background-color: #fff;
+    background: transparent;
     width: 100px;
+    outline: none;
 }
+

@@ -1,7 +1,10 @@
 
 <div class="carousel-wrapper">
+<!-- FORCE LE PIPELINE À SE DÉCLENCHER -->
+<span style="display:none">{{ visible.length }}</span>
 
-  @if (!searchSubmitted()) {
+
+  @if (!searchSubmitted) {
     <div class="pb">
       <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
     </div>
@@ -20,7 +23,7 @@
     </div>
   }
 
-  @else if (showCarousel) {
+  @else if (logic.canShowCarousel()) {
 
     <div class="carousel">
 
@@ -32,7 +35,7 @@
            [class.animating]="logic.isAnimating()"
            [class.left-direction]="logic.direction() === 'left'">
 
-        @for (article of logic.visible(); track article.id; let i = $index) {
+        @for (article of visible; track article.id; let i = $index) {
           <img (click)="readViewProduct(article.id)"
                [src]="article.pathpictureone"
                class="item"
@@ -87,3 +90,4 @@
   }
 
 </div>
+

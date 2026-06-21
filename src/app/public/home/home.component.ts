@@ -5,12 +5,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
-import { BoycoteComponent } from '../features/boycote/boycote.component';
 
 
 @Component({
   selector: 'app-home',
-  imports: [MatButtonModule, MatDividerModule, MatIconModule, BoycoteComponent ],
+  imports: [MatButtonModule, MatDividerModule, MatIconModule ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

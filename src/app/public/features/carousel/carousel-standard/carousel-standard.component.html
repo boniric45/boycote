@@ -42,8 +42,7 @@
         <div class="description">
           @if(centralArticle){
           <p>{{ centralArticle.name }}</p>
-          <p>{{ centralArticle.gender}}</p>
-          <p> {{ centralArticle.size}}</p>
+          <p>{{ centralArticle.gender}} - {{ centralArticle.size}}</p>
           <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
           }
         </div>

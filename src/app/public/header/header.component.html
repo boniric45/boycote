@@ -4,28 +4,27 @@
 <div class="header-wrapper mobile-only">
 
   @if(!searchOpen()){
-    <div class="header">
+  <div class="header">
 
-      <!-- HAMBURGER -->
-      <div class="header-left" (click)="onHamburgerClick()">
-        <app-hamburger></app-hamburger>
-      </div>
-
-      <!-- LOGO -->
-      <div class="header-center">
-        <img src="/pictures/logo.png" class="img_logo_mobile" alt="Boycoté">
-      </div>
-
-      <!-- PANIER -->
-      <div class="header-right">
-        <app-cart></app-cart>
-      </div>
-
+    <!-- HAMBURGER -->
+    <div class="header-left" (click)="onHamburgerClick()">
+      <app-hamburger></app-hamburger>
     </div>
+
+    <!-- LOGO -->
+    <div class="header-center">
+      <img src="/pictures/logo.png" class="img_logo_mobile" alt="Boycoté">
+    </div>
+
+    <!-- PANIER -->
+    <div class="header-right">
+      <app-cart></app-cart>
+    </div>
+
+  </div>
   }
 
 </div>
-
 
 
 <!-- ============================
@@ -51,7 +50,6 @@
 </div>
 
 
-
 <!-- ============================
      ZONE RECHERCHE (mobile + desktop)
      ============================ -->
@@ -59,25 +57,65 @@
 
   @if(searchOpen()){
 
-    <!-- INPUT -->
-    @if(inputActive()){
-      <app-search-input 
-        (focusInput)="onInputFocus()"
-        (searchInput)="onSearchInput($event)"
-        (reset)="resetSearch()">
-      </app-search-input>
-    }
+  <!-- INPUT -->
+  @if(inputActive()){
+  <app-search-input 
+  (focusInput)="onInputFocus()" 
+  (searchInput)="onSearchInput($event)" 
+  (reset)="resetSearch()"
+  (submitted)="onSearchSubmitted()"
+  >
+  </app-search-input>
 
-    <!-- SELECTS -->
-    @if(selectActive()){
-      <app-search-selects
-        [selectActive]="selectActive()"
-        [inputActive]="inputActive()"
-        (focusSelect)="onSelectFocus()"
-        (searchFilters)="onSearchFilters($event)"
-        (reset)="resetSearch()">
-      </app-search-selects>
-    }
+  <app-carousel-input 
+  [searchQuery]="searchQuery"
+  [searchSubmitted]="searchSubmitted()"
+   />
+  }
+
+  <!-- SELECTS -->
+  @if(selectActive()){
+  <app-search-selects [selectActive]="selectActive()" [inputActive]="inputActive()" (focusSelect)="onSelectFocus()"
+    (searchFilters)="onSearchFilters($event)" (reset)="resetSearch()">
+  </app-search-selects>
+  }
   }
 
 </div>
+
+<!-- <div class="search-zone">
+
+  @if(searchOpen()) {
+
+    <!-- INPUT -->
+    @if(inputActive()) {
+      <app-search-input 
+        (focusInput)="onInputFocus()" 
+        (searchInput)="onSearchInput($event)" 
+        (reset)="resetSearch()"
+        (submitted)="onSearchSubmitted()"
+      />
+    }
+
+    <!-- CAROUSEL -->
+    @if(searchSubmitted()) {
+      <app-carousel-input 
+        [searchQuery]="searchQuery"
+        [searchSubmitted]="searchSubmitted()"
+      />
+    }
+
+    <!-- SELECTS -->
+    @if(selectActive()) {
+      <app-search-selects 
+        [selectActive]="selectActive()" 
+        [inputActive]="inputActive()" 
+        (focusSelect)="onSelectFocus()"
+        (searchFilters)="onSearchFilters($event)" 
+        (reset)="resetSearch()"
+      />
+    }
+
+  }
+
+</div> -->

@@ -1,17 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CookiesComponent } from "./public/features/cookies/cookies.component";
 import { FooterComponent } from "./public/footer/footer.component";
 import { HeaderComponent } from "./public/header/header.component";
-import { ApiService } from './services/api.service';
-import { GarmentService } from './services/garment.service';
-import { GenderService } from './services/gender.service';
-import { CookiesComponent } from "./public/features/cookies/cookies.component";
 import { CookieService } from './services/cookie.service';
+import { CarouselHostComponent } from './public/features/carousel/carousel-host/carousel-host.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, CookiesComponent],
+  imports: [HeaderComponent, FooterComponent, CookiesComponent, CarouselHostComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

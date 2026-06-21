@@ -1,14 +1,12 @@
 import { Routes } from "@angular/router";
-import { ConstructionComponent } from "../construction/construction.component";
-import { HomeComponent } from "../../home/home.component";
-import { PageCentraleComponent } from "../../page-centrale/page-centrale.component";
+import { CarouselHostComponent } from "../carousel/carousel-host/carousel-host.component";
 
 
 export const boycoteRoutes: Routes = [
     
     {
     path:'',
-    component:PageCentraleComponent
+    component:CarouselHostComponent
     },
 
 

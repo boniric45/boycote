@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+  .header-right {
+    margin-right: 2px;
+  }
+
 .header-center {
   flex: 1;
   display: flex;
@@ -31,7 +35,7 @@
 }
 
 .img_logo_mobile {
-  width: 140px;
+  width: 130px;
 }
 
 .mobile-only {

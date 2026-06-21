@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-search-input',
@@ -12,6 +12,9 @@ export class SearchInputComponent {
   @Output() searchInput = new EventEmitter<string>();
   @Output() focusInput = new EventEmitter<void>();
   @Output() reset = new EventEmitter<void>();
+  @Output() submitted = new EventEmitter<void>();
+
+  inputValue = '';
 
   /* Quand l’input prend le focus → on prévient le header */
   onFocus() {
@@ -20,8 +23,13 @@ export class SearchInputComponent {
 
   /* Quand l’utilisateur tape → on renvoie la valeur */
   onInput(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchInput.emit(value);
+    this.inputValue = (event.target as HTMLInputElement).value;
+    // this.searchInput.emit(value);
+  }
+
+  onSearchClick() {
+    this.searchInput.emit(this.inputValue); // envoie la valeur
+    this.submitted.emit();                  // débloque la progressbar
   }
 
   onRefresh() {
