@@ -41,7 +41,6 @@ export class CarouselStandardComponent implements OnInit {
   // 2. Un signal calculé qui combine les deux
   productsWithBadge = computed(() => {
     const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
-
     return this.allProducts().map(product => ({
       ...product,
       isSoldOut: soldOutIds.has(product.id) // Ajoute une propriété dynamique
@@ -95,32 +94,6 @@ export class CarouselStandardComponent implements OnInit {
     return url;
   }
 
-  // get visibleArticles() {
-  //   if (!this.articles || this.articles.length === 0) return [];
-
-  //   const total = this.articles.length;
-  //   const count = Math.min(this.visibleCount, total);
-  //   const start = this.currentIndex - Math.floor(count / 2);
-
-  //   // Création d'un Set pour une recherche rapide en O(1)
-  //   const soldOutIds = new Set(this.productsSoldOut().map(p => p.id));
-
-  //   const result = [];
-  //   for (let i = 0; i < count; i++) {
-  //     const index = (start + i + total) % total;
-  //     const article = this.articles[index];
-
-  //     // On retourne l'article avec sa propriété "isSoldOut" calculée à la volée
-  //     result.push({
-  //       ...article,
-  //       isSoldOut: soldOutIds.has(article.id)
-  //     });
-
-  //           this.fixLocalUrl(article.pathpictureone);
-  //   }
-  //   return result;
-  // }
-
   get visibleArticles() {
     if (!this.articles || this.articles.length === 0) return [];
 
@@ -135,7 +108,6 @@ export class CarouselStandardComponent implements OnInit {
     for (let i = 0; i < count; i++) {
       const index = (start + i + total) % total;
       const article = this.articles[index];
-
       const fixedUrl = this.fixLocalUrl(article.pathpictureone);
 
       result.push({

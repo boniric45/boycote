@@ -1,7 +1,19 @@
 :host {
-  display: block;
-  width: 100%;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 60dvh;
+}
+
+.carousel-host {
+  position: relative;
+  z-index: 1;
+}
+
+.page-center {
+  flex: 1;               /* prend tout l’espace disponible */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 

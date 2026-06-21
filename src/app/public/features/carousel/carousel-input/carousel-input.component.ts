@@ -28,7 +28,6 @@ export class CarouselInputComponent implements OnInit {
   private subscription: Subscription = new Subscription();
   logic = inject(LogicInputService);
 
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -47,8 +46,6 @@ export class CarouselInputComponent implements OnInit {
   constructor() {
     // Réagir à la recherche
     effect(() => {
-      console.log("🔥 EFFECT SEARCH TRIGGERED");
-      console.log("CAROUSEL REÇOIT :", this.searchQuery());
       this.logic.setSearch(this.searchQuery());
     });
 
@@ -66,11 +63,10 @@ export class CarouselInputComponent implements OnInit {
     this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
   }
 
+
   // Exposition des données
   get visible() {
-    console.log("🔥 GETTER VISIBLE CALLED");
     const v = this.logic.visible();
-    console.log("👀 CAROUSEL VISIBLE =", v);
     return v;
   }
 
@@ -79,7 +75,7 @@ export class CarouselInputComponent implements OnInit {
   next() { this.logic.next(); }
   prev() { this.logic.prev(); }
 
-  getTransform(i: number) { return this.logic.getTransform(i); }
+
   getOpacity(i: number) { return this.logic.getOpacity(i); }
   getZIndex(i: number) { return this.logic.getZIndex(i); }
 

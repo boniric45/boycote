@@ -12,8 +12,8 @@
 
   <!-- INPUT AU CENTRE -->
   <div class="search-input-wrapper">
-    <input type="text" class="input-search" placeholder="SEARCH BY BRANDS" (focus)="onFocus()"
-      (input)="onInput($event)" />
+    <input #searchInputRef type="text" class="input-search" placeholder="SEARCH BY BRANDS"  (focus)="onFocus()"
+    (input)="onInput($event)" />
   </div>
 
   <!-- LOUPE À DROITE -->

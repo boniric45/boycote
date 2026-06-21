@@ -155,7 +155,7 @@ export class SearchSelectsComponent {
       marques: this.selectedMarques(),
       types: this.selectedTypes(),
       genders: this.selectedGenders()
-    });
+    });    
   }
 
   /* ============================

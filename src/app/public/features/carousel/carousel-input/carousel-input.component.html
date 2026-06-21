@@ -1,93 +1,89 @@
+<div class="global-wrapper">
+  <div class="global-content">
 
-<div class="carousel-wrapper">
-<!-- FORCE LE PIPELINE À SE DÉCLENCHER -->
-<span style="display:none">{{ visible.length }}</span>
+    <div class="carousel-wrapper">
+      <!-- FORCE LE PIPELINE À SE DÉCLENCHER -->
+      <span style="display:none">{{ visible.length }}</span>
 
-
-  @if (!searchSubmitted) {
-    <div class="pb">
-      <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
-    </div>
-  }
-
-  @else if (logic.noResult()) {
-    <div class="no-result">NO RESULTS, PLEASE RETRY</div>
-  }
-
-  @else if (logic.fallbackMode()) {
-    <div class="mini-carousel-wrapper">
-      @for(article of logic.filtered();track article.id){
-        <app-carousel-mini-card 
-        [article]="article" />
+      @if (!searchSubmitted) {
+      <div class="pb">
+        <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
+      </div>
       }
-    </div>
-  }
 
-  @else if (logic.canShowCarousel()) {
+      @else if (logic.noResult()) {
+      <div class="no-result">NO RESULTS, PLEASE RETRY</div>
+      }
 
-    <div class="carousel">
-
-      <button class="nav left desktop" (click)="logic.prev()">
-        <app-component-left></app-component-left>
-      </button>
-
-      <div class="items"
-           [class.animating]="logic.isAnimating()"
-           [class.left-direction]="logic.direction() === 'left'">
-
-        @for (article of visible; track article.id; let i = $index) {
-          <img (click)="readViewProduct(article.id)"
-               [src]="article.pathpictureone"
-               class="item"
-               [style.transform]="logic.getTransform(i)"
-               [style.zIndex]="logic.getZIndex(i)"
-               [style.opacity]="logic.getOpacity(i)" />
+      @else if (logic.fallbackMode()) {
+      <div class="mini-carousel-wrapper">
+        @for(article of logic.filtered();track article.id){
+        <app-carousel-mini-card [article]="article" />
         }
+      </div>
+      }
 
-        @if (logic.central()?.isSoldOut) {
+      @else if (logic.canShowCarousel()) {
+
+      <div class="carousel">
+
+        <button class="nav left desktop" (click)="logic.prev()">
+          <app-component-left></app-component-left>
+        </button>
+
+        <div class="items" [class.animating]="logic.isAnimating()"
+          [class.left-direction]="logic.direction() === 'left'">
+
+          @for (article of visible; track article.id; let i = $index) {
+          <img (click)="readViewProduct(article.id)" [src]="article.pathpictureone" class="item"
+            [style.transform]="logic.getTransform(i)" [style.zIndex]="logic.getZIndex(i)"
+            [style.opacity]="logic.getOpacity(i)" />
+          }
+
+          @if (logic.central()?.isSoldOut) {
           <img class="img-sold-out" src="/pictures/sold-out.png">
-        }
+          }
+        </div>
+
+        <button class="nav right desktop" (click)="logic.next()">
+          <app-component-right></app-component-right>
+        </button>
       </div>
 
-      <button class="nav right desktop" (click)="logic.next()">
-        <app-component-right></app-component-right>
-      </button>
-    </div>
-
-    <div class="container">
-      <div class="description">
-        @if (logic.central()) {
+      <div class="container">
+        <div class="description">
+          @if (logic.central()) {
           <p>{{ logic.central().name }}</p>
-          <p>{{ logic.central().gender }}</p>
-          <p>{{ logic.central().size }}</p>
+          <p>{{ logic.central().gender }} - {{ logic.central().size }}</p>
           <span class="price">{{ logic.central().prix | currency:'EUR' }}</span>
-        }
+          }
+        </div>
       </div>
-    </div>
 
-    <div class="conteneur-bouton">
-      @if (logic.central()?.isSoldOut) {
+      <div class="conteneur-bouton">
+        @if (logic.central()?.isSoldOut) {
         <button class="primary" (click)="addToRequest(logic.central().id)">
           <span>REQUEST SOURCING</span>
         </button>
-      }
-      @else {
+        }
+        @else {
         <button class="primary" (click)="addToCart(logic.central())">
           <span>ADD TO CART</span>
         </button>
+        }
+      </div>
+
+      <div class="nav-mobile mobile">
+        <button class="nav" (click)="logic.prev()">
+          <app-component-left></app-component-left>
+        </button>
+        <button class="nav" (click)="logic.next()">
+          <app-component-right></app-component-right>
+        </button>
+      </div>
+
       }
+
     </div>
-
-    <div class="nav-mobile mobile">
-      <button class="nav" (click)="logic.prev()">
-        <app-component-left></app-component-left>
-      </button>
-      <button class="nav" (click)="logic.next()">
-        <app-component-right></app-component-right>
-      </button>
-    </div>
-
-  }
-
+  </div>
 </div>
-

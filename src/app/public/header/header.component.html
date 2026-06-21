@@ -2,8 +2,8 @@
      HEADER MOBILE (disparaît en recherche)
      ============================ -->
 <div class="header-wrapper mobile-only">
-
   @if(!searchOpen()){
+
   <div class="header">
 
     <!-- HAMBURGER -->
@@ -46,9 +46,7 @@
   <div class="header-right">
     <app-cart></app-cart>
   </div>
-
 </div>
-
 
 <!-- ============================
      ZONE RECHERCHE (mobile + desktop)
@@ -57,65 +55,25 @@
 
   @if(searchOpen()){
 
-  <!-- INPUT -->
-  @if(inputActive()){
-  <app-search-input 
-  (focusInput)="onInputFocus()" 
-  (searchInput)="onSearchInput($event)" 
-  (reset)="resetSearch()"
-  (submitted)="onSearchSubmitted()"
-  >
-  </app-search-input>
+    <!-- INPUT -->
+    @if(inputActive()){
+      <app-search-input 
+        (focusInput)="onInputFocus()" 
+        (searchInput)="onSearchInput($event)" 
+        (reset)="resetSearch()">
+      </app-search-input>
+    }
 
-  <app-carousel-input 
-  [searchQuery]="searchQuery"
-  [searchSubmitted]="searchSubmitted()"
-   />
-  }
-
-  <!-- SELECTS -->
-  @if(selectActive()){
-  <app-search-selects [selectActive]="selectActive()" [inputActive]="inputActive()" (focusSelect)="onSelectFocus()"
-    (searchFilters)="onSearchFilters($event)" (reset)="resetSearch()">
-  </app-search-selects>
-  }
+    <!-- SELECTS -->
+    @if(selectActive()){
+      <app-search-selects 
+        (focusSelect)="onSelectFocus()"
+        (searchFilters)="onSearchSelect($event)" 
+        (reset)="resetSearch()">
+      </app-search-selects>
+    }
   }
 
 </div>
 
-<!-- <div class="search-zone">
 
-  @if(searchOpen()) {
-
-    <!-- INPUT -->
-    @if(inputActive()) {
-      <app-search-input 
-        (focusInput)="onInputFocus()" 
-        (searchInput)="onSearchInput($event)" 
-        (reset)="resetSearch()"
-        (submitted)="onSearchSubmitted()"
-      />
-    }
-
-    <!-- CAROUSEL -->
-    @if(searchSubmitted()) {
-      <app-carousel-input 
-        [searchQuery]="searchQuery"
-        [searchSubmitted]="searchSubmitted()"
-      />
-    }
-
-    <!-- SELECTS -->
-    @if(selectActive()) {
-      <app-search-selects 
-        [selectActive]="selectActive()" 
-        [inputActive]="inputActive()" 
-        (focusSelect)="onSelectFocus()"
-        (searchFilters)="onSearchFilters($event)" 
-        (reset)="resetSearch()"
-      />
-    }
-
-  }
-
-</div> -->

@@ -1,25 +1,25 @@
 <div class="carousel-host">
 
-    @switch (mode()) {
 
-    @case ('standard') {
-    <app-carousel-standard />
-    }
+  @switch (mode()) {
+  @case ('standard') {
+  <app-carousel-standard />
+  }
 
-    @case ('search') {
-    <app-carousel-input  
-    [searchQuery]="searchQuery"
-    />
-    }
+  @case ('search') {
+  @if(searchSubmitted()){
+  <app-carousel-input [searchQuery]="searchQuery" [searchSubmitted]="searchSubmitted()" />
+  }
+  }
 
-    @case ('select') {
-    <app-carousel-select />
-    }
+  @case ('select') {
+  <app-carousel-select [articles]="filteredArticles"/>
+  }
 
-    @case ('product') {
-    <app-carousel-product />
-    }
+  @case ('product') {
+  <app-carousel-product />
+  }
 
-    }
+  }
 
 </div>

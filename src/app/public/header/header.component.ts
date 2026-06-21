@@ -1,11 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, Input, signal } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output, signal } from "@angular/core";
+import { CarouselService } from "../../services/carousel.service";
 import { HeaderService } from "../../services/header.service";
+import { LogicSelectService } from "../../services/logic-select.service";
+import { SearchService } from "../../services/search.service";
 import { CartComponent } from "../cart/cart.component";
 import { HamburgerComponent } from "../features/hamburger/hamburger.component";
 import { SearchInputComponent } from "../features/search-input/search-input.component";
 import { SearchSelectsComponent } from "../features/search-selects/search-selects.component";
-import { CarouselInputComponent } from "../features/carousel/carousel-input/carousel-input.component";
 
 
 @Component({
@@ -16,8 +18,7 @@ import { CarouselInputComponent } from "../features/carousel/carousel-input/caro
     HamburgerComponent,
     CartComponent,
     SearchInputComponent,
-    SearchSelectsComponent,
-    CarouselInputComponent
+    SearchSelectsComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -25,21 +26,28 @@ import { CarouselInputComponent } from "../features/carousel/carousel-input/caro
 export class HeaderComponent {
 
   private headerService = inject(HeaderService);
+  private logicSelectService = inject(LogicSelectService);
+  private searchService = inject(SearchService);
+  private carouselService = inject(CarouselService);
 
   /* Données venant du parent */
   @Input() marques: string[] = [];
   @Input() types: string[] = [];
   @Input() genders: string[] = [];
 
+  @Output() searchFilters = new EventEmitter<any>();
+  @Output() search = new EventEmitter<string>();
+
   /* États du header */
   searchOpen = signal(false);     // Mode recherche activé
   inputActive = signal(true);     // Input visible
   selectActive = signal(false);   // Selects visibles
   productActive = signal(false);  // Carousel Product visible
-  searchQuery = signal('');
-  searchSubmitted = signal(false);
-
-
+  // searchQuery = signal('');
+  // searchQuerySelect = signal('');
+  // searchSubmittedSelect = signal(false);
+  // searchSubmitted = signal(false);
+  // filtersSubmitted = signal(false);
 
 
   /* ============================
@@ -52,7 +60,6 @@ export class HeaderComponent {
   /* ============================
   1) CLIC SUR LE HAMBURGER
   ============================ */
-
   openSearch() {
     this.searchOpen.set(true);
     this.inputActive.set(true);
@@ -60,22 +67,28 @@ export class HeaderComponent {
   }
 
   onHamburgerClick() {
-    const isDesktop = this.isDesktop();
+    const isDesktop = window.innerWidth >= 900;
+
+    // Si déjà ouvert → reset
+    if (this.searchOpen()) {
+      this.resetSearch();
+      return;
+    }
+
+    // Ouvre la zone recherche
+    this.searchOpen.set(true);
 
     if (isDesktop) {
-      if (this.searchOpen()) {
-        this.closeAll();
-        this.headerService.openStandardMode();
-        return;
-      }
-
-      this.openAll();
-      this.headerService.openSearchMode();
+      // Desktop → input seul
+      this.inputActive.set(true);
+      this.selectActive.set(false);
     } else {
-      this.openAll();
-      this.headerService.openSearchMode();
+      // Mobile → input + selects ensemble
+      this.inputActive.set(true);
+      this.selectActive.set(true);
     }
   }
+
 
   openAll() {
     this.searchOpen.set(true);
@@ -89,51 +102,34 @@ export class HeaderComponent {
     this.selectActive.set(false);
   }
 
-  /* ============================
-     2) INPUT PREND LE FOCUS
-     ============================ */
   onInputFocus() {
     this.inputActive.set(true);
     this.selectActive.set(false);
-    this.headerService.openSearchMode();
   }
 
-  /* ============================
-     3) SELECT PREND LE FOCUS
-     ============================ */
   onSelectFocus() {
     this.inputActive.set(false);
     this.selectActive.set(true);
-    this.headerService.openSelectMode();
   }
 
-  /* ============================
-     4) INPUT → SearchService
-     ============================ */
   onSearchInput(value: string) {
-    console.log("HEADER REÇOIT :", value);
-    this.searchQuery.set(value);
+    this.search.emit(value);   // 🔥 RELAYE AU HOST
   }
 
-  /* ============================
-     5) SELECT → SearchService
-     ============================ */
-  onSearchFilters(filters: any) {
-    this.headerService.updateSearchFilters(filters);
-    this.headerService.openSelectMode();
-  }
-
-
-  /* ============================
-     6) BOUTON REFRESH
-     ============================ */
   resetSearch() {
-    this.closeAll();
-    this.headerService.openStandardMode();
+    this.searchOpen.set(false);
+    this.inputActive.set(true);
+    this.selectActive.set(false);
+  }
+
+  onSearchSelect(filters: any) {
+    console.log(filters);
+    this.logicSelectService.setFilters(filters);
+    this.carouselService.setMode('select');
   }
 
   onSearchSubmitted() {
-    this.searchSubmitted.set(true);
+    this.searchService.searchSubmitted.set(true);  // déclenchement
   }
 
 

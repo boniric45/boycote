@@ -1,14 +1,22 @@
 import { computed, Injectable, signal } from '@angular/core';
+import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
 
-  // 🔥 Signaux principaux
+
+  // 🔥 Signaux Input
   searchQuery = signal('');
   searchSubmitted = signal(false);
   searchFilters = signal<any | null>(null);
+
+  // 🔥 Signaux Select
+  searchFiltersSelect = signal<any>(null);
+  selectSubmitted = signal(false);
+  filteredArticlesSelect = signal<Product[]>([]);
+
 
   // 🔥 Computed : indique si une recherche est active
   isSearching = computed(() =>
@@ -18,14 +26,16 @@ export class SearchService {
   // 🔥 Met à jour la query (appelé par Header)
   setQuery(value: string) {
     this.searchQuery.set(value);
-    console.log(this.searchQuery());
-    
   }
 
   // 🔥 Déclenche la recherche (appelé par Header)
   submit() {
     this.searchSubmitted.set(true);
   }
+
+  // submitSelect() {
+  //   this.searchSubmittedSelect.set(true);
+  // }
 
   // 🔥 Réinitialise la recherche (appelé quand on efface)
   reset() {
@@ -38,6 +48,7 @@ export class SearchService {
   setFilters(filters: any) {
     this.searchFilters.set(filters);
   }
+
 
 
 }

@@ -26,4 +26,16 @@ export class AppComponent {
     }
   }
 
+  searchQuery = '';
+  searchFilters: any = null;
+
+  onSearch(query: string) {
+    this.searchQuery = query;
+  }
+
+  onSearchFilters(filters: any) {
+    this.searchFilters = filters;
+  }
+
+
 }

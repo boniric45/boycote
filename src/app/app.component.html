@@ -7,13 +7,17 @@
   </div>
   }
   <div class="global-content">
-    <app-header></app-header>
+
+    <app-header (search)="onSearch($event)" (searchFilters)="onSearchFilters($event)">
+    </app-header>
 
     <div class="carousel-center">
-      <app-carousel-host></app-carousel-host>
+      <app-carousel-host [query]="searchQuery" [filters]="searchFilters">
+      </app-carousel-host>
+      <router-outlet></router-outlet>
     </div>
 
-    <router-outlet></router-outlet>
     <app-footer></app-footer>
+
   </div>
 </div>

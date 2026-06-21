@@ -20,13 +20,11 @@ export class LogicInputService {
   direction = signal<'left' | 'right'>('right');
 
   setArticles(list: Product[]) {
-    console.log("📦 SERVICE REÇOIT ARTICLES =", list);
     this.articles.set(list);
   }
   setSoldOut(list: Product[]) { this.soldOut.set(list); }
 
   setSearch(term: string) {
-    console.log("🔎 SERVICE REÇOIT SEARCH =", term);
     this.search.set(term.toLowerCase());
   }
 
@@ -35,19 +33,11 @@ export class LogicInputService {
   canShowCarousel = computed(() => this.filtered().length >= 3);
 
   filtered = computed(() => {
-    console.log("FILTERED INPUT =", this.search());
     const term = normalize(this.search());
     const list = this.articles();
-    console.log("ARTICLES =", list);
-    // const result = list.filter(p => p.marque.toLowerCase().includes(term));
     const result = list.filter(p => {
-  console.log("TEST MARQUE =", p.marque);
-  return p.marque.toLowerCase().includes(term);
-});
-
-    console.log("FILTERED RESULT =", result);
-    console.log("EXEMPLE PRODUIT =", list[0]);
-    console.log("TERM RAW =", JSON.stringify(term));
+      return p.marque.toLowerCase().includes(term);
+    });
     return result;
   });
 
@@ -80,7 +70,12 @@ export class LogicInputService {
     const result: any[] = [];
     for (let i = 0; i < count; i++) {
       const index = (start + i + total) % total;
-      result.push(list[index]);
+      const article = list[index];
+      const fixedUrl = this.fixLocalUrl(article.pathpictureone);
+      result.push({
+        ...article,
+        pathpictureone: fixedUrl
+      });
     }
     return result;
   });
@@ -113,18 +108,24 @@ export class LogicInputService {
     setTimeout(() => this.isAnimating.set(false), 180);
   }
 
-  getTransform(i: number) {
+    getTransform(i: number) {
     const middle = Math.floor(this.visibleCount() / 2);
     const offset = i - middle;
+    const isMobile = window.innerWidth < 900;
+    const rotation = offset * 8;
+    const scale = 1 - Math.abs(offset) * 0.06;
+    const translateX = offset * (isMobile ? 40 : 80);
+    const translateZ = 80 - Math.abs(offset) * 30;
 
     return `
       perspective(1000px)
-      translateX(${offset * 80}px)
-      translateZ(${80 - Math.abs(offset) * 30}px)
-      rotateY(${offset * 8}deg)
-      scale(${1 - Math.abs(offset) * 0.06})
+      translateX(${translateX}px)
+      translateZ(${translateZ}px)
+      rotateY(${rotation}deg)
+      scale(${scale})
     `;
   }
+
 
   getZIndex(i: number) {
     const middle = Math.floor(this.visibleCount() / 2);
@@ -136,5 +137,22 @@ export class LogicInputService {
     return 1 - Math.abs(i - middle) * 0.15;
   }
 
+
+  fixLocalUrl(url: string): string {
+    if (!url) return '';
+
+    // 1. Si l’URL commence par localhost → remplacer
+    if (url.startsWith('http://localhost:4200')) {
+      return url.replace('http://localhost:4200', 'https://boycote.fr');
+    }
+
+    // 2. Si l’URL est relative → préfixer ton domaine
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `https://boycote.fr/${url.replace(/^\//, '')}`;
+    }
+
+    // 3. Sinon on renvoie tel quel
+    return url;
+  }
 
 }

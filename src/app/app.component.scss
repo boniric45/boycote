@@ -1,3 +1,40 @@
+:host {
+   display: flex;
+   flex-direction: column;
+   min-height: 100dvh;
+}
+
+.global-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.global-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+app-header {
+  position: relative;
+  z-index: 10;
+}
+
+app-carousel-host {
+  position: relative;
+  z-index: 1;
+}
+
 .overlay {
    position: fixed;
    top: 0;
@@ -19,30 +56,3 @@
 .cookies {
    z-index: 9999;
 }
-
-.carousel-center {
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-
-
-// @media all and (max-width: 600px) {
-
-//    .global-wrapper {
-//       width: 100%;
-//       min-height: 100dvh;
-//       display: flex;
-//       justify-content: center;
-//       padding: 0;
-//    }
-
-//    .global-content {
-//       width: 100%;
-//       max-width: 460px;
-//       min-height: 100dvh;
-//       background-color: #fff;
-//    }
-
-// }
