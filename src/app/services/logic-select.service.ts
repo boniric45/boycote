@@ -9,7 +9,6 @@ export class LogicSelectService {
   articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
   private filters = signal<any | null>(null);
-  private search = signal<string>('');
 
   visibleCount = signal(5);
   currentIndex = signal(0);
@@ -18,21 +17,19 @@ export class LogicSelectService {
 
   setArticles(list: Product[]) { this.articles.set(list); }
   setSoldOut(list: Product[]) { this.soldOut.set(list); }
+
   setFilters(f: any) {
-    this.filters.set(f); console.log('logic > ', this.filters());
-  }
-  setSearch(term: string) {
-    this.search.set(term.toLowerCase());
+    this.filters.set(f); 
+    console.log('logic > ', this.filters());
   }
 
+  // setSearch(term: string) {
+  //   this.search.set(term.toLowerCase());
+  // }
 
   filtered = computed(() => {
-    const f = this.filters();
-    console.log('f',f);
-    
-    let list = this.articles();
-    console.log('LIST >> ',list);
-    
+    const f = this.filters();   
+    let list = this.articles();   
 
     if (!f) return list;
 
@@ -48,11 +45,7 @@ export class LogicSelectService {
       list = list.filter(p => f.genders.includes(p.gender));
     }
 
-
-    list.forEach(l => {
-      console.log(l.marque);
-      
-    })
+    console.log('List Filtrées > ',list);
     
     return list;
   });
@@ -81,16 +74,40 @@ export class LogicSelectService {
     return list;
   });
 
+    fixLocalUrl(url: string): string {
+    if (!url) return '';
+
+    // 1. Si l’URL commence par localhost → remplacer
+    if (url.startsWith('http://localhost:4200')) {
+      return url.replace('http://localhost:4200', 'https://boycote.fr');
+    }
+
+    // 2. Si l’URL est relative → préfixer ton domaine
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `https://boycote.fr/${url.replace(/^\//, '')}`;
+    }
+
+    // 3. Sinon on renvoie tel quel
+    return url;
+  }
+
   visible = computed(() => {
     const list = this.normalized();
     const total = list.length;
     const count = this.visibleCount();
     const start = this.currentIndex() - Math.floor(count / 2);
-
+    const soldOutIds = new Set(this.soldOut().map(p => p.id));
     const result: any[] = [];
+
     for (let i = 0; i < count; i++) {
       const index = (start + i + total) % total;
-      result.push(list[index]);
+      const article = list[index];
+      const fixedUrl = this.fixLocalUrl(article.pathpictureone);
+      result.push({
+        ...article,
+                pathpictureone: fixedUrl,
+        isSoldOut: soldOutIds.has(article.id)
+      })
     }
     return result;
   });

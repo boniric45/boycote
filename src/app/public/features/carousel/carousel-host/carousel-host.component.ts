@@ -8,6 +8,7 @@ import { CarouselStandardComponent } from "../carousel-standard/carousel-standar
 import { LogicSelectService } from '../../../../services/logic-select.service';
 import { Product } from '../../../../models/product';
 import { ApiService } from '../../../../services/api.service';
+import { LogicInputService } from '../../../../services/logic-input.service';
 
 @Component({
   selector: 'app-carousel-host',
@@ -17,27 +18,11 @@ import { ApiService } from '../../../../services/api.service';
 })
 export class CarouselHostComponent {
 
-  private logicSelectService = inject(LogicSelectService);
-
-  // // 🔥 Mode du carousel (standard, search, select, product…)
-  // mode = computed(() => this.carouselService.carouselMode());
-
-  // // 🔥 Signaux SearchService (pour carousel-input)
-  // searchQuery = this.searchService.searchQuery;
-  // searchSubmitted = this.searchService.searchSubmitted;
-  // searchFilters = this.searchService.searchFilters;
-
-  // // 🔥 Signaux SearchService (pour carousel-select)
-  // searchQuerySelect = this.searchService.searchQuerySelect;
-  // searchSubmittedSelect = this.searchService.searchSubmittedSelect;
-  // searchFiltersSelect = this.searchService.searchFiltersSelect;
-
-  // // 🔥 Computed : indique si une recherche est active
-  // isSearching = computed(() => this.searchService.isSearching());
-
   @Input() query!: string;
   @Input() filters!: any;
 
+  private logicSelectService = inject(LogicSelectService);
+  private logicInputService = inject(LogicInputService);
   private carouselService = inject(CarouselService);
   private searchService = inject(SearchService);
   private apiService = inject(ApiService);
@@ -46,16 +31,12 @@ export class CarouselHostComponent {
   mode = computed(() => this.carouselService.carouselMode());
 
   // Signaux SearchService
-  searchQuery = this.searchService.searchQuery;
-  searchSubmitted = this.searchService.searchSubmitted;
+  // searchQuery = this.searchService.searchQuery;
+  // searchSubmitted = this.searchService.searchSubmitted;
+  searchQuery: string = '';
   filteredArticles: Product[] = [];
 
   constructor() {
-
-    // Charger les produits UNE SEULE FOIS
-    this.apiService.getProducts().subscribe(p => {
-      this.logicSelectService.setArticles(p);
-    });
 
     // Réagir au mode SELECT
     effect(() => {
@@ -63,30 +44,25 @@ export class CarouselHostComponent {
         this.filteredArticles = this.logicSelectService.filtered();
       }
     });
+
+    effect(() => {
+      if (this.carouselService.carouselMode() === 'search') {
+        this.filteredArticles = this.logicInputService.filtered();
+      }
+    });
   }
-
-
-
 
   // INPUT → pipeline
   onSearch(query: string) {
-    console.log('HOST → query reçue :', query);
-    this.searchQuery.set(query);
-    this.searchSubmitted.set(true);
+    this.logicInputService.setFilters(query);
     this.carouselService.setMode('search');
   }
 
   // SELECT → pipeline
   onSearchFilters(filters: any) {
-    console.log('HOST → filters reçus :', filters);
-    this.logicSelectService.setFilters(filters);   // ← MANQUAIT !
-    console.log('HOST → filters reçus :', filters);
+    this.logicSelectService.setFilters(filters); 
     this.carouselService.setMode('select');
   }
 
-
-  ngDoCheck() {
-    console.log('HOST → mode =', this.mode());
-  }
 
 }

@@ -14,12 +14,11 @@ import { CarouselMiniCardComponent } from "../carousel-mini-card/carousel-mini-c
 
 @Component({
   selector: 'app-carousel-input',
-  imports: [CommonModule, ComponentRightComponent, ComponentLeftComponent, ProgressbarComponent, CarouselMiniCardComponent],
+  imports: [CommonModule, CarouselMiniCardComponent, ComponentLeftComponent, ComponentRightComponent],
   templateUrl: './carousel-input.component.html',
   styleUrl: './carousel-input.component.scss',
 })
-export class CarouselInputComponent implements OnInit {
-
+export class CarouselInputComponent {
 
   private apiService = inject(ApiService);
   private cartService = inject(CartService);
@@ -38,16 +37,13 @@ export class CarouselInputComponent implements OnInit {
   direction: 'left' | 'right' = 'right';
 
   @Output() searchFilters = new EventEmitter<any>();
-  @Input({ required: true }) searchQuery!: Signal<string>;
-  @Input() searchSubmitted!: boolean;
+
+  @Input() articles: Product[] = [];
+  @Input() searchQuery!: string;
 
   loadingPb: boolean = true;
 
   constructor() {
-    // Réagir à la recherche
-    effect(() => {
-      this.logic.setSearch(this.searchQuery());
-    });
 
     // Responsive
     effect(() => {
@@ -57,12 +53,10 @@ export class CarouselInputComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // Charger les produits
-    this.apiService.getProducts().subscribe(p => this.logic.setArticles(p));
-    this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
+    ngOnChanges() {
+      this.apiService.getProducts().subscribe(p => this.logic.setArticles(p));
+      this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
   }
-
 
   // Exposition des données
   get visible() {

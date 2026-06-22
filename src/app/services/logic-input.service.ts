@@ -2,6 +2,7 @@ import { computed, Injectable, signal } from '@angular/core';
 import { Product } from '../models/product';
 
 function normalize(str: string) {
+  console.log(str);
   return str?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
@@ -10,8 +11,9 @@ function normalize(str: string) {
 })
 export class LogicInputService {
 
-  private articles = signal<Product[]>([]);
+  articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
+  private filters = signal<any | null>(null);
   private search = signal<string>('');
 
   visibleCount = signal(5);
@@ -21,11 +23,13 @@ export class LogicInputService {
 
   setArticles(list: Product[]) {
     this.articles.set(list);
+    console.log('setArt > ',this.articles());
+    
   }
-  setSoldOut(list: Product[]) { this.soldOut.set(list); }
+  setSoldOut(list: Product[]) { this.soldOut.set(list);}
 
-  setSearch(term: string) {
-    this.search.set(term.toLowerCase());
+  setFilters(f: any) {
+    this.filters.set(f.toLowerCase());
   }
 
   noResult = computed(() => this.filtered().length === 0);
@@ -33,14 +37,13 @@ export class LogicInputService {
   canShowCarousel = computed(() => this.filtered().length >= 3);
 
   filtered = computed(() => {
-    const term = normalize(this.search());
-    const list = this.articles();
+    const f = this.filters();    
+    let list = this.articles();
     const result = list.filter(p => {
-      return p.marque.toLowerCase().includes(term);
-    });
+      return p.marque.toLowerCase().includes(f);
+    });    
     return result;
   });
-
 
   merged = computed(() => {
     const sold = new Set(this.soldOut().map(p => p.id));
@@ -60,6 +63,7 @@ export class LogicInputService {
     }
     return list;
   });
+ 
 
   visible = computed(() => {
     const list = this.normalized();
@@ -126,7 +130,6 @@ export class LogicInputService {
     `;
   }
 
-
   getZIndex(i: number) {
     const middle = Math.floor(this.visibleCount() / 2);
     return 100 - Math.abs(i - middle);
@@ -136,7 +139,6 @@ export class LogicInputService {
     const middle = Math.floor(this.visibleCount() / 2);
     return 1 - Math.abs(i - middle) * 0.15;
   }
-
 
   fixLocalUrl(url: string): string {
     if (!url) return '';

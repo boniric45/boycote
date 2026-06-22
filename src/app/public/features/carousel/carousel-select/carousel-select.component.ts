@@ -27,12 +27,12 @@ export class CarouselSelectComponent implements OnInit {
   direction: 'left' | 'right' = 'right';
 
   @Input() articles: Product[] = [];
-  
+
   private cartService = inject(CartService);
   private productService = inject(ProductService);
   private router = inject(Router);
   private subscription: Subscription = new Subscription();
-  
+
   logic = inject(LogicSelectService);
 
   constructor() {
@@ -47,22 +47,13 @@ export class CarouselSelectComponent implements OnInit {
 
   get visible() { return this.logic.visible(); }
 
-
   ngOnInit(): void {
     this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
-
   }
 
   ngOnChanges() {
-  // if (this.articles && this.articles.length > 0) {
-  //   this.logic.setArticles(this.articles);
-  // }
-  console.log('SELECT INPUT articles = ', this.articles);
-  this.logic.setArticles(this.articles);
-  console.log('LOGIC articles = ', this.logic.articles());
-
-}
-
+    this.logic.setArticles(this.articles);
+  }
 
   trackByArticle(index: number, article: any) {
     return article?.id ?? index;

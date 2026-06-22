@@ -152,9 +152,19 @@ export class CarouselStandardComponent implements OnInit {
     const middle = Math.floor(this.visibleCount / 2);
     const offset = i - middle;
     const isMobile = window.innerWidth < 900;
+    const isLandscape = window.innerWidth < 650;
+    let translateX = 0;
     const rotation = offset * 8;
     const scale = 1 - Math.abs(offset) * 0.06;
-    const translateX = offset * (isMobile ? 40 : 80);
+    
+    if(isMobile){
+       translateX = offset * 40;
+    } else if (isLandscape){
+      translateX = offset * 80;
+    } else {
+      translateX = offset * 80;
+    }
+   
     const translateZ = 80 - Math.abs(offset) * 30;
 
     return `

@@ -4,10 +4,9 @@ import { forkJoin, Subscription } from 'rxjs';
 import { Garment } from '../../../models/garment';
 import { Gender } from '../../../models/gender';
 import { Marque } from '../../../models/marque';
+import { ApiService } from '../../../services/api.service';
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
-import { MarqueService } from '../../../services/marque.service';
-import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-search-selects',
@@ -22,8 +21,6 @@ export class SearchSelectsComponent {
   @Output() reset = new EventEmitter<void>();
   @Input() selectActive = false;
   @Input() inputActive = false;
-
-
 
   private apiService = inject(ApiService);
   private genderService = inject(GenderService);
@@ -41,9 +38,6 @@ export class SearchSelectsComponent {
   selectedMarques = signal<string[]>([]);
   selectedTypes = signal<string[]>([]);
   selectedGenders = signal<string[]>([]);
-
-
-
 
   /* ============================
         CHARGEMENT API
@@ -155,7 +149,7 @@ export class SearchSelectsComponent {
       marques: this.selectedMarques(),
       types: this.selectedTypes(),
       genders: this.selectedGenders()
-    });    
+    });
   }
 
   /* ============================

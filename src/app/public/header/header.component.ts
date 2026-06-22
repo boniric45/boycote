@@ -8,6 +8,7 @@ import { CartComponent } from "../cart/cart.component";
 import { HamburgerComponent } from "../features/hamburger/hamburger.component";
 import { SearchInputComponent } from "../features/search-input/search-input.component";
 import { SearchSelectsComponent } from "../features/search-selects/search-selects.component";
+import { LogicInputService } from "../../services/logic-input.service";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class HeaderComponent {
 
   private headerService = inject(HeaderService);
   private logicSelectService = inject(LogicSelectService);
+  private logicInputService = inject(LogicInputService);
   private searchService = inject(SearchService);
   private carouselService = inject(CarouselService);
 
@@ -112,14 +114,15 @@ export class HeaderComponent {
     this.selectActive.set(true);
   }
 
-  onSearchInput(value: string) {
-    this.search.emit(value);   // 🔥 RELAYE AU HOST
-  }
-
   resetSearch() {
     this.searchOpen.set(false);
     this.inputActive.set(true);
     this.selectActive.set(false);
+  }
+
+  onSearchInput(value: string) {
+    this.logicInputService.setFilters(value);
+    this.carouselService.setMode('search');
   }
 
   onSearchSelect(filters: any) {

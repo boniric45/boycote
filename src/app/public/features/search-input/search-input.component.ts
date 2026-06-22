@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, inject, Output, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, Output, signal, ViewChild } from '@angular/core';
 import { SearchService } from '../../../services/search.service';
 
 @Component({
@@ -11,13 +11,13 @@ import { SearchService } from '../../../services/search.service';
 export class SearchInputComponent {
 
   private searchService = inject(SearchService);
-
-  @Output() searchInput = new EventEmitter<string>();
   @Output() focusInput = new EventEmitter<void>();
+  @Output() searchInput = new EventEmitter<string>();
   @Output() reset = new EventEmitter<void>();
-  @Output() submitted = new EventEmitter<void>();
-  @ViewChild('searchInputRef') searchInputRef!: ElementRef<HTMLInputElement>;
+  @Input() selectActive = false;
+  @Input() inputActive = false;
 
+  @ViewChild('searchInputRef') searchInputRef!: ElementRef<HTMLInputElement>;
 
   inputValue = '';
 
@@ -30,7 +30,6 @@ export class SearchInputComponent {
     this.searchInputRef.nativeElement.value = ''
   }
 
-
   /* Quand l’utilisateur tape → on renvoie la valeur */
   onInput(event: Event) {
     this.inputValue = (event.target as HTMLInputElement).value;
@@ -38,9 +37,12 @@ export class SearchInputComponent {
 
   onSearchClick() {
     this.searchInput.emit(this.inputValue); // envoie la valeur
-    this.submitted.emit();                  // débloque la progressbar
+    // this.submitted.emit();                  // débloque la progressbar
   }
 
+    /* ============================
+     6) BOUTON REFRESH → RESET TOTAL
+     ============================ */
   onRefresh() {
     this.reset.emit();
   }

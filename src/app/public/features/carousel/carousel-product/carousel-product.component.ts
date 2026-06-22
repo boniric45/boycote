@@ -45,7 +45,6 @@ export class CarouselProductComponent implements OnInit {
   private touchEndX = 0;
   isFullscreen = false;
 
-
   ngOnInit(): void {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
