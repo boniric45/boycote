@@ -8,6 +8,8 @@ import { CartService } from '../../../../services/cart.service';
 import { ProductService } from '../../../../services/product.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
+import { CarouselService } from '../../../../services/carousel.service';
+import { LogicProductService } from '../../../../services/logic-product.service';
 
 
 @Component({
@@ -22,6 +24,8 @@ export class CarouselStandardComponent implements OnInit {
   private productService = inject(ProductService);
   private router = inject(Router);
   private cartService = inject(CartService);
+  private carouselService = inject(CarouselService);
+  private logicProduct = inject(LogicProductService);
 
   // 1. Vos données sources
   allProducts = signal<Product[]>([]); // Votre liste complète
@@ -120,7 +124,6 @@ export class CarouselStandardComponent implements OnInit {
     return result;
   }
 
-
   trackByArticle(index: number, article: Product) {
     return article.id ?? index;
   }
@@ -193,8 +196,12 @@ export class CarouselStandardComponent implements OnInit {
   }
 
   readViewProduct(product: Product) {
-    this.productService.product = product; // Injecte les infos dans ProductService    
-    this.router.navigate(['product', product.id]); // Navigue vers la page produit
+    this.carouselService.setMode('product')
+    this.logicProduct.product = product;
+    // if(this.carouselService.carouselMode()=='product'){
+    //    this.router.navigate(['product', product.id]);
+    // }
+//    this.router.navigate(['product', product.id]); // Navigue vers la page produit
   }
 
   // HAND SWIPE MOBILE //

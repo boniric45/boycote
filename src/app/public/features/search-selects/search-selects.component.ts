@@ -7,6 +7,8 @@ import { Marque } from '../../../models/marque';
 import { ApiService } from '../../../services/api.service';
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
+import { CarouselService } from '../../../services/carousel.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-selects',
@@ -25,6 +27,9 @@ export class SearchSelectsComponent {
   private apiService = inject(ApiService);
   private genderService = inject(GenderService);
   private typeService = inject(GarmentService);
+  private carouselService = inject(CarouselService);
+  private route = inject(Router);
+
 
   marques: Marque[] = [];
   genders: Gender[] = [];
@@ -156,7 +161,10 @@ export class SearchSelectsComponent {
      6) BOUTON REFRESH → RESET TOTAL
      ============================ */
   onRefresh() {
+    this.route.navigate(['/']);
     this.reset.emit();
+    window.location.reload();
+    this.carouselService.setMode('standard');
   }
 
 

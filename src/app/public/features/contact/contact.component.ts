@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { FooterComponent } from "../../footer/footer.component";
-import { ButtonReturnComponent } from "../button-return/button-return.component";
 
 @Component({
   selector: 'app-contact',
-  imports: [ButtonReturnComponent, FooterComponent],
+  imports: [],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })

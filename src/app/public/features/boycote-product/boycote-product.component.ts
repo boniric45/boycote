@@ -2,7 +2,7 @@ import { CommonModule, NgStyle } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../models/product';
@@ -10,8 +10,7 @@ import { ApiService } from '../../../services/api.service';
 import { CartService } from '../../../services/cart.service';
 import { ModalService } from '../../../services/modal.service';
 import { ProductService } from '../../../services/product.service';
-import { ModalComponent } from '../../modal/modalProduct/modal.component';
-import { ProductCardComponent } from '../../product-card/product-card.component';
+import { InformationsCardComponent } from '../../informations-card/informations-card.component';
 import { ButtonReturnComponent } from "../button-return/button-return.component";
 import { ComponentLeftComponent } from '../component-left/component-left.component';
 import { ComponentRightComponent } from '../component-right/component-right.component';
@@ -26,7 +25,7 @@ import { ComponentRightComponent } from '../component-right/component-right.comp
     ComponentLeftComponent,
     ComponentRightComponent,
     CommonModule,
-    ProductCardComponent,
+    InformationsCardComponent,
     ButtonReturnComponent,
 ],
   // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -133,20 +132,20 @@ export class BoycoteProductComponent implements OnInit {
 
   }
 
-  readViewProduct(product: Product) {
-    const dialogConfig = new MatDialogConfig();
-    const picture = product.pathpictureone;
-    // Configure the dialog options
-      dialogConfig.disableClose = true, // Prevents closing the dialog by clicking outside
-      dialogConfig.autoFocus = false,   // Disable autofocus to manually control focus
-    //  dialogConfig.width='100%',       // Set the width of the dialog
-      dialogConfig.minWidth = '20%',
-      dialogConfig.maxWidth = 'auto',
-      dialogConfig.minHeight = '20%',
-      dialogConfig.maxHeight = 'auto',
-      dialogConfig.data = { name: picture }; // Pass data to the dialog component
-      this.dialog.open(ModalComponent, dialogConfig); // Ouvre la modal avec sa configuration
-  }
+  // readViewProduct(product: Product) {
+  //   const dialogConfig = new MatDialogConfig();
+  //   const picture = product.pathpictureone;
+  //   // Configure the dialog options
+  //     dialogConfig.disableClose = true, // Prevents closing the dialog by clicking outside
+  //     dialogConfig.autoFocus = false,   // Disable autofocus to manually control focus
+  //   //  dialogConfig.width='100%',       // Set the width of the dialog
+  //     dialogConfig.minWidth = '20%',
+  //     dialogConfig.maxWidth = 'auto',
+  //     dialogConfig.minHeight = '20%',
+  //     dialogConfig.maxHeight = 'auto',
+  //     dialogConfig.data = { name: picture }; // Pass data to the dialog component
+  //     this.dialog.open(ModalComponent, dialogConfig); // Ouvre la modal avec sa configuration
+  // }
 
   checkStock(stock: number) {
     if (stock === 0) {

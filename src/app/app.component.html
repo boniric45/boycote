@@ -8,12 +8,10 @@
   }
   <div class="global-content">
 
-    <app-header (search)="onSearch($event)" (searchFilters)="onSearchFilters($event)">
-    </app-header>
+    <app-header (search)="onSearch($event)" (searchFilters)="onSearchFilters($event)"></app-header>
 
     <div class="carousel-center">
-      <app-carousel-host [query]="searchQuery" [filters]="searchFilters">
-      </app-carousel-host>
+      <app-carousel-host [query]="searchQuery" [filters]="searchFilters"></app-carousel-host>
       <router-outlet></router-outlet>
     </div>
 

@@ -21,7 +21,7 @@ export class HomeComponent {
     productHome!:Product[];
 
   listClick() {
-    this.route.navigateByUrl("/list");    
+    //this.route.navigateByUrl("/list");    
   }
 
 }

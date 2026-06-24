@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, inject, Input, Output, signal, ViewChild } from '@angular/core';
 import { SearchService } from '../../../services/search.service';
+import { CarouselService } from '../../../services/carousel.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-input',
@@ -11,6 +13,9 @@ import { SearchService } from '../../../services/search.service';
 export class SearchInputComponent {
 
   private searchService = inject(SearchService);
+  private carouselService = inject(CarouselService);
+  private route = inject(Router);
+
   @Output() focusInput = new EventEmitter<void>();
   @Output() searchInput = new EventEmitter<string>();
   @Output() reset = new EventEmitter<void>();
@@ -40,11 +45,14 @@ export class SearchInputComponent {
     // this.submitted.emit();                  // débloque la progressbar
   }
 
-    /* ============================
-     6) BOUTON REFRESH → RESET TOTAL
-     ============================ */
+  /* ============================
+   6) BOUTON REFRESH → RESET TOTAL
+   ============================ */
   onRefresh() {
+    this.route.navigate(['/']);
     this.reset.emit();
+    window.location.reload();
+    this.carouselService.setMode('standard');
   }
 
 }

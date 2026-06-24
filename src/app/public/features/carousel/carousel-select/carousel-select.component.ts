@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, effect, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
@@ -9,6 +9,7 @@ import { ProductService } from '../../../../services/product.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CarouselMiniCardComponent } from '../carousel-mini-card/carousel-mini-card.component';
+import { CarouselService } from '../../../../services/carousel.service';
 
 @Component({
   selector: 'app-carousel-select',
@@ -17,9 +18,7 @@ import { CarouselMiniCardComponent } from '../carousel-mini-card/carousel-mini-c
   templateUrl: './carousel-select.component.html',
   styleUrl: './carousel-select.component.scss',
 })
-export class CarouselSelectComponent implements OnInit {
-
-  productsSoldOut = signal<Product[]>([]); // La liste venant du service
+export class CarouselSelectComponent {
 
   visibleCount = 5;
   currentIndex = 0;
@@ -29,10 +28,8 @@ export class CarouselSelectComponent implements OnInit {
   @Input() articles: Product[] = [];
 
   private cartService = inject(CartService);
-  private productService = inject(ProductService);
+  private carouselService = inject(CarouselService);
   private router = inject(Router);
-  private subscription: Subscription = new Subscription();
-
   logic = inject(LogicSelectService);
 
   constructor() {
@@ -46,14 +43,6 @@ export class CarouselSelectComponent implements OnInit {
   }
 
   get visible() { return this.logic.visible(); }
-
-  ngOnInit(): void {
-    this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
-  }
-
-  ngOnChanges() {
-    this.logic.setArticles(this.articles);
-  }
 
   trackByArticle(index: number, article: any) {
     return article?.id ?? index;
@@ -79,11 +68,7 @@ export class CarouselSelectComponent implements OnInit {
   }
 
   readViewProduct(product: Product) {
-    this.productService.product = product; // Injecte les infos dans ProductService    
     this.router.navigate(['product', product.id]); // Navigue vers la page produit
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 }

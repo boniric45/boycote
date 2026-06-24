@@ -1,15 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, inject, Input, Output, signal } from "@angular/core";
 import { CarouselService } from "../../services/carousel.service";
-import { HeaderService } from "../../services/header.service";
+import { LogicInputService } from "../../services/logic-input.service";
 import { LogicSelectService } from "../../services/logic-select.service";
 import { SearchService } from "../../services/search.service";
 import { CartComponent } from "../cart/cart.component";
 import { HamburgerComponent } from "../features/hamburger/hamburger.component";
 import { SearchInputComponent } from "../features/search-input/search-input.component";
 import { SearchSelectsComponent } from "../features/search-selects/search-selects.component";
-import { LogicInputService } from "../../services/logic-input.service";
-
 
 @Component({
   selector: 'app-header',
@@ -26,7 +24,6 @@ import { LogicInputService } from "../../services/logic-input.service";
 })
 export class HeaderComponent {
 
-  private headerService = inject(HeaderService);
   private logicSelectService = inject(LogicSelectService);
   private logicInputService = inject(LogicInputService);
   private searchService = inject(SearchService);
@@ -45,12 +42,6 @@ export class HeaderComponent {
   inputActive = signal(true);     // Input visible
   selectActive = signal(false);   // Selects visibles
   productActive = signal(false);  // Carousel Product visible
-  // searchQuery = signal('');
-  // searchQuerySelect = signal('');
-  // searchSubmittedSelect = signal(false);
-  // searchSubmitted = signal(false);
-  // filtersSubmitted = signal(false);
-
 
   /* ============================
    0- RESOLUTION DESKTOP
@@ -69,21 +60,22 @@ export class HeaderComponent {
   }
 
   onHamburgerClick() {
+
     const isDesktop = window.innerWidth >= 900;
 
     // Si déjà ouvert → reset
     if (this.searchOpen()) {
       this.resetSearch();
+      window.location.reload();
       return;
-    }
-
+    } 
     // Ouvre la zone recherche
     this.searchOpen.set(true);
 
     if (isDesktop) {
-      // Desktop → input seul
+      // Desktop 
       this.inputActive.set(true);
-      this.selectActive.set(false);
+      this.selectActive.set(true);
     } else {
       // Mobile → input + selects ensemble
       this.inputActive.set(true);
@@ -120,13 +112,12 @@ export class HeaderComponent {
     this.selectActive.set(false);
   }
 
-  onSearchInput(value: string) {
+  onSearchInput(value: string) {    
     this.logicInputService.setFilters(value);
     this.carouselService.setMode('search');
   }
 
   onSearchSelect(filters: any) {
-    console.log(filters);
     this.logicSelectService.setFilters(filters);
     this.carouselService.setMode('select');
   }

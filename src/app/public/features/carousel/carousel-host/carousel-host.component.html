@@ -2,22 +2,31 @@
 
 
   @switch (mode()) {
+    
   @case ('standard') {
   <app-carousel-standard />
   }
 
   @case ('search') {
-  <app-carousel-input [searchQuery]="searchQuery" 
- />
+  <app-carousel-input [searchQuery]="searchQuery" />
   }
 
   @case ('select') {
-  <app-carousel-select [articles]="filteredArticles"/>
+  <app-carousel-select [articles]="filteredArticles" />
   }
 
   @case ('product') {
-  <app-carousel-product />
+  <app-carousel-product/>
   }
+
+  @case ('cabin') {
+  <app-cabine></app-cabine>  
+  }
+
+  @case ('contact') {
+    <app-contact></app-contact>
+  }
+
 
   }
 

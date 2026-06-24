@@ -1,39 +1,33 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
+import { Component, inject, Input, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
+import { CarouselService } from '../../../../services/carousel.service';
+import { CartService } from '../../../../services/cart.service';
 import { ProductService } from '../../../../services/product.service';
-import { CartComponent } from "../../../cart/cart.component";
-import { FooterComponent } from "../../../footer/footer.component";
-import { ProductCardComponent } from '../../../product-card/product-card.component';
-import { ButtonReturnComponent } from "../../button-return/button-return.component";
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
-import { CartService } from '../../../../services/cart.service';
-import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';
+import { InformationsCardComponent } from '../informations-card/informations-card.component';
+import { LogicProductService } from '../../../../services/logic-product.service';
 
 @Component({
   selector: 'app-carousel-product',
   imports: [
-     CommonModule,
-     ComponentRightComponent, 
-     ComponentLeftComponent, 
-     FooterComponent, 
-     ProductCardComponent, 
-     CartComponent, 
-     ButtonReturnComponent],
+    CommonModule,
+    ComponentRightComponent,
+    ComponentLeftComponent,
+    InformationsCardComponent
+  ],
   templateUrl: './carousel-product.component.html',
   styleUrl: './carousel-product.component.scss',
 })
-export class CarouselProductComponent implements OnInit {
+export class CarouselProductComponent {
 
   private productService = inject(ProductService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
   private cartService = inject(CartService);
+  private logicProduct = inject(LogicProductService);
   private subscription: Subscription = new Subscription();
-  private location = inject(Location);
 
   articles = signal<any[]>([]);
   visibleCount = 3;
@@ -45,23 +39,25 @@ export class CarouselProductComponent implements OnInit {
   private touchEndX = 0;
   isFullscreen = false;
 
+  private carouselService = inject(CarouselService);
+
   ngOnInit(): void {
 
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.carouselService.setMode('product');
+    const id = this.logicProduct.product.id;
 
     // 1. Charger le produit depuis l’API
     this.productService.getProduct(id).subscribe(res => {
 
       if (!res.success || !res.product) {
-        this.location.back();
+         this.carouselService.setMode('product');
         return;
       }
-
+ 
       // 2. Stocker le produit
       this.product = res.product;
-      this.productService.product = res.product; // si tu veux garder le cache
 
-      console.log("Produit chargé :", this.product);
+      this.productService.product = res.product; 
 
       // 3. Construire les images
       let imageList = this.productService.buildImageObjects(this.product);
@@ -85,6 +81,9 @@ export class CarouselProductComponent implements OnInit {
     });
   }
 
+ngOnChanges(){
+    this.carouselService.setMode('product');
+}
 
   fixLocalUrl(url: string): string {
     if (!url) return '';
@@ -99,7 +98,7 @@ export class CarouselProductComponent implements OnInit {
 
     return url;
   }
-  
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -118,6 +117,9 @@ export class CarouselProductComponent implements OnInit {
   }
 
   get visibleArticles() {
+
+    console.log('Get Article > ', this.articles());
+
     // SI ARTICLES EST VIDE RENVOI []
     if (!this.articles() || this.articles().length === 0) {
       return [];
@@ -132,7 +134,7 @@ export class CarouselProductComponent implements OnInit {
       const index = (start + i + total) % total;
       result.push(this.articles()[index]);
     }
-
+    console.log('Result > ', result);
     return result;
   }
 
@@ -147,7 +149,7 @@ export class CarouselProductComponent implements OnInit {
   }
 
   updateVisibleCount() {
-      this.visibleCount = 3;  // ✔️ Toujours 3
+    this.visibleCount = 3;  // ✔️ Toujours 3
     // this.visibleCount = window.innerWidth < 768 ? 3 : 5; // suivant la taille de l'écran
   }
 
@@ -201,12 +203,6 @@ export class CarouselProductComponent implements OnInit {
     const offset = Math.abs(i - middle);
     return 1 - offset * 0.15;
   }
-
-  // readViewProduct(product:Product){    
-  //   this.productService.product = product; // Injecte les infos dans ProductService
-
-  //    this.router.navigateByUrl('home'); // Navigue vers la page produit
-  // }
 
   // HAND SWIPE MOBILE //
   onTouchStart(event: TouchEvent) {

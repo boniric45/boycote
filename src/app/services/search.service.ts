@@ -33,10 +33,6 @@ export class SearchService {
     this.searchSubmitted.set(true);
   }
 
-  // submitSelect() {
-  //   this.searchSubmittedSelect.set(true);
-  // }
-
   // 🔥 Réinitialise la recherche (appelé quand on efface)
   reset() {
     this.searchQuery.set('');

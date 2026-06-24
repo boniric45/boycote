@@ -1,29 +1,5 @@
-<div class="page">
-
     <div class="container">
-
-        <div class="parent">
-
-            <!----------------------------- ENTETE ------------------------->
-            <div class="div1">
-
-                <div class="wrapper-header">
-
-                    <app-button-return class="imgBack"></app-button-return>
-
-                    <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
-
-                    <app-cart class="panier"></app-cart>
-                </div>
-
-
-            </div>
-
-            <!----------------------------- CAROUSEL ------------------------->
-            <div class="div2">
-
                 <div class="container-carousel">
-
                     <div class="carousel-product">
 
                         <button class="nav left desktop" (click)="prev()">
@@ -39,9 +15,7 @@
                                 (click)="openFullscreen(article.pathpictureone)" [style.zIndex]="getZIndex(i)"
                                 [style.opacity]="getOpacity(i)" />
                             }
-
                         </div>
-
 
                         <button class="nav right desktop" (click)="next()">
                             <app-component-right></app-component-right>
@@ -62,129 +36,18 @@
 
                     </div>
 
-                    <div class="container">
+
                         <div class="description">
                             @if(product){
-                                <app-product-card [article]="product"></app-product-card>
+                                <app-informations-card [article]="product"></app-informations-card>
                             }
                         </div>
-                    </div>
                 </div>
-            </div>
-            <div class="div3">
-            </div>
 
-        </div>
+    </div>
         @if(fullscreenImage){
         <div class="fullscreen-overlay" (click)="closeFullscreen()">
             <img [src]="fullscreenImage" class="fullscreen-image" />
         </div>
         }
-    </div>
-    <app-footer></app-footer>
-</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-<div class="header">
-
-    <img class="imgBack" src="pictures\back.png" [routerLink]="['/home']" alt="Back">
-
-    <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
-
-    <div class="btn-panier">
-        <app-cart></app-cart>
-    </div>
-</div>
-
-        <div class="carousel">
-
-            <button class="nav left desktop" (click)="prev()">
-                <app-component-left></app-component-left>
-            </button>
-
-            <div class="items" 
-            [class.animating]="isAnimating" 
-            [class.left-direction]="direction === 'left'">
-
-                @if(visibleArticles.length > 0)
-                {
-                    @for (article of visibleArticles;track $index; let i = $index) {
-                        <img (click)="readViewProduct(product)" 
-                        [src]="article" 
-                        class="item"
-                        [style.transform]="getTransform(i)"
-                        [style.zIndex]="getZIndex(i)"
-                        [style.opacity]="getOpacity(i)" />
-                        <div class="card" (click)="readViewProduct(product)"></div>
-                    }
-                }
-            </div>
-
-            <button class="nav right desktop" (click)="next()">
-                <app-component-right></app-component-right>
-            </button>
-        </div>
-
-
-
-
-    
-    <div class="nav-mobile mobile">
-        <button class="nav" (click)="prev()">
-        <app-component-left></app-component-left>
-        </button>
-        <button class="nav" (click)="next()">
-        <app-component-right></app-component-right>
-        </button>
-    </div>
-        
-
-        <div class="description">
-            <app-product-card></app-product-card>
-        </div>       
-
-        <div class="footer">
-        <app-footer></app-footer>
-        </div>
-
-
-    
- -->

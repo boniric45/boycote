@@ -11,6 +11,7 @@ import { ProgressbarComponent } from "../../../progressbar/progressbar.component
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CarouselMiniCardComponent } from "../carousel-mini-card/carousel-mini-card.component";
+import { CarouselService } from '../../../../services/carousel.service';
 
 @Component({
   selector: 'app-carousel-input',
@@ -20,16 +21,10 @@ import { CarouselMiniCardComponent } from "../carousel-mini-card/carousel-mini-c
 })
 export class CarouselInputComponent {
 
-  private apiService = inject(ApiService);
   private cartService = inject(CartService);
-  private productService = inject(ProductService);
+  private carouselService = inject(CarouselService);
   private router = inject(Router);
-  private subscription: Subscription = new Subscription();
   logic = inject(LogicInputService);
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 
   visibleCount = 5;
   currentIndex = 0;
@@ -51,11 +46,6 @@ export class CarouselInputComponent {
       window.addEventListener('resize', handler);
       return () => window.removeEventListener('resize', handler);
     });
-  }
-
-    ngOnChanges() {
-      this.apiService.getProducts().subscribe(p => this.logic.setArticles(p));
-      this.productService.disponibilityProductSoldOut().subscribe(s => this.logic.setSoldOut(s));
   }
 
   // Exposition des données
@@ -86,10 +76,8 @@ export class CarouselInputComponent {
   }
 
   readViewProduct(idProduct: number) {
-    this.productService.getProduct(idProduct)  // Injecte les infos dans ProductService    
     this.router.navigate(['product', idProduct]); // Navigue vers la page produit
   }
-
 
 
 }

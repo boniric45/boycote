@@ -1,10 +1,20 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Product } from '../models/product';
+import { ProductService } from './product.service';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LogicSelectService {
+
+  constructor(
+    private apiService: ApiService,
+    private productService: ProductService
+  ) {
+    this.apiService.getProducts().subscribe(p => this.articles.set(p));
+    this.productService.disponibilityProductSoldOut().subscribe(s => this.soldOut.set(s));
+  }
 
   articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
@@ -15,21 +25,15 @@ export class LogicSelectService {
   isAnimating = signal(false);
   direction = signal<'left' | 'right'>('right');
 
-  setArticles(list: Product[]) { this.articles.set(list); }
-  setSoldOut(list: Product[]) { this.soldOut.set(list); }
-
   setFilters(f: any) {
-    this.filters.set(f); 
-    console.log('logic > ', this.filters());
+    this.filters.set(f);
   }
 
-  // setSearch(term: string) {
-  //   this.search.set(term.toLowerCase());
-  // }
-
   filtered = computed(() => {
-    const f = this.filters();   
-    let list = this.articles();   
+    const f = this.filters();   // Valeur du champ de recherche
+    let list = this.articles();   // All Products mettre en place des toasts
+    console.log('', list);
+
 
     if (!f) return list;
 
@@ -44,9 +48,8 @@ export class LogicSelectService {
     if (f.genders?.length) {
       list = list.filter(p => f.genders.includes(p.gender));
     }
+    console.log('Result Select > ', list);
 
-    console.log('List Filtrées > ',list);
-    
     return list;
   });
 
@@ -74,7 +77,7 @@ export class LogicSelectService {
     return list;
   });
 
-    fixLocalUrl(url: string): string {
+  fixLocalUrl(url: string): string {
     if (!url) return '';
 
     // 1. Si l’URL commence par localhost → remplacer
@@ -105,7 +108,7 @@ export class LogicSelectService {
       const fixedUrl = this.fixLocalUrl(article.pathpictureone);
       result.push({
         ...article,
-                pathpictureone: fixedUrl,
+        pathpictureone: fixedUrl,
         isSoldOut: soldOutIds.has(article.id)
       })
     }

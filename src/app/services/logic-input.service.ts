@@ -1,5 +1,7 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Product } from '../models/product';
+import { ApiService } from './api.service';
+import { ProductService } from './product.service';
 
 function normalize(str: string) {
   console.log(str);
@@ -11,22 +13,23 @@ function normalize(str: string) {
 })
 export class LogicInputService {
 
+  constructor(
+    private apiService: ApiService,
+    private productService: ProductService
+  ) {
+    this.apiService.getProducts().subscribe(p => this.articles.set(p));
+    this.productService.disponibilityProductSoldOut().subscribe(s => this.soldOut.set(s));
+  }
+
+
   articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
   private filters = signal<any | null>(null);
-  private search = signal<string>('');
 
   visibleCount = signal(5);
   currentIndex = signal(0);
   isAnimating = signal(false);
   direction = signal<'left' | 'right'>('right');
-
-  setArticles(list: Product[]) {
-    this.articles.set(list);
-    console.log('setArt > ',this.articles());
-    
-  }
-  setSoldOut(list: Product[]) { this.soldOut.set(list);}
 
   setFilters(f: any) {
     this.filters.set(f.toLowerCase());
@@ -37,11 +40,13 @@ export class LogicInputService {
   canShowCarousel = computed(() => this.filtered().length >= 3);
 
   filtered = computed(() => {
-    const f = this.filters();    
-    let list = this.articles();
+    const f = this.filters();    // Valeur du champ de recherche
+    let list:Product[] =  this.articles(); // All Products
     const result = list.filter(p => {
       return p.marque.toLowerCase().includes(f);
-    });    
+    });
+
+    console.log('Result Input > ', result);
     return result;
   });
 
@@ -63,23 +68,24 @@ export class LogicInputService {
     }
     return list;
   });
- 
+
 
   visible = computed(() => {
     const list = this.normalized();
     const total = list.length;
     const count = this.visibleCount();
     const start = this.currentIndex() - Math.floor(count / 2);
-
     const result: any[] = [];
-    for (let i = 0; i < count; i++) {
-      const index = (start + i + total) % total;
-      const article = list[index];
-      const fixedUrl = this.fixLocalUrl(article.pathpictureone);
-      result.push({
-        ...article,
-        pathpictureone: fixedUrl
-      });
+    if (count) {
+      for (let i = 0; i < count; i++) {
+        const index = (start + i + total) % total;
+        const article = list[index];
+        const fixedUrl = this.fixLocalUrl(article.pathpictureone);
+        result.push({
+          ...article,
+          pathpictureone: fixedUrl
+        });
+      }
     }
     return result;
   });
@@ -112,7 +118,7 @@ export class LogicInputService {
     setTimeout(() => this.isAnimating.set(false), 180);
   }
 
-    getTransform(i: number) {
+  getTransform(i: number) {
     const middle = Math.floor(this.visibleCount() / 2);
     const offset = i - middle;
     const isMobile = window.innerWidth < 900;

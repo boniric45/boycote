@@ -8,8 +8,6 @@ import { Product } from "../../models/product";
 import { CabineService } from "../../services/cabine.service";
 import { GarmentService } from "../../services/garment.service";
 import { ProductService } from "../../services/product.service";
-import { ButtonReturnComponent } from "../features/button-return/button-return.component";
-import { FooterComponent } from "../footer/footer.component";
 
 type Cat = 'chapeau' | 'haut' | 'bas' | 'chaussures';
 
@@ -23,7 +21,7 @@ const mapCat: Record<Cat, string> = {
 @Component({
   selector: 'app-cabine',
   standalone: true,
-  imports: [RouterModule, ButtonReturnComponent, CommonModule,  FooterComponent],
+  imports: [RouterModule, CommonModule],
   templateUrl: './cabine.component.html',
   styleUrl: './cabine.component.scss'
 })
@@ -46,13 +44,13 @@ export class CabineComponent implements OnInit {
 
   product!:Product;
 
-  // Ton catalogue typé avec MAN/WOMAN
   catalogue: Record<'MAN' | 'WOMAN', Record<string, Cabin[]>> = {
     MAN: {},
     WOMAN: {}
   };
 
   ngOnInit(): void {
+    
     const cats: Cat[] = ['haut', 'bas', 'chapeau', 'chaussures'];
 
     forkJoin({

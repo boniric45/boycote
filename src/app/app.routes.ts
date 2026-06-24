@@ -184,16 +184,15 @@ import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
 
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
 
   // HOME
-  // {
-  //   path: 'home',
-  //   title: 'Boy-Coté.fr',
-  //   loadComponent: () =>
-  //     import('./public/home/home.component')
-  //       .then(m => m.HomeComponent)
-  // },
+  {
+    path: 'home',
+    title: 'Boy-Coté.fr',
+    loadComponent: () =>
+      import('./public/home/home.component')
+        .then(m => m.HomeComponent)
+  },
 
   // LOGIN
   {
@@ -229,5 +228,5 @@ export const routes: Routes = [
   { path: 'request/:id', loadComponent: () => import('./public/features/customer-request/customer-request.component').then(m => m.CustomerRequestComponent) },
 
   // 404
-  { path: '**', redirectTo: 'home' }
+  // { path: '**', redirectTo: 'home' }
 ];

@@ -5,11 +5,14 @@ import { Injectable, signal } from '@angular/core';
 })
 export class CarouselService {
 
-  carouselMode = signal<'standard' | 'search' | 'select' | 'product'>('standard');
+  carouselMode = signal<'standard' | 'search' | 'select' | 'product' | 'cabin' | 'contact'>('standard');
 
-  setMode(mode: 'standard' | 'search' | 'select' | 'product') {
-    this.carouselMode.set(mode);
+  setMode(mode: 'standard' | 'search' | 'select' | 'product' | 'cabin' | 'contact') {
+    
+  this.carouselMode.set(mode);
+
+  console.log('Mode >>>> ',this.carouselMode());
+  
   }
 
-  
 }
