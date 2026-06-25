@@ -30,14 +30,14 @@
             <div class="interligne"></div>
         </a>
 
-        <a class="footer-item" routerLink="/mention">
-            <div class="icon mentions"><app-foldermac></app-foldermac></div>
+        <a class="footer-item">
+            <div class="icon mentions" (click)="folderNoticeClick()"><app-foldermac></app-foldermac></div>
             <div class="label">LEGAL_</div>
             <div class="label">NOTICE</div>
             <div class="interligne"></div>    
         </a>
 
-        <a class="footer-item" routerLink="/annulation">
+        <a class="footer-item" (click)="folderAnnulationClick()">
             <div class="icon annulation"><app-foldermac></app-foldermac></div>
             <div class="label">RETURNS_</div>
             <div class="label">CANCELLATIONS</div>

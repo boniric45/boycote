@@ -180,7 +180,7 @@ const TEXTES = {
 
 @Component({
   selector: 'app-legal',
-  imports: [CommonModule, FormsModule, ButtonReturnComponent, FooterComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './legal.component.html',
   styleUrl: './legal.component.scss',
 })

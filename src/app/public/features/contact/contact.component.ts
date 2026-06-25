@@ -7,8 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './contact.component.scss',
 })
 export class ContactComponent {
-
   email     = 'contact@boycoté.fr';
   instagram = '@toncompte';
-
 }

@@ -1,8 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../../../models/product';
-import { ProductService } from '../../../../services/product.service';
-import { Router, RouterLink } from '@angular/router';
-import { LogicSelectService } from '../../../../services/logic-select.service';
+import { CarouselService } from '../../../../services/carousel.service';
+import { LogicProductService } from '../../../../services/logic-product.service';
 
 @Component({
   selector: 'app-carousel-mini-card',
@@ -13,11 +12,13 @@ import { LogicSelectService } from '../../../../services/logic-select.service';
 export class CarouselMiniCardComponent {
 
   @Input() article!: Product;
-  private router = inject(Router);
+  private carouselService = inject(CarouselService);
+    private logicProduct = inject(LogicProductService);
+  
 
-  readViewProduct(idProduct: number) {
-    console.log('Read View Mini Card  >>>>>>>>>>>>>>>>>>>>>>> ', idProduct);
-    this.router.navigate(['product', idProduct]); // Navigue vers la page produit
+  readViewProduct(product: Product) {
+    this.carouselService.setMode('product')
+    this.logicProduct.product = product;
   }
 
   fixLocalUrl(url: string): string {

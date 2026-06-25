@@ -1,6 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, output, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,11 +18,9 @@ import { ProductService } from '../../../services/product.service';
 
 export class CustomerRequestComponent implements OnInit{
 
+  @Input() article!:Product;
+  
   submitted = output<void>();
-  /**
-   * SIGNALS 
-   */
-  // product = signal<Product | any>('');
   product!:Product;
 
   idProduct:number = 0;
@@ -30,6 +28,7 @@ export class CustomerRequestComponent implements OnInit{
   email = '';
   isOpen = signal(true);
   productsSoldOut:Product[] = [];
+  
 
   private apiUrl = 'https://www.boycote.fr/api';
 
@@ -40,13 +39,16 @@ export class CustomerRequestComponent implements OnInit{
   private location = inject(Location);
 
   ngOnInit(){
-      const id = this.route.snapshot.paramMap.get('id');
+      // const id = this.route.snapshot.paramMap.get('id');
 
-      if(id) {
-        this.idProduct =+ id;
-        this.loadProductsSoldOut();
-      }
+      // if(id) {
+      //   this.idProduct =+ id;
+      //   this.loadProductsSoldOut();
+      // }
     
+      console.log(this.article);
+      
+
   }
 
   ngOnChanges(){

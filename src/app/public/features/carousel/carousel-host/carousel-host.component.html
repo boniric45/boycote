@@ -2,7 +2,7 @@
 
 
   @switch (mode()) {
-    
+
   @case ('standard') {
   <app-carousel-standard />
   }
@@ -16,15 +16,23 @@
   }
 
   @case ('product') {
-  <app-carousel-product/>
+  <app-carousel-product />
   }
 
   @case ('cabin') {
-  <app-cabine></app-cabine>  
+  <app-cabine></app-cabine>
   }
 
   @case ('contact') {
-    <app-contact></app-contact>
+  <app-contact></app-contact>
+  }
+
+  @case ('notice') {
+  <app-legal></app-legal>
+  }
+
+  @case ('return') {
+  <app-annulation></app-annulation>
   }
 
 

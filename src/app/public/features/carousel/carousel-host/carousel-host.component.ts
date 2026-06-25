@@ -9,10 +9,13 @@ import { CarouselProductComponent } from "../carousel-product/carousel-product.c
 import { CarouselSelectComponent } from "../carousel-select/carousel-select.component";
 import { CarouselStandardComponent } from "../carousel-standard/carousel-standard.component";
 import { ContactComponent } from "../../contact/contact.component";
+import { AnnulationComponent } from "../../../annulation/annulation.component";
+import { CustomerRequestComponent } from "../../customer-request/customer-request.component";
+import { LegalComponent } from "../../../legal/legal.component";
 
 @Component({
   selector: 'app-carousel-host',
-  imports: [CarouselStandardComponent, CarouselInputComponent, CarouselSelectComponent, CarouselProductComponent, CabineComponent, ContactComponent],
+  imports: [CarouselStandardComponent, CarouselInputComponent, CarouselSelectComponent, CarouselProductComponent, CabineComponent, ContactComponent, AnnulationComponent, LegalComponent],
   templateUrl: './carousel-host.component.html',
   styleUrl: './carousel-host.component.scss',
 })
@@ -31,7 +34,8 @@ export class CarouselHostComponent {
   searchQuery: string = '';
   filteredArticles: Product[] = [];
   idProduct: number = 0;
-  
+  requestProduct!: Product;
+
   constructor() {
 
     // Réagir au mode SELECT
@@ -56,9 +60,9 @@ export class CarouselHostComponent {
 
   // SELECT → pipeline
   onSearchFilters(filters: any) {
-    this.logicSelectService.setFilters(filters); 
+    this.logicSelectService.setFilters(filters);
     this.carouselService.setMode('select');
-  }
+  } 
 
 
 }

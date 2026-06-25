@@ -7,7 +7,7 @@ import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-annulation',
-  imports: [CommonModule, FormsModule, ButtonReturnComponent, FooterComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './annulation.component.html',
   styleUrl: './annulation.component.scss',
 })

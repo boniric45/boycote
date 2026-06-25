@@ -1,8 +1,7 @@
-import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
-import { FoldermacComponent } from "../foldermac/foldermac.component";
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { RouterLink } from "@angular/router";
-import { CabineComponent } from "../cabine/cabine.component";
 import { CarouselService } from '../../services/carousel.service';
+import { FoldermacComponent } from "../foldermac/foldermac.component";
 
 @Component({
   selector: 'app-footer',
@@ -15,20 +14,22 @@ export class FooterComponent {
   @Output() folderClick = new EventEmitter<string>();
 
   private carouselService = inject(CarouselService);
-  
-  folderCabinClick(){
+
+  folderCabinClick() {
     this.carouselService.setMode('cabin');
   }
 
-  folderContactClick(){
+  folderContactClick() {
     this.carouselService.setMode('contact');
   }
-  
-  // onClick(route: string = 'contact') {
-  //   this.folderClick.emit(route);
-  // }
 
+  folderNoticeClick() {
+    this.carouselService.setMode('notice');
+  }
 
+  folderAnnulationClick() {
+    this.carouselService.setMode('return');
+  }
 
 }
 

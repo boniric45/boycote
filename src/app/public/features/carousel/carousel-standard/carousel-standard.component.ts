@@ -198,10 +198,7 @@ export class CarouselStandardComponent implements OnInit {
   readViewProduct(product: Product) {
     this.carouselService.setMode('product')
     this.logicProduct.product = product;
-    // if(this.carouselService.carouselMode()=='product'){
-    //    this.router.navigate(['product', product.id]);
-    // }
-//    this.router.navigate(['product', product.id]); // Navigue vers la page produit
+
   }
 
   // HAND SWIPE MOBILE //
