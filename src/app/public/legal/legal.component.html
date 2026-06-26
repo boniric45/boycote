@@ -3,6 +3,7 @@
 
     <div class="mac-window">
       <div class="title-bar">
+        <app-close-button (close)="closeCart()"></app-close-button>
         <span class="title-text">{{ t.titre }}</span>
         <button class="btn-lang" (click)="changerLangue()">{{ t.lang }}</button>
       </div>

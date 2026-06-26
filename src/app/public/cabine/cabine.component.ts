@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { forkJoin } from 'rxjs';
 import { Cabin } from "../../models/cabin";
 import { Garment } from "../../models/garment";
@@ -8,6 +8,8 @@ import { Product } from "../../models/product";
 import { CabineService } from "../../services/cabine.service";
 import { GarmentService } from "../../services/garment.service";
 import { ProductService } from "../../services/product.service";
+import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
+import { CarouselService } from "../../services/carousel.service";
 
 type Cat = 'chapeau' | 'haut' | 'bas' | 'chaussures';
 
@@ -21,7 +23,7 @@ const mapCat: Record<Cat, string> = {
 @Component({
   selector: 'app-cabine',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, CloseButtonComponent],
   templateUrl: './cabine.component.html',
   styleUrl: './cabine.component.scss'
 })
@@ -41,8 +43,10 @@ export class CabineComponent implements OnInit {
   private cabinService = inject(CabineService);
   private productService = inject(ProductService);
   private typeService = inject(GarmentService);
+  private carouselService = inject(CarouselService);
 
   product!:Product;
+  isOpen = false;
 
   catalogue: Record<'MAN' | 'WOMAN', Record<string, Cabin[]>> = {
     MAN: {},
@@ -192,7 +196,6 @@ export class CabineComponent implements OnInit {
   }
 
 
-
   hasImg(cat: Cat): boolean {
     return !!this.getItem(cat)?.picturecabin;
   }
@@ -201,6 +204,9 @@ export class CabineComponent implements OnInit {
     return this.indexes()[cat] !== -1;
   }
 
-  
+closeCart() {
+this.carouselService.setMode('standard');
+}
+
 
 }

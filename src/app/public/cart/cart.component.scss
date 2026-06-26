@@ -79,18 +79,18 @@
 
 /* ── FENETRE ── */
 .cart-window {
-  width: min(400px, 96vw);
+  width: min(320px, 96vw);
   border-radius: 12px;
   background: linear-gradient(175deg, #f0f0f0 0%, #d8d8d8 55%, #c8c8c8 100%);
   box-shadow: 0 2px 4px rgba(0,0,0,0.20), 0 8px 20px rgba(0,0,0,0.28), 0 28px 50px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.85);
   border: 1px solid #999999;
   overflow: hidden;
   display: flex; flex-direction: column;
-  max-height: 80vh;
+  max-height: 100vh;
 }
 
 .title-bar {
-  height: 24px;
+  height: 30px;
   background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
   display: flex; align-items: center; justify-content: center;
   border-bottom: 1px solid #aaaaaa;
@@ -101,8 +101,9 @@
 .title-text { font-size: 11px; font-weight: 600; color: #444444; }
 
 .btn-close-cart {
-  position: absolute; left: 8px;
-  width: 13px; height: 13px;
+  position: absolute; left: 6px;
+  width: 25px; height: 25px;
+  transform: scale(0.7);
   border-radius: 50%; border: none; cursor: pointer;
   background: radial-gradient(circle at 40% 35%, #ff7060 0%, #e03020 60%, #c02010 100%);
   box-shadow: 0 1px 2px rgba(0,0,0,0.3);
@@ -201,3 +202,6 @@
 
 .secure-note   { font-size: 9px; color: #888888; text-align: center; }
 .shipping-note { font-size: 9px; color: #666666; text-align: center; }
+
+
+

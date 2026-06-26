@@ -23,14 +23,14 @@
 }
 
 .title-bar {
-  height: 24px;
+  height: 32px;
   background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
   display: flex; align-items: center; justify-content: center;
   border-bottom: 1px solid #aaaaaa;
   position: relative; padding: 0 8px;
 }
 
-.title-text { font-size: 11px; font-weight: 600; color: #444444; text-shadow: 0 1px 0 rgba(255,255,255,0.7); }
+.title-text { font-size: 14px; font-weight: 600; color: #444444; text-shadow: 0 1px 0 rgba(255,255,255,0.7); }
 
 .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 14px; }
 

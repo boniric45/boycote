@@ -19,7 +19,7 @@
   max-width: 380px;
   height: 500px;
   box-sizing: border-box;
-  margin-top: 16px;
+  margin-top: 32px;
   margin-bottom: 8px;
 }
 
@@ -38,6 +38,7 @@
 }
 
 .genre-bar {
+  position: relative;
   background: linear-gradient(to bottom, #d0d0d0 0%, #c2c2c2 100%);
   border-bottom: 1px solid #aaaaaa;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);

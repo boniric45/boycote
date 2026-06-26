@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from "@angular/router";
 import { CookieService } from '../../services/cookie.service';
-import { ButtonReturnComponent } from "../features/button-return/button-return.component";
-import { FooterComponent } from "../footer/footer.component";
-import { CookiesComponent } from "../features/cookies/cookies.component";
+import { CarouselService } from '../../services/carousel.service';
+import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 
 // ============================================================
 // ✏️ REMPLIS LES CROCHETS [ ] AVEC TES VRAIES INFOS
@@ -180,7 +178,7 @@ const TEXTES = {
 
 @Component({
   selector: 'app-legal',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CloseButtonComponent],
   templateUrl: './legal.component.html',
   styleUrl: './legal.component.scss',
 })
@@ -203,6 +201,10 @@ export class LegalComponent {
   get section() { return this.t.sections[this.ongletActif]; }
 
   private cookieService = inject(CookieService);
+  private carouselService = inject(CarouselService);
+
+
+
 
   ngOnInit() {
     // Récupère les informations du cookie
@@ -224,11 +226,13 @@ export class LegalComponent {
 
   changerLangue() { this.langue = this.langue === 'en' ? 'fr' : 'en'; }
 
-  ouvrirCookies() {this.cookiePopupOuvert = true; }
+  ouvrirCookies() { this.cookiePopupOuvert = true; }
 
-  fermerCookies() { 
-    this.cookiePopupOuvert = false; }
+  fermerCookies() {
+    this.cookiePopupOuvert = false;
+  }
 
-
-
+  closeCart() {
+    this.carouselService.setMode('standard');
+  }
 }

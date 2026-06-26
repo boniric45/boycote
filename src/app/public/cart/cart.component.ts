@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 
 
 export interface CartItem {
