@@ -1,9 +1,9 @@
-*{
+* {
   margin: 0;
   padding: 0;
 }
 
-.container{
+.container {
   margin: 0;
   padding: 0;
   display: flex;
@@ -14,76 +14,88 @@
   margin-left: 10px;
 }
 
-.products{
+.products {
   margin-left: 10px;
   margin-right: 10px;
   width: 100%;
   margin-top: 5px;
-  overflow-y: auto;     /* Ton scroll vertical */
-  overflow-x:hidden; /* Scroll horizontal caché */
+  overflow-y: auto;
+  /* Ton scroll vertical */
+  overflow-x: hidden;
+  /* Scroll horizontal caché */
   margin-bottom: 50px;
 }
 
-.cabins{
+.cabins {
   margin-left: 10px;
   margin-right: 10px;
   width: 100%;
   margin-top: 5px;
-  overflow-y: auto;     /* Ton scroll vertical */
-  overflow-x:hidden; /* Scroll horizontal caché */
+  overflow-y: auto;
+  /* Ton scroll vertical */
+  overflow-x: hidden;
+  /* Scroll horizontal caché */
   margin-bottom: 50px;
 }
 
 
-.marques{
+.marques {
   margin: 5px;
   width: auto;
-  overflow-y: auto;     /* Ton scroll vertical */
-  overflow-x:hidden; /* Scroll horizontal caché */
+  overflow-y: auto;
+  /* Ton scroll vertical */
+  overflow-x: hidden;
+  /* Scroll horizontal caché */
 }
 
-.garments{
+.garments {
   margin: 5px;
   width: auto;
-  overflow-y: auto;     /* Ton scroll vertical */
-  overflow-x:hidden; /* Scroll horizontal caché */
+  overflow-y: auto;
+  /* Ton scroll vertical */
+  overflow-x: hidden;
+  /* Scroll horizontal caché */
 }
 
-.genders{
-    width: auto;
+.genders {
+  width: auto;
   margin: 5px;
-  overflow-y: auto;     /* Ton scroll vertical */
-  overflow-x:hidden; /* Scroll horizontal caché */
+  overflow-y: auto;
+  /* Ton scroll vertical */
+  overflow-x: hidden;
+  /* Scroll horizontal caché */
 }
 
-.cont-btn-add{
-width: 50px;
+.cont-btn-add {
+  width: 50px;
 
 }
 
-.img_logo{
+.img_logo {
   display: flex;
   justify-self: center;
   align-self: start;
   width: 200px;
 }
 
-.btn-add{
+.btn-add {
   width: 30px;
   cursor: pointer;
+  background: transparent;
 }
 
-.imgBack{
+.imgBack {
   position: absolute;
   width: auto;
   height: 100px;
   cursor: pointer;
 }
 
-.tproduct{
+.tproduct {
   overflow: auto;
   border: 1px solid black;
-  table-layout: fixed; /* Harmonise toutes les colonnes */
+  table-layout: fixed;
+  /* Harmonise toutes les colonnes */
   width: 1400px;
   height: 600px;
   display: block;
@@ -92,11 +104,12 @@ width: 50px;
 }
 
 
-.tcabin{
+.tcabin {
   overflow: auto;
   border: 1px solid black;
-  table-layout: fixed; /* Harmonise toutes les colonnes */
-  width: 800px;
+  table-layout: fixed;
+  /* Harmonise toutes les colonnes */
+  width: 1000px;
   height: 600px;
   display: block;
   margin: 0 auto;
@@ -112,14 +125,18 @@ width: 50px;
 
 .tcabin th.sku-col,
 .tcabin td:nth-child(3) {
-  width: 120px;   /* largeur fixe */
+  width: 120px;
+  /* largeur fixe */
 }
 
 .tcabin td.previewTd img {
-  max-width: 100px;   /* largeur max */
-  max-height: 80px;  /* hauteur max */
+  max-width: 100px;
+  /* largeur max */
+  max-height: 80px;
+  /* hauteur max */
   border-radius: 5px;
-  object-fit: cover; /* garde un rendu propre */
+  object-fit: cover;
+  /* garde un rendu propre */
 }
 
 table {
@@ -131,10 +148,12 @@ table {
   display: block;
   margin: 0 auto;
   border-spacing: 0;
-    table-layout: fixed; /* stabilise les colonnes */
+  table-layout: fixed;
+  /* stabilise les colonnes */
 }
 
-th, td {
+th,
+td {
   padding: 5px 10px;
   border-bottom: 1px solid #ddd;
   text-align: center;
@@ -145,7 +164,7 @@ th, td {
 
 }
 
-th{
+th {
   width: 100%;
   position: sticky;
   top: 0;
@@ -155,8 +174,8 @@ th{
   z-index: 99;
 }
 
-tr{
-   text-align: center;
+tr {
+  text-align: center;
 }
 
 th:last-child,
@@ -184,19 +203,26 @@ tbody {
   margin-right: 8px;
 }
 
-.danger, .update {
-background-color: #ffffff;
-border: none;
-cursor: pointer;
+.danger,
+.update {
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
-.update{
-scale: 0.4;
-transform: translateY(5%);
+.update {
+  scale: 0.4;
+  transform: translateY(5%);
+  background: transparent;
+  border: none;
+
 }
-.danger{
+
+.danger {
   scale: 0.75;
   transform: translateY(-18%);
+  background: transparent;
+  border: none;
 }
 
 
@@ -238,7 +264,7 @@ transform: translateY(5%);
 }
 
 .filter-bar input {
-  width: 260px;
+  width: 350px;
   padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid #ccc;
@@ -251,6 +277,13 @@ transform: translateY(5%);
 .filter-bar input:focus {
   border-color: #888;
   background: #fff;
-  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
 }
 
+.textNumberArticle{
+
+  font-family: var(--aqua-font);
+  text-align: center;
+  margin-top: 8px;
+  font-size: 24px;
+}

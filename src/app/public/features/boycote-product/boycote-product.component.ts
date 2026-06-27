@@ -132,21 +132,6 @@ export class BoycoteProductComponent implements OnInit {
 
   }
 
-  // readViewProduct(product: Product) {
-  //   const dialogConfig = new MatDialogConfig();
-  //   const picture = product.pathpictureone;
-  //   // Configure the dialog options
-  //     dialogConfig.disableClose = true, // Prevents closing the dialog by clicking outside
-  //     dialogConfig.autoFocus = false,   // Disable autofocus to manually control focus
-  //   //  dialogConfig.width='100%',       // Set the width of the dialog
-  //     dialogConfig.minWidth = '20%',
-  //     dialogConfig.maxWidth = 'auto',
-  //     dialogConfig.minHeight = '20%',
-  //     dialogConfig.maxHeight = 'auto',
-  //     dialogConfig.data = { name: picture }; // Pass data to the dialog component
-  //     this.dialog.open(ModalComponent, dialogConfig); // Ouvre la modal avec sa configuration
-  // }
-
   checkStock(stock: number) {
     if (stock === 0) {
       this.modalService.open();
@@ -163,20 +148,11 @@ export class BoycoteProductComponent implements OnInit {
       error: err => console.error(err)
     });
 
-
-    console.log("Email reçu :", email);
-    console.log(this.product);
-
     this.modalService.close();
   }
 
   addPanier() {
     this.isDisplay = 'none'; // désactive le bouton
     this.btnMacIsDisabled = 'margin-top: 75px;'; // Garde l'espace qu'occupait le bouton
-    // Vérifie la disponibilité du produit 
-
-    // this.stock = this.cartService.getDisponibilityProduct(this.product);
-
-
   }
 }

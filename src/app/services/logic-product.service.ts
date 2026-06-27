@@ -8,18 +8,5 @@ export class LogicProductService {
 
 idProduct : number = 0;
 product!: Product;
-
-constructor(){
-  this.ngDebugOk();
-  console.log(this.idProduct);
-  
-}
-
-ngDebugOk(){
-  console.log('id > ',this.idProduct);
-  console.log('Product > ',this.product);
-}
-
-
   
 }

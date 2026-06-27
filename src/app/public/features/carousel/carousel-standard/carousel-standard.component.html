@@ -30,7 +30,6 @@
             }
           }
         </div>
-
         <button class="nav right desktop" (click)="next()">
           <app-component-right></app-component-right>
         </button>
@@ -49,7 +48,7 @@
       @if(centralArticle){
       <div class="conteneur-bouton">       
         @if(centralArticle.stock === 0){
-        <button class="primary" (click)="addToRequest(centralArticle.id)"><span>REQUEST SOURCING</span></button>
+        <button class="primary" (click)="addToRequest(centralArticle)"><span>REQUEST SOURCING</span></button>
         } 
         @else {
           <button class="primary" (click)="addToCart(centralArticle)"><span>ADD TO CART</span></button>

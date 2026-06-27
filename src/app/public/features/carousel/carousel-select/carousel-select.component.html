@@ -55,7 +55,7 @@
 
       <div class="conteneur-bouton">
         @if (logic.central()?.isSoldOut) {
-        <button class="primary" (click)="addToRequest(logic.central().id)">
+        <button class="primary" (click)="addToRequest(logic.central())">
           <span>REQUEST SOURCING</span>
         </button>
         }

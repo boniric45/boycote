@@ -12,7 +12,6 @@ export class SuccessComponent  {
 
   cartService = inject(CartService);
 
- 
   constructor() {
     this.cartService.clear(); // 🔥 Vide le panier
   }

@@ -23,7 +23,7 @@
             <div class="conteneur-bouton">
             @if(article){
                 @if(article.stock === 0){
-                <button class="primary" (click)="addToRequest(article.id)"><span>REQUEST SOURCING</span></button>
+                <button class="primary" (click)="addToRequest(article)"><span>REQUEST SOURCING</span></button>
                 }
                 @else {
                 <button class="primary" (click)="addToCart(article)"><span>ADD TO CART</span></button>

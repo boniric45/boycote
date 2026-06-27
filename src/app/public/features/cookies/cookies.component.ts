@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
 import { CookieService } from '../../../services/cookie.service';
+import { CartService } from '../../../services/cart.service';
 
 
 // TEXTES FR / EN
@@ -59,7 +60,12 @@ const TEXTES = {
 })
 export class CookiesComponent implements OnInit {
 
+  private cookieService = inject(CookieService);
+  private cartService = inject(CartService);
+
   ngOnInit() {
+
+    this.cartService.clear();
     const consent = this.cookieService.get('cookie_consent');
 
     if (consent) {
@@ -69,11 +75,11 @@ export class CookiesComponent implements OnInit {
     }
   }
 
-  private cookieService = inject(CookieService);
 
-// ÉTAT
-  visible      = true;
-  manageOpen   = false;
+
+  // ÉTAT
+  visible = true;
+  manageOpen = false;
   langActuelle: 'en' | 'fr' = 'en';
 
   // PRÉFÉRENCES
@@ -83,7 +89,7 @@ export class CookiesComponent implements OnInit {
   // TEXTES ACTIFS
   get t() { return TEXTES[this.langActuelle]; }
 
-  refreshPage(){
+  refreshPage() {
     window.location.reload();
   }
 
@@ -94,43 +100,43 @@ export class CookiesComponent implements OnInit {
 
   // TOUT ACCEPTER
   acceptAll() {
-  this.analyticsEnabled = true;
-  this.marketingEnabled = true;
+    this.analyticsEnabled = true;
+    this.marketingEnabled = true;
 
-  this.cookieService.set('cookie_consent', 'all');
-  this.cookieService.set('analytics', 'true');
-  this.cookieService.set('marketing', 'true');
+    this.cookieService.set('cookie_consent', 'all');
+    this.cookieService.set('analytics', 'true');
+    this.cookieService.set('marketing', 'true');
 
-  this.visible = false;
-  this.refreshPage();
-}
+    this.visible = false;
+    this.refreshPage();
+  }
 
   // TOUT REFUSER
   decline() {
-  this.analyticsEnabled = false;
-  this.marketingEnabled = false;
+    this.analyticsEnabled = false;
+    this.marketingEnabled = false;
 
-  this.cookieService.set('cookie_consent', 'decline');
-  this.cookieService.set('analytics', 'false');
-  this.cookieService.set('marketing', 'false');
+    this.cookieService.set('cookie_consent', 'decline');
+    this.cookieService.set('analytics', 'false');
+    this.cookieService.set('marketing', 'false');
 
-  this.visible = false;
-  this.refreshPage();
+    this.visible = false;
+    this.refreshPage();
   }
 
   // OUVRIR MANAGE
-  openManage()  { this.manageOpen = true; }
+  openManage() { this.manageOpen = true; }
   closeManage() { this.manageOpen = false; }
 
   // SAUVEGARDER PRÉFÉRENCES
   savePreferences() {
-  this.cookieService.set('cookie_consent', 'custom');
-  this.cookieService.set('analytics', String(this.analyticsEnabled));
-  this.cookieService.set('marketing', String(this.marketingEnabled));
+    this.cookieService.set('cookie_consent', 'custom');
+    this.cookieService.set('analytics', String(this.analyticsEnabled));
+    this.cookieService.set('marketing', String(this.marketingEnabled));
 
-  this.manageOpen = false;
-  this.visible = false;
-  this.refreshPage();
+    this.manageOpen = false;
+    this.visible = false;
+    this.refreshPage();
   }
 
 

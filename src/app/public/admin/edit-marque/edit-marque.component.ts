@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MarqueService } from '../../../services/marque.service';
+import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
 
 @Component({
   selector: 'app-edit-marque',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ButtonReturnComponent],
   templateUrl: './edit-marque.component.html',
   styleUrl: './edit-marque.component.scss',
 })
@@ -39,7 +40,7 @@ export class EditMarqueComponent implements OnInit {
     const name = this.form.value.name ?? '';
 
     this.marqueService.updateMarque(this.id, name).subscribe(() => {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/console']);
     });
   }
  

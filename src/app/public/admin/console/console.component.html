@@ -1,17 +1,15 @@
-<img class="imgBack" src="pictures\back.png" [routerLink]="['/admin']" alt="Back">
+<img class="imgBack" src="pictures\back.png" [routerLink]="['/']" alt="Back">
 
 <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
 
+<p class="textNumberArticle">Nombre de produit en base: {{numberProduct}}</p>
+
 <button class="logout-btn" (click)="logout()">Logout</button>
-
-
 
 <div class="container">
 
-
   <!---------------- PRODUCTS ---------------->
   <div class="products">
-    
     <div class="product-table">
       <div class="filter-bar">
         <input type="text" placeholder="Rechercher (SKU, nom, marque, type)…" [(ngModel)]="searchProduct">
@@ -20,7 +18,7 @@
         <thead>
           <tr>
             <th class="cont-btn-add">
-              <div  routerLink="add">
+              <div routerLink="add">
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
@@ -44,7 +42,8 @@
             <td></td>
             <td>{{ product.display_order }}</td>
             <td>
-              <img [src]="getPreviewProduct(product)" alt="{{ product.name | truncate:6 }}" [title]="product.name" class="preview" />
+              <img [src]="getPreviewProduct(product)" alt="{{ product.name | truncate:6 }}" [title]="product.name"
+                class="preview" />
             </td>
             <td>{{ product.sku }}</td>
             <td>{{ product.type }}</td>
@@ -70,7 +69,7 @@
     </div>
   </div>
 
-    <!---------------- CABIN ---------------->
+  <!---------------- CABIN ---------------->
   <div class="cabins">
     <div class="marque-table">
       <div class="filter-bar">
@@ -81,7 +80,7 @@
         <thead>
           <tr>
             <th class="cont-btn-add">
-              <div  routerLink="cabin/add">
+              <div routerLink="cabin/add">
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
@@ -95,45 +94,44 @@
           </tr>
         </thead>
 
-          @for (cabin of cabinFiltered; track cabin.id) {
-          <tr>
-            <td></td>
-            <td class="previewTd">
-              <img [src]="getPreviewCabin(cabin)" alt="{{ cabin.title | truncate:20 }}" [title]="cabin.title" />
-            </td>
-            <td>{{ cabin.sku }}</td>
-            <td>{{ cabin.title }}</td>
-            <td>{{ cabin.productlink }}</td>
-            <td>{{ cabin.type}}</td>
-            <td>{{ cabin.genre }}</td>
-            <td class="actions">
-              <button class="update" (click)="editCabin(cabin)">
-                <img src="/pictures/modifier.png">
-              </button>
+        @for (cabin of cabinFiltered; track cabin.id) {
+        <tr>
+          <td></td>
+          <td class="previewTd">
+            <img [src]="getPreviewCabin(cabin)" alt="{{ cabin.title | truncate:20 }}" [title]="cabin.title" />
+          </td>
+          <td>{{ cabin.sku }}</td>
+          <td>{{ cabin.title }}</td>
+          <td>{{ cabin.productlink }}</td>
+          <td>{{ cabin.type}}</td>
+          <td>{{ cabin.genre }}</td>
+          <td class="actions">
+            <button class="update" (click)="editCabin(cabin)">
+              <img src="/pictures/modifier.png">
+            </button>
 
-              <button class="danger" (click)="deleteCabin(cabin.id)">
-                <img src="/pictures/delete.png">
-              </button>
-            </td>
-          </tr>
-          }
+            <button class="danger" (click)="deleteCabin(cabin.id)">
+              <img src="/pictures/delete.png">
+            </button>
+          </td>
+        </tr>
+        }
 
 
       </table>
 
     </div>
   </div>
-  
+
 
   <!---------------- MARQUES ---------------->
   <div class="marques">
     <div class="marque-table">
-
       <table>
         <thead>
           <tr>
             <th>
-              <div class="cont-btn-add" routerLink="/admin/marque/add">
+              <div class="cont-btn-add" routerLink="/console/marque/add">
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
@@ -180,7 +178,7 @@
         <thead>
           <tr>
             <th>
-              <div class="cont-btn-add" routerLink="/admin/garment/add">
+              <div class="cont-btn-add" routerLink="/console/garment/add">
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>
@@ -227,7 +225,7 @@
         <thead>
           <tr>
             <th>
-              <div class="cont-btn-add" routerLink="/admin/gender/add">
+              <div class="cont-btn-add" routerLink="/console/gender/add">
                 <img class="btn-add" src="/pictures/add.png" alt="">
               </div>
             </th>

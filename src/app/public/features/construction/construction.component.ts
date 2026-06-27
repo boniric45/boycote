@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CarouselService } from '../../../services/carousel.service';
 
 
 @Component({
@@ -10,5 +11,10 @@ import { RouterModule } from '@angular/router';
 })
 export class ConstructionComponent {
 
+  @Output() exit = new EventEmitter<void>();
+
+  onEnterSite() {
+    this.exit.emit();
+  }
 
 }

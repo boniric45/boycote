@@ -6,16 +6,21 @@
     </div>
   </div>
   }
-  <div class="global-content">
+  @if (construction) {
+  <app-construction (exit)="exitConstruction()"></app-construction>
+  } @else {
 
-    <app-header (search)="onSearch($event)" (searchFilters)="onSearchFilters($event)"></app-header>
+  @if (showLayout) {
+  <app-header></app-header>
+  }
+  @if (showHost) {
+  <app-carousel-host></app-carousel-host>
+  } 
+  <router-outlet></router-outlet>
 
-    <div class="carousel-center">
-      <app-carousel-host [query]="searchQuery" [filters]="searchFilters"></app-carousel-host>
-      <router-outlet></router-outlet>
-    </div>
+  @if (showLayout) {
+  <app-footer></app-footer>
+  }
+  }
 
-    <app-footer></app-footer>
-
-  </div>
 </div>

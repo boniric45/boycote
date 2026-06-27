@@ -31,6 +31,7 @@ export class ConsoleComponent implements OnInit {
   cabins: Cabin[] = [];
   searchProduct: string = '';
   searchCabin: string = '';
+  numberProduct: number = 0;
 
   private router = inject(Router);
   private auth = inject(AuthService);
@@ -111,11 +112,17 @@ export class ConsoleComponent implements OnInit {
   }
 
   loadProducts() {
-    this.consoleProductService.getProducts().subscribe(res => this.products = res);
+    this.consoleProductService.getProducts().subscribe(res => {
+      this.products = res
+      if (this.products.length != 0) {
+        this.numberProduct = this.products.length;
+      }
+    });
+
   }
 
-  loadCabins(){
-    this.cabinService.getAllCabin().subscribe( c =>{
+  loadCabins() {
+    this.cabinService.getAllCabin().subscribe(c => {
       this.cabins = c;
     })
   }
@@ -147,7 +154,7 @@ export class ConsoleComponent implements OnInit {
 
   editProduct(product: Product) {
     this.consoleProductService.product = product;
-    this.router.navigateByUrl('admin/update')
+    this.router.navigateByUrl('console/update')
   }
 
   deleteProduct(id: number) {
@@ -159,9 +166,9 @@ export class ConsoleComponent implements OnInit {
         });
     }
   }
-  
+
   editCabin(cabin: any) {
-    this.router.navigateByUrl('admin2/cabin/edit/'+cabin.id);
+    this.router.navigateByUrl('console/cabin/edit/' + cabin.id);
 
   }
 
@@ -172,18 +179,16 @@ export class ConsoleComponent implements OnInit {
   deleteCabin(id: number) {
     if (confirm("Supprimer cette cabine ?")) {
       this.cabinService.deleteCabin(id).subscribe(() => {
-          alert('Article Supprimé');
-          this.loadCabins();
+        alert('Article Supprimé');
+        this.loadCabins();
       });
     }
   }
 
 
   editMarque(marque: Marque) {
-    this.router.navigateByUrl('admin/marque/edit/'+marque.id);
-
+    this.router.navigateByUrl('console/marque/edit/' + marque.id);
   }
-  
 
   deleteMarque(id: number) {
     if (!confirm("Supprimer cette marque ?")) return;
@@ -194,7 +199,7 @@ export class ConsoleComponent implements OnInit {
   }
 
   editGarment(garment: Garment) {
-    this.router.navigateByUrl('admin/garment/edit/'+garment.id)
+    this.router.navigateByUrl('console/garment/edit/' + garment.id)
   }
 
   deleteGarment(id: number) {
@@ -207,7 +212,7 @@ export class ConsoleComponent implements OnInit {
   }
 
   editGender(gender: Gender) {
-    this.router.navigateByUrl('admin/gender/edit/'+gender.id)
+    this.router.navigateByUrl('console/gender/edit/' + gender.id)
   }
 
   deleteGender(id: number) {
@@ -223,29 +228,29 @@ export class ConsoleComponent implements OnInit {
     this.auth.logout();
   }
 
-get productsFiltered(): Product[] {
-  const f = this.searchProduct.toLowerCase().trim();
-  if (!f) return this.products;
+  get productsFiltered(): Product[] {
+    const f = this.searchProduct.toLowerCase().trim();
+    if (!f) return this.products;
 
-  return this.products.filter(p =>
-    p.sku?.toLowerCase().includes(f) ||
-    p.name?.toLowerCase().includes(f) ||
-    p.marque?.toLowerCase().includes(f) ||
-    p.type?.toLowerCase().includes(f)
-  );
-}
+    return this.products.filter(p =>
+      p.sku?.toLowerCase().includes(f) ||
+      p.name?.toLowerCase().includes(f) ||
+      p.marque?.toLowerCase().includes(f) ||
+      p.type?.toLowerCase().includes(f)
+    );
+  }
 
-get cabinFiltered(): Cabin[] {
-  const f = this.searchCabin.toLowerCase().trim();
-  if (!f) return this.cabins;
+  get cabinFiltered(): Cabin[] {
+    const f = this.searchCabin.toLowerCase().trim();
+    if (!f) return this.cabins;
 
-  return this.cabins.filter(c =>
-    c.genre?.toLowerCase().includes(f) ||
-    c.title?.toLowerCase().includes(f) ||
-    c.sku?.toLowerCase().includes(f) ||
-    c.productlink?.toLowerCase().includes(f) 
-  );
-}
+    return this.cabins.filter(c =>
+      c.genre?.toLowerCase().includes(f) ||
+      c.title?.toLowerCase().includes(f) ||
+      c.sku?.toLowerCase().includes(f) ||
+      c.productlink?.toLowerCase().includes(f)
+    );
+  }
 
 
 

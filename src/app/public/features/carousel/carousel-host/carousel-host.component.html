@@ -1,9 +1,8 @@
 <div class="carousel-host">
 
-
   @switch (mode()) {
-
   @case ('standard') {
+
   <app-carousel-standard />
   }
 
@@ -35,7 +34,10 @@
   <app-annulation></app-annulation>
   }
 
-
+  @case ('request') {
+  <app-customer-request />
   }
 
+  }
+  
 </div>

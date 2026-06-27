@@ -10,6 +10,7 @@ import { ComponentLeftComponent } from '../../component-left/component-left.comp
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { InformationsCardComponent } from '../informations-card/informations-card.component';
 import { LogicProductService } from '../../../../services/logic-product.service';
+import { LogicRequestService } from '../../../../services/logic-request.service';
 
 @Component({
   selector: 'app-carousel-product',
@@ -28,6 +29,7 @@ export class CarouselProductComponent {
   private cartService = inject(CartService);
   private logicProduct = inject(LogicProductService);
   private subscription: Subscription = new Subscription();
+  private carouselService = inject(CarouselService);
 
   articles = signal<any[]>([]);
   visibleCount = 3;
@@ -39,7 +41,7 @@ export class CarouselProductComponent {
   private touchEndX = 0;
   isFullscreen = false;
 
-  private carouselService = inject(CarouselService);
+
 
   ngOnInit(): void {
 
@@ -118,8 +120,6 @@ ngOnChanges(){
 
   get visibleArticles() {
 
-    console.log('Get Article > ', this.articles());
-
     // SI ARTICLES EST VIDE RENVOI []
     if (!this.articles() || this.articles().length === 0) {
       return [];
@@ -134,7 +134,6 @@ ngOnChanges(){
       const index = (start + i + total) % total;
       result.push(this.articles()[index]);
     }
-    console.log('Result > ', result);
     return result;
   }
 
@@ -229,5 +228,7 @@ ngOnChanges(){
   addToCart(product: Product) {
     this.cartService.add(product, 1);
   }
+
+
 
 }

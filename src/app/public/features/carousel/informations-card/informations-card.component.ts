@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Product } from '../../../../models/product';
 import { CartService } from '../../../../services/cart.service';
 import { ProductService } from '../../../../services/product.service';
+import { CarouselService } from '../../../../services/carousel.service';
+import { LogicRequestService } from '../../../../services/logic-request.service';
 
 
 @Component({
@@ -15,7 +17,10 @@ import { ProductService } from '../../../../services/product.service';
 })
 export class InformationsCardComponent implements OnChanges {
 
-  @Input() article!:Product;
+  private carouselService = inject(CarouselService);
+  private logicRequest = inject(LogicRequestService);
+
+  @Input() article!: Product;
 
   productsSoldOut = signal<Product[]>([]); // La liste venant du service
   articles = signal<any[]>([]);
@@ -28,7 +33,7 @@ export class InformationsCardComponent implements OnChanges {
   ngOnChanges() {
     if (!this.article) return;
   }
-  
+
   loadProductsSoldOut() {
     this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
       this.productsSoldOut.set(psoldout);
@@ -39,8 +44,9 @@ export class InformationsCardComponent implements OnChanges {
     this.cartService.add(product, 1);
   }
 
-    addToRequest(id: number) {
-    this.router.navigate(['/request/', id]);
+  addToRequest(product: Product) {
+    this.carouselService.setMode('request');
+    this.logicRequest.setSelectedProduct(product);
   }
 
 }

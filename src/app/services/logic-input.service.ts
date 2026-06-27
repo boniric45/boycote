@@ -4,7 +4,6 @@ import { ApiService } from './api.service';
 import { ProductService } from './product.service';
 
 function normalize(str: string) {
-  console.log(str);
   return str?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
@@ -21,7 +20,7 @@ export class LogicInputService {
     this.productService.disponibilityProductSoldOut().subscribe(s => this.soldOut.set(s));
   }
 
-
+  product!:Product;
   articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
   private filters = signal<any | null>(null);
@@ -40,6 +39,8 @@ export class LogicInputService {
   canShowCarousel = computed(() => this.filtered().length >= 3);
 
   filtered = computed(() => {
+    console.log(this.product);
+    
     const f = this.filters();    // Valeur du champ de recherche
     let list:Product[] =  this.articles(); // All Products
     const result = list.filter(p => {

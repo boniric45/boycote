@@ -64,47 +64,6 @@ export class CabinAddFormComponent implements OnInit{
     this.loadCabins();
   }
 
-// Récupération du fichier
-// onFileSelectedCabin(event: any) {
-//   const file = event.target.files[0];
-//   const sku = this.formCabin.value.sku;
-
-//   if (!file) return;
-//   if (!sku || sku.trim() === '') {
-//     alert("Veuillez saisir un SKU avant l'upload");
-//     return;
-//   }
-
-//   // 1️⃣ Aperçu immédiat (blob)
-//   const previewUrl = URL.createObjectURL(file);
-//   this.formCabin.patchValue({ picturecabin: previewUrl });
-
-//   // 2️⃣ Upload backend
-//   const formData = new FormData();
-//   formData.append('file', file);
-//   formData.append('sku', String(sku));
-//   formData.append('index', 'cabine');
-
-//   this.uploadService.uploadCabin(formData).subscribe(res => {
-//     // 3️⃣ On remplace le blob par l’URL backend
-//     const finalUrl = `https://boycote.fr${res.path}`;
-//     this.formCabin.patchValue({ picturecabin: finalUrl });
-//   });
-// }
-
-
-// saveCabin() {
-
-//     const cabin = this.formCabin.getRawValue();
-
-//     // ➕ Create
-//     this.cabinService.createCabin(cabin).subscribe();
-    
-//     this.loadCabins();
-//     console.log('Enregistrement de la cabine > ', cabin);
-    
-// }
-
 deleteCabin(id: number) {
   if (confirm("Supprimer cette cabine ?")) {
     this.cabinService.deleteCabin(id).subscribe(res => {
@@ -250,25 +209,6 @@ onUpdateFromChild(e: any) {
       }
     })
     
-    // this.uploadService.uploadCabin(formData).subscribe({
-    //   next: (res) => {
-    //     if (res && res.path) {
-    //       // res.path contient ce que ton API PHP renvoie (ex: "uploads/cabine/TEST1.png")
-
-    //       // On y ajoute le timestamp pour forcer le navigateur à rafraîchir l'image à droite
-    //       const timestampUrl = `${res.path}?t=${new Date().getTime()}`;
-
-    //       this.formCabin.patchValue({ picturecabin: timestampUrl });
-    //       this.cdr.detectChanges();
-
-    //       console.log("1. Image uploadée et rafraîchie à droite :", timestampUrl);
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error("Erreur lors de l'appel à uploadCabin :", err);
-    //   }
-    // });
-
     // Remise à zéro de l'input pour autoriser les changements successifs instantanés
     input.value = '';
   }

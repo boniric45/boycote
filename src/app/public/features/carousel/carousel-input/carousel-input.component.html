@@ -33,8 +33,11 @@
           [class.left-direction]="logic.direction() === 'left'">
 
           @for (article of visible; track article.id; let i = $index) {
-          <img (click)="readViewProduct(article.id)" [src]="article.pathpictureone" class="item"
-            [style.transform]="logic.getTransform(i)" [style.zIndex]="logic.getZIndex(i)"
+
+          <img (click)="readViewProduct(article)" 
+            [src]="article.pathpictureone" class="item"
+            [style.transform]="logic.getTransform(i)" 
+            [style.zIndex]="logic.getZIndex(i)"
             [style.opacity]="logic.getOpacity(i)" />
           }
 
@@ -60,7 +63,7 @@
 
       <div class="conteneur-bouton">
         @if (logic.central()?.isSoldOut) {
-        <button class="primary" (click)="addToRequest(logic.central().id)">
+        <button class="primary" (click)="addToRequest(logic.central())">
           <span>REQUEST SOURCING</span>
         </button>
         }

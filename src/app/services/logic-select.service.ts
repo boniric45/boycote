@@ -32,8 +32,6 @@ export class LogicSelectService {
   filtered = computed(() => {
     const f = this.filters();   // Valeur du champ de recherche
     let list = this.articles();   // All Products mettre en place des toasts
-    console.log('', list);
-
 
     if (!f) return list;
 
@@ -48,7 +46,6 @@ export class LogicSelectService {
     if (f.genders?.length) {
       list = list.filter(p => f.genders.includes(p.gender));
     }
-    console.log('Result Select > ', list);
 
     return list;
   });

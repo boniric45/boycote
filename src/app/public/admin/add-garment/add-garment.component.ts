@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GarmentService } from '../../../services/garment.service';
+import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
 
 @Component({
   selector: 'app-add-garment',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ButtonReturnComponent],
   templateUrl: './add-garment.component.html',
   styleUrl: './add-garment.component.scss',
 })

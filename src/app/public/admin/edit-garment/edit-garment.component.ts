@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GarmentService } from '../../../services/garment.service';
+import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
 
 @Component({
   selector: 'app-edit-garment',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ButtonReturnComponent],
   templateUrl: './edit-garment.component.html',
   styleUrl: './edit-garment.component.scss',
 })
@@ -40,7 +41,7 @@ export class EditGarmentComponent implements OnInit {
     const name = this.form.value.name ?? '';
 
     this.garmentService.updateGarment(this.id, name).subscribe(res => {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/console']);
     });
   }
 }

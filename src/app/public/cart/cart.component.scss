@@ -6,7 +6,6 @@
   display: inline-block; 
   transform: scale(0.51);
   transform-origin: center;
-  
 }
 
 .key-btn {
@@ -58,12 +57,12 @@
 .cart-badge {
   position: absolute;
   top: -6px; right: -6px;
-  width: 22px; height: 22px;
+  width: 40px; height: 40px;
   border-radius: 50%;
   background: radial-gradient(circle at 50% 30%, #ff6655 0%, #dd2211 55%, #aa1100 100%);
   border: 1px solid #881100;
   box-shadow: 0 2px 5px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.45);
-  color: #fff; font-size: 10px; font-weight: 800;
+  color: #fff; font-size: 18px; font-weight: 800;
   display: flex; align-items: center; justify-content: center;
   z-index: 10;
   text-shadow: 0 1px 1px rgba(0,0,0,0.4);

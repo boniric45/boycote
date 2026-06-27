@@ -12,7 +12,7 @@ export const adminGuard: CanMatchFn = () => {
     map((res: any) => {
       return res.logged === true
         ? true
-        : router.parseUrl('/admin/login');
+        : router.parseUrl('/admin');
     })
   );
 };

@@ -25,6 +25,7 @@ import { CarouselSelectComponent } from "../carousel/carousel-select/carousel-se
 import { CarouselStandardComponent } from "../carousel/carousel-standard/carousel-standard.component";
 import { CookiesComponent } from '../cookies/cookies.component';
 import { HamburgerComponent } from "../hamburger/hamburger.component";
+import { CarouselHostComponent } from '../carousel/carousel-host/carousel-host.component';
 
 
 @Component({
@@ -41,8 +42,7 @@ import { HamburgerComponent } from "../hamburger/hamburger.component";
     CarouselSelectComponent,
     CartComponent,
     HamburgerComponent,
-    CarouselSelectComponent
-
+    CarouselSelectComponent,
 ],
   templateUrl: './boycote.component.html',
   styleUrl: './boycote.component.scss',

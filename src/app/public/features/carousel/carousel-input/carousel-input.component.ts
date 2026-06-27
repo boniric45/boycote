@@ -1,17 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, EventEmitter, inject, Input, OnInit, Output, signal, Signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
-import { ApiService } from '../../../../services/api.service';
+import { CarouselService } from '../../../../services/carousel.service';
 import { CartService } from '../../../../services/cart.service';
 import { LogicInputService } from '../../../../services/logic-input.service';
-import { ProductService } from '../../../../services/product.service';
-import { ProgressbarComponent } from "../../../progressbar/progressbar.component";
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CarouselMiniCardComponent } from "../carousel-mini-card/carousel-mini-card.component";
-import { CarouselService } from '../../../../services/carousel.service';
+import { LogicProductService } from '../../../../services/logic-product.service';
+import { LogicRequestService } from '../../../../services/logic-request.service';
 
 @Component({
   selector: 'app-carousel-input',
@@ -23,8 +21,10 @@ export class CarouselInputComponent {
 
   private cartService = inject(CartService);
   private carouselService = inject(CarouselService);
-  private router = inject(Router);
+  private logicRequest = inject(LogicRequestService);
   logic = inject(LogicInputService);
+  private logicProduct = inject(LogicProductService);
+  
 
   visibleCount = 5;
   currentIndex = 0;
@@ -37,6 +37,8 @@ export class CarouselInputComponent {
   @Input() searchQuery!: string;
 
   loadingPb: boolean = true;
+
+  
 
   constructor() {
 
@@ -71,12 +73,14 @@ export class CarouselInputComponent {
     this.cartService.add(product, 1);
   }
 
-  addToRequest(id: number) {
-    this.router.navigate(['/request/', id]);
+  addToRequest(product: Product) {
+    this.carouselService.setMode('request');
+    this.logicRequest.setSelectedProduct(product);
   }
 
-  readViewProduct(idProduct: number) {
-    this.router.navigate(['product', idProduct]); // Navigue vers la page produit
+  readViewProduct(product: Product) {
+    this.carouselService.setMode('product')
+    this.logicProduct.product = product;
   }
 
 

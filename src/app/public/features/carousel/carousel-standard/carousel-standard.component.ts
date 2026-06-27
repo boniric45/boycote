@@ -10,6 +10,8 @@ import { ComponentLeftComponent } from '../../component-left/component-left.comp
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CarouselService } from '../../../../services/carousel.service';
 import { LogicProductService } from '../../../../services/logic-product.service';
+import { CustomerRequestComponent } from '../../customer-request/customer-request.component';
+import { LogicRequestService } from '../../../../services/logic-request.service';
 
 
 @Component({
@@ -22,9 +24,9 @@ export class CarouselStandardComponent implements OnInit {
 
   private apiService = inject(ApiService);
   private productService = inject(ProductService);
-  private router = inject(Router);
   private cartService = inject(CartService);
   private carouselService = inject(CarouselService);
+  private logicRequest = inject(LogicRequestService);
   private logicProduct = inject(LogicProductService);
 
   // 1. Vos données sources
@@ -59,8 +61,6 @@ export class CarouselStandardComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.updateVisibleCount();
     });
-    console.log(this.productsWithBadge());
-
   }
 
   ngOnDestroy() {
@@ -226,8 +226,9 @@ export class CarouselStandardComponent implements OnInit {
     this.cartService.add(product, 1);
   }
 
-  addToRequest(id: number) {
-    this.router.navigate(['/request/', id]);
+  addToRequest(product: Product) {
+    this.carouselService.setMode('request');
+    this.logicRequest.setSelectedProduct(product);
   }
 
 }

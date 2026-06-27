@@ -60,15 +60,14 @@ export class HeaderComponent {
   }
 
   onHamburgerClick() {
-
     const isDesktop = window.innerWidth >= 900;
-
+    this.carouselService.setMode('standard');
     // Si déjà ouvert → reset
     if (this.searchOpen()) {
       this.resetSearch();
       window.location.reload();
       return;
-    } 
+    }
     // Ouvre la zone recherche
     this.searchOpen.set(true);
 
@@ -82,7 +81,6 @@ export class HeaderComponent {
       this.selectActive.set(true);
     }
   }
-
 
   openAll() {
     this.searchOpen.set(true);
@@ -99,11 +97,13 @@ export class HeaderComponent {
   onInputFocus() {
     this.inputActive.set(true);
     this.selectActive.set(false);
+    this.carouselService.setMode('search');
   }
 
   onSelectFocus() {
     this.inputActive.set(false);
     this.selectActive.set(true);
+    this.carouselService.setMode('select');
   }
 
   resetSearch() {
@@ -112,7 +112,7 @@ export class HeaderComponent {
     this.selectActive.set(false);
   }
 
-  onSearchInput(value: string) {    
+  onSearchInput(value: string) {
     this.logicInputService.setFilters(value);
     this.carouselService.setMode('search');
   }

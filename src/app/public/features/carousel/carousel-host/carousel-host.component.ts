@@ -3,19 +3,19 @@ import { Product } from '../../../../models/product';
 import { CarouselService } from '../../../../services/carousel.service';
 import { LogicInputService } from '../../../../services/logic-input.service';
 import { LogicSelectService } from '../../../../services/logic-select.service';
+import { AnnulationComponent } from "../../../annulation/annulation.component";
 import { CabineComponent } from "../../../cabine/cabine.component";
+import { LegalComponent } from "../../../legal/legal.component";
+import { ContactComponent } from "../../contact/contact.component";
 import { CarouselInputComponent } from "../carousel-input/carousel-input.component";
 import { CarouselProductComponent } from "../carousel-product/carousel-product.component";
 import { CarouselSelectComponent } from "../carousel-select/carousel-select.component";
 import { CarouselStandardComponent } from "../carousel-standard/carousel-standard.component";
-import { ContactComponent } from "../../contact/contact.component";
-import { AnnulationComponent } from "../../../annulation/annulation.component";
-import { CustomerRequestComponent } from "../../customer-request/customer-request.component";
-import { LegalComponent } from "../../../legal/legal.component";
+import { CustomerRequestComponent } from '../../customer-request/customer-request.component';
 
 @Component({
   selector: 'app-carousel-host',
-  imports: [CarouselStandardComponent, CarouselInputComponent, CarouselSelectComponent, CarouselProductComponent, CabineComponent, ContactComponent, AnnulationComponent, LegalComponent],
+  imports: [CarouselStandardComponent, CarouselInputComponent, CarouselSelectComponent, CarouselProductComponent, CabineComponent, ContactComponent, AnnulationComponent, LegalComponent, CustomerRequestComponent],
   templateUrl: './carousel-host.component.html',
   styleUrl: './carousel-host.component.scss',
 })
@@ -62,7 +62,7 @@ export class CarouselHostComponent {
   onSearchFilters(filters: any) {
     this.logicSelectService.setFilters(filters);
     this.carouselService.setMode('select');
-  } 
+  }
 
 
 }

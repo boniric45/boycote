@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenderService } from '../../../services/gender.service';
+import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
 
 @Component({
   selector: 'app-edit-gender',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ButtonReturnComponent],
   templateUrl: './edit-gender.component.html',
   styleUrl: './edit-gender.component.scss',
 })
@@ -42,7 +43,7 @@ export class EditGenderComponent implements OnInit {
     const name = this.form.value.name ?? '';
 
     this.genderService.updateGender(this.id, name).subscribe((res) => {      
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/console']);
     });
   }
 }
