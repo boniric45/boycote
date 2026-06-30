@@ -198,7 +198,6 @@ export class CarouselStandardComponent implements OnInit {
   readViewProduct(product: Product) {
     this.carouselService.setMode('product')
     this.logicProduct.product = product;
-
   }
 
   // HAND SWIPE MOBILE //

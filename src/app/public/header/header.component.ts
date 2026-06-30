@@ -8,6 +8,7 @@ import { CartComponent } from "../cart/cart.component";
 import { HamburgerComponent } from "../features/hamburger/hamburger.component";
 import { SearchInputComponent } from "../features/search-input/search-input.component";
 import { SearchSelectsComponent } from "../features/search-selects/search-selects.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,7 @@ export class HeaderComponent {
   private logicInputService = inject(LogicInputService);
   private searchService = inject(SearchService);
   private carouselService = inject(CarouselService);
+  private route = inject(Router);
 
   /* Données venant du parent */
   @Input() marques: string[] = [];
@@ -61,6 +63,7 @@ export class HeaderComponent {
 
   onHamburgerClick() {
     const isDesktop = window.innerWidth >= 900;
+    this.route.navigate(['/host']);
     this.carouselService.setMode('standard');
     // Si déjà ouvert → reset
     if (this.searchOpen()) {

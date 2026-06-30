@@ -4,6 +4,12 @@
     top: 0;
 }
 
+.nav:focus,
+.nav:focus-visible {
+  outline: none;
+}
+
+
 button:focus,
 button:focus-visible {
   outline: none;

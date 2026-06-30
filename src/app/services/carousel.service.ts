@@ -1,36 +1,55 @@
 import { Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class CarouselService {
 
-  carouselMode = signal<
-  'home'|
-  'standard'|
-   'search' | 
-   'select' | 
-   'product' | 
-   'cabin' | 
-   'contact' | 
-   'notice' | 
-   'return' | 
-   'request'>('standard');
+  constructor(private router: Router) { }
 
-  setMode(mode: 
-    'home' |
-    'standard' | 
-    'search' | 
-    'select' | 
-    'product' | 
-    'cabin' | 
-    'contact' | 
-    'notice' | 
-    'return' | 
-    'request') {
-    
-  this.carouselMode.set(mode);
-  
+  // carouselMode = signal<
+  //   'home' |
+  //   'standard' |
+  //   'search' |
+  //   'select' |
+  //   'product' |
+  //   'cabin' |
+  //   'contact' |
+  //   'notice' |
+  //   'return' |
+  //   'request'>('standard');
+
+  // setMode(mode:
+  //   'home' |
+  //   'standard' |
+  //   'search' |
+  //   'select' |
+  //   'product' |
+  //   'cabin' |
+  //   'contact' |
+  //   'notice' |
+  //   'return' |
+  //   'request') {
+
+  //   this.carouselMode.set(mode);
+  // }
+
+  carouselMode = signal<
+    'home' | 'standard' | 'search' | 'select' | 'product' |
+    'cabin' | 'contact' | 'notice' | 'return' | 'request'
+  >('standard');
+
+  setMode(mode: ReturnType<typeof this.carouselMode>) {
+    this.carouselMode.set(mode);
+
+  this.router.navigate([], {
+    queryParams: { mode },
+    queryParamsHandling: 'merge'
+  });
   }
 
 }
+
+

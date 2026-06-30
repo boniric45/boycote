@@ -12,6 +12,7 @@ import { CarouselProductComponent } from "../carousel-product/carousel-product.c
 import { CarouselSelectComponent } from "../carousel-select/carousel-select.component";
 import { CarouselStandardComponent } from "../carousel-standard/carousel-standard.component";
 import { CustomerRequestComponent } from '../../customer-request/customer-request.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-carousel-host',
@@ -24,6 +25,7 @@ export class CarouselHostComponent {
   @Input() query!: string;
   @Input() filters!: any;
 
+  private route = inject(ActivatedRoute);
   private logicSelectService = inject(LogicSelectService);
   private logicInputService = inject(LogicInputService);
   private carouselService = inject(CarouselService);
@@ -37,6 +39,14 @@ export class CarouselHostComponent {
   requestProduct!: Product;
 
   constructor() {
+
+    // Quand l’URL change → mettre à jour le signal
+    this.route.paramMap.subscribe(params => {
+      const mode = params.get('mode') as any;
+      if (mode) {
+        this.carouselService.setMode(mode);
+      }
+    });
 
     // Réagir au mode SELECT
     effect(() => {

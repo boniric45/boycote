@@ -48,10 +48,13 @@
 
 
   <!-- POPUP COOKIE PREFERENCES -->
-  <div class="cookie-overlay" *ngIf="cookiePopupOuvert" (click)="fermerCookies()">
+  @if(cookiePopupOuvert){
+  <div class="cookie-overlay" (click)="fermerCookies()">
     <div class="cookie-popup" (click)="$event.stopPropagation()">
       <div class="cookie-popup-bar">
-        <button class="btn-fermer" (click)="fermerCookies()"></button>
+        <app-close-button (close)="closeCart()" (click)="fermerCookies()"></app-close-button>
+
+
         <span class="title-text">Cookie Preferences</span>
       </div>
       <div class="cookie-popup-body">
@@ -93,4 +96,5 @@
       </div>
     </div>
   </div>
+  }
 </div>

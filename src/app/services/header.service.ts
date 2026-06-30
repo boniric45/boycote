@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CarouselService } from './carousel.service';
 import { SearchService } from './search.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ export class HeaderService {
 
   private carouselService = inject(CarouselService);
   private searchService = inject(SearchService);
+  private route = inject(Router);
 
   // --- SEARCH ---
   updateSearchQuery(value: string) {
@@ -36,8 +38,7 @@ export class HeaderService {
 
   // --- STANDARD ---
   openStandardMode() {
-    this.carouselService.setMode('standard');
-  }
+    this.carouselService.setMode('standard');  }
 
   updateSearchFilters(filters: any) {
     this.searchService.searchFilters.set(filters);

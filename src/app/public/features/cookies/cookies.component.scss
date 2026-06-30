@@ -46,8 +46,8 @@
 /* CORPS */
 .window-body { padding: 20px 24px 18px; display: flex; flex-direction: column; gap: 12px; }
 
-.cookie-icon { font-size: 26px; text-align: center; }
-.cookie-title { font-size: 14px; font-weight: 700; color: #1a1a1a; text-align: center; text-shadow: 0 1px 0 rgba(255,255,255,0.5); }
+.cookie-icon { font-size: 26px; text-align: center; margin:0; }
+.cookie-title { font-size: 14px; font-weight: 700; color: #1a1a1a; text-align: center; text-shadow: 0 1px 0 rgba(255,255,255,0.5); margin: 0; }
 .cookie-text { font-size: 11px; color: #444444; line-height: 1.65; text-align: center; text-shadow: 0 1px 0 rgba(255,255,255,0.3); }
 
 .divider { height: 1px; background: rgba(0,0,0,0.12); border-top: 1px solid rgba(255,255,255,0.6); }

@@ -6,6 +6,9 @@ import { CookiesComponent } from "./public/features/cookies/cookies.component";
 import { FooterComponent } from "./public/footer/footer.component";
 import { HeaderComponent } from "./public/header/header.component";
 import { CookieService } from './services/cookie.service';
+import { CartService } from './services/cart.service';
+import { Location } from '@angular/common';
+import { CarouselService } from './services/carousel.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +20,9 @@ export class AppComponent {
 
   private cookiesService = inject(CookieService);
   private router = inject(Router);
+  private cartService = inject(CartService);
+  private carouselService = inject(CarouselService);
+
   noLayoutRoutes = [
     '/admin',
     '/console',
@@ -32,9 +38,21 @@ export class AppComponent {
   showLayout = false;
   showHost = false;
 
+
   ngOnInit() {
 
+  window.addEventListener('popstate', () => {
+    this.router.navigate(['/host']);
+    this.carouselService.setMode('standard');
+  });
+
+    // this.cartService.clear(); // vide le panier au rafraichissement de la page (utile pour le dev)
     const consent = this.cookiesService.get('cookie_consent');
+
+    if (!consent) {
+      this.cartService.clear();
+    };
+
     if (consent) {
       this.isCookiesIsNotSaved.set(false);
     }
@@ -116,5 +134,7 @@ export class AppComponent {
     this.showLayout = true;
     this.showHost = true;
   }
+
+
 
 }

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { EmptyComponent } from './public/features/empty/empty.component';
 
 export const routes: Routes = [
 
@@ -11,8 +12,12 @@ export const routes: Routes = [
   // ADMIN + CONSOLE
   { path: 'console', loadChildren: () => import('./public/admin/console/console.route').then(m => m.CONSOLE_ROUTES) },
 
+
+
   // 404
   { path: '**', redirectTo: '' }
+
+
 ];
 
 

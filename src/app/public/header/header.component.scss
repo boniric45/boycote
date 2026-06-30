@@ -37,7 +37,8 @@
 }
 
 .img_logo_mobile {
-  width: 130px;
+  width: 80px;
+  margin-top:5px;
 }
 
 .mobile-only {
@@ -53,6 +54,9 @@
   display: flex;
   cursor: pointer;
 }
+  .search-zone{
+    transform:scale(0.92);
+  }
 
 @media (min-width: 900px) {
 
@@ -91,6 +95,8 @@
   .desktop-only {
     display: flex;
   }
+
+
 
 }
 

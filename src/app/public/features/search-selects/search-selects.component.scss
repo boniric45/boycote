@@ -1,6 +1,20 @@
+.select-wrapper {
+  display: flex;
+  flex-direction: row;
+  /* 🔥 en ligne */
+  align-items: center;
+  /* aligne verticalement */
+  justify-content: center;
+  /* espace entre les éléments */
+  margin: 0;
+  padding: 0;
+  height: 40px;
+}
+
+
 .search-selects {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
   padding: 0 20px;
 }
@@ -75,7 +89,6 @@
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) !important;
 }
 
-
 .btnSelectSearch {
   width: 42px;
   height: 35px;
@@ -95,7 +108,7 @@
 
 .mac-select-btn {
   width: 100%;
-  height: 28px;
+  height: 32px;
   margin-top: 2px;
   border-radius: 6px;
   border: 1px solid #999999;
@@ -232,15 +245,23 @@
 @media (max-width:600px) {
 
   .mac-select-wrapper {
-    width: 90%;
+    width: 100%;
     max-width: 340px;
-    margin: 0 auto 5px auto; /* centre + espace */
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 3px;
+    margin: 0 auto 3px auto;
+    align-self: center;
+  }
+
+  .btn-refresh{
+    margin-right: 3px;
+  }
+
+  .btnSelectSearch{
+    margin-left: 3px;
   }
 
   .mac-select-btn {
-    height: 34px;
+    height: 36px;
     font-size: 14px;
     padding: 0 12px;
   }
@@ -260,10 +281,12 @@
 
 // Landscape
 @media (min-width: 600px) {
+
   .mac-select-wrapper {
-    width: 80%;
+    width: 100%;
     max-width: 420px;
     margin: 0 auto 7px auto;
+    align-self: center;
   }
 
   .mac-select-btn {
@@ -275,6 +298,7 @@
   .mac-dropdown {
     max-height: 220px;
   }
+
 }
 
 @media (min-width: 900px) {

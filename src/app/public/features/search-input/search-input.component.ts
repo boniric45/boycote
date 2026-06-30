@@ -49,9 +49,7 @@ export class SearchInputComponent {
    6) BOUTON REFRESH → RESET TOTAL
    ============================ */
   onRefresh() {
-    this.route.navigate(['/']);
     this.reset.emit();
-    window.location.reload();
     this.carouselService.setMode('standard');
   }
 

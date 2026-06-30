@@ -16,7 +16,7 @@ export class ContactComponent {
 
 
   closeCart() {
-    this.carouselService.setMode('standard');
+      this.carouselService.setMode('standard');
   }
 
 }

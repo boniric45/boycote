@@ -19,7 +19,6 @@ button:focus-visible {
   position: absolute;
   top: -27px;
   right: -14px;
-
   z-index: 101;
   transition: top 0.25s ease-out, left 0.25s ease-out;
   background: transparent;
@@ -106,13 +105,14 @@ button:focus-visible {
   text-align: center;
   max-width: 365px;
   font-family: "Roboto Mono", monospace;
+  font-size: 0.8rem;
   margin-bottom: 20px;
 }
 
 /* PRICE */
 .price {
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .conteneur-bouton {
@@ -253,7 +253,7 @@ button.primary:active {
   }
 
   .price {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   /* SOLD OUT BADGE */

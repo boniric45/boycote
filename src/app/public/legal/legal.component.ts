@@ -233,6 +233,7 @@ export class LegalComponent {
   }
 
   closeCart() {
+    
     this.carouselService.setMode('standard');
   }
 }

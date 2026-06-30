@@ -15,6 +15,7 @@ export class CartService {
 
   items$ = new BehaviorSubject<CartItem[]>([]);
   count$ = new BehaviorSubject<number>(0);
+  private firstOpenDone = false;
 
   constructor() {
     this.loadFromStorage();   // 🔥 recharge le panier au démarrage
@@ -30,7 +31,7 @@ export class CartService {
 
     // 🔥 Empêcher d'ajouter plusieurs fois le même article
     if (existing) {
-       alert("This item is already in your cart.");
+      alert("This item is already in your cart.");
       return; // On ne cumule pas, on ne touche pas au panier
     }
 
@@ -91,6 +92,15 @@ export class CartService {
       this.count$.next(this.items.length);   // 🔥 recharge le compteur
     }
   }
-  
+
+
+  clearOnFirstOpen() {
+    if (!this.firstOpenDone) {
+      this.clear(); // vide le panier
+      this.firstOpenDone = true;
+    }
+  }
+
+
 }
 

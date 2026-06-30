@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 
 
 export interface CartItem {
@@ -58,7 +57,7 @@ export class CartComponent {
       }))
     };
 
-    // Bonne pratique Stripe et Widows open mieux accepter par IOS
+    // Bonne pratique Stripe et Windows open mieux accepter par IOS
     this.http.post<{ url: string }>(
       `${this.API}/create-checkout.php`,
       payload,
@@ -79,7 +78,7 @@ export class CartComponent {
       });
   }
 
-  openCart()  { this.isOpen = true; }
+  openCart() { this.isOpen = true; }
   closeCart() { this.isOpen = false; }
   isOpen = false;
 
@@ -88,6 +87,8 @@ export class CartComponent {
       this.closeCart();
     }
   }
+
+
 }
 
 

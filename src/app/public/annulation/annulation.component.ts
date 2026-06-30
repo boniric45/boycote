@@ -4,6 +4,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarouselService } from '../../services/carousel.service';
 import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
+import { EmailService } from '../../services/email.service';
 
 @Component({
   selector: 'app-annulation',
@@ -14,6 +15,8 @@ import { CloseButtonComponent } from "../../shared/close-button/close-button.com
 export class AnnulationComponent {
 
   private carouselService = inject(CarouselService);
+  private emailService = inject(EmailService);
+  
 
   closeCart() {
     this.carouselService.setMode('standard');
@@ -59,6 +62,8 @@ export class AnnulationComponent {
   // Exemple : 'https://tonsite.com/api/send-return.php'
   submit() {
     if (!this.isValid()) return;
+
+    
 
     this.http.post(
       'https://www.boycoté.fr/api/return.php',

@@ -147,7 +147,6 @@
     cursor: not-allowed;
   }
 
-
 }
 
 @media all and (max-width: 800px) {
@@ -223,7 +222,7 @@
   }
 
   .items {
-    transform: scale(1.15);
+    transform: scale(1.25);
   }
 
   .nav-mobile {
@@ -240,9 +239,14 @@
     display: flex;
     justify-self: baseline;
     transform: none;
+    margin-top: 16px;
+    margin-bottom: 16px;
     margin-right: 0;
   }
 
+  .container {
+    height: 85dvh;
+  }
 
   .container-carousel {
     height: 200px;
@@ -263,11 +267,12 @@
   .fullscreen-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95);
+    //background: rgba(0, 0, 0, 0.95);
+    background:white;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 88px;
+    top: 0;
     height: auto;
     z-index: 20;
     cursor: pointer;

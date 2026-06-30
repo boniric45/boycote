@@ -58,7 +58,6 @@ export class CustomerRequestComponent {
     });
   }
 
-
   OnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -88,7 +87,6 @@ export class CustomerRequestComponent {
       })
     }
   }
-
 
   onOverlayClick($event: PointerEvent) {
     this.carouselService.setMode('standard');
