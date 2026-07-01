@@ -1,4 +1,4 @@
-.global-wrapper{
+.global-wrapper {
   padding-top: 16px;
 }
 
@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 16px;
   /* ✔ centre tout horizontalement */
 }
 
@@ -263,7 +264,7 @@ button.primary:active {
     margin-top: 72px;
   }
 
-  .nav-mobile{
+  .nav-mobile {
     margin-bottom: 24px;
   }
 

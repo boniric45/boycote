@@ -9,6 +9,7 @@ import { HamburgerComponent } from "../features/hamburger/hamburger.component";
 import { SearchInputComponent } from "../features/search-input/search-input.component";
 import { SearchSelectsComponent } from "../features/search-selects/search-selects.component";
 import { Router } from "@angular/router";
+import { ButtonReturnComponent } from "../features/button-return/button-return.component";
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ import { Router } from "@angular/router";
     CartComponent,
     SearchInputComponent,
     SearchSelectsComponent
-  ],
+],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -44,7 +45,8 @@ export class HeaderComponent {
   inputActive = signal(true);     // Input visible
   selectActive = signal(false);   // Selects visibles
   productActive = signal(false);  // Carousel Product visible
-
+  isArrowReturnActive = signal(false);    // Flèche de retour visible
+  isHamburgerActive = signal(true);  // Hamburger visible
   /* ============================
    0- RESOLUTION DESKTOP
    ============================ */
@@ -89,6 +91,7 @@ export class HeaderComponent {
     this.searchOpen.set(true);
     this.inputActive.set(true);
     this.selectActive.set(true);
+    this.isArrowReturnActive.set(false);
   }
 
   closeAll() {
@@ -116,11 +119,15 @@ export class HeaderComponent {
   }
 
   onSearchInput(value: string) {
+    this.isArrowReturnActive.set(true);
+    this.isHamburgerActive.set(false);
     this.logicInputService.setFilters(value);
     this.carouselService.setMode('search');
   }
 
   onSearchSelect(filters: any) {
+    this.isArrowReturnActive.set(true);
+    this.isHamburgerActive.set(false);
     this.logicSelectService.setFilters(filters);
     this.carouselService.setMode('select');
   }

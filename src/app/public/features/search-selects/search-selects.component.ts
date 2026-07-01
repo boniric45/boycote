@@ -29,6 +29,7 @@ export class SearchSelectsComponent {
   private typeService = inject(GarmentService);
   private carouselService = inject(CarouselService);
   private route = inject(Router);
+  
 
 
   marques: Marque[] = [];
@@ -43,7 +44,7 @@ export class SearchSelectsComponent {
   selectedMarques = signal<string[]>([]);
   selectedTypes = signal<string[]>([]);
   selectedGenders = signal<string[]>([]);
-
+  isRefreshActive = signal(false);
   /* ============================
         CHARGEMENT API
      ============================ */
@@ -69,6 +70,7 @@ export class SearchSelectsComponent {
         FOCUS
      ============================ */
   onFocus() {
+
     this.focusSelect.emit();
   }
 
@@ -79,6 +81,7 @@ export class SearchSelectsComponent {
     event.stopPropagation();
     this.openMarques.set(!this.openMarques());
     this.focusSelect.emit();
+    this.isRefreshActive.set(true);
   }
 
   toggleTypesDropdown(event: Event) {
@@ -138,7 +141,7 @@ export class SearchSelectsComponent {
 
   labTypes() {
     const arr = this.selectedTypes();
-    return arr.length ? arr.join(', ') : 'GARMENTS';
+    return arr.length ? arr.join(', ') : 'TYPES';
   }
 
   labGenders() {
@@ -155,13 +158,15 @@ export class SearchSelectsComponent {
       types: this.selectedTypes(),
       genders: this.selectedGenders()
     });
+    this.openMarques.set(false);
+    this.openTypes.set(false);
+    this.openGenders.set(false);
   }
 
   /* ============================
      6) BOUTON REFRESH → RESET TOTAL
      ============================ */
   onRefresh() {
-
     this.reset.emit();
     window.location.reload();
     this.carouselService.setMode('standard');

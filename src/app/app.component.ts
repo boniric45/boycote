@@ -34,7 +34,7 @@ export class AppComponent {
   isCookiesIsNotSaved = signal(true);
   searchQuery = '';
   searchFilters: any = null;
-  construction = true;
+  construction = false;
   showLayout = false;
   showHost = false;
 

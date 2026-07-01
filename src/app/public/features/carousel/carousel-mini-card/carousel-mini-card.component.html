@@ -1,19 +1,15 @@
-<div class="mini-card">
-    @if(article.stock == 0){
-        <div class="soldout-badge" >
-          SOLD OUT
-        </div>
-    }
+<div class="global-container">
+  <div class="wrapper">
+    <div class="carousel-card">
+      <div class="carousel-img-wrapper">
+        <img class="carousel-img" [src]="fixLocalUrl(article.pathpictureone)" (click)="readViewProduct(article)"
+          alt="{{ article.name }}" />
+      </div>
 
-  <img class="mini-img" 
-  (click)="readViewProduct(article)" 
-  [src]="fixLocalUrl(article.pathpictureone)" 
-  
-  alt="{{ article.name }}" />
-
-  <div class="mini-info">
-    <p class="mini-marque">{{ article.marque }}</p>
-    <p class="mini-name">{{ article.name }}</p>
-    <p class="mini-price">{{ article.prix }} €</p>
+      <div class="carousel-info">
+        <p class="carousel-name">{{ article.name }}</p>
+      </div>
+    </div>
   </div>
+
 </div>
