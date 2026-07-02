@@ -10,6 +10,8 @@ import { GarmentService } from "../../services/garment.service";
 import { ProductService } from "../../services/product.service";
 import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 import { CarouselService } from "../../services/carousel.service";
+import { LogicProductService } from "../../services/logic-product.service";
+import { ApiService } from "../../services/api.service";
 
 type Cat = 'chapeau' | 'haut' | 'bas' | 'chaussures';
 
@@ -44,8 +46,11 @@ export class CabineComponent implements OnInit {
   private productService = inject(ProductService);
   private typeService = inject(GarmentService);
   private carouselService = inject(CarouselService);
+  private logicProduct = inject(LogicProductService);
 
-  product!:Product;
+
+
+  product!: Product;
   isOpen = false;
 
   catalogue: Record<'MAN' | 'WOMAN', Record<string, Cabin[]>> = {
@@ -54,7 +59,7 @@ export class CabineComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    
+
     const cats: Cat[] = ['haut', 'bas', 'chapeau', 'chaussures'];
 
     forkJoin({
@@ -100,7 +105,6 @@ export class CabineComponent implements OnInit {
   /**
    * Construit le catalogue à partir des garments
    */
-
   private buildCatalogue(): void {
     // Initialisation dynamique selon listType
     this.listType.forEach(t => {
@@ -172,7 +176,7 @@ export class CabineComponent implements OnInit {
 
   getImgSrc(cat: Cat): string | null {
     const item = this.getItem(cat);
-    
+
     if (!item || !item.picturecabin || item.picturecabin === '/') return null;
     return `https://boycote.fr${item.picturecabin}`;
   }
@@ -181,7 +185,7 @@ export class CabineComponent implements OnInit {
 
   getUrl(cat: Cat): string { return this.getItem(cat)?.productlink ?? ''; }
 
-  getId(cat: Cat): string | number{ return this.getItem(cat)?.id ?? ''; }
+  getId(cat: Cat): string | number { return this.getItem(cat)?.id ?? ''; }
 
   getProduct(cat: Cat): string | number {
     const item = this.getItem(cat);
@@ -190,11 +194,16 @@ export class CabineComponent implements OnInit {
     this.productService.getProduct(item.idproduct).subscribe(res => {
       if (res.success) {
         this.product = res.product; // récupère le produit
+        this.carouselService.setMode('product'); // passe en mode produit
       }
     });
     return this.product.id;
   }
 
+  readViewProduct(product: Product) {
+    this.carouselService.setMode('product')
+    this.product = product;
+  }
 
   hasImg(cat: Cat): boolean {
     return !!this.getItem(cat)?.picturecabin;
@@ -204,9 +213,31 @@ export class CabineComponent implements OnInit {
     return this.indexes()[cat] !== -1;
   }
 
-closeCart() {
-this.carouselService.setMode('standard');
-}
+  closeCart() {
+    this.carouselService.setMode('standard');
+  }
+
+  host = 'https://boycote.fr';
+
+  openProduct(event: MouseEvent, cat: Cat) {
+    event.preventDefault();
+
+    const cabinItem = this.getItem(cat);
+    if (!cabinItem?.sku) return;
+
+    this.productService.getProductBySKU(cabinItem.sku).subscribe(product => {
+      if (!product) {
+        console.warn("Aucun produit trouvé pour le SKU", cabinItem.sku);
+        return;
+      }
+
+      this.carouselService.setMode('product');
+      this.logicProduct.product = product;
+
+      // window.open(`https://boycote.fr/product/${product.id}`, '_blank');
+    });
+  }
+
 
 
 }

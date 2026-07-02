@@ -6,13 +6,22 @@ import { inject, Injectable } from '@angular/core';
 })
 export class EmailService {
 
-private http = inject(HttpClient);
+  private http = inject(HttpClient);
 
-private apiUrl = 'https://www.boycote.fr/api/send_email.php';
+  private apiUrl = 'https://www.boycote.fr/api/';
 
-sendEmail(formData: any) {
-    return this.http.post(this.apiUrl, formData);
+  sendEmailRequest(formData: any) {
+    return this.http.post(this.apiUrl +
+      'send-email-request.php'
+      , formData);
   }
-  
-  
+
+  sendEmailAnnulation(formData: any) {
+    return this.http.post(this.apiUrl +
+      'send-email-annulation.php', formData);
+  }
+
+
+
+
 }

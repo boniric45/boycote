@@ -1,16 +1,14 @@
-import { CommonModule, Location } from '@angular/common';
-import { Component, inject, Input, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
 import { CarouselService } from '../../../../services/carousel.service';
 import { CartService } from '../../../../services/cart.service';
+import { LogicProductService } from '../../../../services/logic-product.service';
 import { ProductService } from '../../../../services/product.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { InformationsCardComponent } from '../informations-card/informations-card.component';
-import { LogicProductService } from '../../../../services/logic-product.service';
-import { LogicRequestService } from '../../../../services/logic-request.service';
 
 @Component({
   selector: 'app-carousel-product',
@@ -41,8 +39,6 @@ export class CarouselProductComponent {
   private touchEndX = 0;
   isFullscreen = false;
 
-
-
   ngOnInit(): void {
 
     this.carouselService.setMode('product');
@@ -52,14 +48,14 @@ export class CarouselProductComponent {
     this.productService.getProduct(id).subscribe(res => {
 
       if (!res.success || !res.product) {
-         this.carouselService.setMode('product');
+        this.carouselService.setMode('product');
         return;
       }
- 
+
       // 2. Stocker le produit
       this.product = res.product;
+      this.productService.product = res.product;
 
-      this.productService.product = res.product; 
 
       // 3. Construire les images
       let imageList = this.productService.buildImageObjects(this.product);
@@ -83,9 +79,9 @@ export class CarouselProductComponent {
     });
   }
 
-ngOnChanges(){
+  ngOnChanges() {
     this.carouselService.setMode('product');
-}
+  }
 
   fixLocalUrl(url: string): string {
     if (!url) return '';
@@ -129,9 +125,8 @@ ngOnChanges(){
     const result = [];
     const count = Math.min(this.visibleCount, total);
     const start = this.currentIndex - Math.floor(count / 2);
-
-    for (let i = 0; i < count; i++) {
-      const index = (start + i + total) % total;
+    for (let i = -1; i < count; i++) {
+      let index = (start + i + total) % total;
       result.push(this.articles()[index]);
     }
     return result;

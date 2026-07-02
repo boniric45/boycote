@@ -28,12 +28,10 @@ export class CustomerRequestComponent {
   isOpen = signal(true);
   productsSoldOut: Product[] = [];
 
-
   private logicRequest = inject(LogicRequestService);
   private productService = inject(ProductService);
   private emailService = inject(EmailService);
   private carouselService = inject(CarouselService);
-  private location = inject(Location);
 
   ngOnInit() {
     this.product = this.logicRequest.selectedProduct();
@@ -74,7 +72,7 @@ export class CustomerRequestComponent {
         size: this.product.size
       };
 
-      this.emailService.sendEmail(contactData).subscribe({
+      this.emailService.sendEmailRequest(contactData).subscribe({
         next: (response) => {
           if (response) {
             alert('message sent successfully');

@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarouselService } from '../../services/carousel.service';
-import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 import { EmailService } from '../../services/email.service';
+import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 
 @Component({
   selector: 'app-annulation',
@@ -17,15 +16,12 @@ export class AnnulationComponent {
   private carouselService = inject(CarouselService);
   private emailService = inject(EmailService);
   
-
   closeCart() {
     this.carouselService.setMode('standard');
   }
 
-// ✏️ TON EMAIL PRO ICI
-  emailDest = 'pagnon3105@gmail.com';
-
-  private http = inject(HttpClient);
+  // emailDest = 'pagnon3105@gmail.com';
+    emailDest = 'boniric45@gmail.com';
 
   // SIGNALS
   lang = signal<'en' | 'fr'>('en');
@@ -33,11 +29,12 @@ export class AnnulationComponent {
   error = signal(false);
 
   form = signal({
+    email: '',
     type: '',
     orderNumber: '',
-    email: '',
-    items: '',
+    sku: '',
     reason: '',
+    items:'',
     tagConfirmed: false
   });
 
@@ -45,7 +42,7 @@ export class AnnulationComponent {
 
   isValid = computed(() => {
     const f = this.form();
-    const base = f.type && f.orderNumber && f.email && f.items;
+    const base = f.email && f.type && f.orderNumber && f.sku && f.reason && f.items;
     const checkOk = f.type === 'cancel' || f.tagConfirmed;
     return base && checkOk;
   });
@@ -58,23 +55,14 @@ export class AnnulationComponent {
     this.form.update(f => ({ ...f, [field]: value }));
   }
 
-  // ✏️ Ton dev remplace l'URL par celle de son API PHP OVH
-  // Exemple : 'https://tonsite.com/api/send-return.php'
   submit() {
     if (!this.isValid()) return;
 
-    
-
-    this.http.post(
-      'https://www.boycoté.fr/api/return.php',
-      { ...this.form(), emailDest: this.emailDest }
-    ).subscribe({
+    this.emailService.sendEmailAnnulation({ ...this.form(), emailDest: this.emailDest }).subscribe({
       next: () => { this.submitted.set(true); },
       error: () => { this.error.set(true); }
     });
   }
-
-
 
 
   

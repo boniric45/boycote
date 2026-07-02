@@ -9,33 +9,6 @@ export class CarouselService {
 
   constructor(private router: Router) { }
 
-  // carouselMode = signal<
-  //   'home' |
-  //   'standard' |
-  //   'search' |
-  //   'select' |
-  //   'product' |
-  //   'cabin' |
-  //   'contact' |
-  //   'notice' |
-  //   'return' |
-  //   'request'>('standard');
-
-  // setMode(mode:
-  //   'home' |
-  //   'standard' |
-  //   'search' |
-  //   'select' |
-  //   'product' |
-  //   'cabin' |
-  //   'contact' |
-  //   'notice' |
-  //   'return' |
-  //   'request') {
-
-  //   this.carouselMode.set(mode);
-  // }
-
   carouselMode = signal<
     'home' | 'standard' | 'search' | 'select' | 'product' |
     'cabin' | 'contact' | 'notice' | 'return' | 'request'

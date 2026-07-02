@@ -182,10 +182,12 @@ export class ProductService {
   /* -----------------------------------------------------------
      GET PRODUCT BY SKU
   ----------------------------------------------------------- */
-  getProductIdBySKU(sku: string): number {
-    const product = this.allProducts.find(p => p.sku === sku);
-    return product ? product.id : 0;
+  getProductBySKU(sku: string): Observable<Product | undefined> {
+    return this.getProducts().pipe(
+      map(products => products.find(p => p.sku === sku))
+    );
   }
+
 
   /* -----------------------------------------------------------
      VERIFY ALL LIST OF PRODUCT AND ADD BADGE SOLD OUT

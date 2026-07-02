@@ -1,4 +1,3 @@
-
 <div class="page-body">
   <div class="cabine-box">
 
@@ -14,67 +13,74 @@
 
       <div class="arrows-col">
         @for (cat of cats; track cat) {
-          <button class="arrow-btn" (click)="prev(cat)">
-            <svg viewBox="0 0 24 24"><polygon points="16,3 8,12 16,21"/></svg>
-          </button>
+        <button class="arrow-btn" (click)="prev(cat)">
+          <svg viewBox="0 0 24 24">
+            <polygon points="16,3 8,12 16,21" />
+          </svg>
+        </button>
         }
       </div>
-      <div class="mannequin-center" >
+      <div class="mannequin-center">
 
-        <img class="mannequin-img mannequin-img--homme" [class.hidden]="isFemme()"
-             src="/pictures/mannequin-homme.webp" alt="mannequin homme"/>
-        <img class="mannequin-img mannequin-img--femme" [class.hidden]="isHomme()"
-             src="/pictures/mannequin-femme.webp" alt="mannequin femme"/>
+        <img class="mannequin-img mannequin-img--homme" [class.hidden]="isFemme()" src="/pictures/mannequin-homme.webp"
+          alt="mannequin homme" />
+        <img class="mannequin-img mannequin-img--femme" [class.hidden]="isHomme()" src="/pictures/mannequin-femme.webp"
+          alt="mannequin femme" />
 
-             @for (cat of cats; track cat) {
-               @if (hasItem(cat)) {
-                 
-                 <div class="garment-wrapper" [ngStyle]="getStyle(cat)" style="position: absolute;pointer-events: none; z-index: 10;">
-      
-                   <img
-                     class="outfit-img" 
-                     [src]="getImgSrc(cat)"
-                     [alt]="getNom(cat)"
-                     style="width: 100%; height: 100%; display: block; object-fit: fill;"
-                   />                   
-                 </div>
-                }
-              }
+        @for (cat of cats; track cat) {
+        @if (hasItem(cat)) {
+
+        <div class="garment-wrapper" [ngStyle]="getStyle(cat)"
+          style="position: absolute;pointer-events: none; z-index: 10;">
+
+          <img class="outfit-img" [src]="getImgSrc(cat)" [alt]="getNom(cat)"
+            style="width: 100%; height: 100%; display: block; object-fit: fill;" />
+        </div>
+        }
+        }
       </div>
 
       <div class="arrows-col">
-          @for (cat of cats; track cat) {
-            <button class="arrow-btn" (click)="next(cat)">
-              <svg viewBox="0 0 24 24"><polygon points="8,3 16,12 8,21"/></svg>
-            </button>
-          }
+        @for (cat of cats; track cat) {
+        <button class="arrow-btn" (click)="next(cat)">
+          <svg viewBox="0 0 24 24">
+            <polygon points="8,3 16,12 8,21" />
+          </svg>
+        </button>
+        }
       </div>
 
     </div>
   </div>
 
   <div class="outfit-info">
+
     <div class="info-line">
       <span class="lbl">HAT:</span>
-      
-      @if (hasItem('chapeau')) { 
-        <a [routerLink]="['/product',getId('chapeau')]"  target="_blank">{{ getNom('chapeau') }}</a> }
+      @if (hasItem('chapeau')) {
+      <a (click)="openProduct($event, 'chapeau')">{{ getNom('chapeau') }}</a>
+      }
       @else { <span class="none">—</span> }
-
     </div>
+
     <div class="info-line">
       <span class="lbl">TOP:</span>
-      @if (hasItem('haut')) { <a [routerLink]="['/product',getId('haut')]" target="_blank">{{ getNom('haut') }}</a> }
+      @if (hasItem('haut')) {
+      <a (click)="openProduct($event, 'haut')"> {{ getNom('haut') }} </a> }
       @else { <span class="none">—</span> }
     </div>
+
     <div class="info-line">
       <span class="lbl">BOTTOM:</span>
-      @if (hasItem('bas')) { <a [routerLink]="['/product',getId('bas')]"target="_blank">{{ getNom('bas') }}</a> }
+      @if (hasItem('bas')) {
+      <a (click)="openProduct($event, 'bas')"> {{ getNom('bas') }} </a> }
       @else { <span class="none">—</span> }
     </div>
+
     <div class="info-line">
       <span class="lbl">SHOES:</span>
-      @if (hasItem('chaussures')) { <a [routerLink]="['/product',getId('chaussures')]" target="_blank">{{ getNom('chaussures') }}</a> }
+      @if (hasItem('chaussures')) {
+      <a (click)="openProduct($event, 'chaussures')"> {{ getNom('chaussures') }} </a> }
       @else { <span class="none">—</span> }
     </div>
   </div>
