@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Cabin } from '../../../models/cabin';
@@ -8,6 +8,8 @@ import { CabineService } from '../../../services/cabine.service';
 import { GarmentService } from '../../../services/garment.service';
 import { UploadService } from '../../../services/upload.service';
 import { CabinViewdragAddComponent } from "../cabin-viewdrag-add/cabin-viewdrag-add.component";
+import { ProductService } from '../../../services/product.service';
+import { Product } from '../../../models/product';
 
 @Component({
   selector: 'app-cabin-add-form',
@@ -15,23 +17,32 @@ import { CabinViewdragAddComponent } from "../cabin-viewdrag-add/cabin-viewdrag-
   templateUrl: './cabin-add-form.component.html',
   styleUrl: './cabin-add-form.component.scss',
 })
-export class CabinAddFormComponent implements OnInit{
-@ViewChild('canvas') canvas!: ElementRef;
+export class CabinAddFormComponent implements OnInit {
+
+  @ViewChild('canvas') canvas!: ElementRef;
   @Input() picture!: string;
   @Input() x!: number;
   @Input() y!: number;
   @Input() w!: number;
   @Input() h!: number;
   @Input() z!: number;
+
   private typeService = inject(GarmentService);
   private cabinService = inject(CabineService);
   private uploadService = inject(UploadService);
+  private productService = inject(ProductService);
+
+  productUpdateLink = signal<string>('');
+  filteredProducts = signal<Product[]>([]);
+  skuAlert = signal<string>('');
+
 
   cabin: Cabin | undefined;
   types: Garment[] = [];
   previewUrl: string | null = null;
   cabins: Cabin[] = [];
   cabinFiltered: any[] = [];
+  products: Product[] = [];
 
   formCabin = new FormGroup({
     id: new FormControl(0, { nonNullable: true }),
@@ -56,42 +67,85 @@ export class CabinAddFormComponent implements OnInit{
   private startHPercent: number = 0;
   private startXPercent: number = 0;
   private startYPercent: number = 0;
-  
+
   selectedCabin!: Cabin;
 
   ngOnInit() {
-    this.typeService.getAll().subscribe( t => this.types = t);
+
+    this.typeService.getAll().subscribe(t => this.types = t);
     this.loadCabins();
+
+    this.formCabin.controls.sku.valueChanges.subscribe(sku => {
+      this.updateProductLink(sku);
+      this.filterProducts(sku);
+    });
+
+    this.loadProducts();
+
   }
 
-deleteCabin(id: number) {
-  if (confirm("Supprimer cette cabine ?")) {
-    this.cabinService.deleteCabin(id).subscribe(res => {
-      this.loadCabins(); // recharge la liste
+  deleteCabin(id: number) {
+    if (confirm("Supprimer cette cabine ?")) {
+      this.cabinService.deleteCabin(id).subscribe(res => {
+        this.loadCabins(); // recharge la liste
+      });
+    }
+  }
+
+  loadProducts() {
+    this.productService.getProducts().subscribe(products => {
+      this.products = products;
     });
   }
+
+filterProducts(term: string) {
+  term = term.trim().toLowerCase();
+
+  if (term.length < 2) {
+    this.filteredProducts.set([]);
+    this.skuAlert.set('');
+    return;
+  }
+
+  const results = this.products.filter(p =>
+    p.sku.toLowerCase().includes(term)
+  );
+
+  this.filteredProducts.set(results);
+
+  if (results.length === 0) {
+    this.skuAlert.set('⚠️ Aucun produit ne correspond à ce SKU');
+  } else {
+    this.skuAlert.set('');
+  }
 }
 
-loadCabins() {
-  this.cabinService.getAllCabin().subscribe(res => {
-    this.cabins = res;
-    this.cabinFiltered = res; // ou applique ton filtre
-  });
-}
+  selectProduct(product: Product) {
+    this.formCabin.controls.sku.setValue(product.sku);
+    this.updateProductLink(product.sku);
+    this.filteredProducts.set([]);
+  }
 
-editCabin(cabin: any) {
-  this.formCabin.patchValue(cabin);
-}
+  loadCabins() {
+    this.cabinService.getAllCabin().subscribe(res => {
+      this.cabins = res;
+      this.cabinFiltered = res; // ou applique ton filtre
+    });
+  }
 
-onUpdateFromChild(e: any) {
-  this.formCabin.patchValue({
-    positionx: e.x,
-    positiony: e.y,
-    width: e.w,
-    height: e.h,
-    zindex: e.z
-  });
-}
+  editCabin(cabin: any) {
+    this.formCabin.patchValue(cabin);
+  }
+
+  onUpdateFromChild(e: any) {
+    this.formCabin.patchValue({
+      positionx: e.x,
+      positiony: e.y,
+      width: e.w,
+      height: e.h,
+      zindex: e.z
+    });
+  }
 
   // --- LOGIQUE INTERACTIVE : DRAG & RESIZE ---
   startDrag(event: MouseEvent, action: 'move' | 'resize') {
@@ -196,19 +250,19 @@ onUpdateFromChild(e: any) {
 
     // Upload l'image après la sélection de celle ci
     this.uploadService.uploadCabin(formData).subscribe({
-      next:(res) => {
-        console.log('Image uploadé : ',res.path);
+      next: (res) => {
+        console.log('Image uploadé : ', res.path);
         const pathPicture = res.path;
-        this.formCabin.patchValue({picturecabin: pathPicture});
+        this.formCabin.patchValue({ picturecabin: pathPicture });
         //  this.cdr.detectChanges();
-         console.log(this.formCabin.value);
-         
+        console.log(this.formCabin.value);
+
       },
       error: (err) => {
         console.log(err);
       }
     })
-    
+
     // Remise à zéro de l'input pour autoriser les changements successifs instantanés
     input.value = '';
   }
@@ -245,5 +299,17 @@ onUpdateFromChild(e: any) {
     });
   }
 
+
+  updateProductLink(sku: string) {
+
+
+    const link = `/product/${sku}`;
+
+    // Signal
+    this.productUpdateLink.set(link);
+
+    // Form
+    this.formCabin.controls.productlink.setValue(link, { emitEvent: false });
+  }
 
 }

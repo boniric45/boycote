@@ -1,6 +1,17 @@
-<div class="success-container">
-  <h1>Paiement validé ✔</h1>
-  <p>Merci pour votre commande !</p>
-
-  <a routerLink="/home" class="btn">Retour à l'accueil</a>
+<div class="mac-frame">
+  <div class="title-bar">
+    <span class="window-title">BOY_COTÉ</span>
+  </div>
+  <!-- <app-button-return></app-button-return> -->
+  <div class="content">
+    <div class="check-icon" (click)="goToHome()">
+      <svg viewBox="0 0 24 24" fill="none" >
+        <path d="M4 12.5L9.5 18L20 6" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="text-box">
+      <p class="title">PAYMENT CONFIRMED</p>
+      <p>THANK YOU FOR YOUR PURCHASE.<br>A RECEIPT WILL BE SENT<br>TO YOUR EMAIL.</p>
+    </div>
+  </div>
 </div>

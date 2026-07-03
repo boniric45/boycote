@@ -246,6 +246,55 @@ button.primary:active {
   .price {
     font-size: 1.1rem;
   }
+    .nav.desktop {
+    display: none;
+  }
+
+    /* SOLD OUT BADGE */
+  .img-sold-out {
+    width: 260px;
+    height: 155px;
+    position: absolute;
+    top: -28px;
+    left: 95px;
+    z-index: 101;
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .items {
+    width: 150px;
+    height: 200px;
+    margin: 0 auto;
+    /* pour centrer proprement */
+  }
+
+  .item {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 18px;
+  }
+
+  /* SOLD OUT BADGE */
+  .img-sold-out {
+    width: 210px;
+    height: 105px;
+    position: absolute;
+    top: -117px;
+    left: 26px;
+    z-index: 101;
+  }
+
+  .nav.desktop {
+    display: none;
+  }
+
+  .nav.left.desktop, .nav.right.desktop {
+    display: none;
+  }
 
 }
 
@@ -284,11 +333,11 @@ button.primary:active {
 
   /* SOLD OUT BADGE */
   .img-sold-out {
-    width: 340px;
-    height: 150px;
+    width: 170px;
+    height: 85px;
     position: absolute;
     top: -10px;
-    left: -120px;
+    left: 48px;
     z-index: 101;
   }
 

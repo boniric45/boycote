@@ -5,11 +5,17 @@
   @if(!searchOpen()){
 
   <div class="header">
-
+    @if(isHamburgerEnabled()){
     <!-- HAMBURGER -->
     <div class="header-left" (click)="onHamburgerClick()">
       <app-hamburger></app-hamburger>
     </div>
+    }
+    @else {
+    <div class="header-arrow">
+      <app-button-return></app-button-return>
+    </div>
+    }
 
     <!-- LOGO -->
     <div class="header-center">
@@ -32,9 +38,18 @@
 <div class="header desktop-only">
 
   <!-- HAMBURGER -->
+  @if(isHamburgerEnabled()){
+  <!-- HAMBURGER -->
   <div class="header-left" (click)="onHamburgerClick()">
     <app-hamburger></app-hamburger>
   </div>
+  }
+  @else {
+  <div class="header-arrow">
+    <app-button-return></app-button-return>
+  </div>
+  }
+
 
   <!-- LOGO CENTRÉ -->
   <div class="header-center">
@@ -51,30 +66,21 @@
      ZONE RECHERCHE (mobile + desktop)
      ============================ -->
 <div class="search-zone">
-
-
   @if(searchOpen()){
 
+  <div class="search-wrapper">
     <!-- INPUT -->
     @if(inputActive()){
-      <app-search-input 
-        (focusInput)="onInputFocus()" 
-        (searchInput)="onSearchInput($event)" 
-        (reset)="resetSearch()">
-      </app-search-input>
+    <app-search-input (focusInput)="onInputFocus()" (searchInput)="onSearchInput($event)" (reset)="resetSearch()">
+    </app-search-input>
     }
+  </div>
 
-    <!-- SELECTS -->
-    @if(selectActive()){
-      <app-search-selects 
-        (focusSelect)="onSelectFocus()"
-        (searchFilters)="onSearchSelect($event)" 
-        (reset)="resetSearch()">
-      </app-search-selects>
-      }
-    
+  <!-- SELECTS -->
+  @if(selectActive()){
+  <app-search-selects (focusSelect)="onSelectFocus()" (searchFilters)="onSearchSelect($event)" (reset)="resetSearch()">
+  </app-search-selects>
   }
 
+  }
 </div>
-
-

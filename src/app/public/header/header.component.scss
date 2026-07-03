@@ -16,6 +16,14 @@
   z-index: 10;
 }
 
+.header-arrow{
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .header-left,
 .header-right {
   width: 45px;
@@ -54,14 +62,30 @@
   display: flex;
   cursor: pointer;
 }
+
+.header-arrow{
+    display: flex;
+  cursor: pointer;
+}
   .search-zone{
     transform:scale(0.92);
   }
 
+  .search-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
 @media (min-width: 900px) {
 
-  .header-left {
+
+  .header-left,.header-arrow {
     display: flex;
+
     /* visible */
     cursor: pointer;
   }

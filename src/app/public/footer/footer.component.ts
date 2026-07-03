@@ -1,11 +1,10 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { RouterLink } from "@angular/router";
 import { CarouselService } from '../../services/carousel.service';
 import { FoldermacComponent } from "../foldermac/foldermac.component";
 
 @Component({
   selector: 'app-footer',
-  imports: [FoldermacComponent, RouterLink],
+  imports: [FoldermacComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })

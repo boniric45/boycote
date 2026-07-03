@@ -60,6 +60,7 @@ export class SearchSelectsComponent {
         this.types = result.types;
       })
     );
+        this.isRefreshActive.set(true);
   }
 
   ngOnDestroy(): void {
@@ -81,7 +82,6 @@ export class SearchSelectsComponent {
     event.stopPropagation();
     this.openMarques.set(!this.openMarques());
     this.focusSelect.emit();
-    this.isRefreshActive.set(true);
   }
 
   toggleTypesDropdown(event: Event) {

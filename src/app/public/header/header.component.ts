@@ -1,15 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, inject, Input, Output, signal } from "@angular/core";
+import { Router } from "@angular/router";
 import { CarouselService } from "../../services/carousel.service";
+import { HamburgerService } from "../../services/hamburger.service";
 import { LogicInputService } from "../../services/logic-input.service";
 import { LogicSelectService } from "../../services/logic-select.service";
 import { SearchService } from "../../services/search.service";
 import { CartComponent } from "../cart/cart.component";
+import { ButtonReturnComponent } from "../features/button-return/button-return.component";
 import { HamburgerComponent } from "../features/hamburger/hamburger.component";
 import { SearchInputComponent } from "../features/search-input/search-input.component";
 import { SearchSelectsComponent } from "../features/search-selects/search-selects.component";
-import { Router } from "@angular/router";
-import { ButtonReturnComponent } from "../features/button-return/button-return.component";
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,8 @@ import { ButtonReturnComponent } from "../features/button-return/button-return.c
     HamburgerComponent,
     CartComponent,
     SearchInputComponent,
-    SearchSelectsComponent
+    SearchSelectsComponent,
+    ButtonReturnComponent
 ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -30,6 +32,7 @@ export class HeaderComponent {
   private logicInputService = inject(LogicInputService);
   private searchService = inject(SearchService);
   private carouselService = inject(CarouselService);
+  private hamburgerService = inject(HamburgerService);
   private route = inject(Router);
 
   /* Données venant du parent */
@@ -45,8 +48,8 @@ export class HeaderComponent {
   inputActive = signal(true);     // Input visible
   selectActive = signal(false);   // Selects visibles
   productActive = signal(false);  // Carousel Product visible
-  isArrowReturnActive = signal(false);    // Flèche de retour visible
-  isHamburgerActive = signal(true);  // Hamburger visible
+  isHamburgerEnabled = this.hamburgerService.isEnabled;
+  
   /* ============================
    0- RESOLUTION DESKTOP
    ============================ */
@@ -91,7 +94,6 @@ export class HeaderComponent {
     this.searchOpen.set(true);
     this.inputActive.set(true);
     this.selectActive.set(true);
-    this.isArrowReturnActive.set(false);
   }
 
   closeAll() {
@@ -119,15 +121,11 @@ export class HeaderComponent {
   }
 
   onSearchInput(value: string) {
-    this.isArrowReturnActive.set(true);
-    this.isHamburgerActive.set(false);
     this.logicInputService.setFilters(value);
     this.carouselService.setMode('search');
   }
 
   onSearchSelect(filters: any) {
-    this.isArrowReturnActive.set(true);
-    this.isHamburgerActive.set(false);
     this.logicSelectService.setFilters(filters);
     this.carouselService.setMode('select');
   }

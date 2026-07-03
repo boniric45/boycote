@@ -1,17 +1,15 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { forkJoin } from 'rxjs';
 import { Cabin } from "../../models/cabin";
 import { Garment } from "../../models/garment";
 import { Product } from "../../models/product";
 import { CabineService } from "../../services/cabine.service";
-import { GarmentService } from "../../services/garment.service";
-import { ProductService } from "../../services/product.service";
-import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 import { CarouselService } from "../../services/carousel.service";
+import { GarmentService } from "../../services/garment.service";
 import { LogicProductService } from "../../services/logic-product.service";
-import { ApiService } from "../../services/api.service";
+import { ProductService } from "../../services/product.service";
 
 type Cat = 'chapeau' | 'haut' | 'bas' | 'chaussures';
 
@@ -25,7 +23,7 @@ const mapCat: Record<Cat, string> = {
 @Component({
   selector: 'app-cabine',
   standalone: true,
-  imports: [RouterModule, CommonModule, CloseButtonComponent],
+  imports: [RouterModule, CommonModule],
   templateUrl: './cabine.component.html',
   styleUrl: './cabine.component.scss'
 })

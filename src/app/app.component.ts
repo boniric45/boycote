@@ -38,7 +38,6 @@ export class AppComponent {
   showLayout = false;
   showHost = false;
 
-
   ngOnInit() {
 
   window.addEventListener('popstate', () => {
@@ -46,7 +45,6 @@ export class AppComponent {
     this.carouselService.setMode('standard');
   });
 
-    // this.cartService.clear(); // vide le panier au rafraichissement de la page (utile pour le dev)
     const consent = this.cookiesService.get('cookie_consent');
 
     if (!consent) {
@@ -60,7 +58,6 @@ export class AppComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
-        console.log('URL > ', url);
 
         // -------------------------
         // 1) Pages SANS layout

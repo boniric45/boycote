@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { CloseButtonComponent } from "../../../shared/close-button/close-button.component";
 import { CarouselService } from '../../../services/carousel.service';
 
 @Component({
   selector: 'app-contact',
-  imports: [CloseButtonComponent],
+  imports: [],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })

@@ -3,11 +3,10 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarouselService } from '../../services/carousel.service';
 import { EmailService } from '../../services/email.service';
-import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
 
 @Component({
   selector: 'app-annulation',
-  imports: [CommonModule, FormsModule, CloseButtonComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './annulation.component.html',
   styleUrl: './annulation.component.scss',
 })

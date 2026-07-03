@@ -231,6 +231,9 @@ button.primary:active {
     border-radius: 18px;
   }
 
+  .nav.desktop {
+    display: none;
+  }
 
   .nav-mobile {
     all: unset;
@@ -258,11 +261,11 @@ button.primary:active {
 
   /* SOLD OUT BADGE */
   .img-sold-out {
-    width: 320px;
-    height: 150px;
+    width: 210px;
+    height: 105px;
     position: absolute;
-    top: -10px;
-    left: -112px;
+    top: -14px;
+    left: 72px;
     z-index: 101;
   }
 
@@ -271,8 +274,8 @@ button.primary:active {
 @media (max-width: 650px) {
 
   .items {
-    width: 300px;
-    height: 400px;
+    width: 150px;
+    height: 200px;
     margin: 0 auto;
     /* pour centrer proprement */
   }
@@ -286,15 +289,20 @@ button.primary:active {
 
   /* SOLD OUT BADGE */
   .img-sold-out {
-    width: 420px;
-    height: 210px;
+    width: 210px;
+    height: 105px;
     position: absolute;
-    top: -17px;
-    left: -108px;
+    top: -117px;
+    left: 26px;
     z-index: 101;
   }
 
-  .nav.left.desktop, .nav.right.desktop {
+  .nav.desktop {
+    display: none;
+  }
+
+  .nav.left.desktop,
+  .nav.right.desktop {
     display: none;
   }
 
@@ -304,11 +312,14 @@ button.primary:active {
 /* SMALL MOBILE */
 @media (max-width: 480px) {
 
-  .nav.left.desktop, .nav.right.desktop {
+  .nav.desktop {
     display: none;
   }
 
-
+  .nav.left.desktop,
+  .nav.right.desktop {
+    display: none;
+  }
 
   .carousel-wrapper {
     height: 500px;
@@ -342,11 +353,11 @@ button.primary:active {
 
   /* SOLD OUT BADGE */
   .img-sold-out {
-    width: 320px;
-    height: 150px;
+    width: 170px;
+    height: 85px;
     position: absolute;
     top: -10px;
-    left: -112px;
+    left: 38px;
     z-index: 101;
   }
 
