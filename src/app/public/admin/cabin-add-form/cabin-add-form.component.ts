@@ -98,27 +98,27 @@ export class CabinAddFormComponent implements OnInit {
     });
   }
 
-filterProducts(term: string) {
-  term = term.trim().toLowerCase();
+  filterProducts(term: string) {
+    term = term.trim().toLowerCase();
 
-  if (term.length < 2) {
-    this.filteredProducts.set([]);
-    this.skuAlert.set('');
-    return;
+    if (term.length < 2) {
+      this.filteredProducts.set([]);
+      this.skuAlert.set('');
+      return;
+    }
+
+    const results = this.products.filter(p =>
+      p.sku.toLowerCase().includes(term)
+    );
+
+    this.filteredProducts.set(results);
+
+    if (results.length === 0) {
+      this.skuAlert.set('⚠️ Aucun produit ne correspond à ce SKU, lien cabine non opérationnel');
+    } else {
+      this.skuAlert.set('');
+    }
   }
-
-  const results = this.products.filter(p =>
-    p.sku.toLowerCase().includes(term)
-  );
-
-  this.filteredProducts.set(results);
-
-  if (results.length === 0) {
-    this.skuAlert.set('⚠️ Aucun produit ne correspond à ce SKU');
-  } else {
-    this.skuAlert.set('');
-  }
-}
 
   selectProduct(product: Product) {
     this.formCabin.controls.sku.setValue(product.sku);

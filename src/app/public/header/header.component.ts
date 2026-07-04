@@ -22,7 +22,7 @@ import { SearchSelectsComponent } from "../features/search-selects/search-select
     SearchInputComponent,
     SearchSelectsComponent,
     ButtonReturnComponent
-],
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -49,7 +49,7 @@ export class HeaderComponent {
   selectActive = signal(false);   // Selects visibles
   productActive = signal(false);  // Carousel Product visible
   isHamburgerEnabled = this.hamburgerService.isEnabled;
-  
+
   /* ============================
    0- RESOLUTION DESKTOP
    ============================ */
@@ -100,18 +100,19 @@ export class HeaderComponent {
     this.searchOpen.set(false);
     this.inputActive.set(false);
     this.selectActive.set(false);
+    this.productActive.set(false);
   }
 
   onInputFocus() {
     this.inputActive.set(true);
     this.selectActive.set(false);
-    this.carouselService.setMode('search');
+    this.carouselService.setMode('loading');
   }
 
   onSelectFocus() {
     this.inputActive.set(false);
     this.selectActive.set(true);
-    this.carouselService.setMode('select');
+    this.carouselService.setMode('loading');
   }
 
   resetSearch() {

@@ -3,11 +3,8 @@
     <div class="carousel-wrapper">
       <!-- FORCE LE PIPELINE À SE DÉCLENCHER -->
       <span style="display:none">{{ visible.length }}</span>
-  
-       @if(logic.noResult()){
-      <div class="no-result"> NO RESULTS, PLEASE RETRY</div>
-      }
-      @else if (logic.fallbackMode()) {
+
+      @if (logic.fallbackMode()) {
       <div class="mini-carousel-wrapper">
         @for(article of logic.filtered();track article.id){
         <app-carousel-mini-card [article]="article" />
@@ -27,8 +24,8 @@
 
             @for (article of visible; track trackByArticle($index, article); let i = $index) {
             <img (click)="readViewProduct(article)" [src]="article.pathpictureone" class="item"
-            [style.transform]="logic.getTransform(i)" [style.zIndex]="logic.getZIndex(i)"
-            [style.opacity]="logic.getOpacity(i)" />
+              [style.transform]="logic.getTransform(i)" [style.zIndex]="logic.getZIndex(i)"
+              [style.opacity]="logic.getOpacity(i)" />
             }
 
             @if (logic.central()?.isSoldOut) {
@@ -43,28 +40,28 @@
 
         </div>
 
-      <div class="container">
-        <div class="description">
-          @if (logic.central()) {
-          <p>{{ logic.central().name }}</p>
-          <p>{{ logic.central().gender }} - {{ logic.central().size }}</p>
-          <span class="price">{{ logic.central().prix | currency:'EUR' }}</span>
+        <div class="container">
+          <div class="description">
+            @if (logic.central()) {
+            <p>{{ logic.central().name }}</p>
+            <p>{{ logic.central().gender }} - {{ logic.central().size }}</p>
+            <span class="price">{{ logic.central().prix | currency:'EUR' }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="conteneur-bouton">
+          @if (logic.central()?.isSoldOut) {
+          <button class="primary" (click)="addToRequest(logic.central())">
+            <span>REQUEST SOURCING</span>
+          </button>
+          }
+          @else {
+          <button class="primary" (click)="addToCart(logic.central())">
+            <span>ADD TO CART</span>
+          </button>
           }
         </div>
-      </div>
-
-      <div class="conteneur-bouton">
-        @if (logic.central()?.isSoldOut) {
-        <button class="primary" (click)="addToRequest(logic.central())">
-          <span>REQUEST SOURCING</span>
-        </button>
-        }
-        @else {
-        <button class="primary" (click)="addToCart(logic.central())">
-          <span>ADD TO CART</span>
-        </button>
-        }
-      </div>
 
         <div class="nav-mobile mobile">
           <button class="nav" (click)="prev()">
@@ -79,4 +76,3 @@
     </div>
   </div>
 </div>
-

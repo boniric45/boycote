@@ -14,13 +14,12 @@ export class AnnulationComponent {
 
   private carouselService = inject(CarouselService);
   private emailService = inject(EmailService);
-  
+
   closeCart() {
     this.carouselService.setMode('standard');
   }
 
-  // emailDest = 'pagnon3105@gmail.com';
-    emailDest = 'boniric45@gmail.com';
+  emailDest = 'boycote@proton.me';
 
   // SIGNALS
   lang = signal<'en' | 'fr'>('en');
@@ -33,7 +32,7 @@ export class AnnulationComponent {
     orderNumber: '',
     sku: '',
     reason: '',
-    items:'',
+    items: '',
     tagConfirmed: false
   });
 
@@ -41,7 +40,11 @@ export class AnnulationComponent {
 
   isValid = computed(() => {
     const f = this.form();
-    const base = f.email && f.type && f.orderNumber && f.sku && f.reason && f.items;
+    const base =
+      f.email &&
+      f.type &&
+      f.orderNumber &&
+      f.items; // seulement les champs obligatoires
     const checkOk = f.type === 'cancel' || f.tagConfirmed;
     return base && checkOk;
   });
@@ -62,8 +65,5 @@ export class AnnulationComponent {
       error: () => { this.error.set(true); }
     });
   }
-
-
-  
 
 }

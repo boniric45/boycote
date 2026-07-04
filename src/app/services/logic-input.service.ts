@@ -1,6 +1,7 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { Product } from '../models/product';
 import { ApiService } from './api.service';
+import { CarouselService } from './carousel.service';
 import { ProductService } from './product.service';
 
 function normalize(str: string) {
@@ -14,16 +15,27 @@ export class LogicInputService {
 
   constructor(
     private apiService: ApiService,
-    private productService: ProductService
+    private productService: ProductService,
+    private carouselService: CarouselService
   ) {
     this.apiService.getProducts().subscribe(p => this.articles.set(p));
     this.productService.disponibilityProductSoldOut().subscribe(s => this.soldOut.set(s));
+
+
+    effect(() => {
+      const result = this.filtered();
+      if (this.carouselService.carouselMode() === 'search' || this.carouselService.carouselMode() === 'loading') {
+        if (result.length === 0) {
+          this.carouselService.setMode('noresult');
+        } 
+      }
+    });
   }
 
-  product!:Product;
+  product!: Product;
   articles = signal<Product[]>([]);
   private soldOut = signal<Product[]>([]);
-  private filters = signal<any | null>(null);
+  private filters = signal<string>('');
 
   visibleCount = signal(5);
   currentIndex = signal(0);
@@ -38,18 +50,18 @@ export class LogicInputService {
   fallbackMode = computed(() => this.filtered().length > 0 && this.filtered().length < 3);
   canShowCarousel = computed(() => this.filtered().length >= 3);
 
+
   filtered = computed(() => {
-    console.log(this.product);
-    
-    const f = this.filters();    // Valeur du champ de recherche
-    let list:Product[] =  this.articles(); // All Products
+
+    const f = (this.filters() ?? '').toLowerCase();
+    let list: Product[] = this.articles(); // All Products
     const result = list.filter(p => {
       return p.marque.toLowerCase().includes(f);
     });
 
-    console.log('Result Input > ', result);
     return result;
   });
+
 
   merged = computed(() => {
     const sold = new Set(this.soldOut().map(p => p.id));

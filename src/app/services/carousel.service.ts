@@ -11,13 +11,11 @@ export class CarouselService {
   constructor(
     private router: Router,
     private hamburgerService: HamburgerService
-
-  ) { }
-
+  ) {}
 
   carouselMode = signal<
-    'home' | 'standard' | 'search' | 'select' | 'product' |
-    'cabin' | 'contact' | 'notice' | 'return' | 'request'
+    'home' | 'standard' | 'search' | 'select' | 'product' | 'noresult' |
+    'cabin' | 'contact' | 'notice' | 'return' | 'request' | 'loading'
   >('standard');
 
   setMode(mode: ReturnType<typeof this.carouselMode>) {

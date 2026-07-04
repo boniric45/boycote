@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from '../../../../models/product';
 import { CarouselService } from '../../../../services/carousel.service';
 import { CartService } from '../../../../services/cart.service';
 import { LogicInputService } from '../../../../services/logic-input.service';
+import { LogicProductService } from '../../../../services/logic-product.service';
+import { LogicRequestService } from '../../../../services/logic-request.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
 import { CarouselMiniCardComponent } from "../carousel-mini-card/carousel-mini-card.component";
-import { LogicProductService } from '../../../../services/logic-product.service';
-import { LogicRequestService } from '../../../../services/logic-request.service';
 
 @Component({
   selector: 'app-carousel-input',
@@ -25,7 +24,6 @@ export class CarouselInputComponent {
   logic = inject(LogicInputService);
   private logicProduct = inject(LogicProductService);
   
-
   visibleCount = 5;
   currentIndex = 0;
   isAnimating = false;
@@ -36,18 +34,22 @@ export class CarouselInputComponent {
   @Input() articles: Product[] = [];
   @Input() searchQuery!: string;
 
-  loadingPb: boolean = true;
-
+  loading: boolean = true;
   
 
   constructor() {
-
     // Responsive
     effect(() => {
       const handler = () => this.logic.visibleCount.set(5);
       window.addEventListener('resize', handler);
       return () => window.removeEventListener('resize', handler);
     });
+  }
+
+  ngOnChanges() {
+  if (this.articles && this.articles.length > 0 ) {
+    this.loading = false;
+    }
   }
 
   // Exposition des données

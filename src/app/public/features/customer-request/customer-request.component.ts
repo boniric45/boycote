@@ -1,17 +1,16 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject, Input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../models/product';
-import { EmailService } from '../../../services/email.service';
-import { ProductService } from '../../../services/product.service';
-import { LogicRequestService } from '../../../services/logic-request.service';
-import { CloseButtonComponent } from '../../../shared/close-button/close-button.component';
 import { CarouselService } from '../../../services/carousel.service';
+import { EmailService } from '../../../services/email.service';
+import { LogicRequestService } from '../../../services/logic-request.service';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-customer-request',
-  imports: [CommonModule, FormsModule,CloseButtonComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './customer-request.component.html',
   styleUrl: './customer-request.component.scss',
 })

@@ -5,15 +5,8 @@
       <!-- FORCE LE PIPELINE À SE DÉCLENCHER -->
       <span style="display:none">{{ visible.length }}</span>
 
-      <!-- <div class="pb">
-        <app-progressbar [pbIsLoading]="loadingPb"></app-progressbar>
-      </div> -->
 
-      @if (logic.noResult()) {
-      <div class="no-result">NO RESULTS, PLEASE RETRY</div>
-      }
-
-      @else if (logic.fallbackMode()) {
+      @if (logic.fallbackMode()) {
       <div class="mini-carousel-wrapper">
         @for(article of logic.filtered();track article.id){
         <app-carousel-mini-card [article]="article" />
@@ -34,10 +27,8 @@
 
           @for (article of visible; track article.id; let i = $index) {
 
-          <img (click)="readViewProduct(article)" 
-            [src]="article.pathpictureone" class="item"
-            [style.transform]="logic.getTransform(i)" 
-            [style.zIndex]="logic.getZIndex(i)"
+          <img (click)="readViewProduct(article)" [src]="article.pathpictureone" class="item"
+            [style.transform]="logic.getTransform(i)" [style.zIndex]="logic.getZIndex(i)"
             [style.opacity]="logic.getOpacity(i)" />
           }
 
@@ -84,6 +75,9 @@
       </div>
 
       }
+
+
+
 
     </div>
   </div>

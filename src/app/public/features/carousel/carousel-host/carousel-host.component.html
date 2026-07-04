@@ -1,17 +1,18 @@
 <div class="carousel-host">
 
   @switch (mode()) {
-    
-  @case ('standard') {  <app-carousel-standard />  }
-  @case ('search') {  <app-carousel-input [searchQuery]="searchQuery" /> }
-  @case ('select') {  <app-carousel-select [articles]="filteredArticles" />  }
-  @case ('product') {  <app-carousel-product />  }
-  @case ('cabin') {  <app-cabine></app-cabine>  }
-  @case ('contact') {  <app-contact></app-contact>  }
-  @case ('notice') {  <app-legal></app-legal>  }
-  @case ('return') {  <app-annulation></app-annulation>  }
-  @case ('request') {  <app-customer-request />  }
 
+  @case ('standard') { <app-carousel-standard /> }
+  @case ('search') { <app-carousel-input [searchQuery]="searchQuery" /> }
+  @case ('select') { <app-carousel-select [articles]="filteredArticles" /> }
+  @case ('product') { <app-carousel-product /> }
+  @case ('cabin') { <app-cabine></app-cabine> }
+  @case ('contact') { <app-contact></app-contact> }
+  @case ('notice') { <app-legal></app-legal> }
+  @case ('return') { <app-annulation></app-annulation> }
+  @case ('request') { <app-customer-request /> }
+  @case ('loading') {<app-progressbar></app-progressbar>}
+  @case ('noresult') {<app-noresult></app-noresult>}
   }
-  
+
 </div>

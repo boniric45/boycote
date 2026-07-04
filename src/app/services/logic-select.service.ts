@@ -1,7 +1,8 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Product } from '../models/product';
 import { ProductService } from './product.service';
 import { ApiService } from './api.service';
+import { CarouselService } from './carousel.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,22 @@ export class LogicSelectService {
 
   constructor(
     private apiService: ApiService,
-    private productService: ProductService
+    private productService: ProductService,
+    private carouselService: CarouselService
+
   ) {
     this.apiService.getProducts().subscribe(p => this.articles.set(p));
     this.productService.disponibilityProductSoldOut().subscribe(s => this.soldOut.set(s));
+
+    effect(() => {
+      const result = this.filtered();
+      if (this.carouselService.carouselMode() === 'select' || this.carouselService.carouselMode() === 'loading') {
+        if (result.length === 0) {
+          this.carouselService.setMode('noresult');
+        }
+      }
+    });
+
   }
 
   articles = signal<Product[]>([]);

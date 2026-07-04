@@ -5,10 +5,9 @@ import { Garment } from '../../../models/garment';
 import { Gender } from '../../../models/gender';
 import { Marque } from '../../../models/marque';
 import { ApiService } from '../../../services/api.service';
+import { CarouselService } from '../../../services/carousel.service';
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
-import { CarouselService } from '../../../services/carousel.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-selects',
@@ -27,10 +26,7 @@ export class SearchSelectsComponent {
   private apiService = inject(ApiService);
   private genderService = inject(GenderService);
   private typeService = inject(GarmentService);
-  private carouselService = inject(CarouselService);
-  private route = inject(Router);
-  
-
+  private carouselService = inject(CarouselService); 
 
   marques: Marque[] = [];
   genders: Gender[] = [];
@@ -71,7 +67,6 @@ export class SearchSelectsComponent {
         FOCUS
      ============================ */
   onFocus() {
-
     this.focusSelect.emit();
   }
 
@@ -109,9 +104,7 @@ export class SearchSelectsComponent {
     event.stopPropagation();
     const arr = this.selectedMarques();
     this.selectedMarques.set(
-      arr.includes(name)
-        ? arr.filter(x => x !== name)
-        : [...arr, name]
+      arr.includes(name) ? arr.filter(x => x !== name) : [...arr, name]
     );
   }
 

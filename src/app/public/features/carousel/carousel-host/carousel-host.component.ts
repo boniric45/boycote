@@ -1,4 +1,5 @@
 import { Component, computed, effect, inject, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../../../models/product';
 import { CarouselService } from '../../../../services/carousel.service';
 import { LogicInputService } from '../../../../services/logic-input.service';
@@ -6,17 +7,19 @@ import { LogicSelectService } from '../../../../services/logic-select.service';
 import { AnnulationComponent } from "../../../annulation/annulation.component";
 import { CabineComponent } from "../../../cabine/cabine.component";
 import { LegalComponent } from "../../../legal/legal.component";
+import { ProgressbarComponent } from "../../../progressbar/progressbar.component";
 import { ContactComponent } from "../../contact/contact.component";
+import { CustomerRequestComponent } from '../../customer-request/customer-request.component';
+import { NoresultComponent } from '../../noresult/noresult.component';
 import { CarouselInputComponent } from "../carousel-input/carousel-input.component";
 import { CarouselProductComponent } from "../carousel-product/carousel-product.component";
 import { CarouselSelectComponent } from "../carousel-select/carousel-select.component";
 import { CarouselStandardComponent } from "../carousel-standard/carousel-standard.component";
-import { CustomerRequestComponent } from '../../customer-request/customer-request.component';
-import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-carousel-host',
-  imports: [CarouselStandardComponent, CarouselInputComponent, CarouselSelectComponent, CarouselProductComponent, CabineComponent, ContactComponent, AnnulationComponent, LegalComponent, CustomerRequestComponent],
+  imports: [CarouselStandardComponent, CarouselInputComponent, CarouselSelectComponent, CarouselProductComponent, CabineComponent, ContactComponent, AnnulationComponent, LegalComponent, CustomerRequestComponent, ProgressbarComponent, NoresultComponent],
   templateUrl: './carousel-host.component.html',
   styleUrl: './carousel-host.component.scss',
 })
