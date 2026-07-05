@@ -1,20 +1,8 @@
-// .search-input-row {
-//   display: flex;
-//   align-items: center;
-//   gap: 7px;
-//   width: 100%;
-//   padding: 0 6px;
-//   /* réduit pour éviter le débordement */
-//   box-sizing: border-box;
-//   margin-bottom: 6px;
-// }
-
-
 .search-input-row {
   display: flex;
   align-items: center;
   gap: 3px;
-  background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
+  //background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
   border-radius: 10px;
   border: 1px solid #999999;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.80);
@@ -41,8 +29,6 @@
   /* identique */
 }
 
-
-
 .search-input-wrapper {
   flex: 1;
   min-width: 0;
@@ -59,7 +45,6 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     0 1px 3px rgba(0, 0, 0, 0.20);
-
 }
 
 .search-input-wrapper input {
@@ -163,18 +148,18 @@
 }
 
 .input-search {
-  text-align: center;
+  text-align: left;
   font-family: --aqua-font;
   font-size: 14px;
   height: 100%;
   border-radius: 5px;
   // border: 1px solid #999999;
-  background: linear-gradient(180deg, #f8f8f8 0%, #ffffff 100%);
+  // background: linear-gradient(180deg, #f8f8f8 0%, #ffffff 100%);
   box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.10);
   padding: 0 10px;
   font-size: 12px;
   color: #333333;
-  font-family: -apple-system, BlinkMacSystemFont, 'Lucida Grande', sans-serif;
+  font-family: --aqua-font;
   outline: none;
 
   &:focus {
@@ -191,13 +176,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: --aqua-font;
-    font-size: 14px;
+    font-size: 13px;
+    font-family: "Roboto Mono", monospace; // Font Standard
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: #aaa9a9;
   }
 
 }
 
 input:focus::placeholder {
+  font-family: "Roboto Mono", monospace; // Font Standard
+  font-size: 14px;
+  font-optical-sizing: auto;
+  font-style: normal;
   color: transparent;
 }
 
@@ -208,7 +200,7 @@ input:focus::placeholder {
     display: flex;
     align-items: center;
     gap: 3px;
-    background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
+   // background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
     border-radius: 10px;
     border: 1px solid #999999;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.80);
@@ -243,7 +235,7 @@ input:focus::placeholder {
     display: flex;
     align-items: center;
     gap: 3px;
-    background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
+  //  background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
     border-radius: 10px;
     border: 1px solid #999999;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.80);

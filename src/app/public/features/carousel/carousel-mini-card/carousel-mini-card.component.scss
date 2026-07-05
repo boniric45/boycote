@@ -1,26 +1,21 @@
 /* La card du carousel */
 .global-container {
-  margin-top: 48px;
-  /* ← descend les cards */
+  overflow: hidden;
 }
 
 .carousel-card {
-  width: 200px;
-  height: 200px;
-  /* même taille que ton carousel */
+  transform: scale(0.85);
+  transform-origin: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+ max-width: 600px;
 }
 
-.wrapper {
-  padding-top: 32px;
-}
-
-/* Empêche tout débordement */
 .carousel-img-wrapper {
   width: 100%;
   height: 100%;
@@ -30,29 +25,41 @@
 /* Image parfaitement contenue */
 .carousel-img {
   width: 100%;
-  height: 100%;
+  height: 50%;
   object-fit: cover;
   display: block;
+  justify-content: center;
   border-radius: 12px;
   cursor: pointer;
 }
 
 /* Texte */
 .carousel-info {
+  padding: 10%;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 .carousel-name {
   font-size: .9rem;
   color: #555;
-
 }
 
 .carousel-price {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: bold;
   color: #222;
+}
+
+
+@media (min-width: 900px) {
+  .carousel-card{
+     max-width: 560px;
+  }
+
 }

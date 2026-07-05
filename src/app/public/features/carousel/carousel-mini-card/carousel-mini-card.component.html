@@ -2,12 +2,21 @@
   <div class="wrapper">
     <div class="carousel-card">
       <div class="carousel-img-wrapper">
-        <img class="carousel-img" [src]="fixLocalUrl(article.pathpictureone)" (click)="readViewProduct(article)"
-          alt="{{ article.name }}" />
+        <img class="carousel-img" [src]="fixLocalUrl(article.pathpictureone)" (click)="readViewProduct(article)" alt="{{ article.name }}" />
       </div>
 
       <div class="carousel-info">
-        <p class="carousel-name">{{ article.name }}</p>
+          @if(article){
+          <p>{{ article.name }}</p>
+            @if(!article.size){
+              <a>{{ article.gender}} </a>
+            }
+            @else{
+              <a>{{ article.gender}} - {{ article.size}} </a>
+            }
+          <span class="price">{{ article.prix | currency:'EUR'}}</span>
+          }
+
       </div>
     </div>
   </div>

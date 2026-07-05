@@ -80,12 +80,16 @@
   position: relative;
   left: -20rem;
   top: 15rem;
+  background: transparent;
+
 }
 
 .right {
   position: relative;
   left: 31rem;
   bottom: 8rem;
+  background: transparent;
+
 }
 
 .mobile {
@@ -98,7 +102,8 @@
   transform: translateY(-50%);
   z-index: 20;
   border: none;
-  background: white;
+  background: transparent;
+
 }
 
 /* 
@@ -132,12 +137,16 @@
     position: relative;
     margin-left: 40px;
     margin-top: -15px;
+    background: transparent;
+
   }
 
   app-component-right {
     position: relative;
     margin-left: -20px;
     margin-top: -60px;
+    background: transparent;
+
   }
 
   .fullscreen-image {
@@ -167,6 +176,7 @@
     margin-bottom: 80px;
     transform: scale(1.6);
     transform-origin: center;
+    background: transparent;
   }
 
   .nav {
@@ -175,6 +185,7 @@
     justify-self: baseline;
     transform: none;
     margin-right: 0;
+    background: transparent;
   }
 
   .container-carousel {
@@ -208,6 +219,7 @@
     height: 100vh;
     object-fit: contain;
   }
+
   .description {
     opacity: 1;
     position: relative;
@@ -249,6 +261,7 @@
     margin-top: 16px;
     margin-bottom: 16px;
     margin-right: 0;
+    background: transparent;
   }
 
   .container {
@@ -275,7 +288,7 @@
     position: fixed;
     inset: 0;
     //background: rgba(0, 0, 0, 0.95);
-    background:white;
+    background: white;
     display: flex;
     justify-content: center;
     align-items: center;

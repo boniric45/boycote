@@ -2,10 +2,11 @@ import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../../../models/product';
 import { CarouselService } from '../../../../services/carousel.service';
 import { LogicProductService } from '../../../../services/logic-product.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carousel-mini-card',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './carousel-mini-card.component.html',
   styleUrl: './carousel-mini-card.component.scss',
 })
@@ -34,6 +35,5 @@ export class CarouselMiniCardComponent {
 
     return url;
   }
-
 
 }
