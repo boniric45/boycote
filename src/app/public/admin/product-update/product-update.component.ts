@@ -14,6 +14,7 @@ import { Gender } from '../../../models/gender';
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
 import { Cabin } from '../../../models/cabin';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class ProductUpdateComponent implements OnInit {
   private genderService = inject(GenderService);
   private snackBar = inject(MatSnackBar);
   private auth = inject(AuthService);
-  //private route = inject(Router);
+
   marques: Marque[] = [];
   types: Garment[] = [];
   genders: Gender[] = [];
@@ -57,19 +58,17 @@ export class ProductUpdateComponent implements OnInit {
     'pathpictureten'
   ];
 
-ngOnInit(): void {
-  this.product = this.consoleProductService.product;
+  ngOnInit(): void {
+    this.product = this.consoleProductService.product;
 
-  if (!this.product) {
-    console.error("Aucun produit trouvé dans le service");
-    return;
+    if (!this.product) {
+      console.error("Aucun produit trouvé dans le service");
+      return;
+    }
+
+    // Patch du formulaire avec les données du produit
+    this.form.patchValue(this.product);
   }
-
-  // Patch du formulaire avec les données du produit
-  this.form.patchValue(this.product);
-
-
-}
 
 
   getPictureField(i: number): string {
@@ -112,15 +111,20 @@ ngOnInit(): void {
     pathpictureeight: new FormControl(''),
     pathpicturenine: new FormControl(''),
     pathpictureten: new FormControl(''),
-
   });
 
- 
- 
+  private _subGetmarque = Subscription.EMPTY;
+  private _subTypes = Subscription.EMPTY;
+  private _subGenders = Subscription.EMPTY;
+  private _subUpload = Subscription.EMPTY;
+  private _subCreateProduct = Subscription.EMPTY;
+  private _subUpdateProduct = Subscription.EMPTY;
+  private _subDeleteImage = Subscription.EMPTY;
+
   constructor() {
-    this.marqueService.getMarques().subscribe(res => this.marques = res);
-    this.typeService.getAll().subscribe(res => this.types = res);
-    this.genderService.getAll().subscribe(res => this.genders = res);
+    this._subGetmarque = this.marqueService.getMarques().subscribe(res => this.marques = res);
+    this._subTypes = this.typeService.getAll().subscribe(res => this.types = res);
+    this._subGenders = this.genderService.getAll().subscribe(res => this.genders = res);
   }
 
 
@@ -141,7 +145,7 @@ ngOnInit(): void {
     formData.append('sku', sku);
     formData.append('index', index.toString());
 
-    this.uploadService.upload(formData).subscribe(res => {
+    this._subUpload = this.uploadService.upload(formData).subscribe(res => {
       this.form.patchValue({ [field]: res.path });
       // RAFRAICHISSEMENT DE L IMAGE
       const newPath = res.path + '?v=' + Date.now();
@@ -160,7 +164,7 @@ ngOnInit(): void {
     const product = this.form.value as Product;
 
     if (product.id === 0) {
-      this.consoleProductService.create(product).subscribe({
+      this._subCreateProduct = this.consoleProductService.create(product).subscribe({
         next: (res) => {
           alert(`✔ ${res.message} (ID: ${res.id})`);
           // 🔥 Recharger la page après upload réussi
@@ -172,7 +176,7 @@ ngOnInit(): void {
         }
       });
     } else {
-      this.consoleProductService.update(product).subscribe({
+      this._subUpdateProduct = this.consoleProductService.update(product).subscribe({
         next: (res) => {
           alert(`✔ ${res.message}`);
         },
@@ -184,26 +188,33 @@ ngOnInit(): void {
     }
   }
 
+  deleteProductImage(field: string) {
+    if (!confirm("Supprimer définitivement cette image ?")) return;
 
-deleteProductImage(field: string) {
-  if (!confirm("Supprimer définitivement cette image ?")) return;
+    const id = Number(this.form.value.id);
 
-  const id = Number(this.form.value.id);
+    this._subDeleteImage = this.consoleProductService.deleteImage(id, field).subscribe({
+      next: () => {
+        this.form.patchValue({ [field]: '' }); // champ vidé dans le formulaire
+        alert("✔ Image supprimée");
+      },
+      error: () => alert("❌ Erreur suppression image")
+    });
 
-  this.consoleProductService.deleteImage(id, field).subscribe({
-    next: () => {
-      this.form.patchValue({ [field]: '' }); // champ vidé dans le formulaire
-      alert("✔ Image supprimée");
-    },
-    error: () => alert("❌ Erreur suppression image")
-  });
+    this.snackBar.open("✔ Image supprimée", "Fermer", {
+      duration: 3000,
+    });
+  }
 
-  this.snackBar.open("✔ Image supprimée", "Fermer", {
-  duration: 3000,
-});
-}
-
-
+  ngOnDestroy() {
+    this._subGetmarque.unsubscribe();
+    this._subTypes.unsubscribe();
+    this._subGenders.unsubscribe();
+    this._subUpload.unsubscribe();
+    this._subCreateProduct.unsubscribe();
+    this._subUpdateProduct.unsubscribe();
+    this._subDeleteImage.unsubscribe();
+  }
 
 
 

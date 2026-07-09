@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GarmentService } from '../../../services/garment.service';
 import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-garment',
@@ -16,6 +17,7 @@ export class EditGarmentComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private garmentService = inject(GarmentService);
   private router = inject(Router);
+  private _subscription = Subscription.EMPTY;
 
   id!: number;
 
@@ -26,7 +28,7 @@ export class EditGarmentComponent implements OnInit {
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.garmentService.getAll().subscribe(garments => {
+    this._subscription = this.garmentService.getAll().subscribe(garments => {
       const garment = garments.find(g => Number(g.id) === this.id);
 
       if (garment) {
@@ -43,6 +45,10 @@ export class EditGarmentComponent implements OnInit {
     this.garmentService.updateGarment(this.id, name).subscribe(res => {
       this.router.navigate(['/console']);
     });
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 }
 

@@ -10,6 +10,7 @@ import { UploadService } from '../../../services/upload.service';
 import { CabinViewdragAddComponent } from "../cabin-viewdrag-add/cabin-viewdrag-add.component";
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cabin-add-form',
@@ -67,15 +68,22 @@ export class CabinAddFormComponent implements OnInit {
   private startHPercent: number = 0;
   private startXPercent: number = 0;
   private startYPercent: number = 0;
+  private _subType = Subscription.EMPTY;
+  private _subFormCabin = Subscription.EMPTY;
+  private _subDeleteCabin = Subscription.EMPTY;
+  private _subGetProduct = Subscription.EMPTY;
+  private _subGetAllCabin = Subscription.EMPTY;
+  private _subUploadCabin = Subscription.EMPTY;
+  private _subCreateCabin = Subscription.EMPTY;
 
   selectedCabin!: Cabin;
 
   ngOnInit() {
 
-    this.typeService.getAll().subscribe(t => this.types = t);
+    this._subType = this.typeService.getAll().subscribe(t => this.types = t);
     this.loadCabins();
 
-    this.formCabin.controls.sku.valueChanges.subscribe(sku => {
+    this._subFormCabin = this.formCabin.controls.sku.valueChanges.subscribe(sku => {
       this.updateProductLink(sku);
       this.filterProducts(sku);
     });
@@ -86,14 +94,14 @@ export class CabinAddFormComponent implements OnInit {
 
   deleteCabin(id: number) {
     if (confirm("Supprimer cette cabine ?")) {
-      this.cabinService.deleteCabin(id).subscribe(res => {
+      this._subDeleteCabin = this.cabinService.deleteCabin(id).subscribe(res => {
         this.loadCabins(); // recharge la liste
       });
     }
   }
 
   loadProducts() {
-    this.productService.getProducts().subscribe(products => {
+    this._subGetProduct = this.productService.getProducts().subscribe(products => {
       this.products = products;
     });
   }
@@ -127,7 +135,7 @@ export class CabinAddFormComponent implements OnInit {
   }
 
   loadCabins() {
-    this.cabinService.getAllCabin().subscribe(res => {
+    this._subGetAllCabin = this.cabinService.getAllCabin().subscribe(res => {
       this.cabins = res;
       this.cabinFiltered = res; // ou applique ton filtre
     });
@@ -249,7 +257,7 @@ export class CabinAddFormComponent implements OnInit {
     formData.append('index', 'cabine');
 
     // Upload l'image après la sélection de celle ci
-    this.uploadService.uploadCabin(formData).subscribe({
+    this._subUploadCabin = this.uploadService.uploadCabin(formData).subscribe({
       next: (res) => {
         console.log('Image uploadé : ', res.path);
         const pathPicture = res.path;
@@ -287,10 +295,9 @@ export class CabinAddFormComponent implements OnInit {
 
     console.log("2. Données propres envoyées à updateCabin :", cabinData);
 
-    this.cabinService.createCabin(cabinData).subscribe({
+    this._subCreateCabin = this.cabinService.createCabin(cabinData).subscribe({
       next: (res) => {
         console.log("3. Enregistrement réussi en base de données ! => ", res);
-
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -302,7 +309,6 @@ export class CabinAddFormComponent implements OnInit {
 
   updateProductLink(sku: string) {
 
-
     const link = `/product/${sku}`;
 
     // Signal
@@ -312,4 +318,13 @@ export class CabinAddFormComponent implements OnInit {
     this.formCabin.controls.productlink.setValue(link, { emitEvent: false });
   }
 
+  ngOnDestroy() {
+    this._subCreateCabin.unsubscribe();
+    this._subDeleteCabin.unsubscribe();
+    this._subFormCabin.unsubscribe();
+    this._subGetAllCabin.unsubscribe();
+    this._subGetProduct.unsubscribe();
+    this._subType.unsubscribe();
+    this._subUploadCabin.unsubscribe();
+  }
 }

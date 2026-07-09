@@ -22,7 +22,6 @@ export class CustomerRequestComponent {
   submitted = output<void>();
   product: Product | null = null;
   idProduct: number = 0;
-  private subscription = new Subscription();
   email = '';
   isOpen = signal(true);
   productsSoldOut: Product[] = [];
@@ -31,6 +30,8 @@ export class CustomerRequestComponent {
   private productService = inject(ProductService);
   private emailService = inject(EmailService);
   private carouselService = inject(CarouselService);
+  private _subDisponibilityProductSoldOut = Subscription.EMPTY;
+  private _subsendEmailRequest = Subscription.EMPTY;
 
   ngOnInit() {
     this.product = this.logicRequest.selectedProduct();
@@ -40,7 +41,7 @@ export class CustomerRequestComponent {
 
   // ALIMENTE LA LISTE DES SOLDOUT
   loadProductsSoldOut() {
-    this.productService.disponibilityProductSoldOut().subscribe({
+    this._subDisponibilityProductSoldOut = this.productService.disponibilityProductSoldOut().subscribe({
       next: (result) => {
         this.productsSoldOut = result;
         this.productsSoldOut.forEach(p => {
@@ -56,7 +57,8 @@ export class CustomerRequestComponent {
   }
 
   OnDestroy() {
-    this.subscription.unsubscribe();
+    this._subsendEmailRequest.unsubscribe();
+    this._subDisponibilityProductSoldOut.unsubscribe();
   }
 
   submit(): void {
@@ -71,7 +73,7 @@ export class CustomerRequestComponent {
         size: this.product.size
       };
 
-      this.emailService.sendEmailRequest(contactData).subscribe({
+      this._subsendEmailRequest = this.emailService.sendEmailRequest(contactData).subscribe({
         next: (response) => {
           if (response) {
             alert('message sent successfully');
@@ -89,7 +91,7 @@ export class CustomerRequestComponent {
     this.carouselService.setMode('standard');
   }
 
-  
+
 
 
 }

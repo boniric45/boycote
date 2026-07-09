@@ -41,7 +41,9 @@ export class CarouselStandardComponent implements OnInit {
   private touchStartX = 0;
   private touchEndX = 0;
   cart$ = this.cartService.items$;
-  private subscription: Subscription = new Subscription();
+
+  private _subGetProducts = Subscription.EMPTY;
+  private _subDisponibilityProductSoldOut = Subscription.EMPTY;
 
 
   // 2. Un signal calculé qui combine les deux
@@ -64,11 +66,12 @@ export class CarouselStandardComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this._subGetProducts.unsubscribe();
+    this._subDisponibilityProductSoldOut.unsubscribe();
   }
 
   loadProducts() {
-    this.apiService.getProducts().subscribe((p) => {
+    this._subGetProducts = this.apiService.getProducts().subscribe((p) => {
       this.articles = p;
       this.allProducts.set(p);
     });
@@ -76,7 +79,7 @@ export class CarouselStandardComponent implements OnInit {
 
   // ALIMENTE LA LISTE DES SOLDOUT
   loadProductsSoldOut() {
-    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+    this._subDisponibilityProductSoldOut = this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
       this.productsSoldOut.set(psoldout);
     })
   }
@@ -159,15 +162,15 @@ export class CarouselStandardComponent implements OnInit {
     let translateX = 0;
     const rotation = offset * 8;
     const scale = 1 - Math.abs(offset) * 0.06;
-    
-    if(isMobile){
-       translateX = offset * 40;
-    } else if (isLandscape){
+
+    if (isMobile) {
+      translateX = offset * 40;
+    } else if (isLandscape) {
       translateX = offset * 80;
     } else {
       translateX = offset * 80;
     }
-   
+
     const translateZ = 80 - Math.abs(offset) * 30;
 
     return `

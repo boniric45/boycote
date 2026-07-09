@@ -15,6 +15,7 @@ import { CarouselInputComponent } from "../carousel-input/carousel-input.compone
 import { CarouselProductComponent } from "../carousel-product/carousel-product.component";
 import { CarouselSelectComponent } from "../carousel-select/carousel-select.component";
 import { CarouselStandardComponent } from "../carousel-standard/carousel-standard.component";
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -36,6 +37,8 @@ export class CarouselHostComponent {
   // Mode du carousel
   mode = computed(() => this.carouselService.carouselMode());
 
+  private _subParamMap = Subscription.EMPTY;
+
   searchQuery: string = '';
   filteredArticles: Product[] = [];
   idProduct: number = 0;
@@ -44,7 +47,7 @@ export class CarouselHostComponent {
   constructor() {
 
     // Quand l’URL change → mettre à jour le signal
-    this.route.paramMap.subscribe(params => {
+    this._subParamMap = this.route.paramMap.subscribe(params => {
       const mode = params.get('mode') as any;
       if (mode) {
         this.carouselService.setMode(mode);
@@ -77,5 +80,7 @@ export class CarouselHostComponent {
     this.carouselService.setMode('select');
   }
 
-
+  ngOnDestroy() {
+    this._subParamMap.unsubscribe();
+  }
 }

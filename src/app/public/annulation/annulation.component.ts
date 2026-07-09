@@ -3,6 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarouselService } from '../../services/carousel.service';
 import { EmailService } from '../../services/email.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-annulation',
@@ -14,6 +15,7 @@ export class AnnulationComponent {
 
   private carouselService = inject(CarouselService);
   private emailService = inject(EmailService);
+  private _subSendEmail = Subscription.EMPTY;
 
   closeCart() {
     this.carouselService.setMode('standard');
@@ -60,10 +62,14 @@ export class AnnulationComponent {
   submit() {
     if (!this.isValid()) return;
 
-    this.emailService.sendEmailAnnulation({ ...this.form(), emailDest: this.emailDest }).subscribe({
+    this._subSendEmail = this.emailService.sendEmailAnnulation({ ...this.form(), emailDest: this.emailDest }).subscribe({
       next: () => { this.submitted.set(true); },
       error: () => { this.error.set(true); }
     });
+  }
+
+  ngOnDestroy() {
+    this._subSendEmail.unsubscribe();
   }
 
 }

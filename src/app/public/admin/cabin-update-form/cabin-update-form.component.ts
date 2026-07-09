@@ -10,6 +10,7 @@ import { UploadService } from '../../../services/upload.service';
 import { CabinViewdragUpdateComponent } from "../cabin-viewdrag-update/cabin-viewdrag-update.component";
 import { PrevisualisationUpdatecabinComponent } from "../previsualisation-updatecabin/previsualisation-updatecabin.component";
 import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -58,19 +59,20 @@ export class CabinUpdateFormComponent implements OnInit {
   private startHPercent: number = 0;
   private startXPercent: number = 0;
   private startYPercent: number = 0;
-
-
+  private _subType = Subscription.EMPTY;
+  private _subGetCabin = Subscription.EMPTY;
+  private _subUpdateCabin = Subscription.EMPTY;
+  private _subUploadCabin = Subscription.EMPTY;
   selectedCabin!: Cabin;
-
 
   ngOnInit(): void {
 
-    this.typeService.getAll().subscribe(t => this.types = t);
+    this._subType = this.typeService.getAll().subscribe(t => this.types = t);
 
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
 
     if (id) {
-      this.cabinService.getCabinById(id).subscribe(cabin => {
+      this._subGetCabin = this.cabinService.getCabinById(id).subscribe(cabin => {
         this.cabin = cabin;
         if (cabin) {
           this.formCabin.patchValue(cabin);
@@ -206,7 +208,7 @@ export class CabinUpdateFormComponent implements OnInit {
     formData.append('sku', sku);
     formData.append('index', 'cabine');
 
-    this.uploadService.uploadCabin(formData).subscribe({
+    this._subUploadCabin = this.uploadService.uploadCabin(formData).subscribe({
       next: (res) => {
         if (res && res.path) {
           // res.path contient ce que ton API PHP renvoie (ex: "uploads/cabine/TEST1.png")
@@ -249,7 +251,7 @@ export class CabinUpdateFormComponent implements OnInit {
 
     console.log("2. Données propres envoyées à updateCabin :", cabinData);
 
-    this.cabinService.updateCabin(cabinData).subscribe({
+    this._subUpdateCabin = this.cabinService.updateCabin(cabinData).subscribe({
       next: (res) => {
         console.log("3. Enregistrement réussi en base de données ! => ", res);
 
@@ -270,6 +272,14 @@ export class CabinUpdateFormComponent implements OnInit {
     });
   }
 
+ngOnDestroy(){
+  this._subUpdateCabin.unsubscribe();
+  this._subUpdateCabin.unsubscribe();
+  this._subUploadCabin.unsubscribe();
+  this._subGetCabin.unsubscribe();
+  this._subType.unsubscribe();
 
+
+}
 
 }

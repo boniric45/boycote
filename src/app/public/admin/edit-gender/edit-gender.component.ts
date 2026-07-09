@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenderService } from '../../../services/gender.service';
 import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-gender',
@@ -16,6 +17,8 @@ export class EditGenderComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private genderService = inject(GenderService);
+  private _subGetAll = Subscription.EMPTY;
+  private _subUpdateGender = Subscription.EMPTY;
 
   id!: number;
 
@@ -26,8 +29,8 @@ export class EditGenderComponent implements OnInit {
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.genderService.getAll().subscribe(genders => {
-      const gender = genders.find(g => Number(g.id) === this.id); 
+    this._subGetAll = this.genderService.getAll().subscribe(genders => {
+      const gender = genders.find(g => Number(g.id) === this.id);
 
       if (gender) {
         this.form.patchValue({
@@ -42,8 +45,13 @@ export class EditGenderComponent implements OnInit {
 
     const name = this.form.value.name ?? '';
 
-    this.genderService.updateGender(this.id, name).subscribe((res) => {      
+    this._subUpdateGender = this.genderService.updateGender(this.id, name).subscribe((res) => {
       this.router.navigate(['/console']);
     });
+  }
+
+  ngOnDestroy(){
+    this._subGetAll.unsubscribe();
+    this._subUpdateGender.unsubscribe();
   }
 }

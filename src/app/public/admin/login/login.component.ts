@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +20,12 @@ export class LoginComponent {
 
   private auth = inject(AuthService);
   private router = inject(Router);
+  private _subLogin = Subscription.EMPTY;
 
   submit() {
     this.error = '';
 
-    this.auth.login(this.username, this.password).subscribe((res: any) => {
+    this._subLogin = this.auth.login(this.username, this.password).subscribe((res: any) => {
       if (res.success) {
         this.router.navigate(['/console']);
       } else {
@@ -32,7 +34,9 @@ export class LoginComponent {
     });
   }
 
-
+  ngOnDestroy() {
+    this._subLogin.unsubscribe();
+  }
 
 
 }

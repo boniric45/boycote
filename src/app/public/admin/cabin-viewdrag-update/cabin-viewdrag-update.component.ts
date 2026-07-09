@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, inject, Input, OnChanges, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { Cabin } from '../../../models/cabin';
 import { Garment } from '../../../models/garment';
 import { CabineService } from '../../../services/cabine.service';
@@ -19,32 +19,32 @@ const mapCat: Record<string, string> = {
 
 @Component({
   selector: 'app-cabin-viewdrag-update',
-  imports: [RouterModule,  CommonModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './cabin-viewdrag-update.component.html',
   styleUrl: './cabin-viewdrag-update.component.scss',
 })
-export class CabinViewdragUpdateComponent implements OnChanges{
+export class CabinViewdragUpdateComponent implements OnChanges {
 
   @ViewChild('canvas') canvas!: ElementRef;
-  
+
   @Input() picture!: string;
   @Input() x!: number;
   @Input() y!: number;
   @Input() w!: number;
   @Input() h!: number;
   @Input() z!: number;
-  
-ngOnChanges() {
-  this.formCabin.patchValue({
-    positionx: this.x,
-    positiony: this.y,
-    width: this.w,
-    height: this.h,
-    zindex: this.z,
-    picturecabin: this.picture
-  }, { emitEvent: false });
 
-}
+  ngOnChanges() {
+    this.formCabin.patchValue({
+      positionx: this.x,
+      positiony: this.y,
+      width: this.w,
+      height: this.h,
+      zindex: this.z,
+      picturecabin: this.picture
+    }, { emitEvent: false });
+
+  }
 
   formCabin = new FormGroup({
     id: new FormControl(0, { nonNullable: true }),
@@ -66,7 +66,7 @@ ngOnChanges() {
   listCabin: Cabin[] = [];
   listType: Garment[] = [];
   cabin!: Cabin;
-
+  private _subscription = Subscription.EMPTY;
   readonly cats: Cat[] = ['chapeau', 'haut', 'bas', 'chaussures'];
   readonly gender = signal<'MAN' | 'WOMAN'>('MAN');
   readonly indexes = signal<Record<Cat, number>>({ chapeau: -1, haut: -1, bas: -1, chaussures: -1 });
@@ -94,7 +94,7 @@ ngOnChanges() {
   ngOnInit(): void {
     const cats: Cat[] = ['haut', 'bas', 'chapeau', 'chaussures'];
 
-    forkJoin({
+    this._subscription = forkJoin({
       cabins: this.cabinService.getAllCabin(),
       types: this.typeService.getAll()
     }).subscribe({
@@ -105,10 +105,10 @@ ngOnChanges() {
         // Construction du catalogue dynamique
         this.buildCatalogue();
 
-    cats.forEach(cat => {
-      const dbCat = mapCat[cat];
-      const items = this.catalogue[this.gender()][dbCat];
-      this.indexes()[cat] = items && items.length > 0 ? 0 : -1;
+        cats.forEach(cat => {
+          const dbCat = mapCat[cat];
+          const items = this.catalogue[this.gender()][dbCat];
+          this.indexes()[cat] = items && items.length > 0 ? 0 : -1;
         });
       },
       error: (err) => console.error("Erreur API:", err)
@@ -165,25 +165,25 @@ ngOnChanges() {
     this.indexes.set({ chapeau: -1, haut: -1, bas: -1, chaussures: -1 });
   }
 
-  next(cat: Cat): void {   
-  const dbCat = mapCat[cat];
-  const items = this.catalogue[this.gender()][dbCat];
-  if (!items || items.length === 0) return;
+  next(cat: Cat): void {
+    const dbCat = mapCat[cat];
+    const items = this.catalogue[this.gender()][dbCat];
+    if (!items || items.length === 0) return;
 
-  let i = this.indexes()[cat];
-  i = (i + 1) % items.length;
-  this.indexes()[cat] = i;
+    let i = this.indexes()[cat];
+    i = (i + 1) % items.length;
+    this.indexes()[cat] = i;
 
   }
 
   prev(cat: Cat): void {
-  const dbCat = mapCat[cat];
-  const items = this.catalogue[this.gender()][dbCat];
-  if (!items || items.length === 0) return;
+    const dbCat = mapCat[cat];
+    const items = this.catalogue[this.gender()][dbCat];
+    if (!items || items.length === 0) return;
 
-  let i = this.indexes()[cat];
-  i = (i - 1 + items.length) % items.length;
-  this.indexes()[cat] = i;
+    let i = this.indexes()[cat];
+    i = (i - 1 + items.length) % items.length;
+    this.indexes()[cat] = i;
   }
 
 
@@ -208,20 +208,20 @@ ngOnChanges() {
   }
 
 
-getImgSrc(cat: Cat): string | null {
-  const item = this.getItem(cat);
-  if (!item || !item.picturecabin || item.picturecabin === '/') return null;
+  getImgSrc(cat: Cat): string | null {
+    const item = this.getItem(cat);
+    if (!item || !item.picturecabin || item.picturecabin === '/') return null;
 
-  const url = item.picturecabin;
+    const url = item.picturecabin;
 
-  // Si l’URL est déjà complète → on ne touche à rien
-  if (url.startsWith('http')) {
-    return url;
+    // Si l’URL est déjà complète → on ne touche à rien
+    if (url.startsWith('http')) {
+      return url;
+    }
+
+    // Sinon → on ajoute le domaine
+    return `https://boycote.fr${url}`;
   }
- 
-  // Sinon → on ajoute le domaine
-  return `https://boycote.fr${url}`;
-}
 
 
 
@@ -240,10 +240,10 @@ getImgSrc(cat: Cat): string | null {
 
   startDrag(event: MouseEvent, action: 'move' | 'resize') {
 
-  if (!this.picture ) {
-    console.warn("Drag bloqué : données pas encore chargées");
-    return;
-  }
+    if (!this.picture) {
+      console.warn("Drag bloqué : données pas encore chargées");
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
 
@@ -298,8 +298,8 @@ getImgSrc(cat: Cat): string | null {
   onMouseUp() {
     this.currentAction = null;
   }
-  
-    validateBounds() {
+
+  validateBounds() {
     let x = this.formCabin.controls.positionx.value;
     let y = this.formCabin.controls.positiony.value;
     let w = this.formCabin.controls.width.value;
@@ -309,7 +309,7 @@ getImgSrc(cat: Cat): string | null {
     if (y < 0) y = 0;
     if (x > 100 - w) x = 100 - w; // Empêche de sortir par la droite
     if (y > 100 - h) y = 100 - h; // Empêche de sortir par le bas
-    
+
     if (w < 5) w = 5;
     if (h < 5) h = 5;
     if (w > 100) w = 100;
@@ -318,4 +318,8 @@ getImgSrc(cat: Cat): string | null {
     this.formCabin.patchValue({ positionx: x, positiony: y, width: w, height: h }, { emitEvent: false });
   }
 
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
+  }
 }

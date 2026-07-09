@@ -1,14 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CarouselHostComponent } from './public/features/carousel/carousel-host/carousel-host.component';
 import { ConstructionComponent } from "./public/features/construction/construction.component";
 import { CookiesComponent } from "./public/features/cookies/cookies.component";
 import { FooterComponent } from "./public/footer/footer.component";
 import { HeaderComponent } from "./public/header/header.component";
-import { CookieService } from './services/cookie.service';
-import { CartService } from './services/cart.service';
-import { Location } from '@angular/common';
 import { CarouselService } from './services/carousel.service';
+import { CartService } from './services/cart.service';
+import { CookieService } from './services/cookie.service';
 
 @Component({
   selector: 'app-root',
@@ -37,13 +37,14 @@ export class AppComponent {
   construction = false;
   showLayout = false;
   showHost = false;
+  private _subRouterEvent = Subscription.EMPTY;
 
   ngOnInit() {
 
-  window.addEventListener('popstate', () => {
-    this.router.navigate(['/host']);
-    this.carouselService.setMode('standard');
-  });
+    window.addEventListener('popstate', () => {
+      this.router.navigate(['/host']);
+      this.carouselService.setMode('standard');
+    });
 
     const consent = this.cookiesService.get('cookie_consent');
 
@@ -55,7 +56,7 @@ export class AppComponent {
       this.isCookiesIsNotSaved.set(false);
     }
 
-    this.router.events.subscribe(event => {
+    this._subRouterEvent = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
 
@@ -132,6 +133,8 @@ export class AppComponent {
     this.showHost = true;
   }
 
-
+  ngOnDestroy() {
+    this._subRouterEvent.unsubscribe();
+  }
 
 }

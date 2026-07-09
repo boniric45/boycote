@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarqueService } from '../../../services/marque.service';
 import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-marque',
@@ -15,6 +16,7 @@ export class AddMarqueComponent {
   private fb = inject(FormBuilder);
   private marqueService = inject(MarqueService);
   private router = inject(Router);
+  private _subMarque = Subscription.EMPTY;
 
   form = this.fb.group({
     name: ['']
@@ -23,10 +25,13 @@ export class AddMarqueComponent {
 
 submit() {
   const name = this.form.value.name ?? '';
-
-  this.marqueService.addMarque(name).subscribe(res => {
+    this._subMarque = this.marqueService.addMarque(name).subscribe(res => {
     this.router.navigate(['/admin']);
   });
+}
+
+ngOnDestroy(){
+  this._subMarque.unsubscribe();
 }
 
 }

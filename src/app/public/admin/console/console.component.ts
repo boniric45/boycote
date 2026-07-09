@@ -14,6 +14,7 @@ import { ConsoleProductService } from '../../../services/console-product.service
 import { GarmentService } from '../../../services/garment.service';
 import { GenderService } from '../../../services/gender.service';
 import { MarqueService } from '../../../services/marque.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -40,6 +41,21 @@ export class ConsoleComponent implements OnInit {
   private garmentService = inject(GarmentService);
   private genderService = inject(GenderService);
   private cabinService = inject(CabineService);
+  private _subUpdateOrderList = Subscription.EMPTY;
+  private _subMarqueUpdateOrderList = Subscription.EMPTY;
+  private _subGenderUpdateOrderList = Subscription.EMPTY;
+  private _subGarmentOrderList = Subscription.EMPTY;
+  private _subGetProduct = Subscription.EMPTY;
+  private _subGetAllCabin = Subscription.EMPTY;
+  private _subGetMarques = Subscription.EMPTY;
+  private _subGetAllGarment = Subscription.EMPTY;
+  private _subGetAllGender = Subscription.EMPTY;
+  private _subDeleteCabin = Subscription.EMPTY;
+  private _subDeleteProduct = Subscription.EMPTY;
+  private _subDeleteMarque = Subscription.EMPTY;
+  private _subDeleteGarment = Subscription.EMPTY;
+  private _subDeleteGender = Subscription.EMPTY;
+
 
   ngOnInit(): void {
     this.loadProducts();
@@ -62,7 +78,7 @@ export class ConsoleComponent implements OnInit {
       order: index
     }));
 
-    this.consoleProductService.updateOrderList(ordered)
+    this._subUpdateOrderList = this.consoleProductService.updateOrderList(ordered)
       .subscribe(() => console.log("Ordre mis à jour"));
   }
 
@@ -77,7 +93,7 @@ export class ConsoleComponent implements OnInit {
       order: index
     }));
 
-    this.marqueService.updateOrderList(ordered)
+    this._subMarqueUpdateOrderList = this.marqueService.updateOrderList(ordered)
       .subscribe(() => console.log("Ordre marques mis à jour"));
   }
 
@@ -92,7 +108,7 @@ export class ConsoleComponent implements OnInit {
       order: index
     }));
 
-    this.genderService.updateOrderList(ordered)
+    this._subGenderUpdateOrderList = this.genderService.updateOrderList(ordered)
       .subscribe(() => console.log("Ordre genres mis à jour"));
   }
 
@@ -107,12 +123,13 @@ export class ConsoleComponent implements OnInit {
       order: index
     }));
 
-    this.garmentService.updateOrderList(ordered)
+    this._subGarmentOrderList = this.garmentService.updateOrderList(ordered)
       .subscribe(() => console.log("Ordre vêtements mis à jour"));
   }
 
   loadProducts() {
-    this.consoleProductService.getProducts().subscribe(res => {
+
+    this._subGetProduct = this.consoleProductService.getProducts().subscribe(res => {
       this.products = res
       if (this.products.length != 0) {
         this.numberProduct = this.products.length;
@@ -122,27 +139,27 @@ export class ConsoleComponent implements OnInit {
   }
 
   loadCabins() {
-    this.cabinService.getAllCabin().subscribe(c => {
+    this._subGetAllCabin = this.cabinService.getAllCabin().subscribe(c => {
       this.cabins = c;
     })
   }
 
   loadMarques() {
-    this.marqueService.getMarques().subscribe(res => {
+    this._subGetMarques = this.marqueService.getMarques().subscribe(res => {
       const sorted = [...res].sort((a, b) => a.display_order - b.display_order);
       this.marques = res;
     });
   }
 
   loadGarments() {
-    this.garmentService.getAll().subscribe(res => {
+    this._subGetAllGarment = this.garmentService.getAll().subscribe(res => {
       const sorted = [...res].sort((a, b) => a.display_order - b.display_order);
       this.garments = res
     });
   }
 
   loadGenders() {
-    this.genderService.getAll().subscribe(res => {
+    this._subGetAllGender = this.genderService.getAll().subscribe(res => {
       const sorted = [...res].sort((a, b) => a.display_order - b.display_order);
       this.genders = res
     });
@@ -160,7 +177,7 @@ export class ConsoleComponent implements OnInit {
   deleteProduct(id: number) {
     if (confirm('Supprimer le produit avec l\'id: ' + id + ' ?')) {
 
-      this.consoleProductService.deleteProductById(id)
+      this._subDeleteProduct = this.consoleProductService.deleteProductById(id)
         .subscribe(() => {
           window.location.reload();
         });
@@ -169,7 +186,6 @@ export class ConsoleComponent implements OnInit {
 
   editCabin(cabin: any) {
     this.router.navigateByUrl('console/cabin/edit/' + cabin.id);
-
   }
 
   getPreviewCabin(cabin: Cabin): string {
@@ -178,13 +194,12 @@ export class ConsoleComponent implements OnInit {
 
   deleteCabin(id: number) {
     if (confirm("Supprimer cette cabine ?")) {
-      this.cabinService.deleteCabin(id).subscribe(() => {
+      this._subDeleteCabin = this.cabinService.deleteCabin(id).subscribe(() => {
         alert('Article Supprimé');
         this.loadCabins();
       });
     }
   }
-
 
   editMarque(marque: Marque) {
     this.router.navigateByUrl('console/marque/edit/' + marque.id);
@@ -193,7 +208,7 @@ export class ConsoleComponent implements OnInit {
   deleteMarque(id: number) {
     if (!confirm("Supprimer cette marque ?")) return;
 
-    this.marqueService.deleteMarque(id).subscribe(res => {
+    this._subDeleteMarque = this.marqueService.deleteMarque(id).subscribe(res => {
       this.loadMarques(); // recharge la liste
     });
   }
@@ -204,7 +219,7 @@ export class ConsoleComponent implements OnInit {
 
   deleteGarment(id: number) {
     if (confirm('Supprimer le vêtement avec l\'id: ' + id + ' ?')) {
-      this.garmentService.deleteGarment(id)
+      this._subDeleteGarment = this.garmentService.deleteGarment(id)
         .subscribe(() => {
           window.location.reload();
         });
@@ -217,7 +232,7 @@ export class ConsoleComponent implements OnInit {
 
   deleteGender(id: number) {
     if (confirm('Supprimer le genre avec l\'id: ' + id + ' ?')) {
-      this.genderService.deleteGender(id)
+      this._subDeleteGender = this.genderService.deleteGender(id)
         .subscribe(() => {
           window.location.reload();
         });
@@ -252,6 +267,22 @@ export class ConsoleComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this._subUpdateOrderList.unsubscribe();
+    this._subMarqueUpdateOrderList.unsubscribe();
+    this._subGenderUpdateOrderList.unsubscribe();
+    this._subGarmentOrderList.unsubscribe();
+    this._subGetProduct.unsubscribe();
+    this._subGetAllCabin.unsubscribe();
+    this._subGetMarques.unsubscribe();
+    this._subGetAllGarment.unsubscribe();
+    this._subGetAllGender.unsubscribe();
+    this._subDeleteCabin.unsubscribe();
+    this._subDeleteProduct.unsubscribe();
+    this._subDeleteMarque.unsubscribe();
+    this._subDeleteGarment.unsubscribe();
+    this._subDeleteGender.unsubscribe();
+  }
 
 
 

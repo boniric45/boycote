@@ -3,6 +3,7 @@ import { Product } from '../models/product';
 import { ProductService } from './product.service';
 import { ApiService } from './api.service';
 import { CarouselService } from './carousel.service';
+import { forkJoin, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,15 @@ export class LogicSelectService {
     private carouselService: CarouselService
 
   ) {
-    this.apiService.getProducts().subscribe(p => this.articles.set(p));
-    this.productService.disponibilityProductSoldOut().subscribe(s => this.soldOut.set(s));
+    forkJoin({
+      products: this.apiService.getProducts(),
+      soldOut: this.productService.disponibilityProductSoldOut()
+    })
+      .pipe(take(1))
+      .subscribe(({ products, soldOut }) => {
+        this.articles.set(products);
+        this.soldOut.set(soldOut);
+      });
 
     effect(() => {
       const result = this.filtered();
@@ -26,7 +34,6 @@ export class LogicSelectService {
         }
       }
     });
-
   }
 
   articles = signal<Product[]>([]);

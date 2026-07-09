@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, take } from 'rxjs';
 import { Cabin } from '../models/cabin';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CabineService {
+
+  // TODO voir si les take(1) fonctionne
 
   cabins: Cabin[] = [];
   cabin!: Cabin;
@@ -21,14 +23,14 @@ export class CabineService {
   picture = signal('');
 
   getCabinPictures(): Observable<Cabin[]> {
-    return this.http.get<Cabin[]>(`${this.apiUrl}/getAllCabin.php`);
+    return this.http.get<Cabin[]>(`${this.apiUrl}/getAllCabin.php`).pipe(take(1));
   }
 
   /* -----------------------------------------------------------
      GET ALL CABIN
   ----------------------------------------------------------- */
   getCabins():Cabin[]{
-    this.getCabinPictures().subscribe(res=>{
+    this.getCabinPictures().pipe(take(1)).subscribe(res=>{
       this.cabins = res;
     })
     return this.cabins;
@@ -39,14 +41,14 @@ export class CabineService {
      CREATE
   ----------------------------------------------------------- */
   createCabin(cabin: Cabin): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/createCabin.php`, cabin);
+    return this.http.post<any>(`${this.apiUrl}/createCabin.php`, cabin).pipe(take(1));
   }
 
   /* -----------------------------------------------------------
      UPDATE
   ----------------------------------------------------------- */
   updateCabin(cabin: Cabin): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/updateCabin.php`, cabin);
+    return this.http.post<any>(`${this.apiUrl}/updateCabin.php`, cabin).pipe(take(1));
   }
 
 
@@ -54,28 +56,28 @@ export class CabineService {
      GET ONE
   ----------------------------------------------------------- */
   getCabinById(id: number): Observable<Cabin> {
-    return this.http.get<Cabin>(`${this.apiUrl}/getCabin.php?id=${id}`);
+    return this.http.get<Cabin>(`${this.apiUrl}/getCabin.php?id=${id}`).pipe(take(1));
   }
 
   /* -----------------------------------------------------------
      GET ALL
   ----------------------------------------------------------- */
   getAllCabin(): Observable<Cabin[]> {
-    return this.http.get<Cabin[]>(`${this.apiUrl}/getAllCabin.php`);
+    return this.http.get<Cabin[]>(`${this.apiUrl}/getAllCabin.php`).pipe(take(1));
   }
 
   /* -----------------------------------------------------------
      DELETE
   ----------------------------------------------------------- */
   deleteCabin(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/deleteCabin.php?id=${id}`);
+    return this.http.delete<any>(`${this.apiUrl}/deleteCabin.php?id=${id}`).pipe(take(1));
   }
   
   /* -----------------------------------------------------------
      DELETE IMAGE
   ----------------------------------------------------------- */
   deleteImage(id: number) {
-  return this.http.delete(`${this.apiUrl}/deleteCabinImage.php?id=${id}`);
+  return this.http.delete(`${this.apiUrl}/deleteCabinImage.php?id=${id}`).pipe(take(1));
 }
 
 
@@ -86,7 +88,7 @@ export class CabineService {
     let pathCabin = '';
     if (!id) {
       // récupère la cabine
-      this.getCabinById(id).subscribe((res) => this.cabin = res);
+      this.getCabinById(id).subscribe((res) => this.cabin = res)
 
       // récupère le chemin de l'image en itérant sur l'objet cabin
       Object.entries(this.cabin).forEach(([key, value]) => {

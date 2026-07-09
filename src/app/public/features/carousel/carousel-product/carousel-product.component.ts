@@ -45,7 +45,7 @@ export class CarouselProductComponent {
     const id = this.logicProduct.product.id;
 
     // 1. Charger le produit depuis l’API
-    this.productService.getProduct(id).subscribe(res => {
+    this.subscription = this.productService.getProduct(id).subscribe(res => {
 
       if (!res.success || !res.product) {
         this.carouselService.setMode('product');
@@ -124,7 +124,7 @@ export class CarouselProductComponent {
     const total = this.articles().length;
     const result = [];
     const count = Math.min(this.visibleCount, total);
-    const start = (this.currentIndex-1) - Math.floor(count / 2);
+    const start = (this.currentIndex - 1) - Math.floor(count / 2);
     for (let i = 0; i < count; i++) {
       let index = (start + i + total) % total;
       result.push(this.articles()[index]);
@@ -144,7 +144,7 @@ export class CarouselProductComponent {
 
   updateVisibleCount() {
     this.visibleCount = 3;  // ✔️ Toujours 3
-   // this.visibleCount = window.innerWidth < 768 ? 3 : 5; // suivant la taille de l'écran
+    // this.visibleCount = window.innerWidth < 768 ? 3 : 5; // suivant la taille de l'écran
   }
 
   triggerAnimation(dir: 'left' | 'right') {

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnChanges, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from '../../../../models/product';
-import { CartService } from '../../../../services/cart.service';
-import { ProductService } from '../../../../services/product.service';
 import { CarouselService } from '../../../../services/carousel.service';
+import { CartService } from '../../../../services/cart.service';
 import { LogicRequestService } from '../../../../services/logic-request.service';
+import { ProductService } from '../../../../services/product.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -27,15 +27,15 @@ export class InformationsCardComponent implements OnChanges {
   afficherMesures = false;
 
   private productService = inject(ProductService);
-  private router = inject(Router);
   private cartService = inject(CartService);
+  private _subDisponibilityProductSoldOut = Subscription.EMPTY;
 
   ngOnChanges() {
     if (!this.article) return;
   }
 
   loadProductsSoldOut() {
-    this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
+    this._subDisponibilityProductSoldOut = this.productService.disponibilityProductSoldOut().subscribe(psoldout => {
       this.productsSoldOut.set(psoldout);
     })
   }
@@ -49,4 +49,7 @@ export class InformationsCardComponent implements OnChanges {
     this.logicRequest.setSelectedProduct(product);
   }
 
+  ngOnDestroy() {
+    this._subDisponibilityProductSoldOut.unsubscribe();
+  }
 }

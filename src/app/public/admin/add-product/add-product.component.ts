@@ -3,10 +3,11 @@ import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angula
 import { CommonModule } from '@angular/common';
 import { AddProductResponse } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss',
 })
@@ -14,6 +15,7 @@ import { ProductService } from '../../../services/product.service';
 export class AddProductComponent {
 
   form!: FormGroup; // déclaration sans initialisation
+  private _subProduct = Subscription.EMPTY;
 
   constructor(
     private fb: FormBuilder,
@@ -51,17 +53,20 @@ export class AddProductComponent {
 
   submit() {
     if (this.form.invalid) return;
-      this.updateTTC(); // obligatoire
-      const product = this.form.getRawValue();
-    
-  this.productService.addProduct(product).subscribe({
-  next: (res: AddProductResponse) => {
-    alert('Produit ajouté avec succès ! ID : ' + res.id);
-    this.form.reset();
-  },
-  error: () => alert('Erreur lors de l’ajout du produit')
-});
+    this.updateTTC(); // obligatoire
+    const product = this.form.getRawValue();
 
+    this._subProduct = this.productService.addProduct(product).subscribe({
+      next: (res: AddProductResponse) => {
+        alert('Produit ajouté avec succès ! ID : ' + res.id);
+        this.form.reset();
+      },
+      error: () => alert('Erreur lors de l’ajout du produit')
+    });
+  }
+
+  ngOnDestroy(){
+    this._subProduct.unsubscribe();
   }
 
 }

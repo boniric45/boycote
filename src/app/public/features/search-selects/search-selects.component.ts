@@ -26,7 +26,7 @@ export class SearchSelectsComponent {
   private apiService = inject(ApiService);
   private genderService = inject(GenderService);
   private typeService = inject(GarmentService);
-  private carouselService = inject(CarouselService); 
+  private carouselService = inject(CarouselService);
 
   marques: Marque[] = [];
   genders: Gender[] = [];
@@ -45,18 +45,18 @@ export class SearchSelectsComponent {
         CHARGEMENT API
      ============================ */
   ngOnInit(): void {
-    this.subscription.add(
-      forkJoin({
-        marques: this.apiService.getMarques(),
-        genders: this.genderService.getAll(),
-        types: this.typeService.getAll()
-      }).subscribe(result => {
-        this.marques = result.marques;
-        this.genders = result.genders;
-        this.types = result.types;
-      })
-    );
-        this.isRefreshActive.set(true);
+
+    this.subscription = forkJoin({
+      marques: this.apiService.getMarques(),
+      genders: this.genderService.getAll(),
+      types: this.typeService.getAll()
+    }).subscribe(result => {
+      this.marques = result.marques;
+      this.genders = result.genders;
+      this.types = result.types;
+    })
+
+    this.isRefreshActive.set(true);
   }
 
   ngOnDestroy(): void {
@@ -83,14 +83,12 @@ export class SearchSelectsComponent {
     event.stopPropagation();
     this.openTypes.set(!this.openTypes());
     this.focusSelect.emit();
-
   }
 
   toggleGendersDropdown(event: Event) {
     event.stopPropagation();
     this.openGenders.set(!this.openGenders());
     this.focusSelect.emit();
-
   }
 
   isOpenMarques() { return this.openMarques(); }
@@ -163,11 +161,7 @@ export class SearchSelectsComponent {
     this.reset.emit();
     window.location.reload();
     this.carouselService.setMode('standard');
-
   }
-
-
-
 
 }
 

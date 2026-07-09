@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, signal, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { Cabin } from '../../../models/cabin';
 import { Garment } from '../../../models/garment';
 import { CabineService } from '../../../services/cabine.service';
@@ -86,6 +86,7 @@ ngOnChanges() {
 
   private cabinService = inject(CabineService);
   private typeService = inject(GarmentService);
+  private _subscription = Subscription.EMPTY;
 
   // Ton catalogue typé avec MAN/WOMAN
   catalogue: Record<'MAN' | 'WOMAN', Record<string, Cabin[]>> = {
@@ -96,7 +97,7 @@ ngOnChanges() {
   ngOnInit(): void {
     const cats: Cat[] = ['haut', 'bas', 'chapeau', 'chaussures'];
 
-    forkJoin({
+   this._subscription = forkJoin({
       cabins: this.cabinService.getAllCabin(),
       types: this.typeService.getAll()
     }).subscribe({
@@ -316,6 +317,11 @@ getImgSrc(cat: Cat): string | null {
     if (h > 100) h = 100;
 
     this.formCabin.patchValue({ positionx: x, positiony: y, width: w, height: h }, { emitEvent: false });
+  }
+
+
+  ngOnDestroy(){
+    this._subscription.unsubscribe();
   }
 }
 

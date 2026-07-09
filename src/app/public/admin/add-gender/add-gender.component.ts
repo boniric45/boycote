@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GenderService } from '../../../services/gender.service';
 import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-gender',
@@ -15,6 +16,7 @@ export class AddGenderComponent {
   private fb = inject(FormBuilder);
   private genderService = inject(GenderService);
   private router = inject(Router);
+  private _subGender = Subscription.EMPTY;
 
   form = this.fb.group({
     name: ['', Validators.required]
@@ -25,8 +27,12 @@ export class AddGenderComponent {
 
     const name = this.form.value.name ?? '';
 
-    this.genderService.addGender(name).subscribe(res => {
+    this._subGender = this.genderService.addGender(name).subscribe(res => {
       this.router.navigate(['/admin']);
     });
+  }
+
+  ngOnDestroy(){
+    this._subGender.unsubscribe();
   }
 }
