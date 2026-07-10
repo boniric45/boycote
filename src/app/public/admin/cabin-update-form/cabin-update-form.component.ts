@@ -9,8 +9,8 @@ import { GarmentService } from '../../../services/garment.service';
 import { UploadService } from '../../../services/upload.service';
 import { CabinViewdragUpdateComponent } from "../cabin-viewdrag-update/cabin-viewdrag-update.component";
 import { PrevisualisationUpdatecabinComponent } from "../previsualisation-updatecabin/previsualisation-updatecabin.component";
-import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
 import { Subscription } from 'rxjs';
+import { ButtonReturnComponent } from '../../../shared/button-return/button-return.component';
 
 
 @Component({

@@ -6,11 +6,12 @@ import { CartService } from '../../../../services/cart.service';
 import { LogicRequestService } from '../../../../services/logic-request.service';
 import { ProductService } from '../../../../services/product.service';
 import { Subscription } from 'rxjs';
+import { CloseButtonComponent } from "../../../../shared/close-button/close-button.component";
 
 
 @Component({
   selector: 'app-informations-card',
-  imports: [CommonModule],
+  imports: [CommonModule, CloseButtonComponent],
   standalone: true,
   templateUrl: './informations-card.component.html',
   styleUrl: './informations-card.component.scss',

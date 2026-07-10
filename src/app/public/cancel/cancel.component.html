@@ -1,16 +1,28 @@
-<div class="mac-frame">
-  <div class="title-bar">
-    <span class="window-title">BOY_COTÉ</span>
+<div class="header">
+  <app-button-return (click)="goToHome()"></app-button-return>
+  <div class="logo">
+    <img src="/pictures/logo.png" class="img_logo_mobile" alt="Boycoté">
   </div>
-  <div class="content">
-    <div class="cancel-icon" (click)="goToHome()">
-      <svg viewBox="0 0 24 24" fill="none">
-        <path d="M6 6L18 18M18 6L6 18" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div class="text-box">
-      <p class="title">PAYMENT CANCELED</p>
-      <p>YOUR PAYMENT HAS NOT<br>BEEN FINALIZED.</p>
+</div>
+
+<div class="global-wrapper">
+  <div class="wrapper">
+    <div class="mac-frame">
+      <div class="title-bar">
+        <span class="window-title">BOY_COTÉ</span>
+      </div>
+      <div class="content">
+        <div class="cancel-icon" (click)="goToHome()">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 6L18 18M18 6L6 18" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="text-box">
+          <p class="title">PAYMENT CANCELED</p>
+          <p>YOUR PAYMENT HAS NOT<br>BEEN FINALIZED.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -20,7 +20,7 @@ import { LogicRequestService } from '../../../../services/logic-request.service'
 })
 export class CarouselSelectComponent {
 
-  visibleCount = 5;
+  visibleCount = 3; // Nombre de vignette affichée
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
@@ -37,7 +37,7 @@ export class CarouselSelectComponent {
 
     // Responsive
     effect(() => {
-      const handler = () => this.logic.visibleCount.set(5);
+      const handler = () => this.logic.visibleCount.set(this.visibleCount);
       window.addEventListener('resize', handler);
       return () => window.removeEventListener('resize', handler);
     });
@@ -47,10 +47,6 @@ export class CarouselSelectComponent {
 
   trackByArticle(index: number, article: any) {
     return article?.id ?? index;
-  }
-
-  updateVisibleCount() {
-    this.visibleCount = window.innerWidth < 768 ? 5 : 5;
   }
 
   next() { this.logic.next(); }

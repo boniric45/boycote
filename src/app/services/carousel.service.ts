@@ -11,7 +11,7 @@ export class CarouselService {
   constructor(
     private router: Router,
     private hamburgerService: HamburgerService
-  ) {}
+  ) { }
 
   carouselMode = signal<
     'home' | 'standard' | 'search' | 'select' | 'product' | 'noresult' |
@@ -27,10 +27,15 @@ export class CarouselService {
     });
 
     // Gestion du hamburger
-    const shouldEnableHamburger = (mode === 'home' || mode === 'standard' || mode === 'select' || mode === 'search');
+    const shouldEnableHamburger = (
+      mode === 'home' ||
+      mode === 'standard' ||
+      mode === 'select' ||
+      mode === 'search' 
+    );
 
     if (shouldEnableHamburger) {
-      this.hamburgerService.enable();
+      this.hamburgerService.enable();      
     } else {
       this.hamburgerService.disable();
     }

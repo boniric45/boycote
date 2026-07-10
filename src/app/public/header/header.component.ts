@@ -7,10 +7,11 @@ import { LogicInputService } from "../../services/logic-input.service";
 import { LogicSelectService } from "../../services/logic-select.service";
 import { SearchService } from "../../services/search.service";
 import { CartComponent } from "../cart/cart.component";
-import { ButtonReturnComponent } from "../features/button-return/button-return.component";
 import { HamburgerComponent } from "../features/hamburger/hamburger.component";
 import { SearchInputComponent } from "../features/search-input/search-input.component";
 import { SearchSelectsComponent } from "../features/search-selects/search-selects.component";
+import { ButtonReturnComponent } from "../../shared/button-return/button-return.component";
+import { HeaderService } from "../../services/header.service";
 
 @Component({
   selector: 'app-header',
@@ -34,6 +35,8 @@ export class HeaderComponent {
   private carouselService = inject(CarouselService);
   private hamburgerService = inject(HamburgerService);
   private route = inject(Router);
+  private headerService = inject(HeaderService);
+
 
   /* Données venant du parent */
   @Input() marques: string[] = [];
@@ -44,7 +47,8 @@ export class HeaderComponent {
   @Output() search = new EventEmitter<string>();
 
   /* États du header */
-  searchOpen = signal(false);     // Mode recherche activé
+
+  searchOpen = this.headerService.searchOpen;     // Mode recherche activé
   inputActive = signal(true);     // Input visible
   selectActive = signal(false);   // Selects visibles
   productActive = signal(false);  // Carousel Product visible
@@ -78,6 +82,7 @@ export class HeaderComponent {
     }
     // Ouvre la zone recherche
     this.searchOpen.set(true);
+
 
     if (isDesktop) {
       // Desktop 

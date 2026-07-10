@@ -37,7 +37,7 @@ export class LogicInputService {
   private soldOut = signal<Product[]>([]);
   private filters = signal<string>('');
 
-  visibleCount = signal(5);
+  visibleCount = signal(3);
   currentIndex = signal(0);
   isAnimating = signal(false);
   direction = signal<'left' | 'right'>('right');
@@ -52,13 +52,11 @@ export class LogicInputService {
 
 
   filtered = computed(() => {
-
     const f = (this.filters() ?? '').toLowerCase();
     let list: Product[] = this.articles(); // All Products
     const result = list.filter(p => {
       return p.marque.toLowerCase().includes(f);
     });
-
     return result;
   });
 
@@ -159,6 +157,7 @@ export class LogicInputService {
     return 1 - Math.abs(i - middle) * 0.15;
   }
 
+  // Affiche les photos seulement pour le Dev
   fixLocalUrl(url: string): string {
     if (!url) return '';
 

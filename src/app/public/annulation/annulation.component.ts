@@ -19,6 +19,7 @@ export class AnnulationComponent {
 
   closeCart() {
     this.carouselService.setMode('standard');
+
   }
 
   emailDest = 'boycote@proton.me';

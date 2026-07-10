@@ -40,7 +40,7 @@ export class LogicSelectService {
   private soldOut = signal<Product[]>([]);
   private filters = signal<any | null>(null);
 
-  visibleCount = signal(5);
+  visibleCount = signal(3);
   currentIndex = signal(0);
   isAnimating = signal(false);
   direction = signal<'left' | 'right'>('right');

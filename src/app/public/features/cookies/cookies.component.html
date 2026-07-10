@@ -35,7 +35,8 @@
     <div class="manage-window" (click)="$event.stopPropagation()">
    
       <div class="manage-title-bar">
-        <button class="manage-close" (click)="closeManage()"></button>
+        <app-close-button (click)="closeManage()"></app-close-button>
+        <!-- <button class="manage-close" (click)="closeManage()"></button> -->
         <span class="title-text">{{ t.manageTitle }}</span>
       </div>
    

@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { CartService } from '../../services/cart.service';
-import { ButtonReturnComponent } from "../features/button-return/button-return.component";
+import { RouterLink } from "@angular/router";
 import { CarouselService } from '../../services/carousel.service';
+import { CartService } from '../../services/cart.service';
+import { ButtonReturnComponent } from "../../shared/button-return/button-return.component";
 
 @Component({
   selector: 'app-success',
-  imports: [],
+  imports: [ButtonReturnComponent],
   templateUrl: './success.component.html',
   styleUrl: './success.component.scss',
 })

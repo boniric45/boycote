@@ -46,7 +46,12 @@
         <div class="description">
           @if (logic.central()) {
           <p>{{ logic.central().name }}</p>
-          <p>{{ logic.central().gender }} - {{ logic.central().size }}</p>
+          @if(!logic.central().size){
+          <p>{{ logic.central().gender }} </p>
+          }
+          @else{
+          <p>{{ logic.central().gender}} - {{ logic.central().size }} </p>
+          }
           <span class="price">{{ logic.central().prix | currency:'EUR' }}</span>
           }
         </div>

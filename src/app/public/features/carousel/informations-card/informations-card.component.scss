@@ -122,7 +122,7 @@ button.primary:active { filter: brightness(0.88); transform: translateY(1px); }
   width: 100%;
   height: 100%;
 
-  background: rgba(0,0,0,0.35); /* léger assombrissement */
+  //background: rgba(0,0,0,0.35); /* léger assombrissement */
   z-index: 100;
 
   display: flex;
@@ -144,20 +144,11 @@ display: flex; align-items: center; padding: 0 10px;
 border-bottom: 1px solid #999999; position: relative;
 }
 
-.bouton-fermer {
-width: 13px; height: 13px; border-radius: 50%; border: none; cursor: pointer;
-background: radial-gradient(circle at 40% 35%, #ff7060 0%, #e03020 60%, #c02010 100%);
-box-shadow: 0 1px 2px rgba(0,0,0,0.3); position: relative;
+.bouton-fermer{
+    position: absolute;
+    top: 14px;
+    left: 3px;
 }
-
-.bouton-fermer::after {
-content: '×'; position: absolute; top: 50%; left: 50%;
-transform: translate(-50%, -50%);
-font-size: 10px; font-weight: 900; color: #1a0000;
-opacity: 0; transition: opacity 0.15s ease; line-height: 1;
-}
-
-.bouton-fermer:hover::after { opacity: 1; }
 
 .titre-popup {
 position: absolute; left: 50%; transform: translateX(-50%);

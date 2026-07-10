@@ -11,6 +11,15 @@ export class HeaderService {
   private carouselService = inject(CarouselService);
   private searchService = inject(SearchService);
 
+  searchOpen = signal(false);
+
+  closeMenu() {
+    this.searchOpen.set(false);
+  }
+
+  openMenu() {
+    this.searchOpen.set(true);
+  }
 
   // --- SEARCH ---
   updateSearchQuery(value: string) {
@@ -38,9 +47,11 @@ export class HeaderService {
 
   // --- STANDARD ---
   openStandardMode() {
-    this.carouselService.setMode('standard');  }
+    this.carouselService.setMode('standard');
+  }
 
   updateSearchFilters(filters: any) {
     this.searchService.searchFilters.set(filters);
   }
+
 }

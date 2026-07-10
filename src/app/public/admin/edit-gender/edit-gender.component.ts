@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenderService } from '../../../services/gender.service';
-import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
 import { Subscription } from 'rxjs';
+import { ButtonReturnComponent } from '../../../shared/button-return/button-return.component';
 
 @Component({
   selector: 'app-edit-gender',

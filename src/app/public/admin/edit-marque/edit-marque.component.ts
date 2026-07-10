@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MarqueService } from '../../../services/marque.service';
-import { ButtonReturnComponent } from "../../features/button-return/button-return.component";
 import { Subscription } from 'rxjs';
+import { ButtonReturnComponent } from '../../../shared/button-return/button-return.component';
 
 @Component({
   selector: 'app-edit-marque',

@@ -40,6 +40,7 @@ export class AppComponent {
   private _subRouterEvent = Subscription.EMPTY;
 
   ngOnInit() {
+    console.log(this.carouselService.carouselMode());
 
     window.addEventListener('popstate', () => {
       this.router.navigate(['/host']);
@@ -96,10 +97,10 @@ export class AppComponent {
         // -------------------------
         // 4) Pages publiques normales → Host ON
         // -------------------------
-        if (url.startsWith('/product') || url.startsWith('/request')) {
+        if (url.startsWith('/product') || url.startsWith('/request') || url.startsWith('/return')) {
           this.showLayout = true;
           this.showHost = true;
-          this.construction = false
+          this.construction = false;
           return;
         }
 
@@ -110,6 +111,8 @@ export class AppComponent {
         this.showHost = false;
       }
     });
+
+    
   }
 
   onSearch(query: string) {

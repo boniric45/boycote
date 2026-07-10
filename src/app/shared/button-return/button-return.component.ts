@@ -1,7 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { CarouselService } from '../../../services/carousel.service';
+import { CarouselService } from '../../services/carousel.service';
 
 @Component({
   selector: 'app-button-return',
@@ -11,7 +9,6 @@ import { CarouselService } from '../../../services/carousel.service';
 })
 export class ButtonReturnComponent {
 
-  private location = inject(Location);
   private carouselService = inject(CarouselService);
   
   isClicked = false;
@@ -22,7 +19,6 @@ export class ButtonReturnComponent {
     // Animation / état visuel
     setTimeout(() => {
       this.carouselService.setMode('standard');
-      // this.location.back();      
     }, 0);
 
     setTimeout(() => {

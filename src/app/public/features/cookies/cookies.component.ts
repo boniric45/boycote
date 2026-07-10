@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
 import { CookieService } from '../../../services/cookie.service';
 import { CartService } from '../../../services/cart.service';
+import { CloseButtonComponent } from "../../../shared/close-button/close-button.component";
 
 
 // TEXTES FR / EN
@@ -54,7 +55,7 @@ const TEXTES = {
 
 @Component({
   selector: 'app-cookies',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, CloseButtonComponent],
   templateUrl: './cookies.component.html',
   styleUrl: './cookies.component.scss',
 })
