@@ -57,41 +57,6 @@ export class CartComponent {
     this.cartService.remove(productId);
   }
 
-  // checkout(): void {
-  //   const items = this.cartService.getItems();
-  //   if (items.length === 0) return alert('Panier est vide');
-
-  //   const payload = {
-  //     items: items.map(item => ({
-  //       id: item.product.id,
-  //       nom: item.product.name,
-  //       sku: item.product.sku,
-  //       prix: item.product.prix,
-  //       image: item.product.pathpictureone
-  //     }))
-  //   };
-
-  //   // Bonne pratique Stripe et Windows open mieux accepter par IOS
-  //   this.http.post<{ url: string }>(
-  //     `${this.API}/create-checkout.php`,
-  //     payload,
-  //     { withCredentials: true }
-  //   )
-  //     .subscribe({
-  //       next: (res) => {
-  //         if (res?.url) {
-  //           // Méthode la plus fiable sur iOS
-  //           setTimeout(() => {
-  //             window.open(res.url, '_self');
-  //           }, 0);
-  //         }
-  //       },
-  //       error: (err) => {
-  //         console.error('Erreur checkout:', err);
-  //       }
-  //     });
-  // }
-
   checkout(): void {
     const validation = this.cartService.validateCheckout();
 
@@ -141,10 +106,6 @@ export class CartComponent {
       this.closeCart();
     }
   }
-
-
-
-
 
 }
 

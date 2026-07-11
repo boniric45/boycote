@@ -1,12 +1,13 @@
 .search-input-row {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 5px;
   //background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
   border-radius: 10px;
   border: 1px solid #999999;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.80);
-  padding: 5px 5px;
+  padding: 15px 15px;
+
 }
 
 .input-search {
@@ -16,7 +17,6 @@
 .search-input-wrapper {
   height: 34px;
 }
-
 
 .btn-refresh,
 .btn-search {
@@ -30,7 +30,7 @@
 }
 
 .search-input-wrapper {
-  flex: 1;
+  flex: 1 1 0%;
   min-width: 0;
   /* CRITIQUE : empêche le débordement */
   display: flex;
@@ -48,7 +48,7 @@
 }
 
 .search-input-wrapper input {
-  flex: 1;
+  flex: 1 1 0%;
   border: none;
   background: transparent;
   font-size: 14px;
@@ -199,8 +199,9 @@ input:focus::placeholder {
   .search-input-row {
     display: flex;
     align-items: center;
+    width: 330px;
     gap: 3px;
-   // background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
+    // background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
     border-radius: 10px;
     border: 1px solid #999999;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.80);
@@ -215,6 +216,13 @@ input:focus::placeholder {
     height: 34px;
   }
 
+  .btn-refresh {
+    margin-right: 2px;
+  }
+
+  .btn-search {
+    margin-left: 2px;
+  }
 
   .btn-refresh,
   .btn-search {
@@ -235,7 +243,7 @@ input:focus::placeholder {
     display: flex;
     align-items: center;
     gap: 3px;
-  //  background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
+    //  background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
     border-radius: 10px;
     border: 1px solid #999999;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.80);

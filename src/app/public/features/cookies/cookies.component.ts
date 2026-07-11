@@ -1,9 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from "@angular/router";
-import { CookieService } from '../../../services/cookie.service';
+import { CarouselService } from '../../../services/carousel.service';
 import { CartService } from '../../../services/cart.service';
+import { CookieService } from '../../../services/cookie.service';
 import { CloseButtonComponent } from "../../../shared/close-button/close-button.component";
 
 
@@ -55,7 +55,7 @@ const TEXTES = {
 
 @Component({
   selector: 'app-cookies',
-  imports: [CommonModule, FormsModule, RouterLink, CloseButtonComponent],
+  imports: [CommonModule, FormsModule,  CloseButtonComponent],
   templateUrl: './cookies.component.html',
   styleUrl: './cookies.component.scss',
 })
@@ -63,6 +63,7 @@ export class CookiesComponent implements OnInit {
 
   private cookieService = inject(CookieService);
   private cartService = inject(CartService);
+  private carouselService = inject(CarouselService);
 
   ngOnInit() {
 
@@ -75,8 +76,6 @@ export class CookiesComponent implements OnInit {
       this.marketingEnabled = this.cookieService.get('marketing') === 'true';
     }
   }
-
-
 
   // ÉTAT
   visible = true;
@@ -141,7 +140,9 @@ export class CookiesComponent implements OnInit {
   }
 
 
-
+onClickMention(){
+  this.carouselService.setMode('notice');
+}
 
 
 

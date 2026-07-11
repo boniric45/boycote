@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { Cabin } from "../../models/cabin";
 import { Garment } from "../../models/garment";
 import { Product } from "../../models/product";
@@ -32,6 +32,7 @@ export class CabineComponent implements OnInit {
   listCabin: Cabin[] = [];
   listType: Garment[] = [];
   cabin!: Cabin;
+  host = 'https://boycote.fr';
 
   readonly cats: Cat[] = ['chapeau', 'haut', 'bas', 'chaussures'];
   readonly gender = signal<'MAN' | 'WOMAN'>('MAN');
@@ -45,8 +46,7 @@ export class CabineComponent implements OnInit {
   private typeService = inject(GarmentService);
   private carouselService = inject(CarouselService);
   private logicProduct = inject(LogicProductService);
-
-
+  private _sub = Subscription.EMPTY;
 
   product!: Product;
   isOpen = false;
@@ -57,10 +57,13 @@ export class CabineComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.loadCabin();
+  }
 
+  loadCabin() {
     const cats: Cat[] = ['haut', 'bas', 'chapeau', 'chaussures'];
 
-    forkJoin({
+    this._sub = forkJoin({
       cabins: this.cabinService.getAllCabin(),
       types: this.typeService.getAll()
     }).subscribe({
@@ -79,6 +82,10 @@ export class CabineComponent implements OnInit {
       },
       error: (err) => console.error("Erreur API:", err)
     });
+  }
+
+  ngOnDestroy() {
+    this._sub.unsubscribe();
   }
 
   // Centre les images automatiquement s'applique avec ngStyle dans le template
@@ -122,6 +129,7 @@ export class CabineComponent implements OnInit {
   }
 
   onGenderChange(event: Event): void {
+    this.loadCabin();
     this.setGender((event.target as HTMLSelectElement).value);
   }
 
@@ -214,8 +222,6 @@ export class CabineComponent implements OnInit {
   closeCart() {
     this.carouselService.setMode('standard');
   }
-
-  host = 'https://boycote.fr';
 
   openProduct(event: MouseEvent, cat: Cat) {
     event.preventDefault();
