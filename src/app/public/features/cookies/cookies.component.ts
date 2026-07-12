@@ -5,6 +5,7 @@ import { CarouselService } from '../../../services/carousel.service';
 import { CartService } from '../../../services/cart.service';
 import { CookieService } from '../../../services/cookie.service';
 import { CloseButtonComponent } from "../../../shared/close-button/close-button.component";
+import { AppComponent } from '../../../app.component';
 
 
 // TEXTES FR / EN
@@ -55,7 +56,7 @@ const TEXTES = {
 
 @Component({
   selector: 'app-cookies',
-  imports: [CommonModule, FormsModule,  CloseButtonComponent],
+  imports: [CommonModule, FormsModule, CloseButtonComponent],
   templateUrl: './cookies.component.html',
   styleUrl: './cookies.component.scss',
 })
@@ -64,10 +65,19 @@ export class CookiesComponent implements OnInit {
   private cookieService = inject(CookieService);
   private cartService = inject(CartService);
   private carouselService = inject(CarouselService);
+  private app = inject(AppComponent);
+
+
 
   ngOnInit() {
 
+
     this.cartService.clear();
+
+    window.addEventListener('beforeunload', () => {
+      this.saveCookiesOnExit();
+    });
+
     const consent = this.cookieService.get('cookie_consent');
 
     if (consent) {
@@ -85,6 +95,7 @@ export class CookiesComponent implements OnInit {
   // PRÉFÉRENCES
   analyticsEnabled = false;
   marketingEnabled = false;
+  essentialEnabled = true;
 
   // TEXTES ACTIFS
   get t() { return TEXTES[this.langActuelle]; }
@@ -92,6 +103,15 @@ export class CookiesComponent implements OnInit {
   refreshPage() {
     window.location.reload();
   }
+
+  saveCookiesOnExit() {
+    // Si c’est la première fois → les toggles ont les valeurs par défaut
+    // Tu enregistres ces valeurs pour éviter le bug
+    this.cookieService.setBoolean('analytics', this.analyticsEnabled);
+    this.cookieService.setBoolean('marketing', this.marketingEnabled);
+    this.cookieService.set('cookie_consent', 'accepted');
+  }
+
 
   // CHANGER LANGUE
   switchLang() {
@@ -125,8 +145,23 @@ export class CookiesComponent implements OnInit {
   }
 
   // OUVRIR MANAGE
-  openManage() { this.manageOpen = true; }
-  closeManage() { this.manageOpen = false; }
+  openManage() {
+    this.analyticsEnabled = this.cookieService.getBoolean('analytics');
+    this.marketingEnabled = this.cookieService.getBoolean('marketing');
+    this.essentialEnabled = true; // toujours true
+
+    this.manageOpen = true;
+  }
+
+  closeManage() {
+    this.saveCookiesOnExit();
+    this.carouselService.setMode('standard');
+    this.manageOpen = false;
+    this.visible = false;
+    // 👉 C’est cette ligne qui ferme l’overlay
+    this.app.isCookiesIsNotSaved.set(false);
+
+  }
 
   // SAUVEGARDER PRÉFÉRENCES
   savePreferences() {
@@ -140,9 +175,14 @@ export class CookiesComponent implements OnInit {
   }
 
 
-onClickMention(){
-  this.carouselService.setMode('notice');
-}
+  onClickMention(event: MouseEvent) {
+    this.visible = false;
+    // 👉 C’est cette ligne qui ferme l’overlay
+    this.app.isCookiesIsNotSaved.set(false);
+    this.carouselService.setMode('notice');
+
+
+  }
 
 
 

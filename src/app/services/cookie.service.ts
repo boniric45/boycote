@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +29,12 @@ export class CookieService {
     this.set(name, value ? 'true' : 'false', days);
   }
 
-  
+  setConsent(value: 'accepted' | 'decline') {
+    localStorage.setItem('cookie_consent', value);
+  }
+
+  hasConsent(): boolean {
+    return localStorage.getItem('cookie_consent') !== null;
+  }
+
 }

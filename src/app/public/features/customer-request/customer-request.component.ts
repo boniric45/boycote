@@ -7,10 +7,11 @@ import { CarouselService } from '../../../services/carousel.service';
 import { EmailService } from '../../../services/email.service';
 import { LogicRequestService } from '../../../services/logic-request.service';
 import { ProductService } from '../../../services/product.service';
+import { CloseButtonComponent } from "../../../shared/close-button/close-button.component";
 
 @Component({
   selector: 'app-customer-request',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CloseButtonComponent],
   templateUrl: './customer-request.component.html',
   styleUrl: './customer-request.component.scss',
 })

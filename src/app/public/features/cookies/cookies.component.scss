@@ -101,20 +101,6 @@
   border-bottom: 1px solid #aaaaaa; position: relative; padding: 0 10px;
 }
 
-// .manage-close {
-//   position: absolute; left: 8px;
-//   width: 13px; height: 13px; border-radius: 50%; border: none; cursor: pointer;
-//   background: radial-gradient(circle at 40% 35%, #ff7060 0%, #e03020 60%, #c02010 100%);
-//   box-shadow: 0 1px 2px rgba(0,0,0,0.3);
-// }
-// .manage-close::after {
-//   content: '×'; position: absolute; top: 50%; left: 50%;
-//   transform: translate(-50%, -50%);
-//   font-size: 10px; font-weight: 900; color: #1a0000;
-//   opacity: 0; transition: opacity 0.15s ease;
-// }
-// .manage-close:hover::after { opacity: 1; }
-
 .manage-body { padding: 18px 22px 20px; display: flex; flex-direction: column; gap: 10px; }
 
 .manage-intro { font-size: 11px; color: #444444; line-height: 1.6; text-align: center; }
@@ -166,3 +152,4 @@
 .wrapper{
 transform: scale(0.8);
 }
+

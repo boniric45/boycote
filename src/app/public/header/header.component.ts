@@ -83,7 +83,6 @@ export class HeaderComponent {
     // Ouvre la zone recherche
     this.searchOpen.set(true);
 
-
     if (isDesktop) {
       // Desktop 
       this.inputActive.set(true);

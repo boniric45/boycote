@@ -12,6 +12,7 @@ import { CarouselService } from '../../../../services/carousel.service';
 import { LogicProductService } from '../../../../services/logic-product.service';
 import { CustomerRequestComponent } from '../../customer-request/customer-request.component';
 import { LogicRequestService } from '../../../../services/logic-request.service';
+import { HeaderService } from '../../../../services/header.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class CarouselStandardComponent implements OnInit {
   private carouselService = inject(CarouselService);
   private logicRequest = inject(LogicRequestService);
   private logicProduct = inject(LogicProductService);
+  private headerService = inject(HeaderService);
 
   // 1. Vos données sources
   allProducts = signal<Product[]>([]); // Votre liste complète
@@ -201,6 +203,7 @@ export class CarouselStandardComponent implements OnInit {
   readViewProduct(product: Product) {
     this.carouselService.setMode('product')
     this.logicProduct.product = product;
+    this.headerService.closeMenu();
   }
 
   // HAND SWIPE MOBILE //

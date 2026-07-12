@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CarouselHostComponent } from './public/features/carousel/carousel-host/carousel-host.component';
@@ -30,7 +30,6 @@ export class AppComponent {
     '/cancel',
     '/customer-request'
   ];
-
   isCookiesIsNotSaved = signal(true);
   searchQuery = '';
   searchFilters: any = null;
@@ -40,8 +39,6 @@ export class AppComponent {
   private _subRouterEvent = Subscription.EMPTY;
 
   ngOnInit() {
-    console.log(this.carouselService.carouselMode());
-
     window.addEventListener('popstate', () => {
       this.router.navigate(['/host']);
       this.carouselService.setMode('standard');
@@ -54,7 +51,7 @@ export class AppComponent {
     };
 
     if (consent) {
-      this.isCookiesIsNotSaved.set(false);
+       this.isCookiesIsNotSaved.set(false);
     }
 
     this._subRouterEvent = this.router.events.subscribe(event => {
@@ -111,8 +108,6 @@ export class AppComponent {
         this.showHost = false;
       }
     });
-
-    
   }
 
   onSearch(query: string) {

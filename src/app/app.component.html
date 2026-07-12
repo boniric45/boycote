@@ -1,7 +1,7 @@
 <div class="global-wrapper">
   @if(isCookiesIsNotSaved()){
   <div class="overlay">
-    <div class="cookies">
+    <div class="cookies" (click)="$event.stopPropagation()">
       <app-cookies></app-cookies>
     </div>
   </div>

@@ -20,7 +20,18 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-carousel-host',
-  imports: [CarouselStandardComponent, CarouselInputComponent, CarouselSelectComponent, CarouselProductComponent, CabineComponent, ContactComponent, AnnulationComponent, LegalComponent, CustomerRequestComponent, ProgressbarComponent, NoresultComponent],
+  imports: [
+    CarouselStandardComponent,
+    CarouselInputComponent,
+    CarouselSelectComponent,
+    CarouselProductComponent,
+    CabineComponent,
+    ContactComponent,
+    AnnulationComponent,
+    LegalComponent,
+    CustomerRequestComponent,
+    ProgressbarComponent,
+    NoresultComponent],
   templateUrl: './carousel-host.component.html',
   styleUrl: './carousel-host.component.scss',
 })

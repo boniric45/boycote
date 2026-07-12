@@ -22,8 +22,9 @@
      </div>
      <p class="cookie-legal">
        {{ t.legal }}<br>
-       <a (click)="onClickMention()">{{ t.links }}</a>
+       <a (click)="onClickMention($event)">{{ t.links }}</a>
      </p>
+     
    </div>
 
  </div>
@@ -79,11 +80,7 @@
         </div>
    
         <div class="divider"></div>
-   
-        <div class="manage-btn-row">
-          <button class="btn-cookie" (click)="closeManage()"><span>{{ t.cancel }}</span></button>
-          <button class="btn-cookie" (click)="savePreferences()"><span>{{ t.save }}</span></button>
-        </div>
+
       </div>
    
     </div>

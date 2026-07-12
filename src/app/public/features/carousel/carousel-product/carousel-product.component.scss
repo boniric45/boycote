@@ -5,7 +5,7 @@
 
 .container {
   height: 90dvh;
-  margin: 0;
+margin-top: 32px;
   padding: 0;
 }
 
@@ -194,14 +194,6 @@
     transform-origin: center;
   }
 
-  .description {
-    opacity: 0;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    transform: scale(1.3);
-    margin-top: 260px;
-  }
 
   /* Overlay fullscreen */
   .fullscreen-overlay {
@@ -305,6 +297,41 @@
     z-index: 20;
     cursor: pointer;
   }
+}
 
+/* Paysage par défaut : cache la description */
+@media (orientation: landscape) {
+  .description {
+    display: none;
+  }
+}
 
+/* Paysage ET grand écran : même rendu que desktop */
+@media (orientation: landscape) and (min-width: 1401px) {
+  .container {
+    display: flex;
+    flex-direction: row;          /* horizontal */
+    justify-content: space-between;
+    align-items: center;          /* centrage vertical */
+    height: 100dvh;
+    padding: 0 40px;
+  }
+
+  .container-carousel {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;  /* calé à gauche */
+    align-items: center;
+  }
+
+  .description {
+    flex: 1;
+    display: flex;                /* réactive l’affichage */
+    justify-content: flex-end;    /* calé à droite */
+    align-items: center;          /* centré verticalement */
+    opacity: 1;
+    position: relative;
+    margin: 0;
+    transform: none;
+  }
 }
