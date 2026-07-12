@@ -1,24 +1,26 @@
-<div class="global-container">
-  <div class="wrapper">
-    <div class="carousel-card">
-      <div class="carousel-img-wrapper">
-        <img class="carousel-img" [src]="fixLocalUrl(article.pathpictureone)" (click)="readViewProduct(article)" alt="{{ article.name }}" />
-      </div>
+<div class="global-mini-card">
+  <div class="global-container">
+    <div class="wrapper">
+      <div class="carousel-card">
+        <div class="carousel-img-wrapper">
+          <img class="carousel-img" [src]="fixLocalUrl(article.pathpictureone)" (click)="readViewProduct(article)"
+            alt="{{ article.name }}" />
+        </div>
 
-      <div class="carousel-info">
+        <div class="carousel-info">
           @if(article){
           <p>{{ article.name }}</p>
-            @if(!article.size){
-              <a>{{ article.gender}} </a>
-            }
-            @else{
-              <a>{{ article.gender}} - {{ article.size}} </a>
-            }
+          @if(!article.size){
+          <a>{{ article.gender}} </a>
+          }
+          @else{
+          <a>{{ article.gender}} - {{ article.size}} </a>
+          }
           <span class="price">{{ article.prix | currency:'EUR'}}</span>
           }
 
+        </div>
       </div>
     </div>
   </div>
-
 </div>

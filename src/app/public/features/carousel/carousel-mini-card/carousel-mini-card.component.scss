@@ -1,65 +1,75 @@
-/* La card du carousel */
+.global-mini-card{
+  margin: 50px;
+  height: 250px;
+}
+
 .global-container {
   overflow: hidden;
+  height: 300px;
+  padding: 40px;
+}
+
+.wrapper {
+  width: 400px;
+  height: 260px;        /* ↓ réduit pour supprimer le vide */
+  padding: 10px;        /* ↓ réduit pour un centrage parfait */
+
+  display: flex;
+  justify-content: center;  /* centre verticalement */
+  align-items: center;      /* centre horizontalement */
 }
 
 .carousel-card {
-  transform: scale(0.85);
-  transform-origin: center;
+  transform: scale(0.9);
+  transform-origin: top center;
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
   overflow: hidden;
- max-width: 600px;
+  height: 240px;       /* card fixe */
 }
 
+/* Image */
 .carousel-img-wrapper {
-  width: 100%;
+  width: 48%;
   height: 100%;
-  cursor: pointer;
 }
 
-/* Image parfaitement contenue */
 .carousel-img {
   width: 100%;
-  height: 50%;
+  height: 100%;
   object-fit: cover;
-  display: block;
-  justify-content: center;
-  border-radius: 12px;
-  cursor: pointer;
+  border-radius: 14px 0 0 14px;
 }
 
 /* Texte */
 .carousel-info {
-  padding: 10%;
-  text-align: center;
+  width: 52%;
+  padding: 20px;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   font-family: "Roboto Mono", monospace;
   font-size: 1rem;
-  font-weight: normal;
 }
 
 .carousel-name {
-  font-size: .9rem;
+  font-size: 0.95rem;
   color: #555;
 }
 
 .carousel-price {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #222;
 }
 
-
 @media (min-width: 900px) {
-  .carousel-card{
-     max-width: 560px;
+  .carousel-card {
+    max-width: 600px;
   }
-
 }
