@@ -92,7 +92,9 @@ export class CustomerRequestComponent {
     this.carouselService.setMode('standard');
   }
 
-
+  closeManage() {
+    this.carouselService.setMode('standard');
+  }
 
 
 }

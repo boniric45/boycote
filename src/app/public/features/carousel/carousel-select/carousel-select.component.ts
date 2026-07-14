@@ -24,6 +24,8 @@ export class CarouselSelectComponent {
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
+  private touchStartX = 0;
+  private touchEndX = 0;
 
   @Input() articles: Product[] = [];
 
@@ -68,6 +70,26 @@ export class CarouselSelectComponent {
   readViewProduct(product: Product) {
     this.carouselService.setMode('product')
     this.logicProduct.product = product;
+  }
+
+  // HAND SWIPE MOBILE //
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].clientX;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].clientX;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const delta = this.touchEndX - this.touchStartX;
+    if (Math.abs(delta) < 40) return; // seuil minimal
+    if (delta < 0) {
+      this.next();
+    } else {
+      this.prev();
+    }
   }
 
 }

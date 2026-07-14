@@ -33,6 +33,9 @@ export class ConsoleComponent implements OnInit {
   searchProduct: string = '';
   searchCabin: string = '';
   numberProduct: number = 0;
+  sortCol: keyof Product | null = null;
+  sortDirection: 'asc' | 'desc' = 'asc';
+
 
   private router = inject(Router);
   private auth = inject(AuthService);
@@ -55,7 +58,6 @@ export class ConsoleComponent implements OnInit {
   private _subDeleteMarque = Subscription.EMPTY;
   private _subDeleteGarment = Subscription.EMPTY;
   private _subDeleteGender = Subscription.EMPTY;
-
 
   ngOnInit(): void {
     this.loadProducts();
@@ -245,15 +247,44 @@ export class ConsoleComponent implements OnInit {
 
   get productsFiltered(): Product[] {
     const f = this.searchProduct.toLowerCase().trim();
-    if (!f) return this.products;
 
-    return this.products.filter(p =>
-      p.sku?.toLowerCase().includes(f) ||
-      p.name?.toLowerCase().includes(f) ||
-      p.marque?.toLowerCase().includes(f) ||
-      p.type?.toLowerCase().includes(f)
-    );
+    let list = !f
+      ? this.products
+      : this.products.filter(p =>
+        p.sku?.toLowerCase().includes(f) ||
+        p.name?.toLowerCase().includes(f) ||
+        p.marque?.toLowerCase().includes(f) ||
+        p.type?.toLowerCase().includes(f)
+      );
+
+    if (this.sortCol) {
+      const col = this.sortCol;
+      const type = typeof list[0][col];
+
+      list = [...list].sort((a, b) => {
+        const va = a[col];
+        const vb = b[col];
+
+        if (type === 'string') {
+          return this.sortDirection === 'asc'
+            ? String(va).localeCompare(String(vb))
+            : String(vb).localeCompare(String(va));
+        }
+
+        return this.sortDirection === 'asc'
+          ? Number(va) - Number(vb)
+          : Number(vb) - Number(va);
+      });
+    }
+
+    return list;
   }
+
+
+  get hasZeroStock(): boolean {
+    return this.products.some(p => Number(p.stock) === 0);
+  }
+
 
   get cabinFiltered(): Cabin[] {
     const f = this.searchCabin.toLowerCase().trim();
@@ -283,6 +314,20 @@ export class ConsoleComponent implements OnInit {
     this._subDeleteGarment.unsubscribe();
     this._subDeleteGender.unsubscribe();
   }
+
+  sortByStock() {
+    if (this.sortCol === 'stock') {
+      // Inversion normale
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Premier clic sur cette colonne
+      this.sortCol = 'stock';
+      this.sortDirection = 'asc'; // 🔥 tri asc au premier clic
+    }
+  }
+
+
+
 
 
 

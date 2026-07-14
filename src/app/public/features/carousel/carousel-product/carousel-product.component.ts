@@ -210,9 +210,7 @@ export class CarouselProductComponent {
 
   handleSwipe() {
     const delta = this.touchEndX - this.touchStartX;
-
     if (Math.abs(delta) < 40) return; // seuil minimal
-
     if (delta < 0) {
       this.next();
     } else {

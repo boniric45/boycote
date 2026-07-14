@@ -29,7 +29,16 @@
             <th>Nom</th>
             <th>Marque</th>
             <th>Prix</th>
-            <th>Stock</th>
+            <th class="sortable" (click)="sortByStock()">
+              <div class="th-content">
+                <span class="label">Stock</span>
+                @if(hasZeroStock){
+                <span class="arrow">
+                  {{ sortDirection === 'asc' ? '▼' : '▲' }}
+                </span>
+                }
+              </div>
+            </th>
             <th>Actions</th>
           </tr>
         </thead>

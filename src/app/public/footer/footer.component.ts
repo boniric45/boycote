@@ -1,8 +1,7 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CarouselService } from '../../services/carousel.service';
-import { FoldermacComponent } from "../foldermac/foldermac.component";
-import { HamburgerService } from '../../services/hamburger.service';
 import { HeaderService } from '../../services/header.service';
+import { FoldermacComponent } from "../foldermac/foldermac.component";
 
 @Component({
   selector: 'app-footer',

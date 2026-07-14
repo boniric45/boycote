@@ -281,9 +281,26 @@ tbody {
 }
 
 .textNumberArticle{
-
   font-family: var(--aqua-font);
   text-align: center;
   margin-top: 8px;
   font-size: 24px;
+}
+
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  padding: 6px 10px;
+}
+
+/* Le flex est ici, pas sur le <th> */
+.th-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow{
+  margin-left: 8px;
 }

@@ -1,11 +1,10 @@
 .btn-close-cart {
   position: absolute; 
-  left: 6px;
+  left: 5px;
   top: 50%;
   width: 25px; height: 25px;
-  transform: translateY(-65%) scale(0.4);
+  transform: translateY(-55%) scale(0.4);
   border-radius: 50%; border: none; cursor: pointer;
   background: radial-gradient(circle at 40% 35%, #ff7060 0%, #e03020 60%, #c02010 100%);
   box-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
-

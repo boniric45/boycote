@@ -23,8 +23,10 @@ export class CarouselInputComponent {
   private logicRequest = inject(LogicRequestService);
   logic = inject(LogicInputService);
   private logicProduct = inject(LogicProductService);
-  
-  visibleCount = 5;
+  private touchStartX = 0;
+  private touchEndX = 0;
+
+  visibleCount = 3;
   currentIndex = 0;
   isAnimating = false;
   direction: 'left' | 'right' = 'right';
@@ -35,7 +37,7 @@ export class CarouselInputComponent {
   @Input() searchQuery!: string;
 
   loading: boolean = true;
-  
+
 
   constructor() {
     // Responsive
@@ -47,8 +49,8 @@ export class CarouselInputComponent {
   }
 
   ngOnChanges() {
-  if (this.articles && this.articles.length > 0 ) {
-    this.loading = false;
+    if (this.articles && this.articles.length > 0) {
+      this.loading = false;
     }
   }
 
@@ -85,5 +87,24 @@ export class CarouselInputComponent {
     this.logicProduct.product = product;
   }
 
+  // HAND SWIPE MOBILE //
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].clientX;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].clientX;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const delta = this.touchEndX - this.touchStartX;
+    if (Math.abs(delta) < 40) return; // seuil minimal
+    if (delta < 0) {
+      this.next();
+    } else {
+      this.prev();
+    }
+  }
 
 }

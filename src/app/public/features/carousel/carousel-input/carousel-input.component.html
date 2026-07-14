@@ -22,8 +22,7 @@
           <app-component-left></app-component-left>
         </button>
 
-        <div class="items" [class.animating]="logic.isAnimating()"
-          [class.left-direction]="logic.direction() === 'left'">
+        <div class="items" [class.animating]="logic.isAnimating()" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)" [class.left-direction]="logic.direction() === 'left'">
 
           @for (article of visible; track article.id; let i = $index) {
 
