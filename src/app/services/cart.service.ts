@@ -144,6 +144,24 @@ export class CartService {
   }
 
 
+checkMetadataSize(cartItems: any): boolean {
+  
+  // 1. On transforme le panier en JSON comme on le fait en PHP
+  const jsonPayload = JSON.stringify(cartItems);
+  
+  // 2. On vérifie la taille
+  const size = new Blob([jsonPayload]).size;
+  
+  //console.log(`Taille actuelle du panier pour Stripe : ${size} octets`);
+
+  // Stripe limite à 500 caractères (octets), on garde une marge de sécurité
+  if (size > 480) {
+    console.error(" Warning: The cart is too large for Stripe !");
+    return false;
+  }
+  
+  return true;
+}
 
 }
 

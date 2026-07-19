@@ -27,7 +27,7 @@ export class LogicInputService {
       if (this.carouselService.carouselMode() === 'search' || this.carouselService.carouselMode() === 'loading') {
         if (result.length === 0) {
           this.carouselService.setMode('noresult');
-        } 
+        }
       }
     });
   }
@@ -69,23 +69,20 @@ export class LogicInputService {
     }));
   });
 
-  normalized = computed(() => {
-    const list = this.merged();
-    if (list.length === 0) return [];
-    if (list.length < 5) {
-      const result = [...list];
-      while (result.length < 5) result.push(...list);
-      return result.slice(0, 5);
-    }
-    return list;
-  });
+  normalized = computed(() => this.merged());
 
+  autoVisibleCount = computed(() => {
+    const len = this.filtered().length;
+    if (len >= 3) return 3;   // Carousel normal
+    return len;               // 1 ou 2 items
+  });
 
   visible = computed(() => {
     const list = this.normalized();
     const total = list.length;
-    const count = this.visibleCount();
+    const count = this.autoVisibleCount();
     const start = this.currentIndex() - Math.floor(count / 2);
+    const soldOutIds = new Set(this.soldOut().map(p => p.id));
     const result: any[] = [];
     if (count) {
       for (let i = 0; i < count; i++) {
@@ -94,7 +91,8 @@ export class LogicInputService {
         const fixedUrl = this.fixLocalUrl(article.pathpictureone);
         result.push({
           ...article,
-          pathpictureone: fixedUrl
+          pathpictureone: fixedUrl,
+          isSoldOut: soldOutIds.has(article.id)
         });
       }
     }
@@ -109,20 +107,23 @@ export class LogicInputService {
   });
 
   next() {
-    const total = this.normalized().length;
-    if (total === 0) return;
-    this.direction.set('right');
-    this.triggerAnimation();
-    this.currentIndex.set((this.currentIndex() + 1) % total);
+  if (this.filtered().length < 3) return;
+  const total = this.normalized().length;
+  if (total === 0) return;
+  this.direction.set('right');
+  this.triggerAnimation();
+  this.currentIndex.set((this.currentIndex() + 1) % total);
   }
 
-  prev() {
-    const total = this.normalized().length;
-    if (total === 0) return;
-    this.direction.set('left');
-    this.triggerAnimation();
-    this.currentIndex.set((this.currentIndex() - 1 + total) % total);
-  }
+prev() {
+  if (this.filtered().length < 3) return;
+  const total = this.normalized().length;
+  if (total === 0) return;
+  this.direction.set('left');
+  this.triggerAnimation();
+  this.currentIndex.set((this.currentIndex() - 1 + total) % total);
+}
+
 
   private triggerAnimation() {
     this.isAnimating.set(true);
@@ -130,7 +131,7 @@ export class LogicInputService {
   }
 
   getTransform(i: number) {
-    const middle = Math.floor(this.visibleCount() / 2);
+    const middle = Math.floor(this.autoVisibleCount() / 2);
     const offset = i - middle;
     const isMobile = window.innerWidth < 900;
     const rotation = offset * 8;
@@ -148,12 +149,12 @@ export class LogicInputService {
   }
 
   getZIndex(i: number) {
-    const middle = Math.floor(this.visibleCount() / 2);
+    const middle = Math.floor(this.autoVisibleCount() / 2);
     return 100 - Math.abs(i - middle);
   }
 
   getOpacity(i: number) {
-    const middle = Math.floor(this.visibleCount() / 2);
+    const middle = Math.floor(this.autoVisibleCount() / 2);
     return 1 - Math.abs(i - middle) * 0.15;
   }
 

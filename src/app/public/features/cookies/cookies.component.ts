@@ -63,17 +63,12 @@ const TEXTES = {
 export class CookiesComponent implements OnInit {
 
   private cookieService = inject(CookieService);
-  private cartService = inject(CartService);
   private carouselService = inject(CarouselService);
   private app = inject(AppComponent);
 
 
-
   ngOnInit() {
-
-
-    this.cartService.clear();
-
+    
     window.addEventListener('beforeunload', () => {
       this.saveCookiesOnExit();
     });
@@ -135,10 +130,10 @@ export class CookiesComponent implements OnInit {
   decline() {
     this.analyticsEnabled = false;
     this.marketingEnabled = false;
-
     this.cookieService.set('cookie_consent', 'decline');
     this.cookieService.set('analytics', 'false');
     this.cookieService.set('marketing', 'false');
+
 
     this.visible = false;
     this.refreshPage();

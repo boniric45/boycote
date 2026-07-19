@@ -6,9 +6,9 @@ import { Injectable, signal } from '@angular/core';
 export class CookieService {
 
   set(name: string, value: string, days = 365) {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
-  }
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=None; Secure`;
+}
 
   get(name: string): string | null {
     return document.cookie

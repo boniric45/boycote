@@ -46,10 +46,6 @@ export class AppComponent {
 
     const consent = this.cookiesService.get('cookie_consent');
 
-    if (!consent) {
-      this.cartService.clear();
-    };
-
     if (consent) {
        this.isCookiesIsNotSaved.set(false);
     }

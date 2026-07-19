@@ -21,7 +21,9 @@ export class SuccessComponent {
 
   cartService = inject(CartService);
 
-  constructor() {
-    this.cartService.clear(); // 🔥 Vide le panier
+  ngOnInit() {
+    // Le panier doit être vidé uniquement si Stripe confirme le paiement
+    this.cartService.clear(); 
   }
+  
 }
