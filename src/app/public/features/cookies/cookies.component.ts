@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AppComponent } from '../../../app.component';
 import { CarouselService } from '../../../services/carousel.service';
-import { CartService } from '../../../services/cart.service';
 import { CookieService } from '../../../services/cookie.service';
 import { CloseButtonComponent } from "../../../shared/close-button/close-button.component";
-import { AppComponent } from '../../../app.component';
-
 
 // TEXTES FR / EN
 const TEXTES = {
@@ -25,9 +23,9 @@ const TEXTES = {
     essential: 'Essential',
     essentialDesc: 'Required for the site to work (cart, session, security). Cannot be disabled.',
     analytics: 'Analytics',
-    analyticsDesc: 'Help us understand how visitors use the site (Google Analytics, etc.).',
+    analyticsDesc: 'Help us understand how visitors use the site. (Google Analytics)',
     marketing: 'Marketing',
-    marketingDesc: 'Used to show personalised ads and track campaigns.',
+    marketingDesc: 'Used to show personalised ads and track campaigns. (Meta Pixel/ TikTok Pixel)',
     save: 'SAVE PREFERENCES',
     cancel: 'CANCEL'
   },
@@ -66,12 +64,8 @@ export class CookiesComponent implements OnInit {
   private carouselService = inject(CarouselService);
   private app = inject(AppComponent);
 
-
   ngOnInit() {
-    
-    window.addEventListener('beforeunload', () => {
-      this.saveCookiesOnExit();
-    });
+    // ❌ Supprimé : le beforeunload qui pose problème dans les webviews Instagram.
 
     const consent = this.cookieService.get('cookie_consent');
 
@@ -95,19 +89,6 @@ export class CookiesComponent implements OnInit {
   // TEXTES ACTIFS
   get t() { return TEXTES[this.langActuelle]; }
 
-  refreshPage() {
-    window.location.reload();
-  }
-
-  saveCookiesOnExit() {
-    // Si c’est la première fois → les toggles ont les valeurs par défaut
-    // Tu enregistres ces valeurs pour éviter le bug
-    this.cookieService.setBoolean('analytics', this.analyticsEnabled);
-    this.cookieService.setBoolean('marketing', this.marketingEnabled);
-    this.cookieService.set('cookie_consent', 'accepted');
-  }
-
-
   // CHANGER LANGUE
   switchLang() {
     this.langActuelle = this.langActuelle === 'en' ? 'fr' : 'en';
@@ -123,63 +104,62 @@ export class CookiesComponent implements OnInit {
     this.cookieService.set('marketing', 'true');
 
     this.visible = false;
-    this.refreshPage();
+    this.app.isCookiesIsNotSaved.set(false);
+    // ❌ window.location.reload() supprimé pour éviter la boucle Instagram
   }
 
   // TOUT REFUSER
   decline() {
     this.analyticsEnabled = false;
     this.marketingEnabled = false;
+
     this.cookieService.set('cookie_consent', 'decline');
     this.cookieService.set('analytics', 'false');
     this.cookieService.set('marketing', 'false');
 
-
     this.visible = false;
-    this.refreshPage();
+    this.app.isCookiesIsNotSaved.set(false);
+    // ❌ window.location.reload() supprimé
   }
 
   // OUVRIR MANAGE
   openManage() {
     this.analyticsEnabled = this.cookieService.getBoolean('analytics');
     this.marketingEnabled = this.cookieService.getBoolean('marketing');
-    this.essentialEnabled = true; // toujours true
+    this.essentialEnabled = true;
 
     this.manageOpen = true;
   }
 
-  closeManage() {
-    this.saveCookiesOnExit();
-    this.carouselService.setMode('standard');
-    this.manageOpen = false;
-    this.visible = false;
-    // 👉 C’est cette ligne qui ferme l’overlay
-    this.app.isCookiesIsNotSaved.set(false);
-
-  }
-
   // SAUVEGARDER PRÉFÉRENCES
   savePreferences() {
+    // Enregistrement explicite des états actuels des toggles
     this.cookieService.set('cookie_consent', 'custom');
     this.cookieService.set('analytics', String(this.analyticsEnabled));
     this.cookieService.set('marketing', String(this.marketingEnabled));
 
     this.manageOpen = false;
     this.visible = false;
-    this.refreshPage();
+    this.app.isCookiesIsNotSaved.set(false);
   }
 
+
+// FERMER LE MANAGE (ENREGISTRE L'ÉTAT ACTUEL ET FERME TOUT)
+  closeManage() {
+    // Enregistre les choix actuels des toggles sous le profil 'custom'
+    this.cookieService.set('cookie_consent', 'custom');
+    this.cookieService.set('analytics', String(this.analyticsEnabled));
+    this.cookieService.set('marketing', String(this.marketingEnabled));
+
+    this.carouselService.setMode('standard');
+    this.manageOpen = false;
+    this.visible = false;
+    this.app.isCookiesIsNotSaved.set(false);
+  }
 
   onClickMention(event: MouseEvent) {
     this.visible = false;
-    // 👉 C’est cette ligne qui ferme l’overlay
     this.app.isCookiesIsNotSaved.set(false);
     this.carouselService.setMode('notice');
-
-
   }
-
-
-
-
 }

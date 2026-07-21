@@ -4,21 +4,34 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class CookieService {
-
+  
+// Méthode standard pour VOS cookies (Instagram-friendly)
   set(name: string, value: string, days = 365) {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=None; Secure`;
-}
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax; Secure`;
+  }
+
+  // Nouvelle méthode spécifique pour les cookies tiers/Stripe si besoin d'un SameSite=None
+  setCrossSite(name: string, value: string, days = 365) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=None; Secure`;
+  }
 
   get(name: string): string | null {
-    return document.cookie
-      .split('; ')
-      .find(row => row.startsWith(name + '='))
-      ?.split('=')[1] || null;
+    const nameEQ = name + '=';
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) {
+        return decodeURIComponent(c.substring(nameEQ.length, c.length));
+      }
+    }
+    return null;
   }
 
   delete(name: string) {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax; Secure`;
   }
 
   getBoolean(name: string): boolean {
@@ -27,14 +40,6 @@ export class CookieService {
 
   setBoolean(name: string, value: boolean, days: number = 365): void {
     this.set(name, value ? 'true' : 'false', days);
-  }
-
-  setConsent(value: 'accepted' | 'decline') {
-    localStorage.setItem('cookie_consent', value);
-  }
-
-  hasConsent(): boolean {
-    return localStorage.getItem('cookie_consent') !== null;
   }
 
 }

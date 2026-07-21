@@ -56,48 +56,49 @@ export class CartComponent {
     this.cartService.remove(productId);
   }
 
-  // checkout(): void {
-  //   const validation = this.cartService.validateCheckout();
+// checkout(): void {
+//   const validation = this.cartService.validateCheckout();
 
-  //   if (!validation.valid) {
-  //     alert(validation.errors.join("\n"));
-  //     return;
-  //   }
+//   if (!validation.valid) {
+//     alert(validation.errors.join("\n"));
+//     return;
+//   }
 
-  //   const items = this.cartService.getItems().filter(i => !i.soldOut);
+//   const items = this.cartService.getItems().filter(i => !i.soldOut);
 
-  //   const payload = {
-  //     items: items.map(item => ({
-  //       id: item.product.id,
-  //       nom: item.product.name,
-  //       sku: item.product.sku,
-  //       prix: item.product.prix
-  //     }))
-  //   };
+//   // Utilisation des clés courtes pour correspondre au PHP
+//   const payload = {
+//     items: items.map(item => ({
+//       i: item.product.id,
+//       n: item.product.name,
+//       s: item.product.sku,
+//       p: item.product.prix,
+//       q: item.quantity || 1 // Important d'inclure la quantité
+//     }))
+//   };
 
-  //   const checkDataSize = this.cartService.checkMetadataSize(payload);
-
-  //   if (checkDataSize) {
-
-  //     this.http.post<{ url: string }>(
-  //       `${this.API}/create-checkout.php`,
-  //       payload,
-  //       { withCredentials: true }
-  //     )
-  //       .subscribe({
-  //         next: (res) => {
-  //           if (res?.url) {
-  //             setTimeout(() => {
-  //               window.open(res.url, '_self');
-  //             }, 0);
-  //           }
-  //         },
-  //         error: (err) => {
-  //           console.error('Erreur checkout:', err);
-  //         }
-  //       });
-  //   }
-  // }
+//   // Vérification de la taille
+//   if (this.cartService.checkMetadataSize(payload.items)) {
+//     this.http.post<{ url: string }>(
+//       `${this.API}/create-checkout.php`,
+//       payload,
+//       { withCredentials: true }
+//     )
+//     .subscribe({
+//       next: (res) => {
+//         if (res?.url) {
+//           window.location.href = res.url;
+//         }
+//       },
+//       error: (err) => {
+//         console.error('Erreur checkout:', err);
+//         alert("An error occurred while redirecting to Stripe.");
+//       }
+//     });
+//   } else {
+//     alert("Your cart is too large to be processed in a single transaction.");
+//   }
+// }
 
 checkout(): void {
   const validation = this.cartService.validateCheckout();
@@ -109,18 +110,14 @@ checkout(): void {
 
   const items = this.cartService.getItems().filter(i => !i.soldOut);
 
-  // Utilisation des clés courtes pour correspondre au PHP
+  // 🔥 On envoie uniquement les IDs du produit au PHP (plus besoin du nom, prix, etc.)
   const payload = {
     items: items.map(item => ({
-      i: item.product.id,
-      n: item.product.name,
-      s: item.product.sku,
-      p: item.product.prix,
-      q: item.quantity || 1 // Important d'inclure la quantité
+      i: item.product.id
     }))
   };
 
-  // Vérification de la taille
+  // Optionnel : La taille des IDs ne dépassera jamais les limites de Stripe
   if (this.cartService.checkMetadataSize(payload.items)) {
     this.http.post<{ url: string }>(
       `${this.API}/create-checkout.php`,

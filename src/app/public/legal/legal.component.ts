@@ -10,13 +10,13 @@ import { CloseButtonComponent } from "../../shared/close-button/close-button.com
 // ============================================================
 const INFO = {
   prenom_nom: 'Thomas Pagnon',
-  nom_commercial: '[Ton Nom Commercial]',
-  adresse: '[Ton Adresse]',
-  siren: '[Ton Numéro SIREN]',
-  ville_rcs: '[Ta Ville]',
-  email: '[Ton Email Pro]',
-  mediateur: '[Nom du médiateur, ex: CM2C ou FEVAD]',
-  lien_odr: '[Lien plateforme ODR Commission Européenne]',
+  nom_commercial: 'boy coté',
+  adresse: '42 avenue du Languedoc RN 6113, 11200 Lézignan-Corbières',
+  siren: '102 323 318',
+  ville_rcs: 'Narbonne',
+  email: 'contact@boycoté.fr',
+  mediateur: 'CM2C',
+  lien_odr: 'https://www.cm2c.net',
 };
 // ============================================================
 
@@ -39,19 +39,26 @@ const TEXTES = {
       },
       {
         titre: 'Terms & Conditions', cols: [
-          ['Products', 'Items are second-hand and sold in the condition described. Variations in color or minor wear are inherent to vintage/used items.'],
+          ['Products', 'Items are second-hand and sold in the condition described. Variations in color or minor wear are inherent to vintage/used items. All our items are covered by the legal guarantee of conformity (Article L217-4 of the French Consumer Code) and the guarantee against hidden defects (Article 1641 of the French Civil Code). '],
           ['Product Accuracy', "We make every effort to display colors and details accurately. Minor color variations are not considered defects."],
-          ['Price', 'All prices are in Euros (€). VAT not applicable, art. 293 B of the French Tax Code (CGI).'],
+          
+          ['Price', 'All prices are in Euros (€). VAT not applicable, art. 293 B of the French Tax Code (CGI). A physical invoice will be included in each package.'],
+          
           ['Errors and Omissions', 'In the event of an obvious pricing error, we reserve the right to correct it and cancel the order if necessary, even after confirmation.'],
-          ['Shipping Fees', 'Shipping costs are calculated at checkout based on destination and weight.'],
+          ['Shipping Fees', 'Shipping fees are calculated at checkout based on the destination. It is imperative that the buyer selects the service associated with their geographical location, otherwise the order may be cancelled and refunded.'],
+
           ['Customs & Taxes', 'For orders outside the EU, the buyer is the importer. Any customs duties or import fees are the sole responsibility of the buyer.'],
+
           ['Delivery', 'We ship worldwide. We are not responsible for delays caused by customs or postal services once the item has left France.'],
-          ['Responsibility', 'We are not responsible for delays or damages caused by carrier services (Post, DHL, etc.).'],
+
+          ['Responsibility', 'We are not responsible for delays caused by the carrier (La Poste Colissimo). In accordance with regulations, the seller is responsible for the proper execution of the delivery. In the event of loss or damage during transport, the seller undertakes to file the necessary claims with the carrier on behalf of the customer and to find an amicable solution or proceed with a refund.'],
+
           ['Authenticity', 'Every item is carefully selected and undergoes a thorough internal inspection before being listed.'],
-          ['Independent Reseller', 'We are an independent reseller of pre-owned luxury goods. We are not affiliated with, or sponsored by, the brands we sell.'],
+
+          ['Independent Reseller', 'We are an independent reseller of second-hand products. We are not affiliated with the brands we sell.'],
           ['Claims', 'If you have any concerns regarding authenticity, you must contact us within 14 days of receipt.'],
           ['Condition for Refund', 'A refund for authenticity concerns will only be considered if the security tag is still intact and attached to the item.'],
-          ['Last Updated', 'April 2026 — Occitanie, France.'],
+          ['Last Updated', 'July 2026 — Occitanie, France.'],
         ]
       },
       {
@@ -62,7 +69,8 @@ const TEXTES = {
           ['Refund Delay', 'Refunds are processed within 14 days after we receive and inspect the item.'],
           ['Security Tag', 'Items must be returned with their original security tag still attached. Any removal renders the item ineligible for return and refund.'],
           ['Condition', 'Items must be returned in their original condition. Any damaged item will not be refunded.'],
-          ['Damages', 'You must report any damage or discrepancy within 48 hours of receiving the package.'],
+          
+          ['Damages', 'In order to enable us to take the necessary steps with the carrier in the event of transport-related damage, we recommend that the buyer report any damage or damaged package within 48 to 72 hours following receipt.'],
         ]
       },
       {
@@ -73,17 +81,17 @@ const TEXTES = {
           ['Data Retention', 'In accordance with French law, order-related data is kept for 10 years for accounting purposes.'],
           ['Social Media', 'We use cookies for analytics and social media interactions (Instagram/TikTok). Manage your preferences via our cookie banner.'],
           ['Your Rights', `You can request the deletion of your personal data at any time by contacting us at ${INFO.email}.`],
-          ['Cookies', 'We use Essential, Analytics, and Marketing cookies. You can manage your preferences through our cookie banner.'],
+          ['Cookies', 'We use Essential, Analytical, and Marketing cookies. Manage your preferences via our cookie banner. This site uses third-party trackers, including Google Analytics (audience measurement), the Meta Pixel (Facebook/Instagram advertising and targeting), and the TikTok Pixel (TikTok measurement and advertising), in order to analyze user navigation and offer tailored content.'],
         ]
       },
       {
         titre: 'Shipping Policy', cols: [
-          ['Processing', 'Orders are processed and dispatched from Occitanie, France within 2–3 business days.'],
-          ['Rates', 'Shipping costs are calculated at checkout based on weight and destination.'],
-          ['Delivery Estimates', 'France: 2–3 business days · Europe: 5–10 business days · International: 10–20 business days. These times are estimates only.'],
+          ['Processing', 'Orders are processed and dispatched from Occitanie, France within 2–5 business days.'],
+          ['Rates', 'Shipping fees are calculated at checkout based on the destination. It is imperative that the buyer selects the service associated with their geographical location, otherwise the order may be cancelled and refunded.'],
+          ['Delivery Estimates', 'France: 2–5 business days · Europe: 4–7 business days · International: 7–14 business days. These times are estimates only.'],
           ['Tracking', 'A tracking number will be sent to your email address as soon as your package is shipped.'],
           ['Customs', 'For orders outside the EU, any customs fees or import taxes are at the buyer\'s expense.'],
-          ['Responsibility', 'We are not responsible for delays or issues caused by the carrier once the package has been dispatched.'],
+          ['Responsibility', 'We are not responsible for delays caused by the carrier (La Poste Colissimo). In accordance with regulations, the seller is responsible for the proper execution of the delivery. In the event of loss or damage during transport, the seller undertakes to file the necessary claims with the carrier on behalf of the customer and to find an amicable solution or proceed with a refund.'],
           ['Warranty & Liability', 'All items benefit from the French legal warranty of conformity. We are not responsible for events beyond our control (Force Majeure).'],
           ['Applicable Law', 'These terms are governed by French law. Any disputes will be settled under the jurisdiction of French courts.'],
         ]
@@ -91,7 +99,7 @@ const TEXTES = {
       {
         titre: 'Dispute Resolution', cols: [
           ['Mediation', `In the event of a dispute, after a prior written request to our customer service, you may contact a consumer mediator: ${INFO.mediateur}.`],
-          ['Online Platform', `The European Commission provides an online dispute resolution platform: ${INFO.lien_odr}.`],
+          ['Online Platform', `In the event of a dispute, you can use the consumer mediator CM2C via their website: ${INFO.lien_odr} or by mail: CM2C, 49 rue de Ponthieu, 75008 Paris.`],
           ['Applicable Law', 'These terms are governed by French law. Any dispute shall be subject to the jurisdiction of the competent French courts.'],
         ]
       },
@@ -115,19 +123,23 @@ const TEXTES = {
       },
       {
         titre: 'Conditions Générales de Vente', cols: [
-          ['Produits', "Les articles sont d'occasion et vendus dans l'état décrit. Des variations de couleur ou légère usure sont inhérentes aux articles vintage."],
+          ['Produits', "Les articles sont d'occasion et vendus dans l'état décrit. Des variations de couleur ou légère usure sont inhérentes aux articles vintage. Tous nos articles bénéficient de la garantie légale de conformité (article L217-4 du Code de la consommation) et de la garantie contre les vices cachés (article 1641 du Code civil)."],
           ['Exactitude', "Nous faisons tout notre possible pour afficher les couleurs avec précision. Les légères variations ne sont pas considérées comme des défauts."],
-          ['Prix', 'Tous les prix sont en Euros (€). TVA non applicable, art. 293 B du CGI.'],
+          ['Prix', 'Tous les prix sont en Euros (€). TVA non applicable, art. 293 B du CGI. Une facture physique vous sera transmise dans chaque colis.'],
           ['Erreurs', "En cas d'erreur de prix évidente, nous nous réservons le droit de corriger l'erreur et d'annuler la commande, même après confirmation."],
-          ['Frais de port', 'Les frais de livraison sont calculés au moment du paiement en fonction de la destination et du poids.'],
+          ['Frais de port', 'Les frais de livraison sont calculés au moment du paiement en fonction de la destination. Il est impératif que l’acheteur choisisse le service lié à sa position géographique, faute de quoi la commande pourra être annulée et remboursée.'],
           ['Douanes & Taxes', "Hors UE, l'acheteur est l'importateur. Tous droits de douane et taxes locales sont à sa charge exclusive."],
           ['Livraison', "Nous livrons dans le monde entier. Nous ne sommes pas responsables des retards douaniers une fois l'article parti de France."],
-          ['Responsabilité', 'Nous ne sommes pas responsables des retards ou dommages causés par les transporteurs (La Poste, DHL, etc.).'],
+         
+          ['Responsabilité', 'Nous ne sommes pas responsables des retards causés par le transporteur (La Poste Collisimo). Conformément à la réglementation, le vendeur est responsable de la bonne exécution de la livraison. En cas de perte ou de dommage durant le transport, le vendeur s\'engage à faire valoir les réclamations nécessaires auprès du transporteur pour le compte du client et à trouver une solution amiable ou procéder au remboursement.'],
+
           ['Authenticité', "Chaque article est soigneusement sélectionné et fait l'objet d'une inspection interne approfondie avant d'être mis en vente."],
-          ['Revendeur indépendant', "Nous sommes un revendeur indépendant de produits de luxe d'occasion. Nous ne sommes pas affiliés aux marques que nous vendons."],
+         
+          ['Revendeur indépendant', "Nous sommes un revendeur indépendant de produits d'occasion. Nous ne sommes pas affiliés aux marques que nous vendons."],
+
           ['Réclamations', "Pour toute question d'authenticité, vous devez nous contacter dans les 14 jours suivant la réception."],
           ['Condition de remboursement', "Un remboursement pour authenticité ne sera envisagé que si l'étiquette de sécurité est toujours intacte."],
-          ['Dernière mise à jour', 'Avril 2026 — Occitanie, France.'],
+          ['Dernière mise à jour', 'Juillet 2026 — Occitanie, France.'],
         ]
       },
       {
@@ -138,7 +150,7 @@ const TEXTES = {
           ['Délai de remboursement', "Les remboursements sont traités dans les 14 jours suivant la réception et l'inspection de l'article."],
           ['Étiquette de sécurité', "Les articles doivent être retournés avec leur étiquette de sécurité d'origine. Tout retrait rendra l'article inéligible au remboursement."],
           ['État', "Les articles doivent être retournés dans leur état d'origine. Tout article endommagé ne sera pas remboursé."],
-          ['Dommages', 'Tout dommage doit être signalé dans les 48 heures suivant la réception du colis.'],
+          ['Dommages', 'Afin de nous permettre d\'effectuer les démarches nécessaires auprès du transporteur en cas de dommage lié au transport, nous recommandons à l\'acheteur de signaler toute avarie ou colis endommagé dans un délai de 48 à 72 heures suivant la réception.'],
         ]
       },
       {
@@ -149,17 +161,17 @@ const TEXTES = {
           ['Conservation', 'Conformément à la loi française, les données de commandes sont conservées 10 ans à des fins comptables.'],
           ['Réseaux sociaux', 'Nous utilisons des cookies pour les analyses et les interactions Instagram/TikTok. Gérez vos préférences via notre bandeau cookies.'],
           ['Vos droits', `Vous pouvez demander la suppression de vos données à tout moment via ${INFO.email}.`],
-          ['Cookies', 'Nous utilisons des cookies Essentiels, Analytiques et Marketing. Gérez vos préférences via notre bandeau cookies.'],
+          ['Cookies', 'Nous utilisons des cookies Essentiels, Analytiques et Marketing. Gérez vos préférences via notre bandeau cookies. Ce site utilise des traceurs tiers, notamment Google Analytics (mesure d’audience), le Meta Pixel (publicité et ciblage Facebook/Instagram) et le TikTok Pixel (mesure et publicité TikTok), afin d’analyser la navigation des utilisateurs et de proposer des offres adaptées.'],
         ]
       },
       {
         titre: 'Politique de Livraison', cols: [
-          ['Traitement', "Les commandes sont traitées et expédiées depuis l'Occitanie, France sous 2 à 3 jours ouvrés."],
-          ['Tarifs', 'Les frais de livraison sont calculés au moment du paiement selon le poids et la destination.'],
-          ['Délais estimés', 'France : 2–3 jours ouvrés · Europe : 5–10 jours ouvrés · International : 10–20 jours ouvrés. Ces délais sont indicatifs.'],
+          ['Traitement', "Les commandes sont traitées et expédiées depuis l'Occitanie, France sous 2 à 5 jours ouvrés."],
+          ['Tarifs', 'Les frais de livraison sont calculés au moment du paiement en fonction de la destination. Il est impératif que l’acheteur choisisse le service lié à sa position géographique, faute de quoi la commande pourra être annulée et remboursée.'],
+          ['Délais estimés', 'France : 2–5 jours ouvrés · Europe : 4–7 jours ouvrés · International : 7–14 jours ouvrés. Ces délais sont indicatifs.'],
           ['Suivi', 'Un numéro de suivi vous sera envoyé par email dès expédition.'],
           ['Douanes', "Hors UE, tous frais de douane ou taxes d'importation sont à la charge de l'acheteur."],
-          ['Responsabilité', "Nous ne sommes pas responsables des retards causés par le transporteur une fois le colis expédié."],
+          ['Responsabilité', "Nous ne sommes pas responsables des retards causés par le transporteur (La Poste Collisimo). Conformément à la réglementation, le vendeur est responsable de la bonne exécution de la livraison. En cas de perte ou de dommage durant le transport, le vendeur s'engage à faire valoir les réclamations nécessaires auprès du transporteur pour le compte du client et à trouver une solution amiable ou procéder au remboursement."],
           ['Garantie & Force Majeure', "Tous les articles bénéficient de la garantie légale de conformité française. Nous ne sommes pas responsables des événements hors de notre contrôle."],
           ['Droit applicable', 'Ces conditions sont régies par le droit français. Tout litige sera réglé sous la juridiction des tribunaux français.'],
         ]
@@ -167,7 +179,7 @@ const TEXTES = {
       {
         titre: 'Résolution des Litiges', cols: [
           ['Médiation', `En cas de litige, après demande écrite préalable, vous pouvez contacter un médiateur de la consommation : ${INFO.mediateur}.`],
-          ['Plateforme en ligne', `La Commission Européenne met à disposition une plateforme de règlement en ligne des litiges : ${INFO.lien_odr}.`],
+          ['Plateforme en ligne', `  En cas de litige, vous pouvez recourir au médiateur de la consommation CM2Cvia leur site internet :  ${INFO.lien_odr} ou par voie postale : CM2C, 49 rue de Ponthieu, 75008 Paris.`],
           ['Droit applicable', 'Les présentes conditions sont régies par le droit français. Tout litige sera soumis à la compétence des tribunaux français.'],
         ]
       },
@@ -202,8 +214,6 @@ export class LegalComponent {
 
   private cookieService = inject(CookieService);
   private carouselService = inject(CarouselService);
-
-
 
 
   ngOnInit() {

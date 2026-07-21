@@ -10,7 +10,7 @@
 .wrapper{
   display: flex;
   justify-content: center;
-padding-top: 50px;
+  padding-top: 22px;
 }
 
 
@@ -191,12 +191,12 @@ padding-top: 50px;
   flex-direction: row;
   align-items: baseline;
   margin-bottom: 6px;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   color: #111;
   line-height: 1.6;
   min-width: 0;
   overflow: hidden;
-  padding-left: 5%;
+
 }
 
 .info-line .lbl {
