@@ -6,8 +6,7 @@
                 <app-component-left></app-component-left>
             </button>
 
-            <div class="items" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)"
-                [class.animating]="isAnimating" [class.left-direction]="direction === 'left'">
+            <div class="items" [class.animating]="isAnimating" [class.left-direction]="direction === 'left'">
 
                 @for (article of visibleArticles; track trackByArticle($index, article); let i = $index) {
                 <img class="item" [src]="fixLocalUrl(article.pathpictureone)" [style.transform]="getTransform(i)"

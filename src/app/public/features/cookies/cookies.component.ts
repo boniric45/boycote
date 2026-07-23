@@ -64,15 +64,14 @@ export class CookiesComponent implements OnInit {
   private carouselService = inject(CarouselService);
   private app = inject(AppComponent);
 
-  ngOnInit() {
-    // ❌ Supprimé : le beforeunload qui pose problème dans les webviews Instagram.
-
+ngOnInit() {
     const consent = this.cookieService.get('cookie_consent');
 
     if (consent) {
-      this.visible = false; // bannière déjà gérée
-      this.analyticsEnabled = this.cookieService.get('analytics') === 'true';
-      this.marketingEnabled = this.cookieService.get('marketing') === 'true';
+      this.visible = false; 
+      // Utilisation de la méthode getBoolean sécurisée de votre service
+      this.analyticsEnabled = this.cookieService.getBoolean('analytics');
+      this.marketingEnabled = this.cookieService.getBoolean('marketing');
     }
   }
 
@@ -131,25 +130,25 @@ export class CookiesComponent implements OnInit {
     this.manageOpen = true;
   }
 
-  // SAUVEGARDER PRÉFÉRENCES
+// SAUVEGARDER PRÉFÉRENCES
   savePreferences() {
-    // Enregistrement explicite des états actuels des toggles
+    // Forçage explicite de l'écriture des cookies avec le service
     this.cookieService.set('cookie_consent', 'custom');
-    this.cookieService.set('analytics', String(this.analyticsEnabled));
-    this.cookieService.set('marketing', String(this.marketingEnabled));
+    this.cookieService.set('analytics', this.analyticsEnabled ? 'true' : 'false');
+    this.cookieService.set('marketing', this.marketingEnabled ? 'true' : 'false');
 
+    // Fermeture des modales
     this.manageOpen = false;
     this.visible = false;
     this.app.isCookiesIsNotSaved.set(false);
   }
 
-
-// FERMER LE MANAGE (ENREGISTRE L'ÉTAT ACTUEL ET FERME TOUT)
+// FERMER LE MANAGE
   closeManage() {
-    // Enregistre les choix actuels des toggles sous le profil 'custom'
+    // Forçage explicite également ici
     this.cookieService.set('cookie_consent', 'custom');
-    this.cookieService.set('analytics', String(this.analyticsEnabled));
-    this.cookieService.set('marketing', String(this.marketingEnabled));
+    this.cookieService.set('analytics', this.analyticsEnabled ? 'true' : 'false');
+    this.cookieService.set('marketing', this.marketingEnabled ? 'true' : 'false');
 
     this.carouselService.setMode('standard');
     this.manageOpen = false;

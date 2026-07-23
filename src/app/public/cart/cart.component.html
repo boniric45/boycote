@@ -36,6 +36,15 @@
     <div class="cart-body">
       <div class="divider"></div>
 
+      <!-- 💡 Avertissement spécifique si on est dans Instagram -->
+      @if (isInstagram()) {
+      <div class="instagram-warning-box"
+        style="background: #fff3cd; color: #856404; padding: 10px; margin-bottom: 10px; font-size: 12px; border-radius: 4px;">
+        ⚠️ You are browsing within Instagram. To avoid payment errors (3D Secure), click the <strong>3 dots
+          (...)</strong> in the top right corner, then select <strong>"Open in browser"</strong>.
+      </div>
+      }
+
       @if ((cart$ | async)?.length === 0) {
       <p class="cart-empty">Your cart is empty.</p>
       } @else {
@@ -54,14 +63,14 @@
         </div>
 
         @if(item.soldOut){
-          <div class="badge-soldout">
-            SOLD OUT
-          </div>
+        <div class="badge-soldout">
+          SOLD OUT
+        </div>
         }
         @else {
-          <button class="btn-remove" (click)="removeItem(item.product.id)">
-            ✕ Remove
-          </button>
+        <button class="btn-remove" (click)="removeItem(item.product.id)">
+          ✕ Remove
+        </button>
         }
       </div>
       }
@@ -80,18 +89,30 @@
         <span class="cart-total-label">Total</span>
         <span class="cart-total-amount">€ {{ total }}</span>
       </div>
-
+      @if(isInstagram()){
+      <div class="instagram-block-box"
+        style="background: #f8d7da; color: #721c24; padding: 12px; margin-top: 10px; font-size: 13px; border-radius: 6px; text-align: center; border: 1px solid #f5c6cb;">
+        <p style="margin: 0 0 8px 0; font-weight: bold;">⚠️ Payments are not supported inside Instagram</p>
+        <p style="margin: 0;">
+          To checkout securely, please open this page in your browser by tapping the <strong>three dots (...)</strong>
+          in the top right corner ↗️ and selecting <strong>"Open in browser"</strong> (Safari or Chrome).
+        </p>
+      </div>
+      }
+      @else {
       <button class="btn-checkout" [disabled]="isCartEmpty" (click)="checkout()">
-        <span>PROCEED TO CHECKOUT →</span>
+        <span>PROCEED TO CHECKOUT</span>
       </button>
       <p class="secure-note">🔒 Secure payment via Stripe</p>
+      }
       <p class="shipping-note">Apply your code at the final checkout step</p>
       <p class="shipping-note">🌍 Worldwide shipping. Costs updated at next step.</p>
-      <p class="shipping-note">You can view the General Terms and Conditions of Sale by clicking on the following link: <a class="cgv" (click)="onClickGTC()">GTC</a>.</p>
+      <p class="shipping-note">You can view the General Terms and Conditions of Sale by clicking on the following link:
+        <a class="cgv" (click)="onClickGTC()">GTC</a>.
+      </p>
 
     </div>
 
   </div>
 </div>
-
 }
