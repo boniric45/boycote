@@ -32,6 +32,7 @@
       <span class="title-text">My Cart</span>
     </div>
 
+
     <!-- Articles -->
     <div class="cart-body">
       <div class="divider"></div>
@@ -49,18 +50,20 @@
       <p class="cart-empty">Your cart is empty.</p>
       } @else {
       @let items = (cart$ | async) || [];
-
       @for (item of items; track item?.product?.id ?? i; let i = $index) {
       <div class="cart-item" [class.sold-out]="item.soldOut">
-        <div class="cart-item-img-placeholder">
-          <img class="img-cart" [src]="item?.product?.pathpictureone">
-        </div>
 
-        <div class="cart-item-info">
-          <span class="cart-item-name">{{ item?.product?.name }}</span>
-          <span class="cart-item-sub">{{ item?.product?.size }} · {{ item?.product?.gender }}</span>
-          <span class="cart-item-price">€ {{ item?.product?.prix }}</span>
-        </div>
+
+          <div class="cart-item-img-placeholder" >
+            <img class="img-cart" (click)="readProduct(item.product)" [src]="item?.product?.pathpictureone">
+          </div>
+
+          <div class="cart-item-info">
+            <span class="cart-item-name">{{ item?.product?.name }}</span>
+            <span class="cart-item-sub">{{ item?.product?.size }} · {{ item?.product?.gender }}</span>
+            <span class="cart-item-price">€ {{ item?.product?.prix }}</span>
+          </div>
+
 
         @if(item.soldOut){
         <div class="badge-soldout">

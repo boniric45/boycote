@@ -4,8 +4,8 @@
 }
 
 .container {
-  height: 150dvh;
-  margin-top: 32px;
+  height: 100dvh;
+//  margin-top: 32px;
   padding: 0;
 }
 
@@ -71,7 +71,7 @@
   display: block;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: -50px;
   //padding-bottom: 233px;
   margin-left: 6px;
 }
@@ -122,8 +122,10 @@
   .description {
     opacity: 1;
     position: relative; 
-    right: 60px;
+    right: -20px;
     top: 20%;
+    height: 800px;
+    width: 800px;
   }
 
   .carousel-product {
@@ -131,6 +133,7 @@
     top: 32%;
     left: 18%;
     transform: scale(0.9);
+    z-index: 1000;
   }
 
   app-component-left {
@@ -138,7 +141,6 @@
     margin-left: 40px;
     margin-top: -15px;
     background: transparent;
-
   }
 
   app-component-right {
@@ -189,8 +191,9 @@
   }
 
   .container-carousel {
+    margin-top: 100px;
     height: 200px;
-    transform: scale(0.45);
+    transform: scale(0.55);
     transform-origin: center;
   }
 

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { Product } from '../../models/product';
 import { CarouselService } from '../../services/carousel.service';
 import { CartService } from '../../services/cart.service';
-import { CartInfosInstagramComponent } from "../cart-infos-instagram/cart-infos-instagram.component";
+import { LogicProductService } from '../../services/logic-product.service';
 
 
 export interface CartItem {
@@ -18,7 +19,7 @@ export interface CartItem {
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, CartInfosInstagramComponent],
+  imports: [CommonModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
@@ -29,7 +30,10 @@ export class CartComponent {
   private http = inject(HttpClient);
   private cartService = inject(CartService);
   private carouselService = inject(CarouselService);
+  private logicProduct = inject(LogicProductService);
+
   cart$ = this.cartService.items$;
+  product!: Product;
 
   ngOnInit() {
     this.cartService.refreshDispo();
@@ -51,54 +55,26 @@ export class CartComponent {
     return this.cartService.isCartEmpty();
   }
 
+  readProduct(product: Product) {
+    if (this.carouselService.carouselMode() === 'product') {
+      this.carouselService.setMode('standard');
+      setTimeout(() => {
+        this.logicProduct.product = product;
+        this.carouselService.setMode('product');
+        this.closeCart();
+      }, 50);
+
+    } else {
+      this.carouselService.setMode('product');
+      this.logicProduct.product = product;
+      this.closeCart();
+    }
+  }
+
 
   removeItem(productId: number) {
     this.cartService.remove(productId);
   }
-
-  // checkout(): void {
-  //   const validation = this.cartService.validateCheckout();
-
-  //   if (!validation.valid) {
-  //     alert(validation.errors.join("\n"));
-  //     return;
-  //   }
-
-  //   const items = this.cartService.getItems().filter(i => !i.soldOut);
-
-  //   // Utilisation des clés courtes pour correspondre au PHP
-  //   const payload = {
-  //     items: items.map(item => ({
-  //       i: item.product.id,
-  //       n: item.product.name,
-  //       s: item.product.sku,
-  //       p: item.product.prix,
-  //       q: item.quantity || 1 // Important d'inclure la quantité
-  //     }))
-  //   };
-
-  //   // Vérification de la taille
-  //   if (this.cartService.checkMetadataSize(payload.items)) {
-  //     this.http.post<{ url: string }>(
-  //       `${this.API}/create-checkout.php`,
-  //       payload,
-  //       { withCredentials: true }
-  //     )
-  //     .subscribe({
-  //       next: (res) => {
-  //         if (res?.url) {
-  //           window.location.href = res.url;
-  //         }
-  //       },
-  //       error: (err) => {
-  //         console.error('Erreur checkout:', err);
-  //         alert("An error occurred while redirecting to Stripe.");
-  //       }
-  //     });
-  //   } else {
-  //     alert("Your cart is too large to be processed in a single transaction.");
-  //   }
-  // }
 
   checkout(): void {
     const validation = this.cartService.validateCheckout();
@@ -155,10 +131,10 @@ export class CartComponent {
     }
   }
 
-isInstagram(): boolean {
-  const ua = navigator.userAgent || navigator.vendor || (window as any).opera;
-  return /Instagram|FBAN|FBAV/i.test(ua); // Ajout de FBAN/FBAV pour cibler aussi Facebook si besoin
-}
+  isInstagram(): boolean {
+    const ua = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /Instagram|FBAN|FBAV/i.test(ua); // Ajout de FBAN/FBAV pour cibler aussi Facebook si besoin
+  }
 
 }
 

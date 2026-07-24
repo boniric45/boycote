@@ -1,18 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { Router } from "@angular/router";
 import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
 import { ApiService } from '../../../../services/api.service';
+import { CarouselService } from '../../../../services/carousel.service';
 import { CartService } from '../../../../services/cart.service';
+import { HeaderService } from '../../../../services/header.service';
+import { LogicProductService } from '../../../../services/logic-product.service';
+import { LogicRequestService } from '../../../../services/logic-request.service';
 import { ProductService } from '../../../../services/product.service';
 import { ComponentLeftComponent } from '../../component-left/component-left.component';
 import { ComponentRightComponent } from '../../component-right/component-right.component';
-import { CarouselService } from '../../../../services/carousel.service';
-import { LogicProductService } from '../../../../services/logic-product.service';
-import { CustomerRequestComponent } from '../../customer-request/customer-request.component';
-import { LogicRequestService } from '../../../../services/logic-request.service';
-import { HeaderService } from '../../../../services/header.service';
 
 
 @Component({
