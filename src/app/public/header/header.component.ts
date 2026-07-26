@@ -125,9 +125,9 @@ export class HeaderComponent {
     this.selectActive.set(false);
   }
 
-  onSearchInput(value: string) {
-    this.logicInputService.setFilters(value);
-    this.carouselService.setMode('search');
+  onSearchInput(value: string) {   
+      this.logicInputService.setFilters(value);
+      this.carouselService.setMode('search');
   }
 
   onSearchSelect(filters: any) {

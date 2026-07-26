@@ -1,12 +1,13 @@
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 60dvh;
+  min-height: 100%;
   padding-left: 50px;
   padding-right: 50px;
 }
 
 .carousel-host {
+  height: 100%;
   position: relative;
   z-index: 1;
 }

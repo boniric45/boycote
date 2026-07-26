@@ -14,7 +14,7 @@ const INFO = {
   adresse: '42 avenue du Languedoc RN 6113, 11200 Lézignan-Corbières',
   siren: '102 323 318',
   ville_rcs: 'Narbonne',
-  email: 'contact@boycoté.fr',
+  email: 'contact@boycote.fr',
   mediateur: 'CM2C',
   lien_odr: 'https://www.cm2c.net',
 };

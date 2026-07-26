@@ -4,9 +4,9 @@ import { ApiService } from './api.service';
 import { CarouselService } from './carousel.service';
 import { ProductService } from './product.service';
 
-function normalize(str: string) {
-  return str?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
+// function normalize(str: string) {
+//   return str?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+// }
 
 @Injectable({
   providedIn: 'root',
@@ -107,22 +107,22 @@ export class LogicInputService {
   });
 
   next() {
-  if (this.filtered().length < 3) return;
-  const total = this.normalized().length;
-  if (total === 0) return;
-  this.direction.set('right');
-  this.triggerAnimation();
-  this.currentIndex.set((this.currentIndex() + 1) % total);
+    if (this.filtered().length < 3) return;
+    const total = this.normalized().length;
+    if (total === 0) return;
+    this.direction.set('right');
+    this.triggerAnimation();
+    this.currentIndex.set((this.currentIndex() + 1) % total);
   }
 
-prev() {
-  if (this.filtered().length < 3) return;
-  const total = this.normalized().length;
-  if (total === 0) return;
-  this.direction.set('left');
-  this.triggerAnimation();
-  this.currentIndex.set((this.currentIndex() - 1 + total) % total);
-}
+  prev() {
+    if (this.filtered().length < 3) return;
+    const total = this.normalized().length;
+    if (total === 0) return;
+    this.direction.set('left');
+    this.triggerAnimation();
+    this.currentIndex.set((this.currentIndex() - 1 + total) % total);
+  }
 
 
   private triggerAnimation() {

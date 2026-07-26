@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, Signal, signal } from '@angular/core';
 import { forkJoin, Subscription } from 'rxjs';
 import { Garment } from '../../../models/garment';
 import { Gender } from '../../../models/gender';
@@ -32,6 +32,8 @@ export class SearchSelectsComponent {
   genders: Gender[] = [];
   types: Garment[] = [];
   subscription = new Subscription();
+  isNoActive: boolean = true;
+
 
   openMarques = signal(false);
   openTypes = signal(false);
@@ -149,6 +151,7 @@ export class SearchSelectsComponent {
       types: this.selectedTypes(),
       genders: this.selectedGenders()
     });
+    
     this.openMarques.set(false);
     this.openTypes.set(false);
     this.openGenders.set(false);

@@ -8,9 +8,22 @@
   /* ✔ centre tout horizontalement */
 }
 
+
 button:focus,
 button:focus-visible {
   outline: none;
+}
+
+app-component-left {
+      all: unset;
+    /* ✔ supprime TOUT le style par défaut */
+    outline: none;
+}
+
+app-component-right {
+      all: unset;
+    /* ✔ supprime TOUT le style par défaut */
+    outline: none;
 }
 
 .img-sold-out {
@@ -34,9 +47,9 @@ button:focus-visible {
   justify-content: center;
   align-items: center;
   /* ✔ centre le carousel */
-  margin-top: -10px;
-  padding-bottom: 36px;
-  height: 740px;
+ // margin-top: -10px;
+ // padding-bottom: 36px;
+  height: 900px;
 }
 
 /* CAROUSEL CORE */
@@ -104,9 +117,10 @@ button:focus-visible {
 .description {
   text-align: center;
   max-width: 365px;
+  min-height: 120px;
   font-family: "Roboto Mono", monospace;
   font-size: 0.8rem;
-  margin-bottom: 20px;
+  margin: 8px;
 }
 
 /* PRICE */
@@ -210,18 +224,16 @@ button.primary:active {
 }
 
 /* MOBILE RESPONSIVE */
-@media (max-width: 900px) {
+@media (max-width: 800px) {
 
   .carousel-wrapper {
     max-width: 100%;
-    height: auto;
   }
 
   .items {
     width: 270px;
     height: 310px;
-    margin: 0 auto;
-    /* pour centrer proprement */
+    margin: 0 auto; /* pour centrer proprement */
   }
 
   .item {
@@ -235,24 +247,15 @@ button.primary:active {
     display: none;
   }
 
-  .nav-mobile {
-    all: unset;
-    /* ✔ supprime TOUT le style par défaut */
-    outline: none;
-    margin: 0;
-    padding: 0;
-
-    cursor: pointer;
-    z-index: 200;
-
+  .nav-mobile.mobile{
     display: flex;
-    align-items: center;
     justify-content: center;
+    position: relative;
+  }
 
-    width: 42px;
-    /* ✔ taille propre */
-    height: 42px;
-    /* ✔ taille propre */
+  .nav-mobile{
+    margin-top: 16px;
+    margin-bottom: 32px;
   }
 
   .price {
@@ -329,15 +332,12 @@ button.primary:active {
     margin-top: 72px;
   }
 
-  .nav-mobile {
-    margin-bottom: 24px;
-  }
 
   .items {
+    /* pour centrer proprement */
     width: 200px;
     height: 240px;
     margin: 0 auto;
-    /* pour centrer proprement */
   }
 
   .item {

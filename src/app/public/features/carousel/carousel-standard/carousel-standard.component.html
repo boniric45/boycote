@@ -1,6 +1,5 @@
 <div class="global-wrapper">
   <div class="global-content">
-
     <div class="carousel-wrapper">
 
       <div class="carousel">
@@ -15,19 +14,13 @@
           @if(visibleArticles.length > 0){
           @for (article of visibleArticles;track trackByArticle($index,article); let i = $index) {
 
-          <img (click)="readViewProduct(article)"
-            class="item"
-            [src]="article.pathpictureone"
-            [class.sold]="article.isSoldOut" 
-            [style.transform]="getTransform(i)" 
-            [style.zIndex]="getZIndex(i)" 
+          <img (click)="readViewProduct(article)" class="item" [src]="article.pathpictureone"
+            [class.sold]="article.isSoldOut" [style.transform]="getTransform(i)" [style.zIndex]="getZIndex(i)"
             [style.opacity]="getOpacity(i)" />
-            @if(centralArticle.isSoldOut){
-              <img  class="img-sold-out" 
-                #soldBadge
-                src="/pictures/sold-out.png">
-              }
-            }
+          @if(centralArticle.isSoldOut){
+          <img class="img-sold-out" #soldBadge src="/pictures/sold-out.png">
+          }
+          }
           }
         </div>
         <button class="nav right desktop" (click)="next()">
@@ -39,35 +32,34 @@
         <div class="description">
           @if(centralArticle){
           <p>{{ centralArticle.name }}</p>
-            @if(!centralArticle.size){
-              <p>{{ centralArticle.gender}} </p>
-            }
-            @else{
-              <p>{{ centralArticle.gender}} - {{ centralArticle.size}} </p>
-            }
+          @if(!centralArticle.size){
+          <p>{{ centralArticle.gender}} </p>
+          }
+          @else{
+          <p>{{ centralArticle.gender}} - {{ centralArticle.size}} </p>
+          }
           <span class="price">{{ centralArticle.prix | currency:'EUR'}}</span>
           }
         </div>
       </div>
 
       @if(centralArticle){
-      <div class="conteneur-bouton">       
+      <div class="conteneur-bouton">
         @if(centralArticle.stock === 0){
         <button class="primary" (click)="addToRequest(centralArticle)"><span>REQUEST SOURCING</span></button>
-        } 
+        }
         @else {
-          <button class="primary" (click)="addToCart(centralArticle)"><span>ADD TO CART</span></button>
+        <button class="primary" (click)="addToCart(centralArticle)"><span>ADD TO CART</span></button>
         }
       </div>
       }
-      <div class="nav-mobile mobile">
-        <button class="nav" (click)="prev()">
-          <app-component-left></app-component-left>
-        </button>
-        <button class="nav right" (click)="next()">
-          <app-component-right></app-component-right>
-        </button>
-      </div>
+
+        <div class="nav-mobile mobile">
+            <app-component-left (click)="prev()"></app-component-left>
+            <app-component-right (click)="next()"></app-component-right>
+        </div>
+
+        <div class="divider"></div>
 
     </div>
   </div>

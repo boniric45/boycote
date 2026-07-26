@@ -71,13 +71,12 @@
         </div>
 
         <div class="nav-mobile mobile">
-          <button class="nav" (click)="prev()">
-            <app-component-left></app-component-left>
-          </button>
-          <button class="nav" (click)="next()">
-            <app-component-right></app-component-right>
-          </button>
+            <app-component-left (click)="prev()"></app-component-left>
+            <app-component-right (click)="next()"></app-component-right>
         </div>
+
+        <div class="divider"></div>
+
       </div>
       }
     </div>

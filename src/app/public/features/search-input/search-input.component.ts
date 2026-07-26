@@ -14,7 +14,6 @@ export class SearchInputComponent {
 
   private searchService = inject(SearchService);
   private carouselService = inject(CarouselService);
-  private route = inject(Router);
 
   @Output() focusInput = new EventEmitter<void>();
   @Output() searchInput = new EventEmitter<string>();
@@ -24,6 +23,7 @@ export class SearchInputComponent {
 
   @ViewChild('searchInputRef') searchInputRef!: ElementRef<HTMLInputElement>;
 
+  isNoActive: boolean = true;
   inputValue = '';
 
   /* Quand l’input prend le focus → on prévient le header */
@@ -33,16 +33,21 @@ export class SearchInputComponent {
     // Reinitialise le champ pour une autre recherche
     this.inputValue = '';
     this.searchInputRef.nativeElement.value = ''
+    this.isNoActive = true;
   }
 
   /* Quand l’utilisateur tape → on renvoie la valeur */
   onInput(event: Event) {
     this.inputValue = (event.target as HTMLInputElement).value;
+    if (this.inputValue === "") {
+      this.isNoActive = true;
+    } else {
+      this.isNoActive = false;
+    }
   }
 
   onSearchClick() {
     this.searchInput.emit(this.inputValue); // envoie la valeur
-    // this.submitted.emit();                  // débloque la progressbar
   }
 
   /* ============================

@@ -3,7 +3,7 @@
    ============================ */
 .header-wrapper {
   width: 100%;
-  padding: 10px 0;
+  padding: 4px 0;
   z-index: 10;
 }
 
@@ -69,14 +69,17 @@
 }
   .search-zone{
     transform:scale(0.92);
+    transform-origin: top;
+    margin: 0;
   }
 
   .search-wrapper{
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     flex-wrap: nowrap;
-    margin-top: 8px;
+  //  margin-top: 8px;
     margin-bottom: 8px;
   }
 

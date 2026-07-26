@@ -22,7 +22,8 @@
           <app-component-left></app-component-left>
         </button>
 
-        <div class="items" [class.animating]="logic.isAnimating()" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)" [class.left-direction]="logic.direction() === 'left'">
+        <div class="items" [class.animating]="logic.isAnimating()" (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd($event)" [class.left-direction]="logic.direction() === 'left'">
 
           @for (article of visible; track article.id; let i = $index) {
 
@@ -67,21 +68,15 @@
           <span>ADD TO CART</span>
         </button>
         }
-      </div>
-
+      </div>      
       <div class="nav-mobile mobile">
-        <button class="nav" (click)="logic.prev()">
-          <app-component-left></app-component-left>
-        </button>
-        <button class="nav" (click)="logic.next()">
-          <app-component-right></app-component-right>
-        </button>
+        <app-component-left (click)="logic.prev()"></app-component-left>
+        <app-component-right (click)="logic.next()"></app-component-right>
       </div>
+    }
+    
 
-      }
-
-
-
+      <div class="divider"></div>
 
     </div>
   </div>

@@ -36,16 +36,6 @@
     <!-- Articles -->
     <div class="cart-body">
       <div class="divider"></div>
-
-      <!-- 💡 Avertissement spécifique si on est dans Instagram -->
-      @if (isInstagram()) {
-      <div class="instagram-warning-box"
-        style="background: #fff3cd; color: #856404; padding: 10px; margin-bottom: 10px; font-size: 12px; border-radius: 4px;">
-        ⚠️ You are browsing within Instagram. To avoid payment errors (3D Secure), click the <strong>3 dots
-          (...)</strong> in the top right corner, then select <strong>"Open in browser"</strong>.
-      </div>
-      }
-
       @if ((cart$ | async)?.length === 0) {
       <p class="cart-empty">Your cart is empty.</p>
       } @else {
@@ -98,7 +88,7 @@
         <p style="margin: 0 0 8px 0; font-weight: bold;">⚠️ Payments are not supported inside Instagram</p>
         <p style="margin: 0;">
           To checkout securely, please open this page in your browser by tapping the <strong>three dots (...)</strong>
-          in the top right corner ↗️ and selecting <strong>"Open in browser"</strong> (Safari or Chrome).
+          in the top right corner ↗️ and selecting <strong>"Open in browser"</strong>.
         </p>
       </div>
       }

@@ -8,7 +8,7 @@ import { CarouselService } from '../../../services/carousel.service';
   styleUrl: './contact.component.scss',
 })
 export class ContactComponent {
-  email = 'contact@boycoté.fr';
+  email = 'contact@boycote.fr';
   instagram = '@boycotearchive';
 
   private carouselService = inject(CarouselService);

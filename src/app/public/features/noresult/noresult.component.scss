@@ -1,3 +1,8 @@
+.global-wrapper{
+    height: 505px;
+}
+
+
 .container {
     display: flex;
     justify-content: center;
@@ -7,6 +12,7 @@
 p {
     margin-top: 32px;
     font-family: "Roboto Mono", monospace;
+    font-weight: bold;
     font-size: 24px;
     color: #333;
 }

@@ -1,8 +1,9 @@
-.global-wrapper {
+/* GLOBAL LAYOUT */
+.global-wrapper{
   padding-top: 16px;
 }
 
-/* GLOBAL LAYOUT */
+
 .global-content {
   width: 100%;
   display: flex;
@@ -17,13 +18,24 @@ button:focus-visible {
   outline: none;
 }
 
+app-component-left {
+  all: unset;
+  /* ✔ supprime TOUT le style par défaut */
+  outline: none;
+}
+
+app-component-right {
+  all: unset;
+  /* ✔ supprime TOUT le style par défaut */
+  outline: none;
+}
+
 .img-sold-out {
   width: 398px;
   height: 200px;
   position: absolute;
   top: -27px;
   right: -14px;
-
   z-index: 101;
   transition: top 0.25s ease-out, left 0.25s ease-out;
   background: transparent;
@@ -41,7 +53,7 @@ button:focus-visible {
   /* ✔ centre le carousel */
   margin-top: -10px;
   padding-bottom: 36px;
-  height: 740px;
+  height: 900px;
 }
 
 /* CAROUSEL CORE */
@@ -109,14 +121,16 @@ button:focus-visible {
 .description {
   text-align: center;
   max-width: 365px;
+  min-height: 140px;
   font-family: "Roboto Mono", monospace;
-  margin-bottom: 20px;
+  font-size: 0.8rem;
+  margin: 4px;
 }
 
 /* PRICE */
 .price {
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .conteneur-bouton {
@@ -183,6 +197,7 @@ button.primary:active {
 
 .nav-mobile {
   display: none;
+
 }
 
 .nav-buttons {
@@ -213,8 +228,23 @@ button.primary:active {
   margin-top: 100px;
 }
 
+
+
 /* MOBILE RESPONSIVE */
-@media (max-width: 900px) {
+@media (max-width: 1400px) {
+
+  app-component-left {
+    all: unset;
+    /* ✔ supprime TOUT le style par défaut */
+    outline: none;
+
+  }
+
+  app-component-right {
+    all: unset;
+    /* ✔ supprime TOUT le style par défaut */
+    outline: none;
+  }
 
   .carousel-wrapper {
     max-width: 100%;
@@ -251,6 +281,10 @@ button.primary:active {
     font-size: 1.1rem;
   }
 
+  .nav.desktop {
+    display: none;
+  }
+
   /* SOLD OUT BADGE */
   .img-sold-out {
     width: 260px;
@@ -261,12 +295,18 @@ button.primary:active {
     z-index: 101;
   }
 
-  .nav.desktop {
-    display: none;
+  .nav-mobile {
+    all: unset;
+    /* ✔ supprime TOUT le style par défaut */
+    outline: none;
+    margin-top: 16px;
+    margin-bottom: 32px;
   }
+
 }
 
-@media (max-width: 650px) {
+
+@media (max-width: 800px) {
 
   .items {
     width: 150px;
@@ -284,12 +324,20 @@ button.primary:active {
 
   /* SOLD OUT BADGE */
   .img-sold-out {
-    width: 250px;
-    height: 155px;
+    width: 210px;
+    height: 105px;
     position: absolute;
     top: -117px;
-    left: -13px;
+    left: 26px;
     z-index: 101;
+  }
+
+  .nav-mobile {
+    all: unset;
+    /* ✔ supprime TOUT le style par défaut */
+    outline: none;
+    margin-top: 16px;
+    margin-bottom: 16px;
   }
 
   .nav.desktop {
@@ -304,39 +352,47 @@ button.primary:active {
 }
 
 
-
-
 /* SMALL MOBILE */
 @media (max-width: 480px) {
+
+  .nav.desktop {
+    display: none;
+  }
+
+  .select-wrapper{
+    
+  }
+
+  .nav.left.desktop,
+  .nav.right.desktop {
+    display: none;
+  }
 
   .carousel-wrapper {
     height: 500px;
   }
 
   .carousel {
-    margin-top: 72px;
+    margin-top: 114px;
   }
 
-  .nav-mobile {
-    margin-bottom: 24px;
-  }
 
   .items {
-    width: 210px;
+    /* pour centrer proprement */
+    width: 200px;
     height: 240px;
     margin: 0 auto;
-    /* pour centrer proprement */
   }
 
   .item {
-    width: 210px;
+    width: 200px;
     height: 240px;
     object-fit: cover;
     border-radius: 18px;
   }
 
   .description {
-    padding: 8px 16px 0 16px;
+    padding: 8px;
   }
 
   /* SOLD OUT BADGE */
@@ -345,8 +401,10 @@ button.primary:active {
     height: 85px;
     position: absolute;
     top: -10px;
-    left: 48px;
+    left: 38px;
     z-index: 101;
   }
 
 }
+
+
