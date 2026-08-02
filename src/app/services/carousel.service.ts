@@ -20,7 +20,6 @@ export class CarouselService {
 
   setMode(mode: ReturnType<typeof this.carouselMode>) {
     this.carouselMode.set(mode);
-
     this.router.navigate([], {
       queryParams: { mode },
       queryParamsHandling: 'merge'

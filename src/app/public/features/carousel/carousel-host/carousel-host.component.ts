@@ -1,5 +1,6 @@
 import { Component, computed, effect, inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
 import { CarouselService } from '../../../../services/carousel.service';
 import { LogicInputService } from '../../../../services/logic-input.service';
@@ -15,7 +16,6 @@ import { CarouselInputComponent } from "../carousel-input/carousel-input.compone
 import { CarouselProductComponent } from "../carousel-product/carousel-product.component";
 import { CarouselSelectComponent } from "../carousel-select/carousel-select.component";
 import { CarouselStandardComponent } from "../carousel-standard/carousel-standard.component";
-import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -31,7 +31,8 @@ import { Subscription } from 'rxjs';
     LegalComponent,
     CustomerRequestComponent,
     ProgressbarComponent,
-    NoresultComponent],
+    NoresultComponent,
+],
   templateUrl: './carousel-host.component.html',
   styleUrl: './carousel-host.component.scss',
 })

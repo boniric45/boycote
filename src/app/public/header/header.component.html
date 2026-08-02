@@ -78,9 +78,14 @@
 
   <!-- SELECTS -->
   @if(selectActive()){
-  <app-search-selects (focusSelect)="onSelectFocus()" (searchFilters)="onSearchSelect($event)" (reset)="resetSearch()">
+  <app-search-selects 
+  (focusSelect)="onSelectFocus()" 
+  (searchFilters)="onSearchSelect($event)" 
+  (closeSearchMenu)="onCloseSearchMenu()"
+  (reset)="resetSearch()">
   </app-search-selects>
-  }
+  } 
+
 
   }
 </div>

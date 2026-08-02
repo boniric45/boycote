@@ -34,6 +34,7 @@ export class CabineComponent implements OnInit {
   cabin!: Cabin;
   host = 'https://boycote.fr';
 
+
   readonly cats: Cat[] = ['chapeau', 'haut', 'bas', 'chaussures'];
   readonly gender = signal<'MAN' | 'WOMAN'>('MAN');
   readonly indexes = signal<Record<Cat, number>>({ chapeau: -1, haut: -1, bas: -1, chaussures: -1 });
@@ -58,6 +59,15 @@ export class CabineComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCabin();
+  }
+
+  setButtonActive(event: Event, isActive: boolean) {
+    const button = event.currentTarget as HTMLElement;
+    if (isActive) {
+      button.classList.add('is-active');
+    } else {
+      button.classList.remove('is-active');
+    }
   }
 
   loadCabin() {

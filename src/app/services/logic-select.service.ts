@@ -70,7 +70,6 @@ export class LogicSelectService {
     return list;
   });
 
-
   noResult = computed(() => this.filtered().length === 0);
   fallbackMode = computed(() => this.filtered().length > 0 && this.filtered().length < 3);
   canShowCarousel = computed(() => this.filtered().length >= 3);

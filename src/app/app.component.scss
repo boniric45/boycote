@@ -3,6 +3,16 @@
   flex-direction: column;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+  /* Désactive le menu contextuel et l'appel tactile d'iOS au maintien */
+  -webkit-touch-callout: none;
+  
+  /* Empêche la sélection de texte ou d'éléments par l'OS */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .global-wrapper {
   display: flex;
   justify-content: center;

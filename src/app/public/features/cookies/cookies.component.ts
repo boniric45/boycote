@@ -5,6 +5,7 @@ import { AppComponent } from '../../../app.component';
 import { CarouselService } from '../../../services/carousel.service';
 import { CookieService } from '../../../services/cookie.service';
 import { CloseButtonComponent } from "../../../shared/close-button/close-button.component";
+import { GtmService } from '../../../services/gtm.service';
 
 // TEXTES FR / EN
 const TEXTES = {
@@ -52,6 +53,7 @@ const TEXTES = {
   }
 };
 
+
 @Component({
   selector: 'app-cookies',
   imports: [CommonModule, FormsModule, CloseButtonComponent],
@@ -62,18 +64,8 @@ export class CookiesComponent implements OnInit {
 
   private cookieService = inject(CookieService);
   private carouselService = inject(CarouselService);
+  private gtmService = inject(GtmService); // 👈 2. Injection du service GTM
   private app = inject(AppComponent);
-
-ngOnInit() {
-    const consent = this.cookieService.get('cookie_consent');
-
-    if (consent) {
-      this.visible = false; 
-      // Utilisation de la méthode getBoolean sécurisée de votre service
-      this.analyticsEnabled = this.cookieService.getBoolean('analytics');
-      this.marketingEnabled = this.cookieService.getBoolean('marketing');
-    }
-  }
 
   // ÉTAT
   visible = true;
@@ -85,10 +77,32 @@ ngOnInit() {
   marketingEnabled = false;
   essentialEnabled = true;
 
-  // TEXTES ACTIFS
+  ngOnInit() {
+
+    // 1. Vérification stricte de la présence physique du cookie HTTP
+    const hasHttpCookie = document.cookie.includes('cookie_consent=');
+    const consent = this.cookieService.get('cookie_consent');     // Si le cookie HTTP est là, on lit normalement
+
+    if (hasHttpCookie && consent) {
+      this.visible = false;
+      this.analyticsEnabled = this.cookieService.getBoolean('analytics');
+      this.marketingEnabled = this.cookieService.getBoolean('marketing');
+      this.gtmService.updateConsent(this.analyticsEnabled, this.marketingEnabled);
+      return;
+    }
+
+    // 2. Si le cookie HTTP est absent (supprimé), on force l'affichage de la bannière 
+    // et on nettoie uniquement les clés de cookies du LocalStorage (le panier est préservé)
+    this.visible = true;
+    try {
+      localStorage.removeItem('cookie_consent');
+      localStorage.removeItem('analytics');
+      localStorage.removeItem('marketing');
+    } catch (e) { }
+  }
+
   get t() { return TEXTES[this.langActuelle]; }
 
-  // CHANGER LANGUE
   switchLang() {
     this.langActuelle = this.langActuelle === 'en' ? 'fr' : 'en';
   }
@@ -102,9 +116,27 @@ ngOnInit() {
     this.cookieService.set('analytics', 'true');
     this.cookieService.set('marketing', 'true');
 
+    // 👈 Synchronisation avec Google Tag
+    this.gtmService.updateConsent(true, true);
+
     this.visible = false;
     this.app.isCookiesIsNotSaved.set(false);
-    // ❌ window.location.reload() supprimé pour éviter la boucle Instagram
+  }
+
+
+  // Dans cookies.component.ts
+
+  savePreferences() {
+    this.cookieService.set('cookie_consent', 'custom');
+    this.cookieService.set('analytics', this.analyticsEnabled ? 'true' : 'false');
+    this.cookieService.set('marketing', this.marketingEnabled ? 'true' : 'false');
+
+    // Envoi strict selon l'état des switchs UI
+    this.gtmService.updateConsent(this.analyticsEnabled, this.marketingEnabled);
+
+    this.manageOpen = false;
+    this.visible = false;
+    this.app.isCookiesIsNotSaved.set(false);
   }
 
   // TOUT REFUSER
@@ -116,12 +148,13 @@ ngOnInit() {
     this.cookieService.set('analytics', 'false');
     this.cookieService.set('marketing', 'false');
 
+    // 👈 Synchronisation avec Google Tag
+    this.gtmService.updateConsent(false, false);
+
     this.visible = false;
     this.app.isCookiesIsNotSaved.set(false);
-    // ❌ window.location.reload() supprimé
   }
 
-  // OUVRIR MANAGE
   openManage() {
     this.analyticsEnabled = this.cookieService.getBoolean('analytics');
     this.marketingEnabled = this.cookieService.getBoolean('marketing');
@@ -130,25 +163,15 @@ ngOnInit() {
     this.manageOpen = true;
   }
 
-// SAUVEGARDER PRÉFÉRENCES
-  savePreferences() {
-    // Forçage explicite de l'écriture des cookies avec le service
-    this.cookieService.set('cookie_consent', 'custom');
-    this.cookieService.set('analytics', this.analyticsEnabled ? 'true' : 'false');
-    this.cookieService.set('marketing', this.marketingEnabled ? 'true' : 'false');
 
-    // Fermeture des modales
-    this.manageOpen = false;
-    this.visible = false;
-    this.app.isCookiesIsNotSaved.set(false);
-  }
-
-// FERMER LE MANAGE
+  // FERMER LE MANAGE
   closeManage() {
-    // Forçage explicite également ici
     this.cookieService.set('cookie_consent', 'custom');
     this.cookieService.set('analytics', this.analyticsEnabled ? 'true' : 'false');
     this.cookieService.set('marketing', this.marketingEnabled ? 'true' : 'false');
+
+    // 👈 Synchronisation avec Google Tag
+    this.gtmService.updateConsent(this.analyticsEnabled, this.marketingEnabled);
 
     this.carouselService.setMode('standard');
     this.manageOpen = false;

@@ -37,7 +37,6 @@ export class HeaderComponent {
   private route = inject(Router);
   private headerService = inject(HeaderService);
 
-
   /* Données venant du parent */
   @Input() marques: string[] = [];
   @Input() types: string[] = [];
@@ -125,9 +124,9 @@ export class HeaderComponent {
     this.selectActive.set(false);
   }
 
-  onSearchInput(value: string) {   
-      this.logicInputService.setFilters(value);
-      this.carouselService.setMode('search');
+  onSearchInput(value: string) {
+    this.logicInputService.setFilters(value);
+    this.carouselService.setMode('search');
   }
 
   onSearchSelect(filters: any) {
@@ -139,6 +138,13 @@ export class HeaderComponent {
     this.searchService.searchSubmitted.set(true);  // déclenchement
   }
 
+
+  onCloseSearchMenu() {
+    this.searchOpen.set(false);   // ferme la zone recherche
+    this.inputActive.set(true);   // remet l’input en état normal
+    this.selectActive.set(false); // cache les selects
+    // 🔥 NE PAS toucher au carousel → il reste en mode SELECT
+  }
 
 
 }

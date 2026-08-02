@@ -1,15 +1,26 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+  /* Désactive le menu contextuel et l'appel tactile d'iOS au maintien */
+  -webkit-touch-callout: none;
+  
+  /* Empêche la sélection de texte ou d'éléments par l'OS */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 :host {
   font-family: 'Roboto Mono', monospace;
   background: #ffffff;
-  min-height: 70dvh;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.wrapper{
+.wrapper {
   display: flex;
   justify-content: center;
+  min-height: 600px;
 }
 
 
@@ -33,11 +44,12 @@
   border: 1px solid #aaaaaa;
   border-radius: 5px;
   box-shadow:
-    0 2px 8px rgba(0,0,0,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.35);
+    0 2px 8px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
   overflow: hidden;
   background: #cccccc;
-  width: 320px;            /* Fixe la largeur pour correspondre à l'éditeur */
+  width: 320px;
+  /* Fixe la largeur pour correspondre à l'éditeur */
   max-width: 320px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -47,7 +59,7 @@
   position: relative;
   background: linear-gradient(to bottom, #d0d0d0 0%, #c2c2c2 100%);
   border-bottom: 1px solid #aaaaaa;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,7 +78,7 @@
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 3px rgba(0,0,0,0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 3px rgba(0, 0, 0, 0.15);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23444'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 4px center;
@@ -80,7 +92,8 @@
 
 .genre-select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #7aa7ff55; /* halo bleu très léger */
+  box-shadow: 0 0 0 2px #7aa7ff55;
+  /* halo bleu très léger */
 }
 
 
@@ -93,7 +106,8 @@
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
-  height: 365px;           /* Hauteur parfaite ajustée pour le ratio 3/4 */
+  height: 365px;
+  /* Hauteur parfaite ajustée pour le ratio 3/4 */
 }
 
 .arrows-col {
@@ -119,30 +133,33 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 4px 4px 8px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -2px 0 rgba(0,0,0,0.12);
-  transition: all 0.08s ease;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   padding: 0;
   box-sizing: border-box;
 }
 
-.arrow-btn:active {
-  transform: translateY(2px);
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.3), inset 0 3px 8px rgba(0,0,0,0.25);
+/* On remplace :active par .is-active piloté par Angular */
+.arrow-btn.is-active {
+  transform: translateY(5px);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), inset 0 3px 8px rgba(0, 0, 0, 0.25);
   background: linear-gradient(170deg, #b8b8b8 0%, #c0c0c0 100%);
 }
 
 .arrow-btn svg {
-  width: 22px; 
+  width: 22px;
   height: 22px;
   fill: #252525;
-  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.4));
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4));
 }
 
 /* Applique ceci à tes deux conteneurs (éditeur et cabine) */
 .mannequin-container {
-  position: relative; /* Indispensable : sert d'ancre pour le T-shirt */
+  position: relative;
+  /* Indispensable : sert d'ancre pour le T-shirt */
   width: 100%;
-  aspect-ratio: 3 / 4; /* Force un ratio identique partout */
+  aspect-ratio: 3 / 4;
+  /* Force un ratio identique partout */
   overflow: hidden;
   background: transparent;
 }
@@ -161,8 +178,10 @@
 .mannequin-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 'cover' force le remplissage total du cadre */
-  object-position: top center; /* Garde la tête du mannequin en haut */
+  object-fit: cover;
+  /* 'cover' force le remplissage total du cadre */
+  object-position: top center;
+  /* Garde la tête du mannequin en haut */
   position: absolute;
   top: 0;
   left: 0;
@@ -178,10 +197,12 @@
    INFO TENUE
 ══════════════════════════════════════ */
 .outfit-info {
+  display: block;
+  justify-content: left;
   padding: 20px 4px 0;
   overflow: hidden;
-  width: 100%;
-  box-sizing: border-box;
+ width: 100%;
+ box-sizing: border-box;
 }
 
 .info-line {
@@ -251,7 +272,14 @@
   left: var(--x-pos);
   width: var(--width);
   height: var(--height);
-  pointer-events: none; /* Empêche le vêtement d'interférer avec les clics */
-  z-index: 2; /* S'assure que le vêtement est au-dessus du mannequin */
+  pointer-events: none;
+  /* Empêche le vêtement d'interférer avec les clics */
+  z-index: 2;
+  /* S'assure que le vêtement est au-dessus du mannequin */
 }
 
+.trunc {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 25px;
+}

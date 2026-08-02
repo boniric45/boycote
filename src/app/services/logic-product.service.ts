@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { Cabin } from '../models/cabin';
 
@@ -6,9 +6,13 @@ import { Cabin } from '../models/cabin';
   providedIn: 'root',
 })
 export class LogicProductService {
-
-idProduct : number = 0;
-product!: Product;
-cabin!:Cabin;
   
+  idProduct : number = 0;
+  product!: Product;
+  cabin!:Cabin;
+  
+
+
+
+
 }

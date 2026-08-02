@@ -8,6 +8,9 @@
   /* ✔ centre tout horizontalement */
 }
 
+.divider {
+  margin-bottom: 8px;
+}
 
 button:focus,
 button:focus-visible {
@@ -15,15 +18,15 @@ button:focus-visible {
 }
 
 app-component-left {
-      all: unset;
-    /* ✔ supprime TOUT le style par défaut */
-    outline: none;
+  all: unset;
+  /* ✔ supprime TOUT le style par défaut */
+  outline: none;
 }
 
 app-component-right {
-      all: unset;
-    /* ✔ supprime TOUT le style par défaut */
-    outline: none;
+  all: unset;
+  /* ✔ supprime TOUT le style par défaut */
+  outline: none;
 }
 
 .img-sold-out {
@@ -47,8 +50,8 @@ app-component-right {
   justify-content: center;
   align-items: center;
   /* ✔ centre le carousel */
- // margin-top: -10px;
- // padding-bottom: 36px;
+  // margin-top: -10px;
+  // padding-bottom: 36px;
   height: 900px;
 }
 
@@ -233,7 +236,8 @@ button.primary:active {
   .items {
     width: 270px;
     height: 310px;
-    margin: 0 auto; /* pour centrer proprement */
+    margin: 0 auto;
+    /* pour centrer proprement */
   }
 
   .item {
@@ -247,13 +251,13 @@ button.primary:active {
     display: none;
   }
 
-  .nav-mobile.mobile{
+  .nav-mobile.mobile {
     display: flex;
     justify-content: center;
     position: relative;
   }
 
-  .nav-mobile{
+  .nav-mobile {
     margin-top: 16px;
     margin-bottom: 32px;
   }

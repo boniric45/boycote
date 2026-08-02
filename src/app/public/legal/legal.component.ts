@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CookieService } from '../../services/cookie.service';
 import { CarouselService } from '../../services/carousel.service';
 import { CloseButtonComponent } from "../../shared/close-button/close-button.component";
+import { GtmService } from '../../services/gtm.service';
 
 // ============================================================
 // ✏️ REMPLIS LES CROCHETS [ ] AVEC TES VRAIES INFOS
@@ -202,36 +203,34 @@ export class LegalComponent {
   analyticsActif = false;
   marketingActif = false;
 
-  // ÉTAT
   langActuelle: 'en' | 'fr' = 'en';
-
-  // PRÉFÉRENCES
-  analyticsIsEnabled = false;
-  marketingIsEnabled = false;
 
   get t() { return TEXTES[this.langue]; }
   get section() { return this.t.sections[this.ongletActif]; }
 
   private cookieService = inject(CookieService);
   private carouselService = inject(CarouselService);
-
+  private gtmService = inject(GtmService); // 👈 2. Injection de GtmService
 
   ngOnInit() {
-    // Récupère les informations du cookie
+    // Récupère les informations enregistrées
     this.analyticsActif = this.cookieService.getBoolean('analytics');
     this.marketingActif = this.cookieService.getBoolean('marketing');
+
+    // 👈 3. Envoi du trackPageView si ce composant s'ouvre sans changer l'URL
+    this.gtmService.trackPageView('/legal');
   }
 
   updateAnalytics() {
     this.cookieService.setBoolean('analytics', this.analyticsActif);
+    // 👈 4. Notification immédiate à GTM
+    this.gtmService.updateConsent(this.analyticsActif, this.marketingActif);
   }
 
   updateMarketing() {
     this.cookieService.setBoolean('marketing', this.marketingActif);
-  }
-
-  refreshPage() {
-    window.location.reload();
+    // 👈 5. Notification immédiate à GTM
+    this.gtmService.updateConsent(this.analyticsActif, this.marketingActif);
   }
 
   changerLangue() { this.langue = this.langue === 'en' ? 'fr' : 'en'; }
@@ -243,7 +242,9 @@ export class LegalComponent {
   }
 
   closeCart() {
-    
     this.carouselService.setMode('standard');
   }
 }
+
+
+

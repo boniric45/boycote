@@ -1,13 +1,9 @@
 <div class="container">
     <div class="container-carousel">
+
+
         <div class="carousel-product">
-
-            <button class="nav left desktop" (click)="prev()">
-                <app-component-left></app-component-left>
-            </button>
-
             <div class="items" [class.animating]="isAnimating" [class.left-direction]="direction === 'left'">
-
                 @for (article of visibleArticles; track trackByArticle($index, article); let i = $index) {
                 <img class="item" [src]="fixLocalUrl(article.pathpictureone)" [style.transform]="getTransform(i)"
                     [class.fullscreen]="isFullscreen" (click)="openFullscreen(article.pathpictureone)"
@@ -15,9 +11,15 @@
                 }
             </div>
 
-            <button class="nav right desktop" (click)="next()">
-                <app-component-right></app-component-right>
-            </button>
+            <div class="nav-desktop">
+                <button class="nav left desktop" (click)="prev()">
+                    <app-component-left></app-component-left>
+                </button>
+
+                <button class="nav right desktop" (click)="next()">
+                    <app-component-right></app-component-right>
+                </button>
+            </div>
 
             <div class="nav-mobile mobile">
                 <button class="nav" (click)="prev()">
@@ -36,12 +38,10 @@
         <div class="description">
             @if(product){
             <app-informations-card [article]="product"></app-informations-card>
-
             }
         </div>
 
-
-    </div>
+        </div>
 </div>
 
 @if(fullscreenImage){

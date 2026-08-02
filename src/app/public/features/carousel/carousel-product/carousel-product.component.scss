@@ -1,23 +1,36 @@
+
 * {
   margin: 0;
   padding: 0;
 }
 
-
-
 .description {
   display: block;
 }
 
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  margin: 0 auto;
+}
+
+.divider {
+  height: 16px;
+  margin-top: 16px;
+}
+
+/* ===========================
+   CAROUSEL STRUCTURE
+=========================== */
 .items {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 112px;
-
+  transform: scale(1.15);
 }
-
 
 .item {
   position: absolute;
@@ -41,275 +54,119 @@
   opacity: 0.9;
 }
 
-.overlay {
+/* ===========================
+   OVERLAY
+=========================== */
+.overlay,
+.fullscreen-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Couleur sombre semi-transparente + flou */
-  //  background-color: rgba(0, 0, 0, 0.5); 
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  /* Pour Safari */
-  /* Centrage de la div enfant */
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 20;
 }
 
-.container-carousel {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  padding: 2%;
-  // margin-top: -50px;
-  //padding-bottom: 233px;
-  // margin-left: 6px;
+.overlay {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
-.left {
-  position: relative;
-  left: -20rem;
-  top: 15rem;
+.fullscreen-image {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+}
+
+/* ===========================
+   NAVIGATION
+=========================== */
+.nav {
+  border: none;
   background: transparent;
-
+  z-index: 20;
 }
 
-.right {
-  position: relative;
-  left: 31rem;
-  bottom: 8rem;
-  background: transparent;
-
-}
-
-.mobile {
+.nav-mobile {
   display: none;
 }
 
-.nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 20;
-  border: none;
-  background: transparent;
-}
-
-.divider {
-  height: 16px;
-}
 
 
 
-
-
-/* 
-**************** BUREAU ************
- */
-@media all and (min-width: 1401px) {
-
-  .desktop {
-    display: none !important;
-  }
-
-  .items {
-    transform: scale(1.15);
-  }
-
-  .nav-mobile {
-    display: flex;
-    justify-content: center;
-    padding-top: 210px;
-    margin-bottom: 80px;
-    margin-left: 1.5%;
-    transform: scale(1.6);
-    transform-origin: center;
-    background: transparent;
-  }
-
-  .nav {
-    position: static;
-    display: flex;
-    justify-self: baseline;
-    transform: none;
-    background: transparent;
-  }
-
+/* ===========================
+   RESPONSIVE
+=========================== */
+/* ===== Desktop & Tablette (≥600px) ===== */
+@media (min-width: 600px) {
+  /* GRID PRINCIPAL */
   .container-carousel {
-    height: 80dvh;
-    transform: scale(0.75);
-    transform-origin: center;
-  }
-
-
-  .fullscreen-image {
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
-  }
-
-  .description {
-    opacity: 1;
-    position: relative;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 400px; /* carousel | description */
+    grid-template-rows: auto auto;     /* carousel | flèches */
+    column-gap: 220px;
     justify-content: center;
-    transform: scale(1.3);
-    margin-top: 280px;
-  }
-
-  .fullscreen-image {
-    display: none;
-  }
-
-  .item {
-    cursor: not-allowed;
-  }
-
-}
-
-@media all and (max-width: 1400px) {
-
-  .desktop {
-    display: none !important;
-  }
-
-  .items {
-    transform: scale(1.15);
-  }
-
-  .nav-mobile {
-    display: flex;
-    justify-content: center;
-    padding-top: 210px;
-    margin-bottom: 80px;
-    transform: scale(1.6);
-    transform-origin: center;
-    background: transparent;
-  }
-
-  .nav {
-    position: static;
-    display: flex;
-    justify-self: baseline;
-    transform: none;
-    margin-right: 0;
-    background: transparent;
-  }
-
-  .container-carousel {
-    //  margin-top: 100px;
-    height: 80dvh;
-    transform: scale(0.55);
-    transform-origin: center;
-  }
-
-
-  /* Overlay fullscreen */
-  .fullscreen-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 20;
-  }
-
-  .fullscreen-image {
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
-  }
-
-  .description {
-    opacity: 1;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    transform: scale(1.3);
-    margin-top: 275px;
-  }
-}
-
-
-/* 
-**************** MOBILE & TABLETTE ************ OK
- */
-@media all and (min-width: 600px) {
-
-  .container {
+    align-items: start;
     width: 100%;
+    transform: scale(0.75);
+    transform-origin: top center;
+    padding-top: 80px;
+
+  }
+
+  /* CAROUSEL centré dans sa cellule */
+  .carousel-product {
+    grid-column: 1;
+    grid-row: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
   }
 
-  .container-carousel {
+  .items {
+    padding-top: 240px;
+  }
+
+  /* FLÈCHES desktop centrées sous le carousel */
+  .nav-desktop {
+    grid-column: 1;
+    grid-row: 2;
     display: flex;
     justify-content: center;
-    align-items: top;
-    
+    margin-top: 224px;
   }
 
-  .carousel-product{
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    margin-top: 24px;
-    padding-left: 26%;
-  }
-
-  .divider{
-    display: none;
-  }
-
+  /* DESCRIPTION à droite */
   .description {
+    grid-column: 2;
+    grid-row: 1 / span 2; /* occupe toute la hauteur */
     display: flex;
-    transform: scale(1.2);
-    transform-origin: right;
-    align-items: right;
-    margin-left: 480px;
-    padding-bottom: 280px;
+    flex-direction: column;
+    align-items: flex-start;
+    transform: none !important;
+    margin: 0 !important;
+    margin-left: 16px !important;
   }
 
-  .desktop {
+  /* On cache les flèches mobile */
+  .nav-mobile {
     display: none !important;
   }
-
-  .nav-mobile{
-    position: absolute;
-    top: 50%;
-    left: 5%;
-  }
-
 }
 
 
-@media all and (max-width: 599px) {
 
-  .desktop {
+/* ===== Mobile (≤599px) ===== */
+@media (max-width: 599px) {
+
+  .container-carousel {
+    display: block;
+  }
+
+  .nav-desktop {
     display: none !important;
   }
-
-  .divider {
-    height: 164px;
-  }
-
-  // .container{
-  //  // height:stretch;
-  // }
-  app-informations-card {
-    position: relative;
-    display: flex;
-  }
-
-  // .items {
-  //   transform: scale(1.25);
-  // }
 
   .nav-mobile {
     display: flex;
@@ -317,110 +174,64 @@
     padding-top: 160px;
     margin-bottom: 100px;
     transform: scale(1.6);
-    transform-origin: center;
   }
 
   .nav {
-    position: static;
-    display: flex;
-    justify-self: baseline;
-    transform: none;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-right: 0;
-    background: transparent;
+    margin: 16px 0;
   }
-
 
   .container-carousel {
     height: 450px;
     transform: scale(0.45);
-    transform-origin: center;
     margin-bottom: 216px;
   }
 
   .description {
-    opacity: 1;
-    position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
     transform: scale(1.35);
-    // transform-origin: bottom;
-    //margin-bottom: 50px;
-    margin-top: 26px;
+    margin-top: 160px;
   }
 
-  /* Overlay fullscreen */
   .fullscreen-overlay {
-    position: fixed;
-    inset: 0;
-    //background: rgba(0, 0, 0, 0.95);
     background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
     height: auto;
-    z-index: 20;
     cursor: pointer;
   }
 
   .fullscreen-image {
-    width: 100vw;
     height: 80dvh;
-    object-fit: contain;
-    z-index: 20;
     cursor: pointer;
   }
 }
 
+/* ===== Paysage ===== */
+@media (orientation: landscape) {
+  .container {
+    padding: 80px;
+  }
+}
 
-/* Paysage par défaut : cache la description */
-// @media (orientation: landscape) {
-//   .description {
-//     display: none;
-//   }
+/* ===== Intermédiaire (entre 600px et 1000px) ===== */
+@media (min-width: 600px) and (max-width: 1000px) {
 
-//   .container-carousel {
-//     height: 500px;
-//   }
-// }
+.container-carousel {
+    transform: scale(0.50);
+  }
 
+  .description {
+    transform: scale(0.5);
+  }
+}
 
-/* Paysage ET grand écran : même rendu que desktop */
-// @media (orientation: landscape) and (min-width: 1401px) {
-//   .container {
-//     display: flex;
-//     flex-direction: row;
-//     /* horizontal */
-//     justify-content: space-between;
-//     align-items: center;
-//     /* centrage vertical */
-//     height: 100dvh;
-//     padding: 0 40px;
-//   }
+@media (min-width: 1200px)  {
 
-//   .container-carousel {
-//     flex: 1;
-//     display: flex;
-//     justify-content: flex-start;
-//     /* calé à gauche */
-//     align-items: center;
-//   }
+  .container-carousel {
+    transform: scale(1);
+  }
 
-//   .description {
-//     flex: 1;
-//     display: flex;
-//     /* réactive l’affichage */
-//     justify-content: flex-end;
-//     /* calé à droite */
-//     align-items: center;
-//     /* centré verticalement */
-//     opacity: 1;
-//     position: relative;
-//     margin: 0;
-//     transform: none;
-//     overflow: hidden;
-//   }
-// }
+  .description {
+    transform: scale(1);
+  }
+}
+

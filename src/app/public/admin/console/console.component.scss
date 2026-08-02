@@ -72,9 +72,7 @@
 }
 
 .img_logo {
-  display: flex;
-  justify-self: center;
-  align-self: start;
+  margin: 0 auto;
   width: 200px;
 }
 
@@ -280,7 +278,7 @@ tbody {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
 }
 
-.textNumberArticle{
+.textNumberArticle {
   font-family: var(--aqua-font);
   text-align: center;
   margin-top: 8px;
@@ -301,6 +299,6 @@ tbody {
   align-items: center;
 }
 
-.arrow{
+.arrow {
   margin-left: 8px;
 }

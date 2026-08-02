@@ -72,7 +72,11 @@
   background: none;
 }
 
-
+svg{
+    all: unset;
+  /* ✔ supprime TOUT le style par défaut */
+  outline: none;
+}
 
 @keyframes bounce {
   0% {

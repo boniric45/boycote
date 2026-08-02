@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output, Signal, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { forkJoin, Subscription } from 'rxjs';
 import { Garment } from '../../../models/garment';
 import { Gender } from '../../../models/gender';
@@ -20,6 +20,8 @@ export class SearchSelectsComponent {
   @Output() focusSelect = new EventEmitter<void>();
   @Output() searchFilters = new EventEmitter<any>();
   @Output() reset = new EventEmitter<void>();
+  @Output() closeSearchMenu = new EventEmitter<void>();
+
   @Input() selectActive = false;
   @Input() inputActive = false;
 
@@ -151,10 +153,11 @@ export class SearchSelectsComponent {
       types: this.selectedTypes(),
       genders: this.selectedGenders()
     });
-    
+
     this.openMarques.set(false);
     this.openTypes.set(false);
     this.openGenders.set(false);
+    this.closeSearchMenu.emit();   // 🔥 fermer le menu de recherche
   }
 
   /* ============================

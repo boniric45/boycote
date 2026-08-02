@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product';
 import { CarouselService } from '../../../../services/carousel.service';
@@ -30,6 +30,8 @@ export class CarouselProductComponent {
   private carouselService = inject(CarouselService);
 
   articles = signal<any[]>([]);
+  productsIsSoldOut = signal<boolean>(false);
+
   visibleCount = 3;
   currentIndex = 0;
   isAnimating = false;
@@ -38,6 +40,7 @@ export class CarouselProductComponent {
   private touchStartX = 0;
   private touchEndX = 0;
   isFullscreen = false;
+
 
   ngOnInit(): void {
 
@@ -56,6 +59,10 @@ export class CarouselProductComponent {
       this.product = res.product;
       this.productService.product = res.product;
 
+      // Vérifie si le produit est en rupture de stock
+      if (this.product.stock <= 0) {
+        this.productsIsSoldOut.set(true);
+      }
 
       // 3. Construire les images
       let imageList = this.productService.buildImageObjects(this.product);
@@ -77,6 +84,8 @@ export class CarouselProductComponent {
         this.currentIndex = Math.floor(this.visibleCount / 2);
       });
     });
+
+
   }
 
   ngOnChanges() {
@@ -115,7 +124,6 @@ export class CarouselProductComponent {
   }
 
   get visibleArticles() {
-
     // SI ARTICLES EST VIDE RENVOI []
     if (!this.articles() || this.articles().length === 0) {
       return [];

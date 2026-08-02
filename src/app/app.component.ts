@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CarouselHostComponent } from './public/features/carousel/carousel-host/carousel-host.component';
@@ -7,8 +7,8 @@ import { CookiesComponent } from "./public/features/cookies/cookies.component";
 import { FooterComponent } from "./public/footer/footer.component";
 import { HeaderComponent } from "./public/header/header.component";
 import { CarouselService } from './services/carousel.service';
-import { CartService } from './services/cart.service';
 import { CookieService } from './services/cookie.service';
+import { GtmService } from './services/gtm.service';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +16,12 @@ import { CookieService } from './services/cookie.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
 
   private cookiesService = inject(CookieService);
   private router = inject(Router);
-  private cartService = inject(CartService);
   private carouselService = inject(CarouselService);
+  private gtmService = inject(GtmService); // 👈 Injecté
 
   noLayoutRoutes = [
     '/admin',
@@ -39,20 +39,41 @@ export class AppComponent {
   private _subRouterEvent = Subscription.EMPTY;
 
   ngOnInit() {
+    // --------------------------------------------------
+    // 1. Initialisation du consentement GTM au démarrage
+    // --------------------------------------------------
+    this.gtmService.initConsent();
+
     window.addEventListener('popstate', () => {
       this.router.navigate(['/host']);
       this.carouselService.setMode('standard');
     });
 
+    // Nouveau code strict basé sur le cookie HTTP physique :
+    const hasHttpCookie = document.cookie.includes('cookie_consent=');
     const consent = this.cookiesService.get('cookie_consent');
 
-    if (consent) {
-       this.isCookiesIsNotSaved.set(false);
+    if (hasHttpCookie && consent) {
+      this.isCookiesIsNotSaved.set(false);
+    } else {
+      this.isCookiesIsNotSaved.set(true);
+      try {
+        localStorage.removeItem('cookie_consent');
+        localStorage.removeItem('analytics');
+        localStorage.removeItem('marketing');
+      } catch (e) { }
     }
+
+
 
     this._subRouterEvent = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
+
+        // --------------------------------------------------
+        // 2. Envoi du changement de page (Pageview) à GTM
+        // --------------------------------------------------
+        this.gtmService.trackPageView(url);
 
         // -------------------------
         // 1) Pages SANS layout
@@ -130,5 +151,4 @@ export class AppComponent {
   ngOnDestroy() {
     this._subRouterEvent.unsubscribe();
   }
-
 }

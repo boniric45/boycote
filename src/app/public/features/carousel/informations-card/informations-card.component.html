@@ -17,11 +17,19 @@
             </div>
             <div class="infos-produit">
                 <p>{{ article.gender }} — SIZE {{ article.size }}</p>
+                @if(article.stock === 0){
+                <div class="wrapper-soldout">
+                    <div class="badge-soldout">
+                        SOLD OUT
+                    </div>
+                </div>
+                } @else {
                 <p class="prix-produit">{{ article.prix | currency:'EUR'}}</p>
+                }
             </div>
 
             <div class="conteneur-bouton">
-            @if(article){
+                @if(article){
                 @if(article.stock === 0){
                 <button class="primary" (click)="addToRequest(article)"><span>REQUEST SOURCING</span></button>
                 }

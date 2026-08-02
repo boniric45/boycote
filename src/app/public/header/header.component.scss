@@ -1,9 +1,11 @@
+
 /* ============================
    HEADER STRUCTURE
    ============================ */
 .header-wrapper {
   width: 100%;
-  padding: 4px 0;
+  height: 100%;
+  padding: 10px 0;
   z-index: 10;
 }
 
@@ -11,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 65px;
+  height: 100%;
   padding: 0 10px;
   z-index: 10;
 }
@@ -69,17 +71,14 @@
 }
   .search-zone{
     transform:scale(0.92);
-    transform-origin: top;
-    margin: 0;
   }
 
   .search-wrapper{
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
     flex-wrap: nowrap;
-  //  margin-top: 8px;
+    margin-top: 8px;
     margin-bottom: 8px;
   }
 
@@ -99,7 +98,7 @@
   }
 
   .header {
-    height: 80px;
+    height: 40px;
     padding: 0 30px;
   }
 
@@ -122,8 +121,6 @@
   .desktop-only {
     display: flex;
   }
-
-
 
 }
 

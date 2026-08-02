@@ -38,13 +38,15 @@ export class CookieService {
     }
   }
 
-  delete(name: string) {
+delete(name: string) {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax; Secure`;
     try {
-      localStorage.removeItem(name);
+      localStorage.removeItem('cookie_consent');
+      localStorage.removeItem('analytics');
+      localStorage.removeItem('marketing');
     } catch (e) {}
   }
-
+  
   getBoolean(name: string): boolean {
     return this.get(name) === 'true';
   }
