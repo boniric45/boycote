@@ -1,8 +1,11 @@
 <img class="imgBack" src="pictures\back.png" [routerLink]="['/']" alt="Back">
 
-<img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+<div class="img-wrapper">
+  <img class="img_logo" src="/pictures/logo.png" alt="Logo Boycoté">
+</div>
 
 <p class="textNumberArticle">Nombre de produit en base: {{numberProduct}}</p>
+<p class="textNumberArticle">Nombre de produit vendus: {{numberProductSold}}</p>
 
 <button class="logout-btn" (click)="logout()">Logout</button>
 
@@ -82,7 +85,7 @@
   <div class="cabins">
     <div class="marque-table">
       <div class="filter-bar">
-        <h3 style="margin-bottom: 5px;">Articles de la Cabine</h3>
+        <h3 style="margin-bottom: 5px;">Articles de la Cabine ( {{ numberCabin }} articles )</h3>
         <input type="text" placeholder="Rechercher (Title, Genre, ProductLink)…" [(ngModel)]="searchCabin">
       </div>
       <table class="tcabin">

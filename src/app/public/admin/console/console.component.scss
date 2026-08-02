@@ -68,13 +68,22 @@
 
 .cont-btn-add {
   width: 50px;
+}
 
+.img-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;     /* Safari préfère padding à margin */
+  width: 100%;
 }
 
 .img_logo {
-  margin: 0 auto;
   width: 200px;
+  height: auto;
+  display: block;      /* obligatoire pour Safari */
 }
+
 
 .btn-add {
   width: 30px;

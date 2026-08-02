@@ -33,9 +33,10 @@ export class ConsoleComponent implements OnInit {
   searchProduct: string = '';
   searchCabin: string = '';
   numberProduct: number = 0;
+  numberProductSold: number = 0;
+  numberCabin: number = 0;
   sortCol: keyof Product | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
-
 
   private router = inject(Router);
   private auth = inject(AuthService);
@@ -59,6 +60,7 @@ export class ConsoleComponent implements OnInit {
   private _subDeleteGarment = Subscription.EMPTY;
   private _subDeleteGender = Subscription.EMPTY;
 
+
   ngOnInit(): void {
     this.loadProducts();
     this.loadCabins();
@@ -70,7 +72,7 @@ export class ConsoleComponent implements OnInit {
   drop(event: CdkDragDrop<Product[]>) {
     moveItemInArray(this.products, event.previousIndex, event.currentIndex);
 
-    // 🔥 Mettre à jour l’ordre dans la base
+    // Mettre à jour l’ordre dans la base
     this.saveOrder();
   }
 
@@ -130,19 +132,29 @@ export class ConsoleComponent implements OnInit {
   }
 
   loadProducts() {
-
     this._subGetProduct = this.consoleProductService.getProducts().subscribe(res => {
       this.products = res
       if (this.products.length != 0) {
         this.numberProduct = this.products.length;
+        // Calcule les produits sold out ici
+        const soldProducts = this.products.filter(p => Number(p.stock) === 0);
+        this.numberProductSold = soldProducts.length;
       }
     });
+  }
 
+  loadProductsSold() {
+    const soldProducts = this.products.filter(p => p.stock === 0);
+    this.numberProductSold = soldProducts.length;
   }
 
   loadCabins() {
     this._subGetAllCabin = this.cabinService.getAllCabin().subscribe(c => {
       this.cabins = c;
+      this.numberCabin = c.length;
+      if (this.cabins.length != 0) {
+        this.numberProduct = this.products.length;
+      }
     })
   }
 
